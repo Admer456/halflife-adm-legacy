@@ -1,3 +1,26 @@
+Advanced Development Mod
+======================
+
+Welcome to ADM's repository! ADM (Advanced Development Mod) is a Half-Life mod base that aims to bring quality-of-life features while maintaining compatibility with the Half-Life singleplayer campaign. ADM started development in October 2018, as an implementation of a view swaying script function for Sven Co-op, in the form of an entity. Since then, numerous entities have been added, as well as enhancing some of the existing entities.
+
+Features include:
+
+- High-quality sound with FMOD, without fmod.dll being in the HL root directory*
+- Physics with Bullet physics engine*
+- Substantially easier to use than the vanilla HL SDK
+- Time-based entities
+- Flexible serverside vehicle system, with support for many vehicle types and configurations
+- Parametric view bobbing, swaying and HUD colours
+
+To-do: 
+
+- Subtitles
+- Interactive terminals and computers
+- OpFor rope
+- Multiple scripting systems
+
+* Only partially implemented. FMOD for music, physics only work with specifically sized cubes and map geometry is yet to be loaded for collissions.
+
 Half Life 1 SDK LICENSE
 ======================
 
