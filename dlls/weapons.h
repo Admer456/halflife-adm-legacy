@@ -713,12 +713,19 @@ public:
 	void SecondaryAttack( void );
 	void WeaponIdle( void );
 
+	void Spinup( void );
+	void FireRocket( void );
+
 	void UpdateSpot( void );
 	BOOL ShouldWeaponIdle( void ) { return TRUE; };
+
+	int m_fPrimaryFire = FALSE;
 
 	CLaserSpot *m_pSpot;
 	int m_fSpotActive;
 	int m_iRocketMode; // 0 = no guidance, 1 = laser guidance, 2 = player guidance
+	float m_flRocketFuel; // fuel we got
+	float m_flGivenFuel; // fuel we give to a pRocket
 	CBaseEntity *m_pTrackingRocket; // the rocket which is controlled by our player
 	int m_cActiveRockets;// how many missiles in flight from this launcher right now?
 
@@ -744,6 +751,7 @@ public:
 	static	TYPEDESCRIPTION m_SaveData[];
 	void Spawn( void );
 	void Precache( void );
+	void EXPORT EmptyFuelThink( void );
 	void EXPORT FollowThink( void );
 	void EXPORT IgniteThink( void );
 	void EXPORT RocketTouch( CBaseEntity *pOther );
@@ -754,6 +762,7 @@ public:
 	float m_flIgniteTime;
 	CRpg *m_pLauncher; // pointer back to the launcher that fired me. 
 	int m_iFOV; // field of view when the player controls this thingy
+	float m_flRocketFuel;
 };
 
 class CGauss : public CBasePlayerWeapon

@@ -36,6 +36,13 @@ enum rpg_e {
 	RPG_FIDGET_UL,	// unloaded fidget
 };
 
+enum rpgRocketMode
+{
+	ROCKET_UNGUIDED,
+	ROCKET_LASERGUIDED,
+	ROCKET_PLAYERGUIDED
+};
+
 LINK_ENTITY_TO_CLASS( weapon_rpg, CRpg );
 
 #ifndef CLIENT_DLL
@@ -137,7 +144,7 @@ void CRpgRocket :: Spawn( void )
 	UTIL_MakeVectors( pev->angles );
 	pev->angles.x = -(pev->angles.x + 30);
 
-	pev->velocity = gpGlobals->v_forward * 250;
+	pev->velocity = gpGlobals->v_forward * 500;
 	pev->gravity = 0.5;
 
 	pev->nextthink = gpGlobals->time + 0.01;
@@ -184,13 +191,10 @@ void CRpgRocket :: IgniteThink( void  )
 		pev->angles = m_pLauncher->m_pPlayer->pev->v_angle;
 	}
 
-//	pev->movetype = MOVETYPE_FLY;
-//	pev->effects |= EF_LIGHT;
-
 	flTimeToFollow += 0.01;
 
 	// set to follow laser spot
-	if ( flTimeToFollow > 0.85 )
+	if ( flTimeToFollow > 0.35 )
 	{
 		SetThink( &CRpgRocket::FollowThink );
 		pev->movetype = MOVETYPE_FLY;
@@ -220,9 +224,24 @@ void CRpgRocket :: IgniteThink( void  )
 	pev->nextthink = gpGlobals->time + 0.01;
 }
 
+void CRpgRocket::EmptyFuelThink( void )
+{
+	ALERT( at_console, "EmptyFuelThink\n" );
+
+	if ( m_pLauncher->m_iRocketMode == 2 )
+	{
+		m_pLauncher->m_pPlayer->pev->fov = m_pLauncher->m_pPlayer->m_iFOV = m_iFOV;
+		pev->angles = m_pLauncher->m_pPlayer->pev->v_angle;
+	}
+
+	pev->gravity = 0;
+	pev->nextthink = gpGlobals->time + 0.01;
+}
 
 void CRpgRocket :: FollowThink( void  )
 {
+	ALERT( at_console, "FollowThink\n" );
+
 	CBaseEntity *pOther = NULL;
 	Vector vecTarget;
 	Vector vecDir;
@@ -234,38 +253,45 @@ void CRpgRocket :: FollowThink( void  )
 	static float flFOVCounter = 0;
 	static bool fInRocket = false;
 
-	static float flRollAngle = 0;
+//	static float flRollAngle = 0;
 
-	if ( m_pLauncher->m_iRocketMode == 2 && !fInRocket )
+	// Playerguided missile view stuff
+	if ( m_pLauncher->m_iRocketMode == ROCKET_PLAYERGUIDED && !fInRocket )
 	{
 		m_pLauncher->m_pPlayer->pev->fov = m_pLauncher->m_pPlayer->m_iFOV = m_iFOV;
 		fInRocket = true;
 	}
+	else if ( m_pLauncher->m_iRocketMode != ROCKET_PLAYERGUIDED )
+	{
+		fInRocket = false;
+	}
 
 	if ( fInRocket )
 	{
-		Vector vecOldAngleDir, vecAngleDir;
-		UTIL_MakeVectorsPrivate( vecOldAngles, vecOldAngleDir, NULL, NULL );
-		UTIL_MakeVectorsPrivate( pev->angles, vecAngleDir, NULL, NULL );
+//		Vector vecOldAngleDir, vecAngleDir;
+//		UTIL_MakeVectorsPrivate( vecOldAngles, vecOldAngleDir, NULL, NULL );
+//		UTIL_MakeVectorsPrivate( pev->angles, vecAngleDir, NULL, NULL );
 
 		pev->angles = m_pLauncher->m_pPlayer->pev->v_angle;	
 		pev->angles.x *= -1;
 		UTIL_MakeAimVectors( pev->angles );
 	
-		flRollAngle = DotProduct( gpGlobals->v_right, pev->velocity );
-		flRollAngle /= 12.5f;
-		pev->fixangle = 1;
-		m_pLauncher->m_pPlayer->pev->punchangle.z = pev->v_angle.z = pev->angles.z = flRollAngle;
+//		flRollAngle = DotProduct( gpGlobals->v_right, pev->velocity );
+//		flRollAngle /= 12.5f;
+//		pev->fixangle = 1;
+//		m_pLauncher->m_pPlayer->pev->punchangle.z = pev->v_angle.z = pev->angles.z = flRollAngle;
 
-		ALERT( at_console, "\nroll %f", flRollAngle );
-		
-		flFOVCounter += 0.065;
+//		ALERT( at_console, "\nroll %f", flRollAngle );
 
-		if ( flFOVCounter > 1 || m_iFOV < 120 )
+		if ( flFOVCounter > 1 || m_iFOV < 100 )
 		{
 			m_iFOV += 1;
 			m_pLauncher->m_pPlayer->pev->fov = m_pLauncher->m_pPlayer->m_iFOV = m_iFOV;
 			flFOVCounter = 0;
+		}
+		else
+		{
+			flFOVCounter += 0.065;
 		}
 
 		m_pLauncher->m_iRocketMode = 2;
@@ -276,6 +302,7 @@ void CRpgRocket :: FollowThink( void  )
 		UTIL_MakeAimVectors( pev->angles );
 	}
 
+	// Velocity calculations
 	vecTarget = gpGlobals->v_forward;
 	flMax = 8192;
 	
@@ -302,9 +329,9 @@ void CRpgRocket :: FollowThink( void  )
 
 	// this acceleration and turning math is totally wrong, but it seems to respond well so don't change it.
 	float flSpeed = pev->velocity.Length();
-	if (gpGlobals->time - m_flIgniteTime < 1.0)
+	if (gpGlobals->time - m_flIgniteTime < 3.0)
 	{
-		pev->velocity = pev->velocity * 0.2 + vecTarget * (flSpeed * 0.8 + 300);
+		pev->velocity = pev->velocity * 0.2 + vecTarget * (flSpeed * 0.8 + 400);
 		if (pev->waterlevel == 3)
 		{
 			// go slow underwater
@@ -316,24 +343,32 @@ void CRpgRocket :: FollowThink( void  )
 		} 
 		else 
 		{
-			if (pev->velocity.Length() > 1500)
+			if (pev->velocity.Length() > m_flRocketFuel * 50)
 			{
-				pev->velocity = pev->velocity.Normalize() * 1500;
+				pev->velocity = pev->velocity.Normalize() * m_flRocketFuel * 50;
 			}
 		}
 	}
 	else
 	{
-		if (pev->effects & EF_LIGHT)
+		m_flRocketFuel -= 0.01;
+
+		if ( m_flRocketFuel <= 0 )
 		{
-			pev->effects = 0;
-			STOP_SOUND( ENT(pev), CHAN_VOICE, "weapons/rocket1.wav" );
+			SetThink( &CRpgRocket::EmptyFuelThink );
+
+			STOP_SOUND( ENT( pev ), CHAN_VOICE, "weapons/rocket1.wav" );
+			pev->movetype = MOVETYPE_TOSS;
+			FBitClear( pev->effects, EF_LIGHT );
 		}
-		pev->velocity = pev->velocity * 0.2 + vecTarget * flSpeed * 0.798;
-		if (pev->waterlevel == 0 && pev->velocity.Length() < 200)
-		{
-			Detonate( );
-		}
+
+		pev->velocity = vecTarget * flSpeed;
+
+//		pev->velocity = pev->velocity * 0.2 + vecTarget * flSpeed * 0.798;
+//		if (pev->waterlevel == 0 && pev->velocity.Length() < 200)
+//		{
+//			Detonate( );
+//		}
 	}
 	// ALERT( at_console, "%.0f\n", flSpeed );
 
@@ -430,6 +465,7 @@ void CRpg::Spawn( )
 	m_fSpotActive = 1;
 	m_iRocketMode = 1;
 	m_pTrackingRocket = nullptr;
+	m_flRocketFuel = 100;
 
 #ifdef CLIENT_DLL
 	if ( bIsMultiplayer() )
@@ -533,70 +569,85 @@ void CRpg::Holster( int skiplocal /* = 0 */ )
 
 }
 
+
+
 void CRpg::PrimaryAttack()
 {
+	UpdateSpot();
+
+	m_fPrimaryFire = TRUE;
+
+#ifndef CLIENT_DLL
+//	ALERT( at_console, "\nPrimaryAttack" );
+	
+//	ALERT( at_console, "PRIM atk %d\t fuel %f\t burn %f\t time %f\t fire %d\t idle %f\n",
+//		   m_fInAttack,
+//		   m_flGivenFuel,
+//		   m_pPlayer->m_flNextAmmoBurn,
+//		   UTIL_WeaponTimeBase(),
+//		   m_fPrimaryFire,
+//		   m_flTimeWeaponIdle);
+#endif
+
 	if ( m_iClip )
 	{
 //		if ( m_pTrackingRocket != nullptr )
 //			return; // there's a rocket out there being controlled by our player, let's not fire another one
 		
-		m_pPlayer->m_iWeaponVolume = LOUD_GUN_VOLUME;
-		m_pPlayer->m_iWeaponFlash = BRIGHT_GUN_FLASH;
-
-#ifndef CLIENT_DLL
-	
-		// player "shoot" animation
-		m_pPlayer->SetAnimation( PLAYER_ATTACK1 );
-
-		UTIL_MakeVectors( m_pPlayer->pev->v_angle );
-		Vector vecSrc = m_pPlayer->GetGunPosition( ) + gpGlobals->v_forward * 16 + gpGlobals->v_right * 8 + gpGlobals->v_up * -8;
-		
-		CRpgRocket *pRocket = CRpgRocket::CreateRpgRocket( vecSrc, m_pPlayer->pev->v_angle, m_pPlayer, this );
-		pRocket->m_iFOV = 24;
-
-
-		if ( m_iRocketMode == 2 )
+		if ( m_fInAttack == 0 )
 		{
-			m_pTrackingRocket = pRocket;
-			SET_VIEW( m_pPlayer->edict(), ENT( pRocket->pev ) );
+			Spinup();
+
+			m_pPlayer->m_flNextAmmoBurn = UTIL_WeaponTimeBase();
+			
+			m_fInAttack = 1;
+			
+			m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + 0.5;
+			m_pPlayer->m_flStartCharge = gpGlobals->time;
+			m_pPlayer->m_flAmmoStartCharge = UTIL_WeaponTimeBase() + 10; // max charge time
+//			m_pPlayer->m_flNextAttack
 		}
 
-		UTIL_MakeVectors( m_pPlayer->pev->v_angle );// RpgRocket::Create stomps on globals, so remake.
-		pRocket->pev->velocity = pRocket->pev->velocity + gpGlobals->v_forward * DotProduct( m_pPlayer->pev->velocity, gpGlobals->v_forward );
-#endif
+		else if ( m_fInAttack == 1 )
+		{
+			if ( m_flTimeWeaponIdle < UTIL_WeaponTimeBase() )
+			{
+				Spinup();
+				m_fInAttack = 2;
+			}
+		}
 
-		// firing RPG no longer turns on the designator. ALT fire is a toggle switch for the LTD.
-		// Ken signed up for this as a global change (sjb)
+		else // if ( m_fInAttack == 2 )
+		{
+					// during the charging process, eat one bit of ammo every once in a while
+			if ( UTIL_WeaponTimeBase() >= m_pPlayer->m_flNextAmmoBurn && m_pPlayer->m_flNextAmmoBurn != 1000 )
+			{
+				Spinup();
+				m_pPlayer->m_flNextAmmoBurn = UTIL_WeaponTimeBase() + 0.01;
+			}
 
-		int flags;
-#if defined( CLIENT_WEAPONS )
-	flags = FEV_NOTHOST;
-#else
-	flags = 0;
-#endif
-
-		PLAYBACK_EVENT( flags, m_pPlayer->edict(), m_usRpg );
-
-		m_iClip--; 
-				
-		m_flNextPrimaryAttack = GetNextAttackDelay(1.5);
-		m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + 1.5;
+			if ( UTIL_WeaponTimeBase() >= m_pPlayer->m_flAmmoStartCharge )
+			{
+				// don't eat any more ammo after gun is fully charged.
+				m_pPlayer->m_flNextAmmoBurn = 1000;
+			}
+		}
 	}
+
 	else
 	{
 		PlayEmptySound( );
 	}
-	UpdateSpot( );
 }
 
 
 void CRpg::SecondaryAttack()
 {
 	m_iRocketMode++;
-	if ( m_iRocketMode > 2 )
-		m_iRocketMode = 0;
+	if ( m_iRocketMode > ROCKET_PLAYERGUIDED )
+		m_iRocketMode = ROCKET_UNGUIDED;
 
-	if ( m_iRocketMode == 1 )
+	if ( m_iRocketMode == ROCKET_LASERGUIDED )
 		m_fSpotActive = TRUE;
 	else
 		m_fSpotActive = FALSE;
@@ -619,44 +670,125 @@ void CRpg::SecondaryAttack()
 void CRpg::WeaponIdle( void )
 {
 	UpdateSpot( );
-
 	ResetEmptySound( );
+
+#ifndef CLIENT_DLL
+//	ALERT( at_console, "\nWeaponIdle" );
+	
+//	ALERT( at_console, "IDLE atk %d\t fuel %f\t burn %f\t time %f\t fire %d\t idle %f\n",
+//		   m_fInAttack,
+//		   m_flGivenFuel,
+//		   m_pPlayer->m_flNextAmmoBurn,
+//		   UTIL_WeaponTimeBase(),
+//		   m_fPrimaryFire,
+//		   m_flTimeWeaponIdle);
+#endif
 
 	if ( m_flTimeWeaponIdle > UTIL_WeaponTimeBase() )
 		return;
 
-	if ( m_pPlayer->m_rgAmmo[m_iPrimaryAmmoType])
+	if ( m_fInAttack != 0 && !m_fPrimaryFire )
 	{
-		int iAnim;
-		float flRand = UTIL_SharedRandomFloat( m_pPlayer->random_seed, 0, 1 );
-		if (flRand <= 0.75 || m_fSpotActive)
-		{
-			if ( m_iClip == 0 )
-				iAnim = RPG_IDLE_UL;
-			else
-				iAnim = RPG_IDLE;
-
-			m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + 90.0 / 15.0;
-		}
-		else
-		{
-			if ( m_iClip == 0 )
-				iAnim = RPG_FIDGET_UL;
-			else
-				iAnim = RPG_FIDGET;
-
-			m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + 3.0;
-		}
-
-		SendWeaponAnim( iAnim );
+		FireRocket();
+		m_flGivenFuel = 0;
+		m_fInAttack = 0;
+		m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + 2.0;
 	}
 	else
 	{
-		m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + 1;
+		if ( m_pPlayer->m_rgAmmo[ m_iPrimaryAmmoType ] )
+		{
+			int iAnim;
+			float flRand = UTIL_SharedRandomFloat( m_pPlayer->random_seed, 0, 1 );
+			if ( flRand <= 0.75 || m_fSpotActive )
+			{
+				if ( m_iClip == 0 )
+					iAnim = RPG_IDLE_UL;
+				else
+					iAnim = RPG_IDLE;
+
+				m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + 90.0 / 15.0;
+			}
+			else
+			{
+				if ( m_iClip == 0 )
+					iAnim = RPG_FIDGET_UL;
+				else
+					iAnim = RPG_FIDGET;
+
+				m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + 3.0;
+			}
+
+			SendWeaponAnim( iAnim );
+		}
+		else
+		{
+			m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + 3;
+		}
+
+		if ( !m_fPrimaryFire )
+		{
+			m_fInAttack = 0;
+		}
+		else
+		{
+			m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + 0.1;
+		}
+
+		m_fPrimaryFire = FALSE;
 	}
 }
 
+void CRpg::Spinup( void )
+{
+//	m_flRocketFuel -= 0.3;
+	m_flGivenFuel += 0.3;
+}
 
+void CRpg::FireRocket( void )
+{
+	m_pPlayer->m_iWeaponVolume = LOUD_GUN_VOLUME;
+	m_pPlayer->m_iWeaponFlash = BRIGHT_GUN_FLASH;
+
+#ifndef CLIENT_DLL
+
+		// player "shoot" animation
+	m_pPlayer->SetAnimation( PLAYER_ATTACK1 );
+
+	UTIL_MakeVectors( m_pPlayer->pev->v_angle );
+	Vector vecSrc = m_pPlayer->GetGunPosition() + gpGlobals->v_forward * 16 + gpGlobals->v_right * 8 + gpGlobals->v_up * -8;
+
+	CRpgRocket *pRocket = CRpgRocket::CreateRpgRocket( vecSrc, m_pPlayer->pev->v_angle, m_pPlayer, this );
+	pRocket->m_iFOV = 24;
+	pRocket->m_flRocketFuel = m_flGivenFuel;
+
+	if ( m_iRocketMode == ROCKET_PLAYERGUIDED )
+	{
+		m_pTrackingRocket = pRocket;
+		SET_VIEW( m_pPlayer->edict(), ENT( pRocket->pev ) );
+	}
+
+	UTIL_MakeVectors( m_pPlayer->pev->v_angle );// RpgRocket::Create stomps on globals, so remake.
+	pRocket->pev->velocity = pRocket->pev->velocity + gpGlobals->v_forward * DotProduct( m_pPlayer->pev->velocity, gpGlobals->v_forward );
+#endif
+
+		// firing RPG no longer turns on the designator. ALT fire is a toggle switch for the LTD.
+		// Ken signed up for this as a global change (sjb)
+
+	int flags;
+#if defined( CLIENT_WEAPONS )
+	flags = FEV_NOTHOST;
+#else
+	flags = 0;
+#endif
+
+	PLAYBACK_EVENT( flags, m_pPlayer->edict(), m_usRpg );
+
+	m_iClip--;
+
+	m_flNextPrimaryAttack = GetNextAttackDelay( 1.5 );
+	m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + 1.5;
+}
 
 void CRpg::UpdateSpot( void )
 {

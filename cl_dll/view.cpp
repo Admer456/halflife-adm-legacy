@@ -307,7 +307,7 @@ V_CalcRoll
 Used by view and sv_user
 ===============
 */
-float V_CalcRoll (vec3_t angles, vec3_t velocity, float rollangle, float rollspeed )
+float V_CalcRoll (vec3_t angles, vec3_t velocity, float rollangle, float rollspeed, int direction = 1 ) // directions: 0 = forward, 1 = right, 2 = up, 3 = exclusive up
 {
     float   sign;
     float   side;
@@ -316,7 +316,14 @@ float V_CalcRoll (vec3_t angles, vec3_t velocity, float rollangle, float rollspe
     
 	AngleVectors ( angles, forward, right, up );
     
-	side = DotProduct (velocity, right);
+	switch ( direction )
+	{
+		default:
+		case 0: side = DotProduct( velocity, forward ); break;
+		case 1: side = DotProduct( velocity, right ); break;
+		case 2: side = DotProduct( velocity, up ); break;
+		case 3: side = velocity[2] * up[2]; break;
+	}
     sign = side < 0 ? -1 : 1;
     side = fabs( side );
     
@@ -693,6 +700,11 @@ void V_CalcNormalRefdef(struct ref_params_s *pparams)
 	// View origins
 	static Vector vecOrgDelta;		// difference between the old view origin, and the current one, used to determine movement speed
 
+	// Angle vectors
+	static Vector vecOriginalFront;
+	static Vector vecOriginalRight;
+	static Vector vecOriginalUp;
+
 	// Other floats
 	static float oldz = 0;
 	static float lasttime;
@@ -702,6 +714,10 @@ void V_CalcNormalRefdef(struct ref_params_s *pparams)
 	static float flAngSwim = 0;		// another 0 to 360 angle, used for separate sine waves when swimming
 	static float flAngJump = 10.0;	// this angle punches the view a bit, the moment you jump
 	static bool fDeltaReachedMax = false;
+	
+	static float flOldSideMove = 0;
+	static float flOldForwardMove = 0;
+	static float flOldUpMove = 0;
 
 	vecFinalAngles = { 0, 0, 0 };
 
@@ -735,6 +751,11 @@ void V_CalcNormalRefdef(struct ref_params_s *pparams)
 	BobHeight			= CVAR_GET_FLOAT("adm_bob_height");
 
 	float flSideMove = V_CalcRoll(ViewModel->angles, pparams->simvel, 60, 6000);
+	float flForwardMove = V_CalcRoll( ViewModel->angles, pparams->simvel, 8, 600, 0 ) * 0.5;
+	float flUpMove = V_CalcRoll( ViewModel->angles, pparams->simvel, 6, 300, 2 ) * 1.333;
+
+	if ( flUpMove > 0 )
+		flUpMove *= 0.36;
 
 	LocalConFloat(developer);
 	LocalConFloat(adm_classicbob_enable);
@@ -850,6 +871,7 @@ void V_CalcNormalRefdef(struct ref_params_s *pparams)
 	// offsets
 	VectorCopy(pparams->cl_viewangles, angles);
 	AngleVectors(angles, pparams->forward, pparams->right, pparams->up);
+	AngleVectors( ViewModel->curstate.angles, vecOriginalFront, vecOriginalRight, vecOriginalUp );
 
 	// don't allow cheats in multiplayer
 	if (pparams->maxclients <= 1)
@@ -895,11 +917,25 @@ void V_CalcNormalRefdef(struct ref_params_s *pparams)
 	// Let the viewmodel shake at about 10% of the amplitude
 	gEngfuncs.V_ApplyShake(ViewModel->origin, ViewModel->angles, 0.5);
 
+	float flBlendForwardMove =  (0.90 * flOldForwardMove)	+ (0.10 * flForwardMove);
+	float flBlendSideMove =		(0.90 * flOldSideMove)		+ (0.10 * flSideMove);
+	float flBlendUpMove =		(0.93 * flOldUpMove)		+ (0.07 * flUpMove);
+
+	flOldForwardMove = flBlendForwardMove;
+	flOldSideMove = flBlendSideMove;
+	flOldUpMove = flBlendUpMove;
+
 	for (i = 0; i < 2; i++)
 	{
-		ViewModel->origin[i] += v_positionbob_sway * pparams->right[i] * 2;
-		ViewModel->origin[i] += flSideMove * pparams->right[i];
+		ViewModel->origin[ i ] += 2.00 * v_positionbob_sway	* pparams->right[i];
+		ViewModel->origin[ i ] += 1.00 * flBlendForwardMove	* pparams->forward[i];
+		ViewModel->origin[ i ] += 1.00 * flBlendSideMove	* pparams->right[i];
+		ViewModel->origin[ i ] += 0.25 * flBlendUpMove		* pparams->up[i];
 	}
+
+	ViewModel->origin[ 2 ] += flBlendUpMove - 1;
+
+//	gEngfuncs.Con_Printf( "bs %f\tos %f\ts %f", flBlendUpMove, flOldUpMove, flUpMove );
 	
 	// NOTE TO NEW PROGRAMMERS
 	// BUGGY SHIT STARTS HERE
@@ -909,7 +945,6 @@ void V_CalcNormalRefdef(struct ref_params_s *pparams)
 //	ViewModel->angles[YAW] += v_rollbob_y * RBYaw;
 //	ViewModel->angles[ROLL] += v_rollbob_r * RBRoll;
 //	ViewModel->angles[PITCH] += v_rollbob_p * RBPitch;
-
 //	vecFinalAngles[YAW] += v_rollbob_y * RBYaw;
 //	vecFinalAngles[ROLL] += v_rollbob_r * RBRoll;
 //	vecFinalAngles[PITCH] += v_rollbob_p * RBPitch;
@@ -1013,9 +1048,9 @@ void V_CalcNormalRefdef(struct ref_params_s *pparams)
 
 		if (flAngSwim)
 		{
-			vecClientPunch[PITCH] += 4 * sin(2 * flAngSwim);
-			vecClientPunch[YAW]   += 2 * sin(4 * flAngSwim);
-			vecClientPunch[ROLL]  += 5 * sin(4 * flAngSwim);
+			vecClientPunch[PITCH] += 4   * sin(2 * flAngSwim);
+			vecClientPunch[YAW]   += 2   * sin(4 * flAngSwim);
+			vecClientPunch[ROLL]  += 5   * sin(4 * flAngSwim);
 			vecAdditive[YAW]	  -= 0.2 * sin(2 * flAngSwim);
 			vecAdditive[ROLL]	  -= 0.6 * sin(4 * flAngSwim);
 		}
@@ -1046,7 +1081,7 @@ void V_CalcNormalRefdef(struct ref_params_s *pparams)
 	}
 
 	if (lasttime < 0.017)
-		vecOld = /*vecOldB =*/ v_lastAngles;
+		vecOld = v_lastAngles;
 
 	if (nexttime < lasttime)
 	{

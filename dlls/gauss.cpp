@@ -171,6 +171,15 @@ void CGauss::PrimaryAttack()
 
 void CGauss::SecondaryAttack()
 {
+
+#ifndef CLIENT_DLL
+	ALERT( at_console, "atk %d\t burn %f\t time %f",
+		   m_fInAttack,
+	//	   m_flGivenFuel,
+		   m_pPlayer->m_flNextAmmoBurn,
+		   UTIL_WeaponTimeBase() );
+#endif
+
 	// don't fire underwater
 	if ( m_pPlayer->pev->waterlevel == 3 )
 	{
@@ -535,9 +544,6 @@ void CGauss::Fire( Vector vecOrigSrc, Vector vecDir, float flDamage )
 	// ALERT( at_console, "%d bytes\n", nTotal );
 }
 
-
-
-
 void CGauss::WeaponIdle( void )
 {
 	ResetEmptySound( );
@@ -568,6 +574,7 @@ void CGauss::WeaponIdle( void )
 	{
 		int iAnim;
 		float flRand = RANDOM_FLOAT(0, 1);
+
 		if (flRand <= 0.5)
 		{
 			iAnim = GAUSS_IDLE;
@@ -584,9 +591,8 @@ void CGauss::WeaponIdle( void )
 			m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + 3;
 		}
 
-		return;
 		SendWeaponAnim( iAnim );
-		
+		return;
 	}
 }
 
