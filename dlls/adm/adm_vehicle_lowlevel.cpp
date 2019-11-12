@@ -123,10 +123,13 @@ float VehicleEngine::CalcTorque()
 	// so, let's actually accumulate them
 
 	float sumTorque = 0;
-	for ( int i = 0; i <= min; i++ )
+
+	for ( int i = 0; i < CurrentGear; i++ )
 	{
-		sumTorque += TorqueCurve[ i ].Torque;
+		sumTorque += TorqueCurve[ 4 ].Torque;
 	}
+
+	ALERT( at_console, "\nsumTorque %5.2f retTorque %5.2f gear %1d", sumTorque, retTorque, CurrentGear );
 
 	return sumTorque + retTorque;
 }
@@ -223,6 +226,8 @@ void VehicleEngine::Init(VehicleDrive Drive_XWD, float maxHealth, int horsepower
 
 void VehicleEngine::Update()
 {
+	static float TrackTorque = 0.0;
+
 	SlowDown = Health / MaxHealth;
 
 	if (SlowDown < 0.2)
@@ -240,12 +245,12 @@ void VehicleEngine::Update()
 	UTIL_LimitBetween(BrakePedal,		0.0, 1.0);
 	UTIL_LimitBetween(HandbrakeLever,	0.0, 1.0);
 
-	Rpm += Pedal * (Efficiency * SlowDown * HorsePower * (GearRatios[CurrentGear+1])) * 0.08;
+	Rpm += Pedal * (Efficiency * SlowDown * HorsePower * (GearRatios[CurrentGear+1])) * 0.065;
 //	Rpm = Rpm * (1 - (BrakePedal * 0.98));
 
 	// Gotta accelerate faster on lower rpms
-	if ( Rpm < (maxRpm / 3.0f) && FBitCheck( Flags, fEngine_GasHeld ) )
-		Rpm *= 1.2f;
+	if ( Rpm < (maxRpm / 2.0f) && FBitCheck( Flags, fEngine_GasHeld ) )
+		Rpm *= 1.3f;
 
 	// Driving state
 	if (!FBitCheck(Flags, fEngine_Running))
@@ -314,26 +319,39 @@ void VehicleEngine::Update()
 		Rpm /= 1.02;
 
 	if ( FBitCheck( Flags, fEngine_BrakeHeld ) )
-		Rpm *= (1 - BrakePedal); 
+		Rpm *= (0.3 * sqrt(1 - BrakePedal)) + 0.7; 
 
 	Torque = CalcTorque();
 	Torque -= Torque * (1-Pedal) * 0.8;
 
 	WheelTorque = Torque /** GearRatios[CurrentGear+1]*/ * 5.0f;
+	TrackTorque = TrackTorque * 0.995 + WheelTorque * 0.005;
 
 	FBitClear(Flags, fEngine_ClutchHeld);
 	FBitClear(Flags, fEngine_GasHeld);
 	FBitClear(Flags, fEngine_BrakeHeld);
 	FBitClear(Flags, fEngine_HBHeld);
 
-	Output += WheelTorque * 0.015;
+	if ( FBitCheck( Flags, fEngine_GasHeld ) && WheelTorque < TrackTorque && CurrentGear != -1 )
+	{
+		Output += TrackTorque * 0.005;
+		TrackTorque *= 1.005;
+		Rpm *= 1.5f;
+	}
+
+	else
+	{
+		Output += WheelTorque * 0.005;
+	}
+
 //	Output *= Pedal;
 	Output /= 1.02;
 
 //	ALERT(at_console, "\nWheelTorque = %f\tOutput = %f\tPedal = %f\tRpm = %f", WheelTorque, Output, Pedal, Rpm);
+	ALERT( at_console, "\nWheelTorque %5.2f TrackTorque %5.2f", WheelTorque, TrackTorque );
 
-	ALERT( at_console, "\nTorque %f \t Rpm %f \t Gear %d",
-		   Torque, Rpm, CurrentGear );
+//	ALERT( at_console, "\nTorque %f \t Rpm %f \t Gear %d",
+//		   Torque, Rpm, CurrentGear );
 
 //	else if (Rpm < minRpm && !FBitCheck(Flags, fEngine_ClutchHeld))
 	//	FBitClear(Flags, fEngine_Running);
