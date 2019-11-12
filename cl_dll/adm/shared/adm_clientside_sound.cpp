@@ -49,11 +49,13 @@ void CClientFMOD::InitExtension( void )
 
 	gEngfuncs.Con_Printf( "\nCClientFMOD::InitExtension()\n" );
 
+//	LoadExtendedList( gEngfuncs.pfnGetLevelName() );
 	m_soundSystem.Initialise();
 }
 
 void CClientFMOD::Think( void )
 {
+//	UpdateSoundStatus();
 	m_soundSystem.Update();
 }
 

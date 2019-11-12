@@ -42,7 +42,7 @@ public:
 
 	// stuff for map geometry loading
 	btTriangleIndexVertexArray *colonVertexArrays;
-	btGImpactMeshShape *PhysMeshShape;
+	btBvhTriangleMeshShape *PhysMeshShape;
 	btCollisionShape *groundShape;
 	btTransform groundTrans;
 

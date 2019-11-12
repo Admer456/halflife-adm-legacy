@@ -17,6 +17,7 @@
 #pragma once
 
 #include "event_flags.h"
+#include "adm/shared/adm_sound_list.h"
 
 // Must be provided by user of this code
 extern enginefuncs_t g_engfuncs;
@@ -24,7 +25,11 @@ extern enginefuncs_t g_engfuncs;
 // The actual engine callbacks
 #define GETPLAYERUSERID (*g_engfuncs.pfnGetPlayerUserId)
 #define PRECACHE_MODEL	(*g_engfuncs.pfnPrecacheModel)
-#define PRECACHE_SOUND	(*g_engfuncs.pfnPrecacheSound)
+#ifdef CLIENT_DLL
+#define PRECACHE_SOUND	(PrecacheSoundClient)
+#else
+#define PRECACHE_SOUND	(PrecacheSoundServer)
+#endif
 #define PRECACHE_GENERIC	(*g_engfuncs.pfnPrecacheGeneric)
 #define SET_MODEL		(*g_engfuncs.pfnSetModel)
 #define MODEL_INDEX		(*g_engfuncs.pfnModelIndex)
@@ -78,7 +83,11 @@ inline void MESSAGE_BEGIN( int msg_dest, int msg_type, const float *pOrigin = NU
 #define WRITE_SHORT		(*g_engfuncs.pfnWriteShort)
 #define WRITE_LONG		(*g_engfuncs.pfnWriteLong)
 #define WRITE_ANGLE		(*g_engfuncs.pfnWriteAngle)
+#ifdef ADM_WRITE_COORD_EXPERIMENTAL
+#define WRITE_COORD(x)	(g_engfuncs.pfnWriteCoord( (x) / 8.0 )) // support for larger worlds, we lose the 1/8-unit precision, but it's worth it -Admer
+#else
 #define WRITE_COORD		(*g_engfuncs.pfnWriteCoord)
+#endif
 #define WRITE_STRING	(*g_engfuncs.pfnWriteString)
 #define WRITE_ENTITY	(*g_engfuncs.pfnWriteEntity)
 #define CVAR_REGISTER	(*g_engfuncs.pfnCVarRegister)

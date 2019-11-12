@@ -396,6 +396,9 @@
     <ClCompile Include="..\..\dlls\adm\adm_audio_entities.cpp">
       <Filter>Source Files\adm</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\dlls\adm\shared\adm_sound_list.cpp">
+      <Filter>Source Files\adm\shared</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\dlls\doors.h">
@@ -552,6 +555,9 @@
       <Filter>Header Files\adm\shared</Filter>
     </ClInclude>
     <ClInclude Include="..\..\game_shared\adm\DelayLoad.h">
+      <Filter>Header Files\adm\shared</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dlls\adm\shared\adm_sound_list.h">
       <Filter>Header Files\adm\shared</Filter>
     </ClInclude>
   </ItemGroup>

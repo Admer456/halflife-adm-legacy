@@ -119,6 +119,7 @@
     <ClCompile Include="..\..\dlls\adm\shared\adm_control.cpp" />
     <ClCompile Include="..\..\dlls\adm\adm_story.cpp" />
     <ClCompile Include="..\..\dlls\adm\shared\adm_holidays.cpp" />
+    <ClCompile Include="..\..\dlls\adm\shared\adm_sound_list.cpp" />
     <ClCompile Include="..\..\dlls\aflock.cpp" />
     <ClCompile Include="..\..\dlls\agrunt.cpp" />
     <ClCompile Include="..\..\dlls\airtank.cpp" />
@@ -232,6 +233,7 @@
     <ClInclude Include="..\..\dlls\adm\adm_vehicle.h" />
     <ClInclude Include="..\..\dlls\adm\shared\adm_control.h" />
     <ClInclude Include="..\..\dlls\adm\shared\adm_holidays.h" />
+    <ClInclude Include="..\..\dlls\adm\shared\adm_sound_list.h" />
     <ClInclude Include="..\..\dlls\animation.h" />
     <ClInclude Include="..\..\dlls\basemonster.h" />
     <ClInclude Include="..\..\dlls\cbase.h" />

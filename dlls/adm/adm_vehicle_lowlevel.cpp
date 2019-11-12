@@ -119,19 +119,16 @@ float VehicleEngine::CalcTorque()
 	
 	// SOLVED DA BUG, it used to be fraction - 1 instead of 1 - fraction, HAHAHAAHAHAHHA
 
-/*	ALERT(at_console, "\n%s %d\t%s %d\t%s %d\t%s %d\t%s %d\t%s %d\t%s %d\t%s %d\t%s %f\t%s %f",
-		"rpm", (int)Rpm,
-		"gear", CurrentGear,
-		"min", min,
-		"max", max,
-		"TC miR", (int)TorqueCurve[min].Rpm,
-		"TC miT", (int)TorqueCurve[min].Torque,
-		"TC maR", (int)TorqueCurve[max].Rpm,
-		"TC maT", (int)TorqueCurve[max].Torque,
-		"frac", fraction,
-		"ret", retTorque); */
+	// torque gets reset to 0 when you switch gears, 
+	// so, let's actually accumulate them
 
-	return retTorque;
+	float sumTorque = 0;
+	for ( int i = 0; i <= min; i++ )
+	{
+		sumTorque += TorqueCurve[ i ].Torque;
+	}
+
+	return sumTorque + retTorque;
 }
 
 void VehicleEngine::Accelerate(CBaseVehicle &Vehicle)
@@ -243,8 +240,12 @@ void VehicleEngine::Update()
 	UTIL_LimitBetween(BrakePedal,		0.0, 1.0);
 	UTIL_LimitBetween(HandbrakeLever,	0.0, 1.0);
 
-	Rpm += Pedal * (Efficiency * SlowDown * HorsePower * (GearRatios[CurrentGear+1])) * 0.01;
-	Rpm = Rpm * (1 - (BrakePedal * 0.9));
+	Rpm += Pedal * (Efficiency * SlowDown * HorsePower * (GearRatios[CurrentGear+1])) * 0.08;
+//	Rpm = Rpm * (1 - (BrakePedal * 0.98));
+
+	// Gotta accelerate faster on lower rpms
+	if ( Rpm < (maxRpm / 3.0f) && FBitCheck( Flags, fEngine_GasHeld ) )
+		Rpm *= 1.2f;
 
 	// Driving state
 	if (!FBitCheck(Flags, fEngine_Running))
@@ -264,31 +265,38 @@ void VehicleEngine::Update()
 
 	if (CurrentGear != -1)
 	{
-		if (Rpm > maxRpm && CurrentGear <= Gears)
+		if ( Rpm > maxRpm && CurrentGear )
 		{
-			if (FBitCheck(Flags, fEngine_GasHeld))
+			if ( FBitCheck( Flags, fEngine_GasHeld ) )
 			{
-				CurrentGear++;
-				Rpm = 0;
-//				Rpm = minRpm * 1.05;
+				if ( CurrentGear < Gears - 1 )
+				{
+					CurrentGear++;
+					Rpm = 0;
+	//				Rpm = minRpm * 1.05;
+				}
+				else
+				{
+					Rpm = maxRpm;
+				}
 			}
  		}
 
-		else if (Rpm < minRpm)
+		else if ( Rpm < minRpm )
 		{
-			if (CurrentGear > 1)
+			if ( CurrentGear > 1 )
 			{
-				if (!FBitCheck(Flags, fEngine_GasHeld))
+				if ( !FBitCheck( Flags, fEngine_GasHeld ) )
 				{
 					CurrentGear--;
 
-					if (CurrentGear != 0)
+					if ( CurrentGear != 0 )
 					{
 						Rpm = maxRpm;
 					}
 				}
 			}
-			else if (!FBitCheck(Flags, fEngine_GasHeld))
+			else if ( !FBitCheck( Flags, fEngine_GasHeld ) )
 			{
 				CurrentGear--;
 			}
@@ -296,28 +304,36 @@ void VehicleEngine::Update()
 	}
 	else
 	{
-		if (Rpm > -1.0f && FBitCheck(Flags, fEngine_GasHeld))
+		if ( Rpm > -1.0f && FBitCheck( Flags, fEngine_GasHeld ) )
 		{
 			CurrentGear++;
 		}
 	}
 
-	if (!FBitCheck(Flags, fEngine_GasHeld))
-		Rpm /= 1.015;
+	if ( !FBitCheck( Flags, fEngine_GasHeld ) )
+		Rpm /= 1.02;
+
+	if ( FBitCheck( Flags, fEngine_BrakeHeld ) )
+		Rpm *= (1 - BrakePedal); 
 
 	Torque = CalcTorque();
-	WheelTorque = Torque * GearRatios[CurrentGear+1];
+	Torque -= Torque * (1-Pedal) * 0.8;
+
+	WheelTorque = Torque /** GearRatios[CurrentGear+1]*/ * 5.0f;
 
 	FBitClear(Flags, fEngine_ClutchHeld);
 	FBitClear(Flags, fEngine_GasHeld);
 	FBitClear(Flags, fEngine_BrakeHeld);
 	FBitClear(Flags, fEngine_HBHeld);
 
-	Output += WheelTorque * 0.1;
-	Output *= Pedal;
-	Output /= 1.05;
+	Output += WheelTorque * 0.015;
+//	Output *= Pedal;
+	Output /= 1.02;
 
-	ALERT(at_console, "\nWheelTorque = %f\tOutput = %f\tPedal = %f\tRpm = %f", WheelTorque, Output, Pedal, Rpm);
+//	ALERT(at_console, "\nWheelTorque = %f\tOutput = %f\tPedal = %f\tRpm = %f", WheelTorque, Output, Pedal, Rpm);
+
+	ALERT( at_console, "\nTorque %f \t Rpm %f \t Gear %d",
+		   Torque, Rpm, CurrentGear );
 
 //	else if (Rpm < minRpm && !FBitCheck(Flags, fEngine_ClutchHeld))
 	//	FBitClear(Flags, fEngine_Running);
@@ -329,8 +345,6 @@ int VehicleSeat::SeatPlayer()
 		return 0; // Fail, no sitting player
 
 	UTIL_SetOrigin(pSessilis->pev, pos);
-
-//	pSessilis->pev->origin = pos;
 	pSessilis->pev->angles = angles;
 
 	return 1; // Success
@@ -618,7 +632,7 @@ void VehicleWheel::Update(float flSpeed, CBaseVehicle &Vehicle, int arrindex)
 	angle += flSpeed / 60;
 
 	if (FBitCheck(Flags, Wheel_Steerable))
-		SteerAngle /= ((flSpeed / 4) * Width / 2000) + 1;
+		SteerAngle /= ((flSpeed / 6) * Width / 2000) + 1;
 
 	if (m_pWheel != nullptr)
 	{
@@ -658,8 +672,8 @@ void VehicleWheel::Update(float flSpeed, CBaseVehicle &Vehicle, int arrindex)
 	angles = angles + steerangles;
 	groundangles = AlignToGround(pos, angles, 256, Vehicle.edict());
 
-	if (!arrindex)
-		ALERT(at_console, "\nTraction powa: %f\nAngle between force and finalforce: %f", TractionForce.Length(), abs(cos(flDiffAngle)));
+//	if (!arrindex)
+//		ALERT(at_console, "\nTraction powa: %f\nAngle between force and finalforce: %f", TractionForce.Length(), abs(cos(flDiffAngle)));
 
 
 	switch (dbg)

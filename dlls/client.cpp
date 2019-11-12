@@ -802,12 +802,16 @@ void ServerDeactivate( void )
 
 	// Peform any shutdown operations here...
 	//
+
+	ClearSoundListServer(); // Clear serverside sound list -Admer
 }
 
 void ServerActivate( edict_t *pEdictList, int edictCount, int clientMax )
 {
 	int				i;
 	CBaseEntity		*pClass;
+
+	ClearSoundListServer();
 
 	// Every call to ServerActivate should be matched by a call to ServerDeactivate
 	g_serveractive = 1;
@@ -871,22 +875,22 @@ void PlayerPostThink( edict_t *pEntity )
 		pPlayer->PostThink( );
 }
 
-
-
 void ParmsNewLevel( void )
 {
+	ClearSoundListClient();
+	ClearSoundListServer();
 }
-
 
 void ParmsChangeLevel( void )
 {
+	ClearSoundListServer();
+
 	// retrieve the pointer to the save data
 	SAVERESTOREDATA *pSaveData = (SAVERESTOREDATA *)gpGlobals->pSaveData;
 
 	if ( pSaveData )
 		pSaveData->connectionCount = BuildChangeList( pSaveData->levelList, MAX_LEVEL_CONNECTIONS );
 }
-
 
 //
 // GLOBALS ASSUMED SET:  g_ulFrameCount
@@ -902,7 +906,6 @@ void StartFrame( void )
 	gpGlobals->teamplay = teamplay.value;
 	g_ulFrameCount++;
 }
-
 
 void ClientPrecache( void )
 {

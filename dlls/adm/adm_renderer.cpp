@@ -82,7 +82,7 @@ void ADM_RendSTW(float *screen, float *world)
 
 Vector GetHUDColours()
 {
-	return { CVAR_GET_FLOAT("adm_hud_r"), CVAR_GET_FLOAT("adm_hud_g"), CVAR_GET_FLOAT("adm_hud_b") };
+	return Vector(CVAR_GET_FLOAT("adm_hud_r"), CVAR_GET_FLOAT("adm_hud_g"), CVAR_GET_FLOAT("adm_hud_b"));
 }
 
 /*

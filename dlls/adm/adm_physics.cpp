@@ -113,12 +113,9 @@ void CAdmPhysicsBase::CreateWorldCollision(const char* path)
 	szPath = strGame + szPath; // "adm/" "maps/map.bsp"
 	szPath += ".obj"; // "adm/maps/map.bsp.obj" This is gonna work ;)
 
-//	Never mind, figured it out. :P
-//	objl::Loader objLoader; // couldn't figure out Bullet's OBJ loader, so I just went ahead with this, lmao
 	ConvexDecomposition::WavefrontObj objLoader;
-	
 	auto fPhysMeshExists = objLoader.loadObj(szPath.c_str());
-	ALERT(at_console, "\nfPhysMeshExists = %i", fPhysMeshExists);
+//	ALERT(at_console, "\nfPhysMeshExists = %i", fPhysMeshExists);
 
 	{ // Dev message
 		if (fPhysMeshExists)
@@ -136,14 +133,13 @@ void CAdmPhysicsBase::CreateWorldCollision(const char* path)
 			3 * sizeof(float)
 		);
 
-		PhysMeshShape = new btGImpactMeshShape(colonVertexArrays);
-		PhysMeshShape->setLocalScaling(btVector3(mtou(1), mtou(1), mtou(1)));
-		PhysMeshShape->setMargin(0.125f);
-		PhysMeshShape->postUpdate();
-//		PhysMeshShape->updateBound();
-//		PhysMeshShape->postUpdate();
+		PhysMeshShape = new btBvhTriangleMeshShape( colonVertexArrays, false );
+//		PhysMeshShape->setLocalScaling( btVector3( utom( 1 ), utom( 1 ), utom( 1 ) ) );
+//		PhysMeshShape->setLocalScaling( btVector3( mtou( 1 ), mtou( 1 ), mtou( 1 ) ) );
+		PhysMeshShape->setLocalScaling( btVector3( 1, 1, 1 ) );
+//		PhysMeshShape->setMargin(0.125f);
 
-		groundShape = new btGImpactMeshShape(*PhysMeshShape);
+		groundShape = new btBvhTriangleMeshShape(*PhysMeshShape);
 
 		collisionShapes.push_back(groundShape);
 
@@ -157,57 +153,33 @@ void CAdmPhysicsBase::CreateWorldCollision(const char* path)
 		btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, groundMS, groundShape, localInertia);
 
 		groundBody = new btRigidBody(rbInfo);
-	//	groundBody = localCreateRigidBody
-
-		ALERT(at_console, "\nMOTHERFUCKER, YOU PISS ME OFF NIGGA\n");
 
 		admp_World->addRigidBody(groundBody);
 
-		ALERT(at_console, "\nAAAAAAAAAAAAA FUCK YOUUUUUUUUUUUUUU Holy shit that hurt.\n");
-	}
+//		delete colonVertexArrays;
 
-//	objLoader.~WavefrontObj();
+		ALERT(at_console, "\nCreated world PhysMesh!\n");
+		ALERT(at_console, "\nCreated world PhysMesh!\n");
+	}
 } 
 
-/*btTriangleIndexVertexArray* colonVertexArrays = new btTriangleIndexVertexArray(
-wobj.mTriCount,
-wobj.mIndices,
-                3*sizeof(int),
-                wobj.mVertexCount,
-                wobj.mVertices,
-                3*sizeof(float)
-                );
+/*
+	// the array of all collision shapes
+	btAlignedObjectArray<btCollisionShape*> collisionShapes;
 
-btGImpactMeshShape* bunnymesh = new btGImpactMeshShape(colonVertexArrays);*/
+	// stuff for map geometry loading
+	btTriangleIndexVertexArray *colonVertexArrays;
+	btBvhTriangleMeshShape *PhysMeshShape;
+	btCollisionShape *groundShape;
+	btTransform groundTrans;
 
-/*btCollisionShape* groundShape = new btBoxShape(btVector3(btScalar(50.), btScalar(50.), btScalar(50.)));
-
-		collisionShapes.push_back(groundShape);
-
-		btTransform groundTransform;
-		groundTransform.setIdentity();
-		groundTransform.setOrigin(btVector3(0, -56, 0));
-
-		btScalar mass(0.);
-
-		//rigidbody is dynamic if and only if mass is non zero, otherwise static
-		bool isDynamic = (mass != 0.f);
-
-		btVector3 localInertia(0, 0, 0);
-		if (isDynamic)
-			groundShape->calculateLocalInertia(mass, localInertia);
-
-		//using motionstate is optional, it provides interpolation capabilities, and only synchronizes 'active' objects
-		btDefaultMotionState* myMotionState = new btDefaultMotionState(groundTransform);
-		btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, myMotionState, groundShape, localInertia);
-		btRigidBody* body = new btRigidBody(rbInfo);
-
-		//add the body to the dynamics world
-		dynamicsWorld->addRigidBody(body);*/
+	btDefaultMotionState *groundMS;
+	btRigidBody *groundBody;
+*/
 
 // Utilities
 
-// Function to convert from units to metres
+// 1 unit = 39th of a metre
 float utom(float units)
 {
 	// 39.37 is how many inches there are in 1 metre
@@ -215,7 +187,7 @@ float utom(float units)
 	return units / 39.37007874;
 }
 
-// Function to convert from metres to units
+// 1 metre = 39.37 units
 float mtou(float metres)
 {
 	return metres * 39.37007874;
@@ -226,11 +198,12 @@ float mtou(float metres)
 class CBasePhysical : public CBaseEntity
 {
 public:
-	virtual void Spawn(void);
+	void Spawn(void);
 	void KeyValue(KeyValueData *pkvd);
-	virtual void EXPORT Think(void);
+	virtual void EXPORT SpawnThink( void );
+	void EXPORT PhysicalThink( void );
 	
-	int ObjectCaps() override { return FCAP_ACROSS_TRANSITION | FCAP_CONTINUOUS_USE; }
+	int ObjectCaps() override { return (FCAP_ACROSS_TRANSITION | FCAP_CONTINUOUS_USE); }
 
 //private:
 	btCollisionObject *m_CollisionObject;
@@ -247,51 +220,69 @@ public:
 	btVector3 vecPos, vecAngles;
 };
 
+LINK_ENTITY_TO_CLASS( phys_base, CBasePhysical );
+
 void CBasePhysical::Spawn(void)
 {
 	pev->movetype = MOVETYPE_PUSH;
 	pev->solid = SOLID_BSP;
 	SET_MODEL(ENT(pev), STRING(pev->model));
 
-	m_CollisionShape = new btBoxShape(btVector3(btScalar(utom(16.0)), btScalar(utom(16.0)), btScalar(utom(16.0))));
-	AdmPhysEngine.collisionShapes.push_back(m_CollisionShape);
+	pev->nextthink = 0.1;
+	SetThink( &CBasePhysical::SpawnThink );
+
+//	ALERT( at_console, "\nCBasePhysical::Spawn() time %f", gpGlobals->time );
+}
+
+void EXPORT CBasePhysical::SpawnThink( void )
+{
+	m_CollisionShape = new btBoxShape( btVector3( btScalar( utom( 16.0 ) ), btScalar( utom( 16.0 ) ), btScalar( utom( 16.0 ) ) ) );
+	AdmPhysEngine.collisionShapes.push_back( m_CollisionShape );
 
 	m_Trans.setIdentity();
-	m_Trans.setOrigin(btVector3(utom(pev->origin.x), utom(pev->origin.z), utom(pev->origin.y)));
+	m_Trans.setOrigin( btVector3( utom( pev->origin.x ), utom( pev->origin.z ), utom( pev->origin.y ) ) );
 
-	btScalar mass(m_flMass);
+	btScalar mass( m_flMass );
 
 	//rigidbody is dynamic if and only if mass is non zero, otherwise static
 	m_fDynamic = (mass != 0.f);
 
-	btVector3 localInertia(0, 0, 0);
+	btVector3 localInertia( 0, 0, 0 );
 
-	if (m_fDynamic)
-		m_CollisionShape->calculateLocalInertia(mass, localInertia);
+	if ( m_fDynamic )
+		m_CollisionShape->calculateLocalInertia( mass, localInertia );
 
 	//using motionstate is recommended, it provides interpolation capabilities, and only synchronizes 'active' objects
-	m_MotionState = new btDefaultMotionState(m_Trans);
-	btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, m_MotionState, m_CollisionShape, localInertia);
-	m_Body = new btRigidBody(rbInfo);
+	m_MotionState = new btDefaultMotionState( m_Trans );
+	btRigidBody::btRigidBodyConstructionInfo rbInfo( mass, m_MotionState, m_CollisionShape, localInertia );
+	m_Body = new btRigidBody( rbInfo );
 
-	AdmPhysEngine.admp_World->addRigidBody(m_Body);
+	AdmPhysEngine.admp_World->addRigidBody( m_Body );
 
 //	m_Body->applyCentralImpulse(btVector3(btScalar(0.1), btScalar(4), btScalar(0.1))); // DEbugging, just wanna launch them up a bit
 //	m_Body->applyTorqueImpulse(btVector3(btScalar(1.6), btScalar(1.2), btScalar(0.6)));
 
 	vecPos = m_Body->getWorldTransform().getOrigin();
 	btScalar ang_yaw, ang_pitch, ang_roll;
-	m_Body->getWorldTransform().getRotation().getEulerZYX(ang_yaw, ang_pitch, ang_roll);
+	m_Body->getWorldTransform().getRotation().getEulerZYX( ang_yaw, ang_pitch, ang_roll );
 	vecAngles = { ang_yaw, ang_pitch, ang_roll };
 
-	if (m_fDynamic)
+	if ( m_fDynamic )
 	{
-		SetThink(&CBasePhysical::Think);
-		pev->nextthink = 1.0;
-	}
-}
+		SetThink( &CBasePhysical::PhysicalThink );
 
-LINK_ENTITY_TO_CLASS(phys_base, CBasePhysical);
+		ALERT( at_console, "Created dynamic CBasePhysical!\n" );
+//		ALERT( at_console, "\nCBasePhysical::SpawnThink() time %f", gpGlobals->time );
+	}
+	else
+	{
+		SetThink( NULL );
+
+		ALERT( at_console, "Created static CBasePhysical!\n" );
+	}
+
+	pev->nextthink = pev->ltime + 0.1;
+}
 
 void CBasePhysical::KeyValue(KeyValueData *pkvd)
 {
@@ -305,10 +296,11 @@ void CBasePhysical::KeyValue(KeyValueData *pkvd)
 	}
 }
 
-void EXPORT CBasePhysical::Think(void)
+void EXPORT CBasePhysical::PhysicalThink(void)
 {
-//	m_Body->applyTorqueImpulse(btVector3(btScalar(0.005), btScalar(0.005), btScalar(0.005)));
-
+//	m_Body->applyTorqueImpulse(btVector3(btScalar(0.275), btScalar(0.155), btScalar(0.135))); // TEST
+//	m_Body->applyCentralForce( btVector3( btScalar( 0 ), btScalar( 0.5 ), btScalar( 0 ) ) ); // TEST
+		
 	vecPos = m_Body->getWorldTransform().getOrigin();
 
 	btScalar ang_yaw, ang_pitch, ang_roll;
@@ -331,43 +323,30 @@ void EXPORT CBasePhysical::Think(void)
 
 	UTIL_SetOrigin(pev, pev->origin);
 
-//	ALERT(at_console, "\norigin %f %f %f\nangles pitch %f yaw %f roll %f", 
-//		pev->origin.x, pev->origin.y, pev->origin.z,
-//		pev->angles.x, pev->angles.y, pev->angles.z);
-
-/*	MESSAGE_BEGIN(MSG_PVS, SVC_TEMPENTITY, pev->origin);
-	WRITE_BYTE(TE_LINE);
-	WRITE_COORD(pev->origin.x); // coords
-	WRITE_COORD(pev->origin.y);
-	WRITE_COORD(pev->origin.z);
-	WRITE_COORD((pev->origin.x + 64)); // coords
-	WRITE_COORD((pev->origin.y + 64));
-	WRITE_COORD((pev->origin.z + 64));
-	WRITE_SHORT(5);
-	WRITE_BYTE(255);
-	WRITE_BYTE(128);
-	WRITE_BYTE(0);
-	MESSAGE_END(); */
-
-	pev->nextthink = pev->ltime + (1.0 / 60.0);
+	pev->nextthink = pev->ltime + (1.0f / 100.0f);
+	
+// 	ALERT( at_console, "\nCBasePhysical::PhysicalThink() time = %f\tourtime = %f", gpGlobals->time, pev->nextthink );
 }
 
 class CPhysicsStatic : public CBasePhysical
 {
-	void Spawn();
+public:
+	void EXPORT SpawnThink( void ) override;
 };
 
-void CPhysicsStatic::Spawn()
+void EXPORT CPhysicsStatic::SpawnThink(void)
 {
+	ALERT( at_console, "\nCPhysicsStatic::SpawnThink" );
+
 	pev->movetype = MOVETYPE_NONE;
 	pev->solid = SOLID_NOT;
 //	SET_MODEL(ENT(pev), STRING(pev->model));
 
-	m_CollisionShape = new btBoxShape(btVector3(btScalar(utom(256.0)), btScalar(utom(0.5)), btScalar(utom(256.0))));
+	m_CollisionShape = new btBoxShape(btVector3(btScalar(utom(256.0)), btScalar(utom(-4)), btScalar(utom(256.0))));
 	AdmPhysEngine.collisionShapes.push_back(m_CollisionShape);
 
 	m_Trans.setIdentity();
-	m_Trans.setOrigin(btVector3(utom(pev->origin.x), utom(pev->origin.z), utom(pev->origin.y)));
+	m_Trans.setOrigin(btVector3(utom(pev->origin.x), utom(pev->origin.z + 1), utom(pev->origin.y)));
 
 	//rigidbody is static, mass zero
 	btScalar mass(0.0f);
@@ -382,6 +361,7 @@ void CPhysicsStatic::Spawn()
 
 	AdmPhysEngine.admp_World->addRigidBody(m_Body);
 	SetThink(NULL);
+	pev->nextthink = pev->ltime + 0.1;
 }
 
 LINK_ENTITY_TO_CLASS(phys_staticplane, CPhysicsStatic);
@@ -393,6 +373,7 @@ LINK_ENTITY_TO_CLASS(phys_staticplane, CPhysicsStatic);
 
 class CPhysicsManager : public CPointEntity
 {
+public:
 	void Spawn();
 	void EXPORT PM_Think();
 	void EXPORT PM_SpawnThink();
@@ -400,53 +381,41 @@ class CPhysicsManager : public CPointEntity
 
 void CPhysicsManager::Spawn()
 {
-	AdmPhysEngine.CreateWorldCollision(STRING(g_iszWorldModel));
-	SetThink(&CPhysicsManager::PM_SpawnThink); 
-	pev->nextthink = 1.0;
-}
-
-void EXPORT CPhysicsManager::PM_Think()
-{
-	ALERT(at_console, "\nCPhysicsManager::PM_Think()");
-
-//	AdmPhysEngine.PhysMeshShape->postUpdate();
-//	ALERT(at_console, "\nPhysMeshShape->postUpdate()");
-
-//	AdmPhysEngine.PhysMeshShape->updateBound();
-//	ALERT(at_console, "\nPhysMeshShape->updateBound()");
-
-	AdmPhysEngine.PhysMeshShape->postUpdate();
-	ALERT(at_console, "\nPhysMeshShape->postUpdate()");
+	if ( !AdmPhysEngine.PhysMeshShape )
+		AdmPhysEngine.CreateWorldCollision(STRING(g_iszWorldModel));
 	
-	AdmPhysEngine.admp_World->stepSimulation(1.0f / 60.0f, 12);
-	ALERT(at_console, "\nWorld->stepSimulation()");
+	pev->nextthink = 1.0;
+	SetThink(&CPhysicsManager::PM_SpawnThink); 
 
-	//print positions of all objects
-/*	for (int j = AdmPhysEngine.admp_World->getNumCollisionObjects() - 1; j >= 0; j--)
-	{
-		btCollisionObject* obj = AdmPhysEngine.admp_World->getCollisionObjectArray()[j];
-		btRigidBody* body = btRigidBody::upcast(obj);
-		btTransform trans;
-		if (body && body->getMotionState())
-		{
-			body->getMotionState()->getWorldTransform(trans);
-		}
-		else
-		{
-			trans = obj->getWorldTransform();
-		}
-	//	ALERT(at_console, "\nworld pos object %d = %f,%f,%f\n", j, float(mtou((trans.getOrigin().getX()))), float(mtou((trans.getOrigin().getZ()))), float(mtou((trans.getOrigin().getY()))));
-	} */
-
-	pev->nextthink = pev->ltime + (1.0 / 60.0);
-	ALERT(at_console, "\npev->nextthink");
+//	ALERT( at_console, "\nCPhysicsManager::Spawn() time %f", gpGlobals->time );
 }
 
 void EXPORT CPhysicsManager::PM_SpawnThink()
 {
-	pev->nextthink = pev->ltime + (1.0f / 60.0f);
+	pev->nextthink = gpGlobals->time + 0.8;
+	SetThink( &CPhysicsManager::PM_Think );
 
-	SetThink(&CPhysicsManager::PM_Think);
+//	ALERT( at_console, "\nCPhysicsManager::PM_SpawnThink() time %f", gpGlobals->time );
+}
+
+void EXPORT CPhysicsManager::PM_Think()
+{
+//	ALERT(at_console, "\nCPhysicsManager::PM_Think() time %f\tnextthink %f", gpGlobals->time, pev->nextthink);
+
+//	AdmPhysEngine.PhysMeshShape->postUpdate();
+//	ALERT(at_console, "\nPhysMeshShape->postUpdate()");
+
+//	if ( AdmPhysEngine.PhysMeshShape )
+//		AdmPhysEngine.PhysMeshShape->updateBound();
+//	ALERT(at_console, "\nPhysMeshShape->updateBound()");
+//	if ( AdmPhysEngine.PhysMeshShape )
+//		AdmPhysEngine.PhysMeshShape->postUpdate();
+//	ALERT(at_console, "\nPhysMeshShape->postUpdate()");
+	
+	AdmPhysEngine.admp_World->stepSimulation(1.0f / 60.0f, 12);
+//	ALERT(at_console, "\nWorld->stepSimulation()");
+
+	pev->nextthink = gpGlobals->time + (1.0f / 100.0f);
 }
 
 LINK_ENTITY_TO_CLASS(phys_manager, CPhysicsManager);

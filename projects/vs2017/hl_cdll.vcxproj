@@ -170,6 +170,7 @@
     <ClCompile Include="..\..\dlls\adm\adm_renderer.cpp" />
     <ClCompile Include="..\..\dlls\adm\adm_sound.cpp" />
     <ClCompile Include="..\..\dlls\adm\shared\adm_control.cpp" />
+    <ClCompile Include="..\..\dlls\adm\shared\adm_sound_list.cpp" />
     <ClCompile Include="..\..\dlls\crossbow.cpp" />
     <ClCompile Include="..\..\dlls\crowbar.cpp" />
     <ClCompile Include="..\..\dlls\egon.cpp" />
@@ -233,6 +234,7 @@
     <ClInclude Include="..\..\dlls\adm\adm_renderer.h" />
     <ClInclude Include="..\..\dlls\adm\adm_sound.h" />
     <ClInclude Include="..\..\dlls\adm\shared\adm_control.h" />
+    <ClInclude Include="..\..\dlls\adm\shared\adm_sound_list.h" />
     <ClInclude Include="..\..\game_shared\adm\DelayLoad.h" />
     <ClInclude Include="..\..\game_shared\vgui_scrollbar2.h" />
     <ClInclude Include="..\..\game_shared\vgui_slider2.h" />

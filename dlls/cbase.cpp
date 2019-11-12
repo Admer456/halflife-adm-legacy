@@ -705,20 +705,21 @@ int CBaseEntity :: IsDormant( void )
 
 BOOL CBaseEntity :: IsInWorld( void )
 {
+	// increased from +/-4096 to +/-32768, and 2000 to 8000 -Admer
 	// position 
-	if (pev->origin.x >= 4096) return FALSE;
-	if (pev->origin.y >= 4096) return FALSE;
-	if (pev->origin.z >= 4096) return FALSE;
-	if (pev->origin.x <= -4096) return FALSE;
-	if (pev->origin.y <= -4096) return FALSE;
-	if (pev->origin.z <= -4096) return FALSE;
+	if ( pev->origin.x >=  MAX_EIW_DISTANCE ) return FALSE;
+	if ( pev->origin.y >=  MAX_EIW_DISTANCE ) return FALSE;
+	if ( pev->origin.z >=  MAX_EIW_DISTANCE ) return FALSE;
+	if ( pev->origin.x <= -MAX_EIW_DISTANCE ) return FALSE;
+	if ( pev->origin.y <= -MAX_EIW_DISTANCE ) return FALSE;
+	if ( pev->origin.z <= -MAX_EIW_DISTANCE ) return FALSE;
 	// speed
-	if (pev->velocity.x >= 2000) return FALSE;
-	if (pev->velocity.y >= 2000) return FALSE;
-	if (pev->velocity.z >= 2000) return FALSE;
-	if (pev->velocity.x <= -2000) return FALSE;
-	if (pev->velocity.y <= -2000) return FALSE;
-	if (pev->velocity.z <= -2000) return FALSE;
+	if ( pev->velocity.x >=  MAX_EIW_VELOCITY ) return FALSE;
+	if ( pev->velocity.y >=  MAX_EIW_VELOCITY ) return FALSE;
+	if ( pev->velocity.z >=  MAX_EIW_VELOCITY ) return FALSE;
+	if ( pev->velocity.x <= -MAX_EIW_VELOCITY ) return FALSE;
+	if ( pev->velocity.y <= -MAX_EIW_VELOCITY ) return FALSE;
+	if ( pev->velocity.z <= -MAX_EIW_VELOCITY ) return FALSE;
 
 	return TRUE;
 }

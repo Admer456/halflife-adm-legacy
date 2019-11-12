@@ -107,16 +107,8 @@ void CBaseVehicle::Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE u
 
 void EXPORT CBaseVehicle::VehicleUse(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value)
 {
-	ALERT(at_console, "VehicleUse\n");
-
-	if (!pActivator || !pActivator->IsPlayer())
-		return;
-
-	ALERT(at_console, "\nVehicleUse partially successful");
-
-	if (((CBasePlayer*)pActivator)->m_InVehicle)
+	if ( !pActivator || !pActivator->IsPlayer() || ((CBasePlayer*)pActivator)->m_InVehicle )
 	{
-		ALERT(at_console, "VehicleUse unsuccessful, player already in vehicle\n");
 		return;
 	}
 	else
@@ -126,8 +118,6 @@ void EXPORT CBaseVehicle::VehicleUse(CBaseEntity *pActivator, CBaseEntity *pCall
 		{
 			if (v_Seats[i].pSessilis == NULL && v_Seats[i].fExists == true)
 			{
-				ALERT(at_console, "\nSeat%d free", i);
-
 				v_Seats[i].pSessilis = (CBasePlayer *)pActivator;
 				v_Seats[i].pSessilis->pev->movetype = MOVETYPE_NOCLIP;
 				v_Seats[i].pSessilis->pev->solid = SOLID_NOT;
@@ -326,26 +316,17 @@ void CBaseVehicle::SeatPositionLocking()
 
 void CBaseVehicle::SeatSwitch(VehicleSeat &seatFrom)
 {
-	ALERT(at_console, "\nSeatSwitch()\nSwitching from Seat%d", seatFrom.iSitdex);
-	ALERT(at_console, "\niSitdex: %d, BoneOffset: %d, m_iSeats - 1: %d", seatFrom.iSitdex, m_iBoneOffset, m_iSeats - 1);
-
 	if (seatFrom.iSitdex == (m_iSeats - 1))
 	{
-		ALERT(at_console, "\niSitdex = m_iSeats - 1");
-
 		for (int i = 0; i < m_iSeats; i++)
 		{
-			ALERT(at_console, "\ni is: %d", i);
-
 			if (v_Seats[i].pSessilis != nullptr)
 			{
-				ALERT(at_console, "\nThis seat is taken");
 				continue;
 			}
 
 			else
 			{
-				ALERT(at_console, "\nThis seat is free");
 				seatFrom.SeatSwitch(v_Seats[i]);
 				break;
 			}
@@ -354,21 +335,15 @@ void CBaseVehicle::SeatSwitch(VehicleSeat &seatFrom)
 
 	else
 	{
-		ALERT(at_console, "\niSitdex != m_iSeats -1");
-
 		for (int i = seatFrom.iSitdex; i < m_iSeats; i++)
 		{
-			ALERT(at_console, "\ni is: %d", i);
-
 			if (v_Seats[i].pSessilis != nullptr)
 			{
-				ALERT(at_console, "\nThis seat is taken");
 				continue;
 			}
 
 			else
 			{
-				ALERT(at_console, "\nThis seat is free");
 				seatFrom.SeatSwitch(v_Seats[i]);
 				break;
 			}
@@ -923,18 +898,18 @@ public:
 		v_Engine.SetGearRatios
 		(
 			-4.5, 4.5, 
-			3.3, 1.8, 
-			1.2, 1.0, 
+			4.0, 3.5, 
+			3.0, 2.0, 
 			0, 0
 		);
 
 		v_Engine.SetTorqueCurve
 		(
-			{ 60.0f,  000.0f  },
-			{ 80.0f,  100.0f  },
-			{ 150.0f, 1000.0f },
-			{ 170.0f, 3200.0f },
-			{ 80.0f,  5000.0f }
+			{ 40.0f,  000.0f  },
+			{ 90.0f,  100.0f  },
+			{ 170.0f, 1000.0f },
+			{ 190.0f, 3200.0f },
+			{ 250.0f,  5000.0f }
 		);
 
 		v_Engine.Init(Drive_AWD, 500, 70, 0.9);

@@ -90,6 +90,9 @@ typedef int BOOL;
 	extern "C" DLLEXPORT void mapClassName( entvars_t *pev ); \
 	void mapClassName( entvars_t *pev ) { GetClassPtr( (DLLClassName *)pev ); }
 
+// Sound precache macro, moved from enginecallback.h
+// This one uses the global sound list, to avoid precaching duplicates
+//unsigned int PRECACHE_SOUND( char* soundname );
 
 //
 // Conversion among the three types of "entity", including identity-conversions.

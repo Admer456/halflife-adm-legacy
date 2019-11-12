@@ -106,6 +106,10 @@ class CBaseMonster;
 class CBasePlayerItem;
 class CSquadMonster;
 
+// entities' maximum absolute distance from the map origin (EIW -> Entity In World)
+#define MAX_EIW_DISTANCE 32768
+// entities' maximum absolute velocity (EIW -> Entity In World)
+#define MAX_EIW_VELOCITY 8000
 
 #define	SF_NORESPAWN	( 1 << 30 )// !!!set this bit on guns and stuff that should never respawn.
 

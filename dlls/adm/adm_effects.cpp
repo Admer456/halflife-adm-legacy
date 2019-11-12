@@ -72,8 +72,8 @@ public:
 
 private:
 	Vector	vecSwayIntensity;
-	float	fViewAngle = 0;
-	float	fFrequency = 1;
+	float	fViewAngle;
+	float	fFrequency;
 	float	m_iszDelay;
 };
 
@@ -91,6 +91,8 @@ void CViewSway::Spawn(void)
 {
 	SetThink(NULL);
 	SetUse(NULL);
+
+	fViewAngle = 0.0f;
 
 	if (pev->spawnflags & SF_NO_THINKING)
 	{

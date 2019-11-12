@@ -31,6 +31,8 @@
 #include "weapons.h"
 #include "gamerules.h"
 
+#include <vector>
+#include "adm/shared/adm_sound_list.h"
 #include "../engine/studio.h"
 
 float UTIL_WeaponTimeBase( void )
@@ -311,6 +313,11 @@ TYPEDESCRIPTION	gEntvarsDescription[] =
 };
 
 #define ENTVARS_COUNT		(sizeof(gEntvarsDescription)/sizeof(gEntvarsDescription[0]))
+
+//unsigned int PRECACHE_SOUND( char* soundname )
+//{
+//	return PrecacheSound( soundname );
+//}
 
 bool UTIL_GetGameDir( char* pszBuffer, const size_t uiBufferSize )
 {

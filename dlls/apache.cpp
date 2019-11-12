@@ -1026,8 +1026,16 @@ void CApacheHVR :: IgniteThink( void  )
 
 void CApacheHVR :: AccelerateThink( void  )
 {
+	// OLD CODE
 	// check world boundaries
-	if (pev->origin.x < -4096 || pev->origin.x > 4096 || pev->origin.y < -4096 || pev->origin.y > 4096 || pev->origin.z < -4096 || pev->origin.z > 4096)
+//	if (pev->origin.x < -4096 || pev->origin.x > 4096 || pev->origin.y < -4096 || pev->origin.y > 4096 || pev->origin.z < -4096 || pev->origin.z > 4096)
+//	{
+//		UTIL_Remove( this );
+//		return;
+//	}
+
+	// NEW CODE
+	if ( !IsInWorld() ) // increased entity range -Admer
 	{
 		UTIL_Remove( this );
 		return;

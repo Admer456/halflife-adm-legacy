@@ -536,13 +536,10 @@ void CWorld :: Precache( void )
 
 // init texture type array from materials.txt
 
-	TEXTURETYPE_Init();
-
-
 // the area based ambient sounds MUST be the first precache_sounds
 
 // player precaches     
-	W_Precache ();									// get weapon precaches
+	W_Precache ();									// get weapon precaches 
 
 	ClientPrecache();
 

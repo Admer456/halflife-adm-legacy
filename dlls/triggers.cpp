@@ -503,7 +503,7 @@ void CRenderFxManager :: Use ( CBaseEntity *pActivator, CBaseEntity *pCaller, US
 			if (FNullEnt(pentTarget))
 				break;
 
-			entvars_t *pevTarget = VARS( pentTarget );		// My value changing entities will be based off this from now on. UWU
+			entvars_t *pevTarget = VARS( pentTarget );
 			if ( !FBitSet( pev->spawnflags, SF_RENDER_MASKFX ) )
 				pevTarget->renderfx = pev->renderfx;
 			if ( !FBitSet( pev->spawnflags, SF_RENDER_MASKAMT ) )

@@ -2059,6 +2059,7 @@
 	pitch(integer) : "Pitch" : 0 : "A negative number will give downward pitch (which is normally what you want)."
 	_light(color255) : "Brightness" : "255 255 128 200" : "First three integer numbers are the color (RGB). The fourth number is the brightness."
 	_diffuse_light(color255) : "Shade" : "0 64 128 200" : "Colour of the ambient light. Useful for altering the colour of shadows etc."
+	_spread(float) : "Spread angle" : "5" : "Sun spread angle, affects how much shadows get blurred, the farther away they are from a surface"
 ]
 
 @SolidClass base(Door, ZHLT) = momentary_door : "Momentary/Continuous door" 

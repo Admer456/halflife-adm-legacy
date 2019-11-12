@@ -754,7 +754,7 @@ void V_CalcNormalRefdef(struct ref_params_s *pparams)
 	float flForwardMove = V_CalcRoll( ViewModel->angles, pparams->simvel, 8, 600, 0 ) * 0.5;
 	float flUpMove = V_CalcRoll( ViewModel->angles, pparams->simvel, 6, 300, 2 ) * 1.333;
 
-	if ( flUpMove > 0 )
+	if ( flUpMove < 0 )
 		flUpMove *= 0.36;
 
 	LocalConFloat(developer);
@@ -933,7 +933,7 @@ void V_CalcNormalRefdef(struct ref_params_s *pparams)
 		ViewModel->origin[ i ] += 0.25 * flBlendUpMove		* pparams->up[i];
 	}
 
-	ViewModel->origin[ 2 ] += flBlendUpMove - 1;
+	ViewModel->origin[ 2 ] -= flBlendUpMove;
 
 //	gEngfuncs.Con_Printf( "bs %f\tos %f\ts %f", flBlendUpMove, flOldUpMove, flUpMove );
 	

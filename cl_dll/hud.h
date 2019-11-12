@@ -563,6 +563,15 @@ public:
 	virtual void Reset( void ) {};
 };
 
+enum MusicState
+{
+	MusicOverworld,
+	MusicCalm,
+	MusicSuspense,
+	MusicAction,
+	MusicVictory
+};
+
 class CClientFMOD : public CBaseClientExtension
 {
 public:
@@ -572,6 +581,28 @@ public:
 	void LoadSound( char *szSoundPath );
 	void PlaySound( char *szSoundPath );
 
+	// To-do: implement
+	/*
+	void LoadMusic( char *szSongName );
+	void StartMusic();
+	void SwitchMusicState( int state );
+
+	void UpdateSoundStatus( void ); // checks per frame for any changes in sound direction, or events etc.
+	bool LoadExtendedEntList( char* eefName ); // loads .eef file and reads custom data e.g. soundscapes, ambients etc.
+	*/
+
+	
+	// That will be handled in LoadSound and UpdateSoundStatus
+	 // When the mapper defines a flag in the entity, then 
+	 // FMOD will receive a special message and loop the sound.
+	 // Give me a moment.
+
+	// For example:
+	// Result = System->createSound( szSoundPath, FMOD_DEFAULT, 0, &Sound );
+	// This createSound call will create a sound. BUT
+	// You can set it to loop.
+	// FMOD_DEFAULT to FMOD_LOOP_NORMAL
+
 	// User messages - FSS stands for "FMOD sound system"
 
 	int MsgFunc_FSSSound( const char* pszName, int iSize, void *pbuf );
@@ -580,7 +611,7 @@ public:
 
 	FMODSoundSystem m_soundSystem;
 
-	// local little string table
+	// local little string table // Obsolete - sound table is already built elsewhere
 	std::vector<int> m_rgIndices;
 	std::vector<std::string> m_rgStrings;
 
