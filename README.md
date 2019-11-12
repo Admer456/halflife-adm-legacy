@@ -17,7 +17,7 @@ To-do:
 - Subtitles
 - Interactive terminals and computers
 - OpFor rope
-- Multiple scripting systems
+- Scripting system
 
 * Only partially implemented. FMOD for music, physics only work with specifically sized cubes and map geometry is yet to be loaded for collissions.
 

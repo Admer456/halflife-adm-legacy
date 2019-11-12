@@ -42,14 +42,14 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>$(Configuration)\$(ProjectName)\..\..\..\..\Versions\LatestDebug\cl_dlls\</OutDir>
+    <OutDir>..\..\Versions\Latest$(Configuration)\cl_dlls\</OutDir>
     <TargetName>client</TargetName>
     <IntDir>$(Configuration)\$(ProjectName)\int\</IntDir>
     <IncludePath>..\..\dlls\bullet;..\..\FMOD\inc;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(Configuration)\$(ProjectName)\..\..\..\..\Versions\LatestRelease\cl_dlls\</OutDir>
+    <OutDir>..\..\Versions\Latest$(Configuration)\cl_dlls\</OutDir>
     <TargetName>client</TargetName>
     <IntDir>$(Configuration)\$(ProjectName)\int\</IntDir>
   </PropertyGroup>
@@ -74,7 +74,8 @@
       <DelayLoadDLLs>fmod.dll</DelayLoadDLLs>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy "$(OutputPath)client.dll" "E:\Workfolders\Half-Life\SourceCodes\AdmSrc\Versions\DLL\cl_dlls" /i /y</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
     <PostBuildEvent />
   </ItemDefinitionGroup>
