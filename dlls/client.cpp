@@ -1450,6 +1450,7 @@ typedef struct
 #define FIELD_ANGLES0			3
 #define FIELD_ANGLES1			4
 #define FIELD_ANGLES2			5
+#define FIELD_GAITSEQ			6
 
 static entity_field_alias_t entity_field_alias[]=
 {
@@ -1459,6 +1460,7 @@ static entity_field_alias_t entity_field_alias[]=
 	{ "angles[0]",			0 },
 	{ "angles[1]",			0 },
 	{ "angles[2]",			0 },
+	{ "gaitsequence",		0 }, // Gait sequences on monsters, or any other entity -Admer
 };
 
 void Entity_FieldInit( struct delta_s *pFields )
@@ -1469,6 +1471,7 @@ void Entity_FieldInit( struct delta_s *pFields )
 	entity_field_alias[ FIELD_ANGLES0 ].field		= DELTA_FINDFIELD( pFields, entity_field_alias[ FIELD_ANGLES0 ].name );
 	entity_field_alias[ FIELD_ANGLES1 ].field		= DELTA_FINDFIELD( pFields, entity_field_alias[ FIELD_ANGLES1 ].name );
 	entity_field_alias[ FIELD_ANGLES2 ].field		= DELTA_FINDFIELD( pFields, entity_field_alias[ FIELD_ANGLES2 ].name );
+	entity_field_alias[ FIELD_GAITSEQ ].field		= DELTA_FINDFIELD( pFields, entity_field_alias[ FIELD_GAITSEQ ].name );
 }
 
 /*
@@ -1526,6 +1529,11 @@ void Entity_Encode( struct delta_s *pFields, const unsigned char *from, const un
 		DELTA_SETBYINDEX( pFields, entity_field_alias[ FIELD_ORIGIN0 ].field );
 		DELTA_SETBYINDEX( pFields, entity_field_alias[ FIELD_ORIGIN1 ].field );
 		DELTA_SETBYINDEX( pFields, entity_field_alias[ FIELD_ORIGIN2 ].field );
+	}
+
+	if ( f->gaitsequence != t->gaitsequence )
+	{
+		DELTA_SETBYINDEX( pFields, entity_field_alias[ FIELD_GAITSEQ ].field );
 	}
 }
 
@@ -1614,15 +1622,15 @@ entity_field_alias_t custom_entity_field_alias[]=
 
 void Custom_Entity_FieldInit( struct delta_s *pFields )
 {
-	custom_entity_field_alias[ CUSTOMFIELD_ORIGIN0 ].field	= DELTA_FINDFIELD( pFields, custom_entity_field_alias[ CUSTOMFIELD_ORIGIN0 ].name );
-	custom_entity_field_alias[ CUSTOMFIELD_ORIGIN1 ].field	= DELTA_FINDFIELD( pFields, custom_entity_field_alias[ CUSTOMFIELD_ORIGIN1 ].name );
-	custom_entity_field_alias[ CUSTOMFIELD_ORIGIN2 ].field	= DELTA_FINDFIELD( pFields, custom_entity_field_alias[ CUSTOMFIELD_ORIGIN2 ].name );
-	custom_entity_field_alias[ CUSTOMFIELD_ANGLES0 ].field	= DELTA_FINDFIELD( pFields, custom_entity_field_alias[ CUSTOMFIELD_ANGLES0 ].name );
-	custom_entity_field_alias[ CUSTOMFIELD_ANGLES1 ].field	= DELTA_FINDFIELD( pFields, custom_entity_field_alias[ CUSTOMFIELD_ANGLES1 ].name );
-	custom_entity_field_alias[ CUSTOMFIELD_ANGLES2 ].field	= DELTA_FINDFIELD( pFields, custom_entity_field_alias[ CUSTOMFIELD_ANGLES2 ].name );
-	custom_entity_field_alias[ CUSTOMFIELD_SKIN ].field	= DELTA_FINDFIELD( pFields, custom_entity_field_alias[ CUSTOMFIELD_SKIN ].name );
-	custom_entity_field_alias[ CUSTOMFIELD_SEQUENCE ].field= DELTA_FINDFIELD( pFields, custom_entity_field_alias[ CUSTOMFIELD_SEQUENCE ].name );
-	custom_entity_field_alias[ CUSTOMFIELD_ANIMTIME ].field= DELTA_FINDFIELD( pFields, custom_entity_field_alias[ CUSTOMFIELD_ANIMTIME ].name );
+	custom_entity_field_alias[ CUSTOMFIELD_ORIGIN0  ].field	= DELTA_FINDFIELD( pFields, custom_entity_field_alias[ CUSTOMFIELD_ORIGIN0	].name );
+	custom_entity_field_alias[ CUSTOMFIELD_ORIGIN1  ].field	= DELTA_FINDFIELD( pFields, custom_entity_field_alias[ CUSTOMFIELD_ORIGIN1	].name );
+	custom_entity_field_alias[ CUSTOMFIELD_ORIGIN2  ].field	= DELTA_FINDFIELD( pFields, custom_entity_field_alias[ CUSTOMFIELD_ORIGIN2	].name );
+	custom_entity_field_alias[ CUSTOMFIELD_ANGLES0  ].field	= DELTA_FINDFIELD( pFields, custom_entity_field_alias[ CUSTOMFIELD_ANGLES0	].name );
+	custom_entity_field_alias[ CUSTOMFIELD_ANGLES1  ].field	= DELTA_FINDFIELD( pFields, custom_entity_field_alias[ CUSTOMFIELD_ANGLES1	].name );
+	custom_entity_field_alias[ CUSTOMFIELD_ANGLES2  ].field	= DELTA_FINDFIELD( pFields, custom_entity_field_alias[ CUSTOMFIELD_ANGLES2	].name );
+	custom_entity_field_alias[ CUSTOMFIELD_SKIN     ].field	= DELTA_FINDFIELD( pFields, custom_entity_field_alias[ CUSTOMFIELD_SKIN		].name );
+	custom_entity_field_alias[ CUSTOMFIELD_SEQUENCE ].field = DELTA_FINDFIELD( pFields, custom_entity_field_alias[ CUSTOMFIELD_SEQUENCE ].name );
+	custom_entity_field_alias[ CUSTOMFIELD_ANIMTIME ].field = DELTA_FINDFIELD( pFields, custom_entity_field_alias[ CUSTOMFIELD_ANIMTIME ].name );
 }
 
 /*
@@ -1636,7 +1644,7 @@ FIXME:  Move to script
 void Custom_Encode( struct delta_s *pFields, const unsigned char *from, const unsigned char *to )
 {
 	entity_state_t *f, *t;
-	int beamType;
+	int beamType, gaitSequence;
 	static int initialized = 0;
 
 	if ( !initialized )
