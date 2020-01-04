@@ -591,18 +591,6 @@ public:
 	bool LoadExtendedEntList( char* eefName ); // loads .eef file and reads custom data e.g. soundscapes, ambients etc.
 	*/
 
-	
-	// That will be handled in LoadSound and UpdateSoundStatus
-	 // When the mapper defines a flag in the entity, then 
-	 // FMOD will receive a special message and loop the sound.
-	 // Give me a moment.
-
-	// For example:
-	// Result = System->createSound( szSoundPath, FMOD_DEFAULT, 0, &Sound );
-	// This createSound call will create a sound. BUT
-	// You can set it to loop.
-	// FMOD_DEFAULT to FMOD_LOOP_NORMAL
-
 	// User messages - FSS stands for "FMOD sound system"
 
 	int MsgFunc_FSSSound( const char* pszName, int iSize, void *pbuf );
