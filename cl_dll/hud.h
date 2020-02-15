@@ -36,6 +36,8 @@
 
 #include "adm/adm_sound.h"
 
+#include "com_model.h"
+
 #include <vector>
 
 #define DHN_DRAWZERO 1
@@ -554,13 +556,14 @@ private:
 class CBaseClientExtension : public CHudBase
 {
 public:
-	int Init( void );
-	virtual void InitExtension( void ) {};
-	virtual int VidInit( void ) { return 1; };
+	int				Init( void );
+	virtual void	InitExtension( void ) {}
+	virtual int		VidInit( void ) { return 1; }
 
-	virtual int Draw( float flTime ) { return 1; };
-	virtual void Think( void ) {};
-	virtual void Reset( void ) {};
+	virtual int		Draw( float flTime ) { return 1; }
+	virtual int		Render( triangleapi_s *pRender ) { return 1; }
+	virtual void	Think( void ) {}
+	virtual void	Reset( void ) {}
 };
 
 enum MusicState
@@ -605,6 +608,52 @@ public:
 
 	void AddToStringTable( int index, std::string string );
 	std::string GetStringFromTable( int index );
+};
+
+class CClientSkyRenderer : public CBaseClientExtension
+{
+public:
+
+	void			InitExtension( void );
+	int				VidInit( void );
+
+	void			Think( void );
+	int				Draw( float flTime );
+	int				Render( triangleapi_s *pRender );
+	void			Reset( void );
+
+	int				MsgFunc_SkyChange( const char* pszName, int iSize, void *pbuf );
+	void			UpdateSky( void );
+
+private:
+
+	float			m_flSkyRadius;
+	Vector			m_rgCubeVerts[ 8 ];
+	Vector			m_rgCubeVertsDiv2[ 27 ];
+
+	Vector2D		m_rgCubeAngles[ 8 ];
+	Vector2D		m_rgCubeAnglesAdded[ 8 ];
+	Vector2D		m_rgCubeAnglesTotal[ 8 ];
+	model_t			*m_skySprites[ 6 ];
+
+	int				m_skySize = 0;
+	char			*m_szSkyName;
+};
+
+class CClientWorld : public CBaseClientExtension
+{
+public:
+	void			InitExtension( void );
+	int				VidInit( void );
+
+	void			Think( void );
+	int				Render( triangleapi_s *pRender );
+
+private:
+	cl_entity_t		*m_pWorld;
+
+	float			m_flWave;
+	float			m_flWaveIterator;
 };
 
 //
@@ -685,6 +734,8 @@ public:
 	CHudBenchmark		m_Benchmark;
 
 	CClientFMOD			m_clFMOD;
+	CClientSkyRenderer	m_clSky;
+	CClientWorld		m_clWorld;
 
 	void Init( void );
 	void VidInit( void );

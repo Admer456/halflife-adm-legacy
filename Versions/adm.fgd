@@ -561,6 +561,29 @@
 //		ENV_ ENTITIIES
 // ========================================================================================================= //
 
+@PointClass base(Targetname) size(-4 -4 -4, 4 4 4) = env_sky : "Sky changing entity"
+[
+	skyname(string) : "Name of the sky"
+	skysize(choices) : "Sky resolution" : 8 =
+	[
+		1: "128 or less"
+		2: "256"
+		3: "512 (not supported yet)"
+		4: "1024 (not supported yet)"
+	]
+	skyradius(choices) : "Distance from the map centre" : 6 =
+	[
+		1: "512"
+		2: "1024"
+		3: "2048"
+		4: "4096"
+		5: "8192"
+		6: "16384"
+		7: "32728"
+		8: "65536"
+	]
+]
+
 @PointClass base(Targetname) size(-4 -4 -4, 4 4 4) = env_viewsway : "View swaying"
 [
 	fFrequency(string) : "Frequency" : "1"

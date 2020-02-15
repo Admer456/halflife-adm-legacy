@@ -59,6 +59,9 @@ void DLLEXPORT HUD_DrawTransparentTriangles( void )
 
 	if ( g_pParticleMan )
 		 g_pParticleMan->Update();
+
+	gHUD.m_clSky.Render( gEngfuncs.pTriAPI );
+	gHUD.m_clWorld.Render( gEngfuncs.pTriAPI );
 }
 
 //#define ORTHOEXAMPLE

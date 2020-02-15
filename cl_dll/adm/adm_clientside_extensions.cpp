@@ -32,16 +32,22 @@ int CBaseClientExtension::Init( void )
 List of extensions:
 
 CClientFMOD m_clFMOD;
+CClientSkyRenderer m_clSky;
+CClientWorld m_clWorld;
 
 */
 
 void CHud::InitExtensions( void )
 {
 	m_clFMOD.Init();
+	m_clSky.Init();
+	m_clWorld.Init();
 }
 
 void CHud::VidInitExtensions( void )
 {
 	m_clFMOD.VidInit();
+	m_clSky.VidInit();
+	m_clWorld.VidInit();
 }
 
