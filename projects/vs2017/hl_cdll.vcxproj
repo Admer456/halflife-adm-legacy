@@ -110,6 +110,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\cl_dll\adm\adm_clientside_extensions.cpp" />
+    <ClCompile Include="..\..\cl_dll\adm\adm_clientside_sky.cpp" />
+    <ClCompile Include="..\..\cl_dll\adm\adm_clientside_world.cpp" />
     <ClCompile Include="..\..\cl_dll\adm\shared\adm_clientside_sound.cpp" />
     <ClCompile Include="..\..\cl_dll\ammo.cpp" />
     <ClCompile Include="..\..\cl_dll\ammohistory.cpp" />

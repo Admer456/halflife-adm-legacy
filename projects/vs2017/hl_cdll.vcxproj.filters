@@ -339,6 +339,12 @@
     <ClCompile Include="..\..\dlls\adm\shared\adm_sound_list.cpp">
       <Filter>Source Files\adm\shared</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\cl_dll\adm\adm_clientside_world.cpp">
+      <Filter>Source Files\adm</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cl_dll\adm\adm_clientside_sky.cpp">
+      <Filter>Source Files\adm</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\cl_dll\kbutton.h">
