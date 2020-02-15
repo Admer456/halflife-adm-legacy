@@ -239,8 +239,6 @@ void LinkUserMessages( void )
 	gmsgStatusText = REG_USER_MSG("StatusText", -1);
 	gmsgStatusValue = REG_USER_MSG("StatusValue", 3); 
 
-//	gmsgADMSIPlay = REG_USER_MSG("ADMSIPlay", -1);
-
 	gmsgFSSMusic = REG_USER_MSG("FSSMusic", -1);
 
 }

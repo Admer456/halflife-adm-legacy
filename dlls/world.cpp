@@ -483,7 +483,7 @@ void CWorld :: Spawn( void )
 
 		AdmPhysEngine.Init();
 		g_iszWorldModel = pev->model;
-	//	AdmPhysEngine.CreateWorldCollision(STRING(pev->model));
+		AdmPhysEngine.CreateWorldCollision(STRING(pev->model)); // To-do: fix crashing
 	}
 	else
 	{

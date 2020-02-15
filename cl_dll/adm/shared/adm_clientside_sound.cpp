@@ -16,7 +16,7 @@
 // 1. The correct way of implementing FMOD - the foundation
 // Rewrite this crap (done)
 // Make server-client messages so that clients can play back sounds (done)
-// Migrate to FMDO Studio 1.10.15 (cur ver is 1.10.10 IIRC)
+// Migrate to FMDO Studio 1.10.15 (cur ver is 1.10.10 IIRC) (done)
 // Intercept PRECACHE_SOUND() and sound playback functions to FMOD
 //
 // 2. Nice little features
@@ -138,13 +138,14 @@ std::string CClientFMOD::GetStringFromTable( int index )
 
 void FMODSoundSystem::Initialise()
 {
+	// Delay loading allows us to load DLL files from other folders like cl_dlls
+	// The function LoadLibrary() by itself is kinda dumb in that regard
 	m_hFmodLibrary = DelayLoad_LoadGameLib( "fmod.dll", "cl_dlls" );
 
 	Result = FMOD::System_Create( &System );
 	Result = System->init( 32, FMOD_INIT_NORMAL, nullptr );
 
 	FMOD_ERRCHECK( Result );
-	gEngfuncs.Con_Printf( "\nAt Initialise()" );
 }
 
 void FMODSoundSystem::Shutdown()
@@ -153,24 +154,27 @@ void FMODSoundSystem::Shutdown()
 	Result = System->release();
 }
 
+// TO-DO:
+// Add more options like loading 2D sounds, 3D sounds,
+// streaming from disk etc.
 void FMODSoundSystem::LoadSound( char *szSoundPath )
 {
 	Result = System->createSound( szSoundPath, FMOD_DEFAULT, 0, &Sound );
 	FMOD_ERRCHECK( Result );
-	gEngfuncs.Con_Printf( "\nAt LoadSound()" );
 }
 
+// TO-DO:
+// Precache/load only when needed
+// Play as many times as you want
 void FMODSoundSystem::Play( char *szSoundPath )
 {
 	LoadSound( szSoundPath );
 	Result = System->playSound( Sound, 0, false, &Channel );
 	FMOD_ERRCHECK( Result );
-	gEngfuncs.Con_Printf( "\nAt PlaySound()" );
 }
 
+// Note: this must run EVERY frame
 void FMODSoundSystem::Update()
 {
 	Result = System->update();
-//	FMOD_ERRCHECK( Result );
-//	gEngfuncs.Con_Printf( "\nAt Update()" );
 }

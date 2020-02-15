@@ -247,6 +247,273 @@ void CViewSway::Sway_CalcComplexSines(Vector &vecPlayerView)
 	vecPlayerView.z = 1.26 * vecSwayIntensity.z * sin(1.4 * fViewAngle)  * sin(1.0 * fViewAngle) + 3.0  * vecSwayIntensity.z * sin(4.2 * fViewAngle);
 }
 
+// Temporary class for Valentine's Day
+// It uses a heart model and attracts some sprites to it. :3
+class CHeart : public CBaseAnimating
+{
+public:
+	void		Spawn( void );
+	void		Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
+	void		Think( void );
+
+	enum		particleMode
+	{
+		HeartPrtInvisible = 0,
+		HeartPrtFadeIn,
+		HeartPrtRadiate,
+
+		HeartPrt_MAX
+	};
+
+private:
+	CSprite		*m_prgParticles[ 32 ];
+	int			m_particleMode;
+	string_t	m_iszSprite;
+	int			m_iParticleRenderAmt;
+};
+
+LINK_ENTITY_TO_CLASS( env_heart, CHeart );
+
+void CHeart::Spawn()
+{
+	m_particleMode = HeartPrtInvisible;
+	m_iParticleRenderAmt = 0;
+
+	PRECACHE_MODEL( "sprites/animglow01.spr" );
+	PRECACHE_MODEL( "models/heart.mdl" );
+
+	SET_MODEL( ENT( pev ), "models/heart.mdl" );
+
+	pev->renderamt = 255;
+	pev->rendermode = kRenderTransTexture;
+
+	pev->movetype = MOVETYPE_FLY;
+
+	ResetSequenceInfo();
+
+	for ( int i = 0; i < 32; i++ )
+	{
+		m_prgParticles[ i ] = CSprite::SpriteCreate( "sprites/animglow01.spr", pev->origin, true );
+
+		m_prgParticles[ i ]->pev->rendermode = kRenderTransAdd;
+		m_prgParticles[ i ]->pev->rendercolor = Vector( 200, 0, 0 );
+	}
+
+	pev->nextthink = gpGlobals->time + 0.1;
+}
+
+void CHeart::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value )
+{
+	m_particleMode++;
+
+	if ( m_particleMode == HeartPrt_MAX )
+		m_particleMode = HeartPrtInvisible;
+}
+
+void CHeart::Think()
+{
+	switch ( m_particleMode )
+	{
+	case HeartPrtInvisible: 
+		
+		break;
+
+	case HeartPrtFadeIn: 
+		
+//		ALERT( at_console, "\nHeartParticleFadeIn" );
+
+		m_iParticleRenderAmt += 4;
+
+		if ( m_iParticleRenderAmt > 255 )
+		{
+			m_particleMode = HeartPrtRadiate;
+			break;
+		}
+
+		for ( int i = 0; i < 32; i++ )
+		{
+			m_prgParticles[ i ]->pev->renderamt = m_iParticleRenderAmt;
+			m_prgParticles[ i ]->pev->velocity = m_prgParticles[ i ]->pev->velocity + Vector( RANDOM_FLOAT( -4, 4 ), RANDOM_FLOAT( -4, 4 ), RANDOM_FLOAT( -4, 4 ) );
+		}
+
+		break;
+
+	case HeartPrtRadiate:
+
+//		ALERT( at_console, "\nHeartParticleRadiate" );
+
+		StudioFrameAdvance();
+
+		if ( m_fSequenceFinished )
+		{
+			// ResetSequenceInfo();
+			// hack to avoid reloading model every frame
+			pev->animtime = gpGlobals->time;
+			pev->framerate = 0.25;
+			m_fSequenceFinished = FALSE;
+			m_flLastEventCheck = gpGlobals->time;
+			pev->frame = 0;
+		}
+
+		for ( int i = 0; i < 32; i++ )
+		{
+			Vector vecDelta = m_prgParticles[ i ]->pev->origin - pev->origin;
+			Vector vecCurrentVel = m_prgParticles[ i ]->pev->velocity;
+
+			if ( vecDelta.Length() > 300 )
+				m_prgParticles[ i ]->pev->velocity = vecCurrentVel * 0.8 + (-vecDelta)*0.2;
+			else if ( vecDelta.Length() < 100 )
+				m_prgParticles[ i ]->pev->velocity = vecCurrentVel * 0.8 + (vecDelta)*0.2;
+			else
+				m_prgParticles[ i ]->pev->velocity = vecCurrentVel / 1.01;
+
+			m_prgParticles[ i ]->pev->scale = 300.0 / (1.0 + vecDelta.Length());
+
+			for ( int j = 0; j < 32; j++ )
+			{
+				if ( j == i )
+					continue;
+
+				Vector vecPDelta = m_prgParticles[ i ]->pev->origin - m_prgParticles[ j ]->pev->origin;
+
+				if ( vecPDelta.Length() < 180 )
+				{
+					m_prgParticles[ i ]->pev->velocity = vecCurrentVel + vecPDelta / 16.0;
+
+					float flRand = RANDOM_FLOAT( 0, vecPDelta.Length() / 72.0 );
+
+					m_prgParticles[ i ]->pev->velocity = m_prgParticles[ i ]->pev->velocity + Vector( flRand, flRand, flRand );
+				}
+			}
+		}
+
+		break;
+	}
+
+	pev->nextthink = gpGlobals->time + 0.01;
+}
+
+// Temporary class for Valentine's Day
+// It uses a heart model and attracts some sprites to it. :3
+class CSpriteAura : public CBaseEntity
+{
+public:
+	void		Spawn( void );
+	void		Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
+	void		Think( void );
+
+	enum		particleMode
+	{
+		HeartPrtInvisible = 0,
+		HeartPrtFadeIn,
+		HeartPrtRadiate,
+
+		HeartPrt_MAX
+	};
+
+private:
+	CSprite		*m_prgParticles[ 32 ];
+	int			m_particleMode;
+	string_t	m_iszSprite;
+	int			m_iParticleRenderAmt;
+};
+
+LINK_ENTITY_TO_CLASS( env_aura, CSpriteAura );
+
+void CSpriteAura::Spawn()
+{
+	m_particleMode = HeartPrtInvisible;
+	m_iParticleRenderAmt = 0;
+
+	PRECACHE_MODEL( "sprites/animglow01.spr" );
+	
+	pev->movetype = MOVETYPE_FLY;
+
+	for ( int i = 0; i < 32; i++ )
+	{
+		m_prgParticles[ i ] = CSprite::SpriteCreate( "sprites/animglow01.spr", pev->origin, true );
+
+		m_prgParticles[ i ]->pev->rendermode = kRenderTransAdd;
+		m_prgParticles[ i ]->pev->rendercolor = Vector( 210, 210, 255 );
+	}
+
+	pev->nextthink = gpGlobals->time + 0.1;
+}
+
+void CSpriteAura::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value )
+{
+	m_particleMode++;
+
+	if ( m_particleMode == HeartPrt_MAX )
+		m_particleMode = HeartPrtInvisible;
+}
+
+void CSpriteAura::Think()
+{
+	switch ( m_particleMode )
+	{
+	case HeartPrtInvisible:
+
+		break;
+
+	case HeartPrtFadeIn:
+
+		m_iParticleRenderAmt += 4;
+
+		if ( m_iParticleRenderAmt > 255 )
+		{
+			m_particleMode = HeartPrtRadiate;
+			break;
+		}
+
+		for ( int i = 0; i < 32; i++ )
+		{
+			m_prgParticles[ i ]->pev->renderamt = m_iParticleRenderAmt;
+			m_prgParticles[ i ]->pev->velocity = m_prgParticles[ i ]->pev->velocity + Vector( RANDOM_FLOAT( -4, 4 ), RANDOM_FLOAT( -4, 4 ), RANDOM_FLOAT( -4, 4 ) );
+		}
+
+		break;
+
+	case HeartPrtRadiate:
+
+		for ( int i = 0; i < 32; i++ )
+		{
+			Vector vecDelta = m_prgParticles[ i ]->pev->origin - pev->origin;
+			Vector vecCurrentVel = m_prgParticles[ i ]->pev->velocity;
+
+			if ( vecDelta.Length() > 300 )
+				m_prgParticles[ i ]->pev->velocity = vecCurrentVel * 0.85 + (-vecDelta)*0.15;
+			else if ( vecDelta.Length() < 100 )
+				m_prgParticles[ i ]->pev->velocity = vecCurrentVel * 0.6 + (vecDelta)*0.4;
+			else
+				m_prgParticles[ i ]->pev->velocity = vecCurrentVel / 1.01;
+
+			m_prgParticles[ i ]->pev->scale = 300.0 / (1.0 + vecDelta.Length());
+
+			for ( int j = 0; j < 32; j++ )
+			{
+				if ( j == i )
+					continue;
+
+				Vector vecPDelta = m_prgParticles[ i ]->pev->origin - m_prgParticles[ j ]->pev->origin;
+
+				if ( vecPDelta.Length() < 180 )
+				{
+					m_prgParticles[ i ]->pev->velocity = vecCurrentVel + vecPDelta / 16.0;
+
+					float flRand = RANDOM_FLOAT( 0, vecPDelta.Length() / 72.0 );
+
+					m_prgParticles[ i ]->pev->velocity = m_prgParticles[ i ]->pev->velocity + Vector( flRand, flRand, flRand );
+				}
+			}
+		}
+
+		break;
+	}
+
+	pev->nextthink = gpGlobals->time + 0.01;
+}
+
   // ============================================================================================== //
  // ----------------------------------- PARAMETRIC EFFECTS --------------------------------------- //
 // ============================================================================================== //

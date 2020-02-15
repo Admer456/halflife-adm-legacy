@@ -1876,3 +1876,76 @@ void CUtilRotateNoOrigin::Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE
 	UTIL_SetOrigin(pTarget->pev, vecNewOrigin);
 	pTarget->pev->angles = anglesNew;
 }
+
+// Quick and lazy attempt at making a SoHL "movewith"-like thing
+// To-do: rewrite in June
+class CUtilMoveWith : public CBaseEntity
+{
+public:
+	void			Spawn( void );
+	void			Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
+	void			Think( void );
+
+	void			KeyValue( KeyValueData *pkvd );
+
+private:
+	string_t		m_iszTarget, m_iszParent;
+	CBaseEntity*	m_pTarget;
+	CBaseEntity*	m_pParent;
+
+	bool			m_fMoveActive;
+};
+
+LINK_ENTITY_TO_CLASS( util_movewith, CUtilMoveWith );
+
+void CUtilMoveWith::Spawn()
+{
+	m_fMoveActive = false;
+
+	m_pTarget = NULL;
+	m_pParent = NULL;
+
+	pev->nextthink = gpGlobals->time + 1.5;
+}
+
+void CUtilMoveWith::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value )
+{
+	m_pTarget = UTIL_FindEntityByTargetname( NULL, STRING( m_iszTarget ) );
+	m_pParent = UTIL_FindEntityByTargetname( NULL, STRING( m_iszParent ) );
+
+	m_fMoveActive = true;
+}
+
+void CUtilMoveWith::Think()
+{
+	if ( m_fMoveActive )
+	{
+		UTIL_SetOrigin( m_pTarget->pev, m_pParent->pev->origin );
+		m_pTarget->pev->angles = m_pParent->pev->angles;
+	}
+
+	pev->nextthink = gpGlobals->time + 0.001;
+}
+
+void CUtilMoveWith::KeyValue( KeyValueData *pkvd )
+{
+	if ( KeyvalueToken( m_iszTarget ) )
+	{
+		KeyvalueToString( m_iszTarget );
+	}
+	else if ( KeyvalueToken( m_iszParent ) )
+	{
+		KeyvalueToString( m_iszParent );
+	}
+	else
+	{
+		KeyvaluesFromBase( CBaseEntity );
+	}
+}
+
+
+
+
+
+
+

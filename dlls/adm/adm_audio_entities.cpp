@@ -22,7 +22,7 @@ LINK_ENTITY_TO_CLASS( audio_music, CAudioMusic );
 
 void CAudioMusic::Spawn( void )
 {
-//	g_ServerSoundTable.AddString( g_ServerSoundTable.iIterator );
+	g_ServerSoundTable.AddString( STRING(m_iszSong) );
 }
 
 void CAudioMusic::KeyValue( KeyValueData *pkvd )

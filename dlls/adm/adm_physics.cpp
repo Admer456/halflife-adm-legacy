@@ -133,7 +133,7 @@ void CAdmPhysicsBase::CreateWorldCollision(const char* path)
 			3 * sizeof(float)
 		);
 
-		PhysMeshShape = new btBvhTriangleMeshShape( colonVertexArrays, false );
+		PhysMeshShape = new btBvhTriangleMeshShape( colonVertexArrays, true, btVector3( -1000, -1000, -1000 ), btVector3( 1000, 1000, 1000 ) );
 //		PhysMeshShape->setLocalScaling( btVector3( utom( 1 ), utom( 1 ), utom( 1 ) ) );
 //		PhysMeshShape->setLocalScaling( btVector3( mtou( 1 ), mtou( 1 ), mtou( 1 ) ) );
 		PhysMeshShape->setLocalScaling( btVector3( 1, 1, 1 ) );
@@ -154,7 +154,7 @@ void CAdmPhysicsBase::CreateWorldCollision(const char* path)
 
 		groundBody = new btRigidBody(rbInfo);
 
-		admp_World->addRigidBody(groundBody);
+		admp_World->addRigidBody(groundBody); // assumption is that treating a static body as a rigid body is not good
 
 //		delete colonVertexArrays;
 
@@ -224,7 +224,7 @@ LINK_ENTITY_TO_CLASS( phys_base, CBasePhysical );
 
 void CBasePhysical::Spawn(void)
 {
-	pev->movetype = MOVETYPE_PUSH;
+	pev->movetype = MOVETYPE_PUSHSTEP;
 	pev->solid = SOLID_BSP;
 	SET_MODEL(ENT(pev), STRING(pev->model));
 

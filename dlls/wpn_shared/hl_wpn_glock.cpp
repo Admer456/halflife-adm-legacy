@@ -167,6 +167,7 @@ void CGlock::PrimaryAttack( void )
 {
 	if( !TriggerReleased )
 		return;
+
 	GlockFire( 0.004, 0.01, TRUE );
 	TriggerReleased = FALSE;
 
@@ -247,6 +248,9 @@ void CGlock::Reload( void )
 {
 	if ( m_pPlayer->ammo_9mm <= 0 )
 		 return;
+
+	if ( m_iClip >= GLOCK_MAX_CLIP )
+		return;
 
 	int iResult;
 

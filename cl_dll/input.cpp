@@ -926,190 +926,73 @@ AdmSrc Special code
 ====================
 */
 
-void IN_Adm1Up()
-{
-//	ControlAPI.OnButtonUp("adm_k1");
-	EngineClientCmd("-key_adm_k1");
-}
+void IN_Adm1Up()		{ EngineClientCmd("-key_adm_k1"); }
 
-void IN_Adm1Down()
-{
-//	ControlAPI.OnButtonDown("adm_k1");
-	EngineClientCmd("+key_adm_k1");
-}
+void IN_Adm1Down()		{ EngineClientCmd("+key_adm_k1"); }
 
-void IN_Adm2Up()
-{
-	EngineClientCmd("-key_adm_k2");
-}
+void IN_Adm2Up()		{ EngineClientCmd("-key_adm_k2"); }
 
-void IN_Adm2Down()
-{
-	EngineClientCmd("+key_adm_k2");
-}
+void IN_Adm2Down()		{ EngineClientCmd("+key_adm_k2"); }
 
-void IN_SprintUp()
-{
-	EngineClientCmd("-key_sprint");
-}
+void IN_SprintUp()		{ EngineClientCmd("-key_sprint"); }
 
-void IN_SprintDown()
-{
-	EngineClientCmd("+key_sprint");
-}
+void IN_SprintDown()	{ EngineClientCmd("+key_sprint"); }
 
 // Car
-
-/*void IN_VAccDown()
-{
-	EngineClientCmd("+key_vacc");
-}						  
+					  
+void IN_VCltcDown()		{ EngineClientCmd("+key_vcltc"); }						  
 						  
-void IN_VAccUp()		  
-{						  
-	EngineClientCmd("-key_vacc");
-}						  
-						  
-void IN_VDecDown()		  
-{						  
-	EngineClientCmd("+key_vdec");
-}						  
-						  
-void IN_VDecUp()		  
-{						  
-	EngineClientCmd("-key_vdec");
-}						  
-						  
-void IN_VLtDown()		  
-{						  
-	EngineClientCmd("+key_vlt");
-}						  
-						  
-void IN_VLtUp()			  
-{						  
-	EngineClientCmd("-key_vlt");
-}						  
-						  
-void IN_VRtDown()		  
-{						  
-	EngineClientCmd("+key_vrt");
-}						  
-						  
-void IN_VRtUp()			  
-{						  
-	EngineClientCmd("-key_vrt");
-}						  
-						  
-void IN_VHdbkDown()		  
-{						  
-	EngineClientCmd("+key_vhdbk");
-}						  
-						  
-void IN_VHdbkUp()		  
-{						  
-	EngineClientCmd("-key_vhdbk");
-}						  
-*/						  
-void IN_VCltcDown()		  
-{						  
-	EngineClientCmd("+key_vcltc");
-}						  
-						  
-void IN_VCltcUp()		  
-{						  
-	EngineClientCmd("-key_vcltc");
-}
+void IN_VCltcUp()		{ EngineClientCmd("-key_vcltc"); }
 
 // Plane
 
-void IN_VUpDown()
-{
-	EngineClientCmd("+key_vup");
-}						  
-						  
-void IN_VUpUp()			  
-{						  
-	EngineClientCmd("-key_vup");
-}						  
-						  
-void IN_VDnDown()		  
-{						  
-	EngineClientCmd("+key_vdn");
-}						  
-						  
-void IN_VDnUp()			  
-{						  
-	EngineClientCmd("-key_vdn");
-}						  
-						  
-void IN_VLLtDown()		  
-{						  
-	EngineClientCmd("+key_vllt");
-}						  
-						  
-void IN_VLLtUp()		  
-{						  
-	EngineClientCmd("-key_vllt");
-}						  
-						  
-void IN_VLRtDown()		  
-{						  
-	EngineClientCmd("+key_vlrt");
-}						  
-						  
-void IN_VLRtUp()		  
-{						  
-	EngineClientCmd("-key_vlrt");
-}
+void IN_VUpDown()		{ EngineClientCmd( "+key_vup" ); }						  
+
+void IN_VUpUp()			{ EngineClientCmd( "-key_vup" ); }
+
+void IN_VDnDown()		{ EngineClientCmd( "+key_vdn" ); }
+
+void IN_VDnUp()			{ EngineClientCmd( "-key_vdn" ); }
+
+void IN_VLLtDown()		{ EngineClientCmd( "+key_vllt" ); }
+
+void IN_VLLtUp()		{ EngineClientCmd( "-key_vllt" ); }
+
+void IN_VLRtDown()		{ EngineClientCmd( "+key_vlrt" ); }
+
+void IN_VLRtUp()		{ EngineClientCmd( "-key_vlrt" ); }
 
 // Vehicle NPC
 
-void IN_VJumpDown()
-{
-	EngineClientCmd("+key_vjmp");
-}
+void IN_VJumpDown()		{ EngineClientCmd( "+key_vjmp" ); }
 
-void IN_VJumpUp()
-{
-	EngineClientCmd("-key_vjmp");
-}
-
-/*void IN_VAttackDown()
-{
-	EngineClientCmd("+key_vatk");
-}
-
-void IN_VAttackUp()
-{
-	EngineClientCmd("-key_vatk");
-}*/
-
+void IN_VJumpUp()		{ EngineClientCmd( "-key_vjmp" ); }
 
 // Vehicle general controls
 
-void IN_VFlashDown() { EngineClientCmd("+key_vflash"); }
+void IN_VFlashDown()	{ EngineClientCmd( "+key_vflash" ); }
 
-void IN_VFlashUp() { EngineClientCmd("-key_vflash"); }
+void IN_VFlashUp()		{ EngineClientCmd( "-key_vflash" ); }
 
-void IN_VUnuseDown() { EngineClientCmd("+key_vunuse"); }
+void IN_VUnuseDown()	{ EngineClientCmd( "+key_vunuse" ); }
 
-void IN_VUnuseUp() { EngineClientCmd("-key_vunuse"); }
+void IN_VUnuseUp()		{ EngineClientCmd( "-key_vunuse" ); }
 
-void IN_VStartDown() { EngineClientCmd("+key_vstart"); }
+void IN_VStartDown()	{ EngineClientCmd( "+key_vstart" ); }
 
-void IN_VStartUp() { EngineClientCmd("-key_vstart"); }
+void IN_VStartUp()		{ EngineClientCmd( "-key_vstart" ); }
 
-void IN_VSeatsDown() { EngineClientCmd("+key_vseats"); }
+void IN_VSeatsDown()	{ EngineClientCmd( "+key_vseats" ); }
 
-void IN_VSeatsUp() { EngineClientCmd("-key_vseats"); }
+void IN_VSeatsUp()		{ EngineClientCmd( "-key_vseats" ); }
 
-void IN_VShootDown() { EngineClientCmd("+key_vfire1"); }
+void IN_VShootDown()	{ EngineClientCmd( "+key_vfire1" ); }
 
-void IN_VShootUp() { EngineClientCmd("-key_vfire1"); }
+void IN_VShootUp()		{ EngineClientCmd( "-key_vfire1" ); }
 
-void IN_VShoot2Down() { EngineClientCmd("+key_vfire2");  }
+void IN_VShoot2Down()	{ EngineClientCmd( "+key_vfire2" );  }
 
-void IN_VShoot2Up() { EngineClientCmd("-key_vfire2"); }
+void IN_VShoot2Up()		{ EngineClientCmd( "-key_vfire2" ); }
 
 /*	gEngfuncs.pfnAddCommand("+vspec_acc", IN_VSpecAccDown);
 	gEngfuncs.pfnAddCommand("-vspec_acc", IN_VSpecAccUp);
