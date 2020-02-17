@@ -79,6 +79,7 @@ entity_state_t gamedll Entity_Encode
 	DEFINE_DELTA( origin[1], DT_SIGNED | DT_FLOAT, 32, 8.0 ),
 	DEFINE_DELTA( origin[2], DT_SIGNED | DT_FLOAT, 32, 8.0 ),
 	DEFINE_DELTA( sequence, DT_INTEGER, 8, 1.0 ),
+	DEFINE_DELTA( gaitsequence, DT_INTEGER, 8, 1.0 ), // !!! Monsters can have gaitsequences now -Admer
 	DEFINE_DELTA( modelindex, DT_INTEGER, 10, 1.0 ),
 	DEFINE_DELTA( movetype, DT_INTEGER, 4, 1.0 ),
 	DEFINE_DELTA( solid, DT_SHORT, 3, 1.0 ),

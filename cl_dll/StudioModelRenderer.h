@@ -95,8 +95,14 @@ public:
 	// Estimate gait frame for player
 	virtual void StudioEstimateGait ( entity_state_t *pplayer );
 
+	// Estimate gait frame for monster
+	virtual void StudioEstimateGait_M( entity_state_t *pmon, player_info_t *pmonstate );
+
 	// Process movement of player
-	virtual void StudioProcessGait ( entity_state_t *pplayer );
+	virtual void StudioProcessGait( entity_state_t *pplayer );
+
+	// Process movement of monster
+	virtual void StudioProcessGait_M( entity_state_t *pmon, player_info_t *pmonstate );
 
 public:
 

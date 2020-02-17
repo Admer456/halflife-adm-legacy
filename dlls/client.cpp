@@ -1361,13 +1361,16 @@ int AddToFullPack( struct entity_state_s *state, int e, edict_t *ent, edict_t *h
 		state->playerclass  = ent->v.playerclass;
 	}
 
+	// Moved outside of special players only stuff; now monsters can have gaitseqs
+	state->gaitsequence = ent->v.gaitsequence;
+
 	// Special stuff for players only
 	if ( player )
 	{
 		memcpy( state->basevelocity, ent->v.basevelocity, 3 * sizeof( float ) );
 
 		state->weaponmodel  = MODEL_INDEX( STRING( ent->v.weaponmodel ) );
-		state->gaitsequence = ent->v.gaitsequence;
+		
 		state->spectator = ent->v.flags & FL_SPECTATOR;
 		state->friction     = ent->v.friction;
 
@@ -1531,6 +1534,7 @@ void Entity_Encode( struct delta_s *pFields, const unsigned char *from, const un
 		DELTA_SETBYINDEX( pFields, entity_field_alias[ FIELD_ORIGIN2 ].field );
 	}
 
+	// Gaitseqs on monsters -Admer
 	if ( f->gaitsequence != t->gaitsequence )
 	{
 		DELTA_SETBYINDEX( pFields, entity_field_alias[ FIELD_GAITSEQ ].field );

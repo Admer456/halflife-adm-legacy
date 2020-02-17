@@ -1191,6 +1191,27 @@ int CStudioModelRenderer::StudioDrawModel( int flags )
 		m_fDoInterp = save_interp;
 		return result;
 	}
+	
+	if ( m_pCurrentEntity->curstate.gaitsequence && !m_pCurrentEntity->player )
+	{
+		//m_pPlayerInfo = IEngineStudio.PlayerInfo( m_nPlayerIndex );
+
+		player_info_t monsterInfo;
+		monsterInfo.gaitsequence = m_pCurrentEntity->curstate.gaitsequence;
+		monsterInfo.gaityaw = m_pCurrentEntity->prevstate.angles.y;
+		monsterInfo.gaitframe = 0; //???
+
+		monsterInfo.prevgaitorigin = m_pCurrentEntity->prevstate.origin;
+		monsterInfo.renderframe = m_nFrameCount-1;
+
+		m_pPlayerInfo = &monsterInfo;
+		
+		int result = StudioDrawPlayer( flags | STUDIO_MONSTER, &m_pCurrentEntity->curstate );
+
+		m_pPlayerInfo = NULL;
+
+		return result;
+	}
 
 	m_pRenderModel = m_pCurrentEntity->model;
 	m_pStudioHeader = (studiohdr_t *)IEngineStudio.Mod_Extradata (m_pRenderModel);
@@ -1408,6 +1429,78 @@ void CStudioModelRenderer::StudioEstimateGait( entity_state_t *pplayer )
 
 /*
 ====================
+StudioEstimateGait_M
+
+====================
+*/
+void CStudioModelRenderer::StudioEstimateGait_M( entity_state_t *pmon, player_info_t *pmonstate )
+{
+	float dt;
+	vec3_t est_velocity;
+
+	dt = (m_clTime - m_clOldTime);
+	if ( dt < 0 )
+		dt = 0;
+	else if ( dt > 1.0 )
+		dt = 1;
+
+	if ( dt == 0 || m_pPlayerInfo->renderframe == m_nFrameCount )
+	{
+		m_flGaitMovement = 0;
+		return;
+	}
+
+	//VectorAdd( pplayer->velocity, pplayer->prediction_error, est_velocity );
+	if ( m_fGaitEstimation )
+	{
+		VectorSubtract( m_pCurrentEntity->origin, m_pPlayerInfo->prevgaitorigin, est_velocity );
+		VectorCopy( m_pCurrentEntity->origin, m_pPlayerInfo->prevgaitorigin );
+		m_flGaitMovement = Length( est_velocity );
+		if ( dt <= 0 || m_flGaitMovement / dt < 5 )
+		{
+			m_flGaitMovement = 0;
+			est_velocity[ 0 ] = 0;
+			est_velocity[ 1 ] = 0;
+		}
+	}
+	else
+	{
+		VectorCopy( pmon->velocity, est_velocity );
+		m_flGaitMovement = Length( est_velocity ) * dt;
+	}
+
+	if ( est_velocity[ 1 ] == 0 && est_velocity[ 0 ] == 0 )
+	{
+		float flYawDiff = m_pCurrentEntity->angles[ YAW ] - m_pPlayerInfo->gaityaw;
+		flYawDiff = flYawDiff - (int)(flYawDiff / 360) * 360;
+		if ( flYawDiff > 180 )
+			flYawDiff -= 360;
+		if ( flYawDiff < -180 )
+			flYawDiff += 360;
+
+		if ( dt < 0.25 )
+			flYawDiff *= dt * 4;
+		else
+			flYawDiff *= dt;
+
+		m_pPlayerInfo->gaityaw += flYawDiff;
+		m_pPlayerInfo->gaityaw = m_pPlayerInfo->gaityaw - (int)(m_pPlayerInfo->gaityaw / 360) * 360;
+
+		m_flGaitMovement = 0;
+	}
+	else
+	{
+		m_pPlayerInfo->gaityaw = (atan2( est_velocity[ 1 ], est_velocity[ 0 ] ) * 180 / M_PI);
+		if ( m_pPlayerInfo->gaityaw > 180 )
+			m_pPlayerInfo->gaityaw = 180;
+		if ( m_pPlayerInfo->gaityaw < -180 )
+			m_pPlayerInfo->gaityaw = -180;
+	}
+
+}
+
+/*
+====================
 StudioProcessGait
 
 ====================
@@ -1502,6 +1595,105 @@ void CStudioModelRenderer::StudioProcessGait( entity_state_t *pplayer )
 	m_pPlayerInfo->gaitframe = m_pPlayerInfo->gaitframe - (int)(m_pPlayerInfo->gaitframe / pseqdesc->numframes) * pseqdesc->numframes;
 	if (m_pPlayerInfo->gaitframe < 0)
 		m_pPlayerInfo->gaitframe += pseqdesc->numframes;
+}
+
+/*
+====================
+StudioProcessGait_M
+
+To-do: Work around m_pPlayerInfo?
+====================
+*/
+void CStudioModelRenderer::StudioProcessGait_M( entity_state_t *pmon, player_info_t *pmonstate )
+{
+	mstudioseqdesc_t	*pseqdesc;
+	float dt;
+	int iBlend;
+	float flYaw;	 // view direction relative to movement
+
+	if ( m_pCurrentEntity->curstate.sequence >= m_pStudioHeader->numseq )
+	{
+		m_pCurrentEntity->curstate.sequence = 0;
+	}
+
+	pseqdesc = (mstudioseqdesc_t *)((byte *)m_pStudioHeader + m_pStudioHeader->seqindex) + m_pCurrentEntity->curstate.sequence;
+
+	StudioPlayerBlend( pseqdesc, &iBlend, &m_pCurrentEntity->angles[ PITCH ] );
+
+	m_pCurrentEntity->latched.prevangles[ PITCH ] = m_pCurrentEntity->angles[ PITCH ];
+	m_pCurrentEntity->curstate.blending[ 0 ] = iBlend;
+	m_pCurrentEntity->latched.prevblending[ 0 ] = m_pCurrentEntity->curstate.blending[ 0 ];
+	m_pCurrentEntity->latched.prevseqblending[ 0 ] = m_pCurrentEntity->curstate.blending[ 0 ];
+
+	// Con_DPrintf("%f %d\n", m_pCurrentEntity->angles[PITCH], m_pCurrentEntity->blending[0] );
+
+	dt = (m_clTime - m_clOldTime);
+	if ( dt < 0 )
+		dt = 0;
+	else if ( dt > 1.0 )
+		dt = 1;
+
+	StudioEstimateGait_M( pmon, pmonstate );
+
+	// Con_DPrintf("%f %f\n", m_pCurrentEntity->angles[YAW], m_pPlayerInfo->gaityaw );
+
+	// calc side to side turning
+	flYaw = m_pCurrentEntity->angles[ YAW ] - pmonstate->gaityaw;
+	flYaw = flYaw - (int)(flYaw / 360) * 360;
+	if ( flYaw < -180 )
+		flYaw = flYaw + 360;
+	if ( flYaw > 180 )
+		flYaw = flYaw - 360;
+
+	if ( flYaw > 120 )
+	{
+		pmonstate->gaityaw = pmonstate->gaityaw - 180;
+		m_flGaitMovement = -m_flGaitMovement;
+		flYaw = flYaw - 180;
+	}
+	else if ( flYaw < -120 )
+	{
+		pmonstate->gaityaw = pmonstate->gaityaw + 180;
+		m_flGaitMovement = -m_flGaitMovement;
+		flYaw = flYaw + 180;
+	}
+
+	// adjust torso
+	m_pCurrentEntity->curstate.controller[ 0 ] = ((flYaw / 4.0) + 30) / (60.0 / 255.0);
+	m_pCurrentEntity->curstate.controller[ 1 ] = ((flYaw / 4.0) + 30) / (60.0 / 255.0);
+	m_pCurrentEntity->curstate.controller[ 2 ] = ((flYaw / 4.0) + 30) / (60.0 / 255.0);
+	m_pCurrentEntity->curstate.controller[ 3 ] = ((flYaw / 4.0) + 30) / (60.0 / 255.0);
+	m_pCurrentEntity->latched.prevcontroller[ 0 ] = m_pCurrentEntity->curstate.controller[ 0 ];
+	m_pCurrentEntity->latched.prevcontroller[ 1 ] = m_pCurrentEntity->curstate.controller[ 1 ];
+	m_pCurrentEntity->latched.prevcontroller[ 2 ] = m_pCurrentEntity->curstate.controller[ 2 ];
+	m_pCurrentEntity->latched.prevcontroller[ 3 ] = m_pCurrentEntity->curstate.controller[ 3 ];
+
+	m_pCurrentEntity->angles[ YAW ] = pmonstate->gaityaw;
+	if ( m_pCurrentEntity->angles[ YAW ] < -0 )
+		m_pCurrentEntity->angles[ YAW ] += 360;
+	m_pCurrentEntity->latched.prevangles[ YAW ] = m_pCurrentEntity->angles[ YAW ];
+
+	if ( pmon->gaitsequence >= m_pStudioHeader->numseq )
+	{
+		pmon->gaitsequence = 0;
+	}
+
+	pseqdesc = (mstudioseqdesc_t *)((byte *)m_pStudioHeader + m_pStudioHeader->seqindex) + pmon->gaitsequence;
+
+	// calc gait frame
+	if ( pseqdesc->linearmovement[ 0 ] > 0 )
+	{
+		pmonstate->gaitframe += (m_flGaitMovement / pseqdesc->linearmovement[ 0 ]) * pseqdesc->numframes;
+	}
+	else
+	{
+		pmonstate->gaitframe += pseqdesc->fps * dt;
+	}
+
+	// do modulo
+	pmonstate->gaitframe = pmonstate->gaitframe - (int)(pmonstate->gaitframe / pseqdesc->numframes) * pseqdesc->numframes;
+	if ( pmonstate->gaitframe < 0 )
+		pmonstate->gaitframe += pseqdesc->numframes;
 }
 
 #if defined _TFC
@@ -1665,7 +1857,7 @@ int CStudioModelRenderer::StudioDrawPlayer( int flags, entity_state_t *pplayer )
 
 	m_nPlayerIndex = pplayer->number - 1;
 
-	if (m_nPlayerIndex < 0 || m_nPlayerIndex >= gEngfuncs.GetMaxClients())
+	if (m_nPlayerIndex < 0 || m_nPlayerIndex >= gEngfuncs.GetMaxClients() && !(flags & STUDIO_MONSTER))
 		return 0;
 
 #if defined( _TFC )
@@ -1688,8 +1880,10 @@ int CStudioModelRenderer::StudioDrawPlayer( int flags, entity_state_t *pplayer )
 	}
 
 #else
-
-	m_pRenderModel = IEngineStudio.SetupPlayerModel( m_nPlayerIndex );
+	if ( !(flags & STUDIO_MONSTER) )
+		m_pRenderModel = IEngineStudio.SetupPlayerModel( m_nPlayerIndex );
+	else
+		m_pRenderModel = m_pCurrentEntity->model;
 
 #endif
 
@@ -1703,14 +1897,18 @@ int CStudioModelRenderer::StudioDrawPlayer( int flags, entity_state_t *pplayer )
 	if (pplayer->gaitsequence)
 	{
 		vec3_t orig_angles;
-		m_pPlayerInfo = IEngineStudio.PlayerInfo( m_nPlayerIndex );
+
+		if ( !(flags & STUDIO_MONSTER) )
+			m_pPlayerInfo = IEngineStudio.PlayerInfo( m_nPlayerIndex );
 
 		VectorCopy( m_pCurrentEntity->angles, orig_angles );
 	
 		StudioProcessGait( pplayer );
 
 		m_pPlayerInfo->gaitsequence = pplayer->gaitsequence;
-		m_pPlayerInfo = NULL;
+
+		if ( !(flags & STUDIO_MONSTER) )
+			m_pPlayerInfo = NULL;
 
 		StudioSetUpTransform( 0 );
 		VectorCopy( orig_angles, m_pCurrentEntity->angles );
@@ -1726,7 +1924,9 @@ int CStudioModelRenderer::StudioDrawPlayer( int flags, entity_state_t *pplayer )
 		m_pCurrentEntity->latched.prevcontroller[2] = m_pCurrentEntity->curstate.controller[2];
 		m_pCurrentEntity->latched.prevcontroller[3] = m_pCurrentEntity->curstate.controller[3];
 		
-		m_pPlayerInfo = IEngineStudio.PlayerInfo( m_nPlayerIndex );
+		if ( !(flags & STUDIO_MONSTER) )
+			m_pPlayerInfo = IEngineStudio.PlayerInfo( m_nPlayerIndex );
+		
 		m_pPlayerInfo->gaitsequence = 0;
 
 		StudioSetUpTransform( 0 );
@@ -1745,12 +1945,15 @@ int CStudioModelRenderer::StudioDrawPlayer( int flags, entity_state_t *pplayer )
 			return 1;
 	}
 
-	m_pPlayerInfo = IEngineStudio.PlayerInfo( m_nPlayerIndex );
+	if ( !(flags & STUDIO_MONSTER) )
+		m_pPlayerInfo = IEngineStudio.PlayerInfo( m_nPlayerIndex );
+	
 	StudioSetupBones( );
 	StudioSaveBones( );
 	m_pPlayerInfo->renderframe = m_nFrameCount;
 
-	m_pPlayerInfo = NULL;
+	if ( !(flags & STUDIO_MONSTER) )
+		m_pPlayerInfo = NULL;
 
 	if (flags & STUDIO_EVENTS)
 	{
@@ -1786,7 +1989,8 @@ int CStudioModelRenderer::StudioDrawPlayer( int flags, entity_state_t *pplayer )
 		// model and frame independant
 		IEngineStudio.StudioSetupLighting (&lighting);
 
-		m_pPlayerInfo = IEngineStudio.PlayerInfo( m_nPlayerIndex );
+		if ( !(flags & STUDIO_MONSTER) )
+			m_pPlayerInfo = IEngineStudio.PlayerInfo( m_nPlayerIndex );
 
 #if defined _TFC
 
@@ -1842,7 +2046,9 @@ int CStudioModelRenderer::StudioDrawPlayer( int flags, entity_state_t *pplayer )
 		IEngineStudio.StudioSetRemapColors( m_nTopColor, m_nBottomColor );
 
 		StudioRenderModel( );
-		m_pPlayerInfo = NULL;
+
+		if ( !(flags & STUDIO_MONSTER) )
+			m_pPlayerInfo = NULL;
 
 		if (pplayer->weaponmodel)
 		{

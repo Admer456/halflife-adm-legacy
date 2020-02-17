@@ -146,6 +146,12 @@ int CZombie :: TakeDamage( entvars_t *pevInflictor, entvars_t *pevAttacker, floa
 		flDamage *= 0.3;
 	}
 
+	// Gait seq test
+	pev->gaitsequence = LookupSequence( "walk" );
+	pev->sequence = LookupSequence( "attack2" );
+
+	m_MonsterState = MONSTERSTATE_SCRIPT;
+
 	// HACK HACK -- until we fix this.
 	if ( IsAlive() )
 		PainSound();
