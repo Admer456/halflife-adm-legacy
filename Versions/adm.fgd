@@ -561,6 +561,29 @@
 //		ENV_ ENTITIIES
 // ========================================================================================================= //
 
+@PointClass base(Targetname) size(-4 -4 -4, 4 4 4) = env_sky : "Skybox-changing entity"
+[
+	skyname(string) : "Name of the sky"
+	skysize(choices) : "Sky resolution" : 8 =
+	[
+		1: "128 or less"
+		2: "256"
+		3: "512 (not supported yet)"
+		4: "1024 (not supported yet)"
+	]
+	skyradius(choices) : "Distance from the map centre" : 6 =
+	[
+		1: "512"
+		2: "1024"
+		3: "2048"
+		4: "4096"
+		5: "8192"
+		6: "16 384"
+		7: "32 768"
+		8: "65 536"
+	]
+]
+
 @PointClass base(Targetname) size(-4 -4 -4, 4 4 4) = env_viewsway : "View swaying"
 [
 	fFrequency(string) : "Frequency" : "1"
@@ -646,12 +669,29 @@
 	]
 ]
 
+// Even if a value is set, _t_tip1 will get stripped by the compilers
+// VHLT-ADM will remove any keyvalues in this format: _x_,
+// where 'x' can be any character.
+
+// The difference between these characters, e.g. _c_ and _t_,
+// means that _c_ is like a comment, _t_ is like a tip.
+
+// It is up to the devs of a map editor to implement this kind of
+// functionality to utilise tips, comments and whatnot.
+// So, one day, perhaps we'll have a fork of TrenchBroom with full GoldSrc
+// support, as well as support for this type of keyavlues.
+
+// Example usage:
+// iBeeps(integer) : "Number of beeps" : 1
+// _c1_iBeeps(string) : "This keyvalue controls how many times" 
+// _c2_iBeeps(string) : "the entity will emit beep sounds when triggered"
+
 @PointClass base(Targetname, Target) = trigger_date2 : "Time-dependent trigger"
 [
 	hour(integer) : "Hour (0-23)"
 	minute(integer) : "Minute (0-59)"
 	second(integer) : "Second (0-60)"
-	_tip1(string) : "Set to -1 for any time!"
+	_t_1(string) : "Set to -1 for any time!"
 ]
 
 @PointClass base(Targetname, Target) = trigger_difficulty : "Difficulty-dependent trigger"
