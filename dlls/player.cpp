@@ -1553,7 +1553,7 @@ void CBasePlayer::PlayerUse ( void )
 	float flDot;
 
 	UTIL_MakeVectors ( pev->v_angle );// so we know which way we are facing
-	
+
 	while ((pObject = UTIL_FindEntityInSphere( pObject, pev->origin, PLAYER_SEARCH_RADIUS )) != NULL)
 	{
 
@@ -1580,8 +1580,21 @@ void CBasePlayer::PlayerUse ( void )
 	}
 	pObject = pClosest;
 
+	bool fHitWall = false;
+	TraceResult trCheckWall;
+	UTIL_TraceLine( pev->origin + pev->view_ofs, pObject->Center(), dont_ignore_monsters, ENT( pev ), &trCheckWall );
+
+	if ( trCheckWall.pHit )
+	{
+		CBaseEntity *pCheckEnt = CBaseEntity::Instance( trCheckWall.pHit );
+
+		// We can't use worldspawn 
+		// Compare entity indices to determine if we're actually looking at the entity we just used
+		fHitWall = (pObject->entindex() == pCheckEnt->entindex()) || FClassnameIs(pCheckEnt->pev, "worldspawn");
+	}
+
 	// Found an object
-	if (pObject )
+	if ( pObject && !fHitWall )
 	{
 		//!!!UNDONE: traceline here to prevent USEing buttons through walls			
 		int caps = pObject->ObjectCaps();

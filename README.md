@@ -2,13 +2,14 @@ Advanced Development Mod
 ======================
 
 ADM is a Half-Life mod base that aims to bring quality-of-life features while maintaining compatibility with the Half-Life singleplayer campaign. It is what powers the mod Utopia at Stake. ([ModDB page](https://www.moddb.com/mods/admerthegame)) 
+You can track exact progress, suggest features, ask questions about features etc. on the [Trello board](https://trello.com/b/mbpXU4ff).
 
-Current version: v0.03 November. 
+Current version: v0.04 February. 
 
 ## **Features:**
 
-- High-quality sound with FMOD, without fmod.dll being in the HL root directory*
-- Physics with Bullet physics engine*
+- High-quality sound with [FMOD](https://www.fmod.com/studio), without fmod.dll being in the HL root directory*
+- Physics with [Bullet](https://github.com/bulletphysics/bullet3) physics engine*
 - Time-based entities
 - Flexible vehicle system, with support for many vehicle types and configurations
 - Parametric view bobbing, swaying and HUD colours
