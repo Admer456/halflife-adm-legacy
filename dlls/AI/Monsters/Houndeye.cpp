@@ -19,11 +19,11 @@
 #include	"extdll.h"
 #include	"util.h"
 #include	"cbase.h"
-#include	"monsters.h"
+#include	"AI/Monsters.h"
 #include	"schedule.h"
 #include	"animation.h"
 #include	"nodes.h"
-#include	"squadmonster.h"
+#include	"AI/SquadMonster.h"
 #include	"soundent.h"
 #include	"game.h"
 
