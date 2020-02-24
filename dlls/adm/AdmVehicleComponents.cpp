@@ -1,6 +1,6 @@
 /*
 
-======= adm_vehicle.cpp ===========================
+======= AdmVehicleComponents.cpp ===========================
 
 	Vehicle API.
 
@@ -22,14 +22,14 @@
 
 //#include <Eigen/Geometry>
 
-#include "extdll.h"
-#include "util.h"
-#include "cbase.h"
-#include "player.h"
-#include "saverestore.h"
+#include "ExtDLL.h"
+#include "Util.h"
+#include "CBase.h"
+#include "Player.h"
+#include "SaveRestore.h"
 
-#include "adm_vehicle.h"
-#include "animation.h"
+#include "AdmVehicle.h"
+#include "Animation.h"
 
 void VehicleEngine::Damage(float hp)
 {

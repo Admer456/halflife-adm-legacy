@@ -32,7 +32,7 @@
 #include "gamerules.h"
 
 #include <vector>
-#include "adm/shared/adm_sound_list.h"
+#include "adm/shared/AdmSoundList.h"
 #include "../engine/studio.h"
 
 float UTIL_WeaponTimeBase( void )

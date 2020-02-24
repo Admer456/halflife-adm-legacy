@@ -53,7 +53,7 @@
 #include "extdll.h"
 #include "util.h"
 #include "cbase.h"
-#include "adm_physics.h"
+#include "AdmPhysics.h"
 //#include "../utils/obj/OBJ_Loader.h"
 
 string_t g_iszWorldModel; // e.g. mapname.bsp

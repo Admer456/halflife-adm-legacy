@@ -52,7 +52,7 @@
 // DSP effects
 // Reading sound waves, if possible
 
-#include "adm_sound.h"
+#include "AdmSound.h"
 #include "../FMOD/inc/fmod.hpp"
 #include "../FMOD/inc/fmod_common.h"
 #include "../FMOD/inc/fmod_errors.h"

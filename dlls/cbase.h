@@ -52,7 +52,7 @@ CBaseEntity
 
 #include "Platform.h"
 
-#include "adm/adm_physics.h"
+#include "adm/AdmPhysics.h"
 
 // C functions for external declarations that call the appropriate C++ methods
 

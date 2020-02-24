@@ -34,7 +34,7 @@
 #include "cl_dll.h"
 #include "ammo.h"
 
-#include "adm/adm_sound.h"
+#include "adm/AdmSound.h"
 
 #include <vector>
 

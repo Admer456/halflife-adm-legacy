@@ -33,7 +33,7 @@
 #include "trains.h"			// trigger_camera has train functionality
 #include "gamerules.h"
 #include "skill.h"
-#include "adm/shared/adm_holidays.h"
+#include "adm/shared/AdmTime.h"
 
 #include <cmath>
 #include <string>

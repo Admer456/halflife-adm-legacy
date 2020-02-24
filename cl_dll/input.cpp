@@ -23,7 +23,7 @@ extern "C"
 #include "Exports.h"
 
 #include "vgui_TeamFortressViewport.h"
-#include "adm/shared/adm_control.h"
+#include "adm/shared/AdmControl.h"
 
 //AdmControlAPI ControlAPI;
 

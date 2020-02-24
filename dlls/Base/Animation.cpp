@@ -46,7 +46,7 @@ typedef unsigned char byte;
 
 // Don't do this at home
 #include <vector>
-#include "adm/shared/adm_sound_list.h"
+#include "adm/shared/AdmSoundList.h"
 
 extern globalvars_t				*gpGlobals;
 

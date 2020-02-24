@@ -1,5 +1,7 @@
-#include "adm_holidays.h"
+#include "AdmTime.h"
 #include <ctime>
+
+// TODO: make a namespace for this
 
 bool isDate(int year, int month, int day)
 {

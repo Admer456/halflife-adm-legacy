@@ -1554,6 +1554,7 @@ void CBasePlayer::PlayerUse ( void )
 
 	UTIL_MakeVectors ( pev->v_angle );// so we know which way we are facing
 
+	// TODO: Replace search by radius with a traceline
 	while ((pObject = UTIL_FindEntityInSphere( pObject, pev->origin, PLAYER_SEARCH_RADIUS )) != NULL)
 	{
 

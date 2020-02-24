@@ -20,13 +20,13 @@
 
 */
 
-#include "extdll.h"
-#include "util.h"
-#include "cbase.h"
-#include "player.h"
-#include "saverestore.h"
-#include "adm_vehicle.h"
-#include "animation.h"
+#include "ExtDLL.h"
+#include "Util.h"
+#include "CBase.h"
+#include "Player.h"
+#include "SaveRestore.h"
+#include "AdmVehicle.h"
+#include "Animation.h"
 
 // Welcome to the beginning of this monstrosity!
 // Scroll all the way down until line 469 if you wanna take a look at a vehicle class template.

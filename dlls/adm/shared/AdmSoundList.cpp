@@ -1,7 +1,7 @@
 #include "extdll.h"
 #include "util.h"
 
-#include "adm_sound_list.h"
+#include "AdmSoundList.h"
 
 std::vector< std::string > g_ClientSoundList;
 std::vector< std::string > g_ServerSoundList;
