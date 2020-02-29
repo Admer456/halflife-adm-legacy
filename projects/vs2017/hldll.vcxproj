@@ -110,7 +110,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\dlls\adm\AdmAudioEntities.cpp" />
-    <ClCompile Include="..\..\dlls\adm\AdmEffects.cpp" /> 
+    <ClCompile Include="..\..\dlls\adm\AdmEffects.cpp" />
     <ClCompile Include="..\..\dlls\adm\AdmFunc.cpp" />
     <ClCompile Include="..\..\dlls\adm\AdmGetSetKV.cpp" />
     <ClCompile Include="..\..\dlls\adm\AdmPhysics.cpp" />
@@ -249,11 +249,12 @@
     <ClInclude Include="..\..\dlls\Base\ExtDLL.h" />
     <ClInclude Include="..\..\dlls\AI\FlyingMonster.h" />
     <ClInclude Include="..\..\dlls\Func_Break.h" />
+    <ClInclude Include="..\..\dlls\Game\Game.h" />
     <ClInclude Include="..\..\dlls\Game\GameRules.h" />
     <ClInclude Include="..\..\dlls\AI\Hornet.h" />
-    <ClInclude Include="..\..\dlls\Items.h" />
     <ClInclude Include="..\..\dlls\AI\MonsterEvent.h" />
     <ClInclude Include="..\..\dlls\AI\Monsters.h" />
+    <ClInclude Include="..\..\dlls\Items\Items.h" />
     <ClInclude Include="..\..\dlls\Nodes.h" />
     <ClInclude Include="..\..\dlls\Plane.h" />
     <ClInclude Include="..\..\dlls\Player.h" />
