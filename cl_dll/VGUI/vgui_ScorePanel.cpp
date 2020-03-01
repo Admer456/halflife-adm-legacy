@@ -28,7 +28,7 @@
 #include "VGUI/vgui_ScorePanel.h"
 #include "vgui_helpers.h"
 #include "vgui_loadtga.h"
-#include "voice_status.h"
+#include "HUD/VoiceStatus.h"
 #include "vgui_SpectatorPanel.h"
 
 extern hud_player_info_t	 g_PlayerInfoList[MAX_PLAYERS+1];	   // player info from the engine

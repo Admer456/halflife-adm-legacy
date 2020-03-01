@@ -15,9 +15,6 @@
     <Filter Include="Source Files\ADM\Shared">
       <UniqueIdentifier>{be3c1453-aff0-462e-89bb-b99e09ab72f2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\common">
-      <UniqueIdentifier>{d9b0bb75-7f25-443b-8899-6b1a9e1dd63c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\AI">
       <UniqueIdentifier>{c3d2fc78-8d63-414b-bf71-1e83a7db7592}</UniqueIdentifier>
     </Filter>
@@ -44,6 +41,9 @@
     </Filter>
     <Filter Include="Source Files\PM_Shared">
       <UniqueIdentifier>{7f184267-1d16-4bbc-9212-a804fcd04e6a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Common">
+      <UniqueIdentifier>{d9b0bb75-7f25-443b-8899-6b1a9e1dd63c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -398,7 +398,7 @@
       <Filter>Source Files\Engine</Filter>
     </ClInclude>
     <ClInclude Include="..\..\common\Platform.h">
-      <Filter>Source Files\common</Filter>
+      <Filter>Source Files\Common</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\adm\AdmVehicle.h">
       <Filter>Source Files\ADM</Filter>

@@ -146,7 +146,7 @@ int CHudAmmoSecondary :: MsgFunc_SecAmmoVal( const char *pszName, int iSize, voi
 	}
 
 	if ( count == 0 ) 
-	{	// the ammo fields are all empty, so turn off this HUD/hud.h area
+	{	// the ammo fields are all empty, so turn off this HUD area
 		m_iFlags &= ~HUD_ACTIVE;
 		return 1;
 	}

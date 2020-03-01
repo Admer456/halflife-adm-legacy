@@ -14,7 +14,7 @@
 ****/
 
 #include "Base/ExtDLL.h"
-#include "util.h"
+#include "Util.h"
 #include "Base/CBase.h"
 #include "AI/Monsters.h"
 #include "Weapons/Weapons.h"
@@ -304,7 +304,7 @@ int CCrowbar::Swing( int fFirst )
 		}
 
 		// play texture hit sound
-		// UNDONE: Calculate the correct point of intersection when we hit with the hull instead of the line
+		// TODO: Calculate the correct point of intersection when we hit with the hull instead of the line
 
 		if (fHitWorld)
 		{

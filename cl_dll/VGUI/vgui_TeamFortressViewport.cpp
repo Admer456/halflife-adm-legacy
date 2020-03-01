@@ -1968,7 +1968,7 @@ void TeamFortressViewport::HideTopMenu()
 	UpdateCursorState();
 }
 
-// Return TRUE if the HUD/hud.h's allowed to print text messages
+// Return TRUE if the HUD's allowed to print text messages
 bool TeamFortressViewport::AllowedToPrintText( void )
 {
 	// Prevent text messages when fullscreen menus are up
@@ -2041,7 +2041,7 @@ void TeamFortressViewport::CreateSpectatorMenu()
 }
 
 //======================================================================================
-// UPDATE HUD/hud.h SECTIONS
+// UPDATE HUD SECTIONS
 //======================================================================================
 // We've got an update on player info
 // Recalculate any menus that use it.

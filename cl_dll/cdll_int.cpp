@@ -162,13 +162,13 @@ int DLLEXPORT Initialize( cl_enginefunc_t *pEnginefuncs, int iVersion )
 
 Called when the game initializes
 and whenever the vid_mode is changed
-so the HUD/hud.h can reinitialize itself.
+so the HUD can reinitialize itself.
 ==========================
 */
 
 int DLLEXPORT HUD_VidInit( void )
 {
-//	RecClHUD/hud.hVidInit();
+//	RecClHUDVidInit();
 	gHUD.VidInit();
 
 	VGui_Startup();
@@ -182,13 +182,13 @@ int DLLEXPORT HUD_VidInit( void )
 
 Called whenever the client connects
 to a server.  Reinitializes all 
-the HUD/hud.h variables.
+the HUD variables.
 ==========================
 */
 
 void DLLEXPORT HUD_Init( void )
 {
-//	RecClHUD/hud.hInit();
+//	RecClHUDInit();
 	InitInput();
 	gHUD.Init();
 	Scheme_Init();
@@ -206,7 +206,7 @@ redraw the HUD/hud.h.
 
 int DLLEXPORT HUD_Redraw( float time, int intermission )
 {
-//	RecClHUD/hud.hRedraw(time, intermission);
+//	RecClHUDRedraw(time, intermission);
 
 	gHUD.Redraw( time, intermission );
 
@@ -229,7 +229,7 @@ returns 1 if anything has been changed, 0 otherwise.
 
 int DLLEXPORT HUD_UpdateClientData(client_data_t *pcldata, float flTime )
 {
-//	RecClHUD/hud.hUpdateClientData(pcldata, flTime);
+//	RecClHUDUpdateClientData(pcldata, flTime);
 
 	IN_Commands();
 
@@ -240,13 +240,13 @@ int DLLEXPORT HUD_UpdateClientData(client_data_t *pcldata, float flTime )
 ==========================
 	HUD_Reset
 
-Called at start and end of demos to restore to "non"HUD/hud.h state.
+Called at start and end of demos to restore to "non"HUD state.
 ==========================
 */
 
 void DLLEXPORT HUD_Reset( void )
 {
-//	RecClHUD/hud.hReset();
+//	RecClHUDReset();
 
 	gHUD.VidInit();
 }
@@ -261,7 +261,7 @@ Called by engine every frame that client .dll is loaded
 
 void DLLEXPORT HUD_Frame( double time )
 {
-//	RecClHUD/hud.hFrame(time);
+//	RecClHUDFrame(time);
 
 	ServersThink( time );
 

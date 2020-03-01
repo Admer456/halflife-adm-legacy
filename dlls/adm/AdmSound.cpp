@@ -27,7 +27,7 @@
 #ifndef CLIENT_DLL
 #include "Base/ExtDLL.h"
 //#include "Base/CBase.h"
-#include "util.h"
+#include "Util.h"
 #endif
 
 #ifdef CLIENT_DLL

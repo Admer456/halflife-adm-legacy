@@ -21,9 +21,9 @@
 //
 //  This DLL is linked by the client when they first initialize.
 // This DLL is responsible for the following tasks:
-//		- Loading the HUD/hud.h graphics upon initialization
-//		- Drawing the HUD/hud.h graphics every frame
-//		- Handling the custum HUD/hud.h-update packets
+//		- Loading the HUD graphics upon initialization
+//		- Drawing the HUD graphics every frame
+//		- Handling the custum HUD-update packets
 //
 
 #include "Platform.h"

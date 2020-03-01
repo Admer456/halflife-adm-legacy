@@ -15,10 +15,10 @@
 //=========================================================
 // monster template
 //=========================================================
-// UNDONE: Holster weapon?
+// TODO: Holster weapon?
 
 #include	"Base/ExtDLL.h"
-#include	"util.h"
+#include	"Util.h"
 #include	"Base/CBase.h"
 #include	"AI/Monsters.h"
 #include	"AI/TalkMonster.h"
@@ -82,7 +82,7 @@ public:
 	float	m_checkAttackTime;
 	BOOL	m_lastAttackCheck;
 
-	// UNDONE: What is this for?  It isn't used?
+	// TODO: What is this for?  It isn't used?
 	float	m_flPlayerDamage;// how much pain has the player inflicted on me?
 
 	CUSTOM_SCHEDULES;
@@ -365,7 +365,7 @@ void CBarney :: BarneyFirePistol ( void )
 
 	CSoundEnt::InsertSound ( bits_SOUND_COMBAT, pev->origin, 384, 0.3 );
 
-	// UNDONE: Reload?
+	// TODO: Reload?
 	m_cAmmoLoaded--;// take away a bullet!
 }
 		
@@ -474,9 +474,9 @@ void CBarney :: TalkInit()
 	m_szGrp[TLK_PLHURT2] =	"!BA_CUREB"; 
 	m_szGrp[TLK_PLHURT3] =	"!BA_CUREC";
 
-	m_szGrp[TLK_PHELLO] =	NULL;	//"BA_PHELLO";		// UNDONE
-	m_szGrp[TLK_PIDLE] =	NULL;	//"BA_PIDLE";			// UNDONE
-	m_szGrp[TLK_PQUESTION] = "BA_PQUEST";		// UNDONE
+	m_szGrp[TLK_PHELLO] =	NULL;	//"BA_PHELLO";		// TODO
+	m_szGrp[TLK_PIDLE] =	NULL;	//"BA_PIDLE";			// TODO
+	m_szGrp[TLK_PQUESTION] = "BA_PQUEST";		// TODO
 
 	m_szGrp[TLK_SMELL] =	"BA_SMELL";
 	
@@ -734,7 +734,7 @@ Schedule_t *CBarney :: GetSchedule ( void )
 		{
 			if ( !m_hTargetEnt->IsAlive() )
 			{
-				// UNDONE: Comment about the recently dead player here?
+				// TODO: Comment about the recently dead player here?
 				StopFollowing( FALSE );
 				break;
 			}

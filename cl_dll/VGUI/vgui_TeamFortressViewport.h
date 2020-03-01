@@ -1743,7 +1743,7 @@ public:
 };
 
 //=========================================================
-// Specific Menus to handle old HUD/hud.h sections
+// Specific Menus to handle old HUD sections
 class CHealthPanel : public DragNDropPanel
 {
 private:

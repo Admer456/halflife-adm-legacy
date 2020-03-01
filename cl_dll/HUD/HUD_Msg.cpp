@@ -43,7 +43,7 @@ int CHud :: MsgFunc_ResetHUD(const char *pszName, int iSize, void *pbuf )
 {
 	ASSERT( iSize == 0 );
 
-	// clear all HUD/hud.h data
+	// clear all HUD data
 	HUDLIST *pList = m_pHUDList;
 
 	while ( pList )
@@ -71,7 +71,7 @@ void CHud :: MsgFunc_ViewMode( const char *pszName, int iSize, void *pbuf )
 
 void CHud :: MsgFunc_InitHUD( const char *pszName, int iSize, void *pbuf )
 {
-	// prepare all HUD/hud.h data
+	// prepare all HUD data
 	HUDLIST *pList = m_pHUDList;
 
 	while (pList)

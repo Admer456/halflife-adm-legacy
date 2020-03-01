@@ -21,7 +21,7 @@
 */
 
 #include "Base/extdll.h"
-#include "util.h"
+#include "Util.h"
 #include "Base/cbase.h"
 
 

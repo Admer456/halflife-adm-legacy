@@ -73,7 +73,7 @@ BitmapTGA *LoadTGAForRes( const char* pImageName )
 }
 
 //===========================================================
-// All TFC HUD/hud.h buttons are derived from this one.
+// All TFC HUD buttons are derived from this one.
 CommandButton::CommandButton( const char* text,int x,int y,int wide,int tall, bool bNoHighlight) : Button("",x,y,wide,tall)
 {
 	m_iPlayerClass = 0;

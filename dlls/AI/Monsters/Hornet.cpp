@@ -17,7 +17,7 @@
 //=========================================================
 
 #include	"Base/ExtDLL.h"
-#include	"util.h"
+#include	"Util.h"
 #include	"Base/CBase.h"
 #include	"AI/Monsters.h"
 #include	"Weapons/Weapons.h"
@@ -262,7 +262,7 @@ void CHornet :: TrackTarget ( void )
 		return;
 	}
 
-	// UNDONE: The player pointer should come back after returning from another level
+	// TODO: The player pointer should come back after returning from another level
 	if ( m_hEnemy == NULL )
 	{// enemy is dead.
 		Look( 512 );

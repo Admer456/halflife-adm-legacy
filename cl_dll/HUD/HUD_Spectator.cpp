@@ -10,7 +10,7 @@
 #include "cl_entity.h"
 #include "triangleapi.h"
 #include "VGUI/vgui_TeamFortressViewport.h"
-#include "vgui_SpectatorPanel.h"
+#include "VGUI/vgui_SpectatorPanel.h"
 #include "hltv.h"
 
 #include "pm_shared.h"
@@ -696,7 +696,7 @@ void CHudSpectator::DirectorMessage( int iSize, void *pbuf )
 							g_iPlayerClass = 0;
 							g_iTeamNumber = 0;
 
-							// fake a InitHUD/hud.h & ResetHUD/hud.h message
+							// fake a InitHUD & ResetHUD message
 							gHUD.MsgFunc_InitHUD(NULL,0, NULL);
 							gHUD.MsgFunc_ResetHUD(NULL, 0, NULL);
 														
@@ -1556,7 +1556,7 @@ void CHudSpectator::DrawOverviewEntities()
 	
 
 	z = m_OverviewData.layersHeights[0] * zScale;
-	// get yellow/brown HUD/hud.h color
+	// get yellow/brown HUD color
 	UnpackRGB(ir,ig,ib, RGB_YELLOWISH);
 	r = (float)ir/255.0f;
 	g = (float)ig/255.0f;
@@ -1652,7 +1652,7 @@ void CHudSpectator::DrawOverviewEntities()
 		gEngfuncs.pTriAPI->Vertex3f (origin[0]-4, origin[1]+4,z);
 		gEngfuncs.pTriAPI->End ();
 
-		// calculate screen position for name and infromation in HUD/hud.h::draw()
+		// calculate screen position for name and infromation in HUD::draw()
 		if ( gEngfuncs.pTriAPI->WorldToScreen(origin,screen) )
 			continue;	// object is behind viewer
 
@@ -1933,7 +1933,7 @@ int CHudSpectator::ToggleInset(bool allowOff)
 }
 void CHudSpectator::Reset()
 {
-	// Reset HUD/hud.h
+	// Reset HUD
 	if ( strcmp( m_OverviewData.map, gEngfuncs.pfnGetLevelName() ) )
 	{
 		// update level overview if level changed
@@ -1975,7 +1975,7 @@ void CHudSpectator::InitHUDData()
 
 	g_iUser2 = 0; // fake not target until first camera command
 
-	// reset HUD/hud.h FOV
+	// reset HUD FOV
 	gHUD.m_iFOV =  CVAR_GET_FLOAT("default_fov");
 }
 

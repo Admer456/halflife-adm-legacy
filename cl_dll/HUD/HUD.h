@@ -94,7 +94,7 @@ struct HUDLIST {
 //
 //-----------------------------------------------------
 //
-#include "voice_status.h" // base voice handling class
+#include "VoiceStatus.h" // base voice handling class
 #include "HUD/hud_spectator.h"
 
 

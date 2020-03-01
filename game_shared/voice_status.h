@@ -48,7 +48,7 @@ public:
 
 
 
-class IVoiceHUD/hud.h
+class IVoiceHUD
 {
 public:
 

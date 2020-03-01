@@ -1546,81 +1546,81 @@ void CBasePlayer::PlayerUse ( void )
 		}
 	}
 
-	CBaseEntity *pObject = NULL;
-	CBaseEntity *pClosest = NULL;
-	Vector		vecLOS;
-	float flMaxDot = VIEW_FIELD_NARROW;
-	float flDot;
-
 	UTIL_MakeVectors ( pev->v_angle );// so we know which way we are facing
 
-	// TODO: Replace search by radius with a traceline
-	while ((pObject = UTIL_FindEntityInSphere( pObject, pev->origin, PLAYER_SEARCH_RADIUS )) != NULL)
-	{
+	// Perform a traceline
+	Vector vecView = pev->origin + pev->view_ofs;
+	Vector vecLookAt = vecView + gpGlobals->v_forward * PLAYER_SEARCH_RADIUS;
+	CBaseEntity *pObject = NULL;
+	TraceResult trCheckWall;
 
-		if (pObject->ObjectCaps() & (FCAP_IMPULSE_USE | FCAP_CONTINUOUS_USE | FCAP_ONOFF_USE))
+	UTIL_TraceLine( vecView, vecLookAt, dont_ignore_monsters, dont_ignore_glass, ENT( pev ), &trCheckWall );
+	pObject = CBaseEntity::Instance( trCheckWall.pHit );
+	bool hasHit = trCheckWall.flFraction < 1.0;
+	bool isWorld = pObject->entindex() == 0 && hasHit;
+
+	// Perform search by radius just in case we're encountering a momentary rotating button
+	// Traceline for some reason doesn't detect that specfiic entity
+	if ( hasHit && isWorld )
+	{
+		float flMaxDot = VIEW_FIELD_ULTRA_NARROW;
+		CBaseEntity *pSearchEnt = nullptr;
+
+		while ( pSearchEnt = UTIL_FindEntityInSphere( pSearchEnt, pev->origin, PLAYER_SEARCH_RADIUS ) )
 		{
-			// !!!PERFORMANCE- should this check be done on a per case basis AFTER we've determined that
-			// this object is actually usable? This dot is being done for every object within PLAYER_SEARCH_RADIUS
-			// when player hits the use key. How many objects can be in that area, anyway? (sjb)
-			vecLOS = (VecBModelOrigin( pObject->pev ) - (pev->origin + pev->view_ofs));
-			
-			// This essentially moves the origin of the target to the corner nearest the player to test to see 
-			// if it's "hull" is in the view cone
-			vecLOS = UTIL_ClampVectorToBox( vecLOS, pObject->pev->size * 0.5 );
-			
-			flDot = DotProduct (vecLOS , gpGlobals->v_forward);
-			if (flDot > flMaxDot )
-			{// only if the item is in front of the user
-				pClosest = pObject;
-				flMaxDot = flDot;
-//				ALERT( at_console, "%s : %f\n", STRING( pObject->pev->classname ), flDot );
+			if ( pSearchEnt->ObjectCaps() & (FCAP_IMPULSE_USE | FCAP_CONTINUOUS_USE | FCAP_ONOFF_USE) )
+			{
+				// !!!PERFORMANCE- should this check be done on a per case basis AFTER we've determined that
+				// this object is actually usable? This dot is being done for every object within PLAYER_SEARCH_RADIUS
+				// when player hits the use key. How many objects can be in that area, anyway? (sjb)
+				Vector vecLOS = (VecBModelOrigin( pSearchEnt->pev ) - (pev->origin + pev->view_ofs));
+
+				// This essentially moves the origin of the target to the corner nearest the player to test to see 
+				// if its "hull" is in the view cone
+				vecLOS = UTIL_ClampVectorToBox( vecLOS, pSearchEnt->pev->size * 0.5 );
+
+				float flDot = DotProduct( vecLOS, gpGlobals->v_forward );
+
+				if ( flDot > flMaxDot )
+				{	// only if the item is in front of the user
+					pObject = pSearchEnt;
+					flMaxDot = flDot;
+
+					isWorld = false;
+				}
 			}
-//			ALERT( at_console, "%s : %f\n", STRING( pObject->pev->classname ), flDot );
 		}
 	}
-	pObject = pClosest;
 
 	// Found an object
-	if ( pObject )
+	if ( hasHit && !isWorld )
 	{
-		bool fHitWall = false;
-		TraceResult trCheckWall;
-		UTIL_TraceLine( pev->origin + pev->view_ofs, pObject->Center(), dont_ignore_monsters, ENT( pev ), &trCheckWall );
+		ALERT( at_console, "Hit the object we're looking at! %s\n", STRING( pObject->pev->classname ) );
 
-		if ( trCheckWall.pHit )
+		int caps = pObject->ObjectCaps();
+
+		if ( m_afButtonPressed & IN_USE )
+			EMIT_SOUND( ENT( pev ), CHAN_ITEM, "common/wpn_select.wav", 0.4, ATTN_NORM );
+
+		if ( ((pev->button & IN_USE) && (caps & FCAP_CONTINUOUS_USE)) ||
+			((m_afButtonPressed & IN_USE) && (caps & (FCAP_IMPULSE_USE | FCAP_ONOFF_USE))) )
 		{
-			CBaseEntity *pCheckEnt = CBaseEntity::Instance( trCheckWall.pHit );
+			if ( caps & FCAP_CONTINUOUS_USE )
+				m_afPhysicsFlags |= PFLAG_USING;
 
-			// Compare entity indices to determine if we're actually looking at the entity we just used
-			fHitWall = (pObject->entindex() == pCheckEnt->entindex());
+			pObject->Use( this, this, USE_SET, 1 );
 		}
-		
-		// The object is what we're actually aiming at
-		if ( !fHitWall )
+		// TODO: Send different USE codes for ON/OFF.  Cache last ONOFF_USE object to send 'off' if you turn away
+		else if ( (m_afButtonReleased & IN_USE) && (pObject->ObjectCaps() & FCAP_ONOFF_USE) )	// BUGBUG This is an "off" use
 		{
-			int caps = pObject->ObjectCaps();
-
-			if ( m_afButtonPressed & IN_USE )
-				EMIT_SOUND( ENT( pev ), CHAN_ITEM, "common/wpn_select.wav", 0.4, ATTN_NORM );
-
-			if ( ((pev->button & IN_USE) && (caps & FCAP_CONTINUOUS_USE)) ||
-				((m_afButtonPressed & IN_USE) && (caps & (FCAP_IMPULSE_USE | FCAP_ONOFF_USE))) )
-			{
-				if ( caps & FCAP_CONTINUOUS_USE )
-					m_afPhysicsFlags |= PFLAG_USING;
-
-				pObject->Use( this, this, USE_SET, 1 );
-			}
-			// TODO: Send different USE codes for ON/OFF.  Cache last ONOFF_USE object to send 'off' if you turn away
-			else if ( (m_afButtonReleased & IN_USE) && (pObject->ObjectCaps() & FCAP_ONOFF_USE) )	// BUGBUG This is an "off" use
-			{
-				pObject->Use( this, this, USE_SET, 0 );
-			}
+			pObject->Use( this, this, USE_SET, 0 );
 		}
 	}
+
 	else
 	{
+		ALERT( at_console, "Did NOT hit the object we're looking at\n" );
+
 		if ( m_afButtonPressed & IN_USE )
 			EMIT_SOUND( ENT(pev), CHAN_ITEM, "common/wpn_denyselect.wav", 0.4, ATTN_NORM);
 	}

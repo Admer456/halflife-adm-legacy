@@ -17,7 +17,7 @@
 //=========================================================
 
 #include	"Base/ExtDLL.h"
-#include	"util.h"
+#include	"Util.h"
 #include	"Base/CBase.h"
 #include	"AI/Monsters.h"
 #include	"AI/Schedule.h"

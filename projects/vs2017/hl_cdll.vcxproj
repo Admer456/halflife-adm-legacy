@@ -111,7 +111,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\cl_dll\adm\AdmClientsideExtensions.cpp" />
-    <ClCompile Include="..\..\cl_dll\adm\shared\AdmClientsideSound.cpp" />
+    <ClCompile Include="..\..\cl_dll\ADM\AdmClientsideSound.cpp" />
     <ClCompile Include="..\..\cl_dll\CDLL_Int.cpp" />
     <ClCompile Include="..\..\cl_dll\COM_Weapons.cpp" />
     <ClCompile Include="..\..\cl_dll\Demo.cpp" />
@@ -153,12 +153,10 @@
     <ClCompile Include="..\..\cl_dll\Input\IN_Camera.cpp" />
     <ClCompile Include="..\..\cl_dll\Interpolation.cpp" />
     <ClCompile Include="..\..\cl_dll\Rendering\GameStudioModelRenderer.cpp" />
-    <ClCompile Include="..\..\cl_dll\Rendering\GameStudioModelRenderer_Sample.cpp" />
     <ClCompile Include="..\..\cl_dll\Rendering\StudioModelRenderer.cpp" />
     <ClCompile Include="..\..\cl_dll\Rendering\StudioUtil.cpp" />
     <ClCompile Include="..\..\cl_dll\Rendering\Tri.cpp" />
     <ClCompile Include="..\..\cl_dll\Rendering\View.cpp" />
-    <ClCompile Include="..\..\cl_dll\SoundSystem.cpp" />
     <ClCompile Include="..\..\cl_dll\Util.cpp" />
     <ClCompile Include="..\..\cl_dll\VGUI\vgui_ClassMenu.cpp" />
     <ClCompile Include="..\..\cl_dll\VGUI\vgui_ConsolePanel.cpp" />
@@ -177,6 +175,7 @@
     <ClCompile Include="..\..\dlls\adm\AdmSound.cpp" />
     <ClCompile Include="..\..\dlls\adm\shared\AdmControl.cpp" />
     <ClCompile Include="..\..\dlls\adm\shared\AdmSoundList.cpp" />
+    <ClCompile Include="..\..\dlls\ADM\shared\AdmTime.cpp" />
     <ClCompile Include="..\..\dlls\Weapons\Crossbow.cpp" />
     <ClCompile Include="..\..\dlls\Weapons\Crowbar.cpp" />
     <ClCompile Include="..\..\dlls\Weapons\Egon.cpp" />
@@ -232,7 +231,6 @@
     <ClInclude Include="..\..\cl_dll\Interpolation.h" />
     <ClInclude Include="..\..\cl_dll\PlayerInfo.h" />
     <ClInclude Include="..\..\cl_dll\Rendering\GameStudioModelRenderer.h" />
-    <ClInclude Include="..\..\cl_dll\Rendering\GameStudioModelRenderer_Sample.h" />
     <ClInclude Include="..\..\cl_dll\Rendering\StudioModelRenderer.h" />
     <ClInclude Include="..\..\cl_dll\Rendering\StudioUtil.h" />
     <ClInclude Include="..\..\cl_dll\Rendering\Tri.h" />
@@ -251,9 +249,9 @@
     <ClInclude Include="..\..\common\parsemsg.h" />
     <ClInclude Include="..\..\common\Platform.h" />
     <ClInclude Include="..\..\dlls\ADM\AdmRenderer.h" />
-    <ClInclude Include="..\..\dlls\adm\adm_sound.h" />
-    <ClInclude Include="..\..\dlls\adm\shared\adm_control.h" />
-    <ClInclude Include="..\..\dlls\adm\shared\adm_sound_list.h" />
+    <ClInclude Include="..\..\dlls\ADM\shared\AdmControl.h" />
+    <ClInclude Include="..\..\dlls\ADM\shared\AdmSoundList.h" />
+    <ClInclude Include="..\..\dlls\ADM\shared\AdmTime.h" />
     <ClInclude Include="..\..\game_shared\adm\DelayLoad.h" />
     <ClInclude Include="..\..\game_shared\vgui_scrollbar2.h" />
     <ClInclude Include="..\..\game_shared\vgui_slider2.h" />

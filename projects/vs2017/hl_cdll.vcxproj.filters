@@ -119,9 +119,6 @@
     <ClCompile Include="..\..\dlls\adm\AdmSound.cpp">
       <Filter>Source Files\ADM\Shared</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\cl_dll\adm\shared\AdmClientsideSound.cpp">
-      <Filter>Source Files\ADM</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\dlls\Weapons\Glock.cpp">
       <Filter>Source Files\Weapons</Filter>
     </ClCompile>
@@ -281,9 +278,6 @@
     <ClCompile Include="..\..\cl_dll\Events\EV_Common.cpp">
       <Filter>Source Files\Events</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\cl_dll\Rendering\GameStudioModelRenderer_Sample.cpp">
-      <Filter>Source Files\Rendering</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\cl_dll\Rendering\StudioModelRenderer.cpp">
       <Filter>Source Files\Rendering</Filter>
     </ClCompile>
@@ -326,11 +320,14 @@
     <ClCompile Include="..\..\cl_dll\Interpolation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\cl_dll\SoundSystem.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\cl_dll\Util.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\ADM\shared\AdmTime.cpp">
+      <Filter>Source Files\ADM\Shared</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cl_dll\ADM\AdmClientsideSound.cpp">
+      <Filter>Source Files\ADM</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -369,15 +366,6 @@
     </ClInclude>
     <ClInclude Include="..\..\common\Platform.h">
       <Filter>Source Files\Common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\dlls\adm\shared\adm_control.h">
-      <Filter>Source Files\ADM\Shared</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\dlls\adm\adm_sound.h">
-      <Filter>Source Files\ADM\Shared</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\dlls\adm\shared\adm_sound_list.h">
-      <Filter>Source Files\ADM\Shared</Filter>
     </ClInclude>
     <ClInclude Include="..\..\game_shared\adm\DelayLoad.h">
       <Filter>Source Files\ADM\Shared</Filter>
@@ -448,9 +436,6 @@
     <ClInclude Include="..\..\cl_dll\Events\EventScripts.h">
       <Filter>Source Files\Events</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\cl_dll\Rendering\GameStudioModelRenderer_Sample.h">
-      <Filter>Source Files\Rendering</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\cl_dll\Rendering\StudioModelRenderer.h">
       <Filter>Source Files\Rendering</Filter>
     </ClInclude>
@@ -510,6 +495,15 @@
     </ClInclude>
     <ClInclude Include="..\..\cl_dll\WRect.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dlls\ADM\shared\AdmTime.h">
+      <Filter>Source Files\ADM\Shared</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dlls\ADM\shared\AdmControl.h">
+      <Filter>Source Files\ADM\Shared</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dlls\ADM\shared\AdmSoundList.h">
+      <Filter>Source Files\ADM\Shared</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

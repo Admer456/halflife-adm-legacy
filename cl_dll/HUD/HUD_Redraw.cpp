@@ -64,7 +64,7 @@ void CHud::Think(void)
 		m_iFOV = newfov;
 	}
 
-	// the clients fov is actually set in the client data update section of the HUD/hud.h
+	// the clients fov is actually set in the client data update section of the HUD
 
 	// Set a new sensitivity
 	if ( m_iFOV == default_fov->value )
@@ -146,7 +146,7 @@ int CHud :: Redraw( float flTime, int intermission )
 	// if no redrawing is necessary
 	// return 0;
 	
-	// draw all registered HUD/hud.h elements
+	// draw all registered HUD elements
 	if ( m_pCvarDraw->value )
 	{
 		HUDLIST *pList = m_pHUDList;
@@ -161,7 +161,7 @@ int CHud :: Redraw( float flTime, int intermission )
 						pList->p->Draw(flTime);
 				}
 				else
-				{  // it's an intermission,  so only draw HUD/hud.h elements that are set to draw during intermissions
+				{  // it's an intermission,  so only draw HUD elements that are set to draw during intermissions
 					if ( pList->p->m_iFlags & HUD_INTERMISSION )
 						pList->p->Draw( flTime );
 				}

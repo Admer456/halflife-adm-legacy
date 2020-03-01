@@ -21,7 +21,7 @@
 */
 
 #include "Base/ExtDLL.h"
-#include "util.h"
+#include "Util.h"
 #include "Base/CBase.h"
 #include "Weapons/Weapons.h"
 #include "player.h"
@@ -332,7 +332,7 @@ class CItemLongJump : public CItem
 				WRITE_STRING( STRING(pev->classname) );
 			MESSAGE_END();
 
-			EMIT_SOUND_SUIT( pPlayer->edict(), "!HEV_A1" );	// Play the longjump sound UNDONE: Kelly? correct sound?
+			EMIT_SOUND_SUIT( pPlayer->edict(), "!HEV_A1" );	// Play the longjump sound TODO: Kelly? correct sound?
 			return TRUE;		
 		}
 		return FALSE;

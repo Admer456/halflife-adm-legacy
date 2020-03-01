@@ -15,7 +15,7 @@
 #if !defined( OEM_BUILD ) && !defined( HLDEMO_BUILD )
 
 #include "Base/ExtDLL.h"
-#include "util.h"
+#include "Util.h"
 #include "Base/CBase.h"
 #include "player.h"
 #include "AI/Monsters.h"

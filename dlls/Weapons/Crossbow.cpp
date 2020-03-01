@@ -15,7 +15,7 @@
 #if !defined( OEM_BUILD ) && !defined( HLDEMO_BUILD )
 
 #include "Base/ExtDLL.h"
-#include "util.h"
+#include "Util.h"
 #include "Base/cbase.h"
 #include "AI/monsters.h"
 #include "Weapons/Weapons.h"
@@ -27,7 +27,7 @@
 #define BOLT_AIR_VELOCITY	2000
 #define BOLT_WATER_VELOCITY	1000
 
-// UNDONE: Save/restore this?  Don't forget to set classname and LINK_ENTITY_TO_CLASS()
+// TODO: Save/restore this?  Don't forget to set classname and LINK_ENTITY_TO_CLASS()
 // 
 // OVERLOADS SOME ENTVARS:
 //
@@ -106,7 +106,7 @@ void CCrossbowBolt::BoltTouch( CBaseEntity *pOther )
 
 		pevOwner = VARS( pev->owner );
 
-		// UNDONE: this needs to call TraceAttack instead
+		// TODO: this needs to call TraceAttack instead
 		ClearMultiDamage( );
 
 		if ( pOther->IsPlayer() )

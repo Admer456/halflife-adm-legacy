@@ -15,7 +15,7 @@
 #ifndef OEM_BUILD
 
 #include "Base/ExtDLL.h"
-#include "util.h"
+#include "Util.h"
 #include "Base/CBase.h"
 #include "AI/Monsters.h"
 #include "Weapons/Weapons.h"
@@ -24,7 +24,7 @@
 
 extern DLL_GLOBAL int		g_iSkillLevel;
 
-#define SF_WAITFORTRIGGER	(0x04 | 0x40) // UNDONE: Fix!
+#define SF_WAITFORTRIGGER	(0x04 | 0x40) // TODO: Fix!
 #define SF_NOWRECKAGE		0x08
 
 class CApache : public CBaseMonster
@@ -415,7 +415,7 @@ void CApache::FlyTouch( CBaseEntity *pOther )
 	{
 		TraceResult tr = UTIL_GetGlobalTrace( );
 
-		// UNDONE, do a real bounce
+		// TODO, do a real bounce
 		pev->velocity = pev->velocity + tr.vecPlaneNormal * (pev->velocity.Length() + 200);
 	}
 }
@@ -715,7 +715,7 @@ void CApache :: Flight( void )
 		CBaseEntity *pPlayer = NULL;
 
 		pPlayer = UTIL_FindEntityByClassname( NULL, "player" );
-		// UNDONE: this needs to send different sounds to every player for multiplayer.	
+		// TODO: this needs to send different sounds to every player for multiplayer.	
 		if (pPlayer)
 		{
 

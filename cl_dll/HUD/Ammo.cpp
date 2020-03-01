@@ -438,7 +438,7 @@ void WeaponsResource :: SelectSlot( int iSlot, int fAdvance, int iDirection )
 
 	if ( (gpActiveSel == NULL) || (gpActiveSel == (WEAPON *)1) || (iSlot != gpActiveSel->iSlot) )
 	{
-		PlaySound( "common/wpn_HUD/hud.hon.wav", 1 );
+		PlaySound( "common/wpn_hudon.wav", 1 );
 		p = GetFirstPos( iSlot );
 
 		if ( p && fastSwitch ) // check for fast weapon switch mode
@@ -555,7 +555,7 @@ int CHudAmmo::MsgFunc_HideWeapon( const char *pszName, int iSize, void *pbuf )
 }
 
 // 
-//  CurWeapon: Update HUD/hud.h state with the current weapon and clip count. Ammo
+//  CurWeapon: Update HUD state with the current weapon and clip count. Ammo
 //  counts are updated with AmmoX. Server assures that the Weapon ammo type 
 //  numbers match a real ammo type.
 //
@@ -633,7 +633,7 @@ int CHudAmmo::MsgFunc_CurWeapon(const char *pszName, int iSize, void *pbuf )
 }
 
 //
-// WeaponList -- Tells the HUD/hud.h about a new weapon type.
+// WeaponList -- Tells the HUD about a new weapon type.
 //
 int CHudAmmo::MsgFunc_WeaponList(const char *pszName, int iSize, void *pbuf )
 {
@@ -733,7 +733,7 @@ void CHudAmmo::UserCmd_Close(void)
 	{
 		gpLastSel = gpActiveSel;
 		gpActiveSel = NULL;
-		PlaySound("common/wpn_HUD/hud.hoff.wav", 1);
+		PlaySound("common/wpn_hudoff.wav", 1);
 	}
 	else
 		EngineClientCmd("escape");
@@ -946,7 +946,7 @@ int CHudAmmo::Draw(float flTime)
 
 
 //
-// Draws the ammo bar on the HUD/hud.h
+// Draws the ammo bar on the HUD
 //
 int DrawBar(int x, int y, int width, int height, float f)
 {
