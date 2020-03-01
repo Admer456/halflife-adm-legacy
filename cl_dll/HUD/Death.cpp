@@ -15,14 +15,14 @@
 //
 // death notice
 //
-#include "hud.h"
+#include "HUD/hud.h"
 #include "cl_util.h"
 #include "parsemsg.h"
 
 #include <string.h>
 #include <stdio.h>
 
-#include "vgui_TeamFortressViewport.h"
+#include "VGUI/vgui_TeamFortressViewport.h"
 
 DECLARE_MESSAGE( m_DeathNotice, DeathMsg );
 
@@ -73,7 +73,7 @@ int CHudDeathNotice :: Init( void )
 
 	HOOK_MESSAGE( DeathMsg );
 
-	CVAR_CREATE( "hud_deathnotice_time", "6", 0 );
+	CVAR_CREATE( "HUD_deathnotice_time", "6", 0 );
 
 	return 1;
 }
@@ -241,7 +241,7 @@ int CHudDeathNotice :: MsgFunc_DeathMsg( const char *pszName, int iSize, void *p
 
 	rgDeathNoticeList[i].iId = spr;
 
-	DEATHNOTICE_DISPLAY_TIME = CVAR_GET_FLOAT( "hud_deathnotice_time" );
+	DEATHNOTICE_DISPLAY_TIME = CVAR_GET_FLOAT( "HUD_deathnotice_time" );
 	rgDeathNoticeList[i].flDisplayTime = gHUD.m_flTime + DEATHNOTICE_DISPLAY_TIME;
 
 	if (rgDeathNoticeList[i].iNonPlayerKill)

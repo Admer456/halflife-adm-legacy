@@ -20,20 +20,20 @@
 
 */
 
-#include "extdll.h"
-#include "util.h"
+#include "Base/ExtDLL.h"
+#include "Util.h"
 
-#include "cbase.h"
+#include "Base/CBase.h"
 #include "player.h"
 #include "trains.h"
 #include "nodes.h"
-#include "weapons.h"
+#include "Weapons/Weapons.h"
 #include "soundent.h"
-#include "monsters.h"
+#include "AI/Monsters.h"
 #include "shake.h"
 #include "decals.h"
-#include "gamerules.h"
-#include "game.h"
+#include "Game/GameRules.h"
+#include "Game/Game.h"
 #include "pm_shared.h"
 #include "hltv.h"
 
@@ -538,9 +538,9 @@ int CBasePlayer :: TakeDamage( entvars_t *pevInflictor, entvars_t *pevAttacker, 
 	// handle all bits set in this damage message,
 	// let the suit give player the diagnosis
 
-	// UNDONE: add sounds for types of damage sustained (ie: burn, shock, slash )
+	// TODO: add sounds for types of damage sustained (ie: burn, shock, slash )
 
-	// UNDONE: still need to record damage and heal messages for the following types
+	// TODO: still need to record damage and heal messages for the following types
 
 		// DMG_BURN	
 		// DMG_FREEZE
@@ -930,7 +930,7 @@ void CBasePlayer::Killed( entvars_t *pevAttacker, int iGib )
 	MESSAGE_END();
 
 
-	// UNDONE: Put this in, but add FFADE_PERMANENT and make fade time 8.8 instead of 4.12
+	// TODO: Put this in, but add FFADE_PERMANENT and make fade time 8.8 instead of 4.12
 	// UTIL_ScreenFade( edict(), Vector(128,0,0), 6, 15, 255, FFADE_OUT | FFADE_MODULATE );
 
 	if ( ( pev->health < -40 && iGib != GIB_NEVER ) || iGib == GIB_ALWAYS )
@@ -1612,7 +1612,7 @@ void CBasePlayer::PlayerUse ( void )
 
 				pObject->Use( this, this, USE_SET, 1 );
 			}
-			// UNDONE: Send different USE codes for ON/OFF.  Cache last ONOFF_USE object to send 'off' if you turn away
+			// TODO: Send different USE codes for ON/OFF.  Cache last ONOFF_USE object to send 'off' if you turn away
 			else if ( (m_afButtonReleased & IN_USE) && (pObject->ObjectCaps() & FCAP_ONOFF_USE) )	// BUGBUG This is an "off" use
 			{
 				pObject->Use( this, this, USE_SET, 0 );
@@ -1880,7 +1880,7 @@ void CBasePlayer::PreThink(void)
 	int buttonsChanged = (m_afButtonLast ^ pev->button);	// These buttons have changed this frame
 	
 	// Debounced button codes for pressed/released
-	// UNDONE: Do we need auto-repeat?
+	// TODO: Do we need auto-repeat?
 	m_afButtonPressed =  buttonsChanged & pev->button;		// The changed ones still down are "pressed"
 	m_afButtonReleased = buttonsChanged & (~pev->button);	// The ones not down are "released"
 
@@ -2114,7 +2114,7 @@ void CBasePlayer::CheckTimeBasedDamage()
 			switch (i)
 			{
 			case itbd_Paralyze:
-				// UNDONE - flag movement as half-speed
+				// TODO - flag movement as half-speed
 				bDuration = PARALYZE_DURATION;
 				break;
 			case itbd_NerveGas:
@@ -3314,7 +3314,7 @@ const char *CBasePlayer::TeamID( void )
 
 
 //==============================================
-// !!!UNDONE:ultra temporary SprayCan entity to apply
+// !!!TODO:ultra temporary SprayCan entity to apply
 // decal frame at a time. For PreAlpha CD
 //==============================================
 class CSprayCan : public CBaseEntity
@@ -3522,7 +3522,7 @@ extern float g_flWeaponCheat;
 
 void CBasePlayer::ImpulseCommands( )
 {
-	TraceResult	tr;// UNDONE: kill me! This is temporary for PreAlpha CDs
+	TraceResult	tr;// TODO: kill me! This is temporary for PreAlpha CDs
 
 	// Handle use events
 	PlayerUse();
@@ -4381,7 +4381,7 @@ Vector CBasePlayer :: GetAutoaimVector( float flDelta )
 	float flDist = 8192;
 
 	// always use non-sticky autoaim
-	// UNDONE: use sever variable to chose!
+	// TODO: use sever variable to chose!
 	if (1 || g_iSkillLevel == SKILL_MEDIUM)
 	{
 		m_vecAutoAim = Vector( 0, 0, 0 );
@@ -4419,7 +4419,7 @@ Vector CBasePlayer :: GetAutoaimVector( float flDelta )
 
 
 	// always use non-sticky autoaim
-	// UNDONE: use sever variable to chose!
+	// TODO: use sever variable to chose!
 	if (0 || g_iSkillLevel == SKILL_EASY)
 	{
 		m_vecAutoAim = m_vecAutoAim * 0.67 + angles * 0.33;
@@ -4589,7 +4589,7 @@ void CBasePlayer :: ResetAutoaim( )
 =============
 SetCustomDecalFrames
 
-  UNDONE:  Determine real frame limit, 8 is a placeholder.
+  TODO:  Determine real frame limit, 8 is a placeholder.
   Note:  -1 means no custom frames present.
 =============
 */

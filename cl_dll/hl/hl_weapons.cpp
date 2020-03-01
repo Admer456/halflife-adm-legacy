@@ -12,11 +12,11 @@
 *   without written permission from Valve LLC.
 *
 ****/
-#include "extdll.h"
+#include "Base/ExtDLL.h"
 #include "util.h"
-#include "cbase.h"
-#include "monsters.h"
-#include "weapons.h"
+#include "Base/CBase.h"
+#include "AI/Monsters.h"
+#include "Weapons/Weapons.h"
 #include "nodes.h"
 #include "player.h"
 
@@ -27,7 +27,7 @@
 #include "event_api.h"
 #include "r_efx.h"
 
-#include "../hud_iface.h"
+#include "../HUD/hud_iface.h"
 #include "../com_weapons.h"
 #include "../demo.h"
 

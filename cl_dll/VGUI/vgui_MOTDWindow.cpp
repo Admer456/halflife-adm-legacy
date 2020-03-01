@@ -22,14 +22,14 @@
 
 #include<VGUI_StackLayout.h>
 
-#include "hud.h"
+#include "HUD/hud.h"
 #include "cl_util.h"
-#include "camera.h"
-#include "kbutton.h"
+#include "Input/Camera.h"
+#include "Input/KButton.h"
 #include "const.h"
 
-#include "vgui_int.h"
-#include "vgui_TeamFortressViewport.h"
+#include "VGUI/vgui_int.h"
+#include "VGUI/vgui_TeamFortressViewport.h"
 #include "vgui_ServerBrowser.h"
 
 #define MOTD_TITLE_X		XRES(16)

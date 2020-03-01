@@ -2,15 +2,15 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#include "hud.h"
+#include "HUD/hud.h"
 #include "cl_util.h"
 #include "const.h"
 #include "entity_state.h"
 #include "cl_entity.h"
 #include "pm_shared.h"
-#include "vgui_TeamFortressViewport.h"
+#include "VGUI/vgui_TeamFortressViewport.h"
 #include "vgui_SpectatorPanel.h"
-#include "vgui_ScorePanel.h"
+#include "VGUI/vgui_ScorePanel.h"
 
 #include "Exports.h"
 

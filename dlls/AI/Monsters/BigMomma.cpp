@@ -17,14 +17,14 @@
 //=========================================================
 // monster template
 //=========================================================
-#include	"extdll.h"
-#include	"util.h"
-#include	"cbase.h"
-#include	"monsters.h"
-#include	"schedule.h"
+#include	"Base/ExtDLL.h"
+#include	"Util.h"
+#include	"Base/CBase.h"
+#include	"AI/Monsters.h"
+#include	"AI/Schedule.h"
 #include	"decals.h"
-#include	"weapons.h"
-#include	"game.h"
+#include	"Weapons/Weapons.h"
+#include	"Game/Game.h"
 
 #define SF_INFOBM_RUN		0x0001
 #define SF_INFOBM_WAIT		0x0002
@@ -168,7 +168,7 @@ Vector VecCheckSplatToss( entvars_t *pev, const Vector &vecSpot1, Vector vecSpot
 void MortarSpray( const Vector &position, const Vector &direction, int spriteModel, int count );
 
 
-// UNDONE:	
+// TODO:	
 //
 #define BIG_CHILDCLASS		"monster_babycrab"
 
@@ -1151,7 +1151,7 @@ void MortarSpray( const Vector &position, const Vector &direction, int spriteMod
 }
 
 
-// UNDONE: right now this is pretty much a copy of the squid spit with minor changes to the way it does damage
+// TODO: right now this is pretty much a copy of the squid spit with minor changes to the way it does damage
 void CBMortar:: Spawn( void )
 {
 	pev->movetype = MOVETYPE_TOSS;

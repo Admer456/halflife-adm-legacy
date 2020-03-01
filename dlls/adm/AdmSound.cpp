@@ -25,13 +25,13 @@
 
 */
 #ifndef CLIENT_DLL
-#include "extdll.h"
-//#include "cbase.h"
+#include "Base/ExtDLL.h"
+//#include "Base/CBase.h"
 #include "util.h"
 #endif
 
 #ifdef CLIENT_DLL
-#include "hud.h"
+#include "HUD/hud.h"
 #include "cl_util.h"
 #endif
 

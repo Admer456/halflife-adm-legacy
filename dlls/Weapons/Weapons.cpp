@@ -20,16 +20,16 @@
 
 */
 
-#include "extdll.h"
-#include "util.h"
-#include "cbase.h"
+#include "Base/ExtDLL.h"
+#include "Util.h"
+#include "Base/CBase.h"
 #include "player.h"
-#include "monsters.h"
-#include "weapons.h"
+#include "AI/Monsters.h"
+#include "Weapons/Weapons.h"
 #include "nodes.h"
 #include "soundent.h"
 #include "decals.h"
-#include "gamerules.h"
+#include "Game/GameRules.h"
 
 extern CGraph	WorldGraph;
 extern int gEvilImpulse101;
@@ -129,7 +129,7 @@ void AddMultiDamage( entvars_t *pevInflictor, CBaseEntity *pEntity, float flDama
 
 	if ( pEntity != gMultiDamage.pEntity )
 	{
-		ApplyMultiDamage(pevInflictor,pevInflictor); // UNDONE: wrong attacker!
+		ApplyMultiDamage(pevInflictor,pevInflictor); // TODO: wrong attacker!
 		gMultiDamage.pEntity	= pEntity;
 		gMultiDamage.amount		= 0;
 	}
@@ -219,7 +219,7 @@ void EjectBrass ( const Vector &vecOrigin, const Vector &vecVelocity, float rota
 
 
 #if 0
-// UNDONE: This is no longer used?
+// TODO: This is no longer used?
 void ExplodeModel( const Vector &vecOrigin, float speed, int model, int count )
 {
 	MESSAGE_BEGIN( MSG_PVS, SVC_TEMPENTITY, vecOrigin );
@@ -621,7 +621,7 @@ void CBasePlayerItem::DefaultTouch( CBaseEntity *pOther )
 		EMIT_SOUND(ENT(pPlayer->pev), CHAN_ITEM, "items/gunpickup2.wav", 1, ATTN_NORM);
 	}
 
-	SUB_UseTargets( pOther, USE_TOGGLE, 0 ); // UNDONE: when should this happen?
+	SUB_UseTargets( pOther, USE_TOGGLE, 0 ); // TODO: when should this happen?
 }
 
 BOOL CanAttack( float attack_time, float curtime, BOOL isPredicted )
@@ -1018,7 +1018,7 @@ BOOL CBasePlayerWeapon :: DefaultReload( int iClipSize, int iAnim, float fDelay,
 
 	m_pPlayer->m_flNextAttack = UTIL_WeaponTimeBase() + fDelay;
 
-	//!!UNDONE -- reload sound goes here !!!
+	//!!TODO -- reload sound goes here !!!
 	SendWeaponAnim( iAnim, UseDecrement() ? 1 : 0 );
 
 	m_fInReload = TRUE;

@@ -15,7 +15,7 @@
 //
 // status_icons.cpp
 //
-#include "hud.h"
+#include "HUD/hud.h"
 #include "cl_util.h"
 #include "const.h"
 #include "entity_state.h"
@@ -131,7 +131,7 @@ void CHudStatusIcons::EnableIcon( char *pszIconName, unsigned char red, unsigned
 	}
 
 	// Load the sprite and add it to the list
-	// the sprite must be listed in hud.txt
+	// the sprite must be listed in HUD/hud.h.txt
 	int spr_index = gHUD.GetSpriteIndex( pszIconName );
 	m_IconList[i].spr = gHUD.GetSprite( spr_index );
 	m_IconList[i].rc = gHUD.GetSpriteRect( spr_index );

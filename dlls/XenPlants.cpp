@@ -12,11 +12,11 @@
 *   without written permission from Valve LLC.
 *
 ****/
-#include "extdll.h"
-#include "util.h"
-#include "cbase.h"
-#include "animation.h"
-#include "effects.h"
+#include "Base/ExtDLL.h"
+#include "Util.h"
+#include "Base/CBase.h"
+#include "Base/Animation.h"
+#include "Effects.h"
 
 
 #define XEN_PLANT_GLOW_SPRITE		"sprites/flare3.spr"
@@ -418,7 +418,7 @@ void CXenTree :: Think( void )
 }
 
 
-// UNDONE:	These need to smoke somehow when they take damage
+// TODO:	These need to smoke somehow when they take damage
 //			Touch behavior?
 //			Cause damage in smoke area
 

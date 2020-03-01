@@ -6,11 +6,11 @@
 //=============================================================================
 
 #include <memory.h>
-#include "hud.h"
+#include "HUD/hud.h"
 #include "cl_util.h"
 #include "const.h"
 #include "com_model.h"
-#include "studio_util.h"
+#include "Rendering/StudioUtil.h"
 
 /*
 ====================

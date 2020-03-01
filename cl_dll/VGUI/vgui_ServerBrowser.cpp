@@ -12,12 +12,12 @@
 #include<VGUI_Button.h>
 #include<VGUI_ActionSignal.h>
 
-#include "hud.h"
+#include "HUD/hud.h"
 #include "cl_util.h"
-#include "hud_servers.h"
+#include "HUD/HUD_servers.h"
 #include "net_api.h"
 
-#include "vgui_TeamFortressViewport.h"
+#include "VGUI/vgui_TeamFortressViewport.h"
 #include "vgui_ServerBrowser.h"
 
 using namespace vgui;

@@ -16,12 +16,12 @@
 // nodes.cpp - AI node tree stuff.
 //=========================================================
 
-#include	"extdll.h"
-#include	"util.h"
-#include	"cbase.h"
-#include	"monsters.h"
+#include	"Base/ExtDLL.h"
+#include	"Util.h"
+#include	"Base/CBase.h"
+#include	"AI/Monsters.h"
 #include	"nodes.h"
-#include	"animation.h"
+#include	"Base/Animation.h"
 #include	"doors.h"
 
 #if !defined ( _WIN32 )
@@ -161,7 +161,7 @@ entvars_t* CGraph :: LinkEntForLink ( CLink *pLink, CNode *pNode )
 	if ( FClassnameIs ( pevLinkEnt, "func_door" ) || FClassnameIs ( pevLinkEnt, "func_door_rotating" ) )
 	{
 
-		///!!!UNDONE - check for TOGGLE or STAY open doors here. If a door is in the way, and is 
+		///!!!TODO - check for TOGGLE or STAY open doors here. If a door is in the way, and is 
 		// TOGGLE or STAY OPEN, even monsters that can't open doors can go that way.
 
 		if ( ( pevLinkEnt->spawnflags & SF_DOOR_USE_ONLY ) )
@@ -1476,7 +1476,7 @@ void CTestHull :: Spawn( entvars_t *pevMasterNode )
 	}
 
 	// Make this invisible
-	// UNDONE: Shouldn't we just use EF_NODRAW?  This doesn't need to go to the client.
+	// TODO: Shouldn't we just use EF_NODRAW?  This doesn't need to go to the client.
 	pev->rendermode = kRenderTransTexture;
 	pev->renderamt = 0;
 }
@@ -2077,7 +2077,7 @@ void CTestHull :: PathFind ( void )
 		return;
 	}
 
-	iPathSize = WorldGraph.FindShortestPath ( iPath, 0, 19, 0, 0 ); // UNDONE use hull constant
+	iPathSize = WorldGraph.FindShortestPath ( iPath, 0, 19, 0, 0 ); // TODO use hull constant
 
 	if ( !iPathSize )
 	{

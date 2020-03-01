@@ -18,11 +18,11 @@
 // Misc utility code
 //
 #ifndef ACTIVITY_H
-#include "activity.h"
+#include "AI/Activity.h"
 #endif
 
 #ifndef ENGINECALLBACK_H
-#include "enginecallback.h"
+#include "Base/EngineCallBack.h"
 #endif
 inline void MESSAGE_BEGIN( int msg_dest, int msg_type, const float *pOrigin, entvars_t *ent );  // implementation later in this file
 

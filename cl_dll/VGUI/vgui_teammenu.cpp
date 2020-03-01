@@ -16,14 +16,14 @@
 // $NoKeywords: $
 //=============================================================================
 
-#include "vgui_int.h"
+#include "VGUI/vgui_int.h"
 #include "VGUI_Font.h"
 #include "VGUI_ScrollPanel.h"
 #include "VGUI_TextImage.h"
 
-#include "hud.h"
+#include "HUD/hud.h"
 #include "cl_util.h"
-#include "vgui_TeamFortressViewport.h"
+#include "VGUI/vgui_TeamFortressViewport.h"
 
 // Team Menu Dimensions
 #define TEAMMENU_TITLE_X				XRES(40)

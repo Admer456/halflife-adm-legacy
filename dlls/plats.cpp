@@ -20,11 +20,11 @@
 
 */
 
-#include "extdll.h"
-#include "util.h"
-#include "cbase.h"
+#include "Base/ExtDLL.h"
+#include "Util.h"
+#include "Base/CBase.h"
 #include "trains.h"
-#include "saverestore.h"
+#include "Base/SaveRestore.h"
 
 static void PlatSpawnInsideTrigger(entvars_t* pevPlatform);
 
@@ -244,7 +244,7 @@ public:
 LINK_ENTITY_TO_CLASS( func_plat, CFuncPlat );
 
 
-// UNDONE: Need to save this!!! It needs class & linkage
+// TODO: Need to save this!!! It needs class & linkage
 class CPlatTrigger : public CBaseEntity
 {
 public:
@@ -1714,7 +1714,7 @@ void CFuncTrackChange :: Precache( void )
 }
 
 
-// UNDONE: Filter touches before re-evaluating the train.
+// TODO: Filter touches before re-evaluating the train.
 void CFuncTrackChange :: Touch( CBaseEntity *pOther )
 {
 #if 0

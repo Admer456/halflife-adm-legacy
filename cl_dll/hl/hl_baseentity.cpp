@@ -21,11 +21,11 @@ This file contains "stubs" of class member implementations so that we can predic
  add in the functionality you need.
 ==========================
 */
-#include	"extdll.h"
+#include	"Base/ExtDLL.h"
 #include	"util.h"
-#include	"cbase.h"
+#include	"Base/CBase.h"
 #include	"player.h"
-#include	"weapons.h"
+#include	"Weapons/Weapons.h"
 #include	"nodes.h"
 #include	"soundent.h"
 #include	"skill.h"

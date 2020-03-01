@@ -13,14 +13,14 @@
 *
 ****/
 
-#include "extdll.h"
+#include "Base/ExtDLL.h"
 #include "util.h"
-#include "cbase.h"
-#include "monsters.h"
-#include "weapons.h"
+#include "Base/CBase.h"
+#include "AI/Monsters.h"
+#include "Weapons/Weapons.h"
 #include "nodes.h"
 #include "player.h"
-#include "gamerules.h"
+#include "Game/GameRules.h"
 
 
 #define	CROWBAR_BODYHIT_VOLUME 128

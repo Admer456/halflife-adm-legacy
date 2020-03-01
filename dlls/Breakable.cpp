@@ -19,10 +19,10 @@
   spawn, think, and use functions for entities that use brush models
 
 */
-#include "extdll.h"
-#include "util.h"
-#include "cbase.h"
-#include "saverestore.h"
+#include "Base/ExtDLL.h"
+#include "Util.h"
+#include "Base/CBase.h"
+#include "Base/SaveRestore.h"
 #include "func_break.h"
 #include "decals.h"
 #include "explode.h"
@@ -62,7 +62,7 @@ const char *CBreakable::pSpawnObjects[] =
 
 void CBreakable::KeyValue( KeyValueData* pkvd )
 {
-	// UNDONE_WC: explicitly ignoring these fields, but they shouldn't be in the map file!
+	// TODO_WC: explicitly ignoring these fields, but they shouldn't be in the map file!
 	if (FStrEq(pkvd->szKeyName, "explosion"))
 	{
 		if (!stricmp(pkvd->szValue, "directed"))
@@ -419,7 +419,7 @@ void CBreakable::DamageSound( void )
 		break;
 
 	case matCeilingTile:
-		// UNDONE: no ceiling tile shard sound yet
+		// TODO: no ceiling tile shard sound yet
 		i = 0;
 		break;
 	}

@@ -6,14 +6,14 @@
 
 */
 
-#include "extdll.h"
-#include "util.h"
+#include "Base/ExtDLL.h"
+#include "Util.h"
 //#include "steam_util.h"
-#include "cbase.h"
+#include "Base/CBase.h"
 #include "player.h"
-#include "saverestore.h"
-#include "game.h"
-#include "gamerules.h"
+#include "Base/SaveRestore.h"
+#include "Game/Game.h"
+#include "Game/GameRules.h"
 
 // ----- CStoryGlobal - story_value -----
 //

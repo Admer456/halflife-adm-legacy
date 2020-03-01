@@ -522,11 +522,11 @@ void PM_UpdateStepSound( void )
 	// determine if we are on a ladder
 	fLadder = ( pmove->movetype == MOVETYPE_FLY );// IsOnLadder();
 
-	// UNDONE: need defined numbers for run, walk, crouch, crouch run velocities!!!!	
+	// TODO: need defined numbers for run, walk, crouch, crouch run velocities!!!!	
 	if ( ( pmove->flags & FL_DUCKING) || fLadder )
 	{
 		velwalk = 60;		// These constants should be based on cl_movespeedkey * cl_forwardspeed somehow
-		velrun = 80;		// UNDONE: Move walking to server
+		velrun = 80;		// TODO: Move walking to server
 		flduck = 100;
 	}
 	else
@@ -2574,7 +2574,7 @@ void PM_Jump (void)
 	if ( ( pmove->bInDuck ) || ( pmove->flags & FL_DUCKING ) )
 	{
 		// Adjust for super long jump module
-		// UNDONE -- note this should be based on forward angles, not current velocity.
+		// TODO -- note this should be based on forward angles, not current velocity.
 		if ( cansuperjump &&
 			( pmove->cmd.buttons & IN_DUCK ) &&
 			( pmove->flDuckTime > 0 ) &&

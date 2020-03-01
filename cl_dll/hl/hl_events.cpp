@@ -12,7 +12,7 @@
 *   without written permission from Valve LLC.
 *
 ****/
-#include "../hud.h"
+#include "../HUD/hud.h"
 #include "../cl_util.h"
 #include "event_api.h"
 

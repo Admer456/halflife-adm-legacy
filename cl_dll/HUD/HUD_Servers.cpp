@@ -5,11 +5,11 @@
 // $NoKeywords: $
 //=============================================================================
 
-// hud_servers.cpp
-#include "hud.h"
+// HUD_servers.cpp
+#include "HUD/hud.h"
 #include "cl_util.h"
-#include "hud_servers_priv.h"
-#include "hud_servers.h"
+#include "HUD_servers_priv.h"
+#include "HUD_servers.h"
 #include "net_api.h"
 #include <string.h>
 #ifdef _WIN32

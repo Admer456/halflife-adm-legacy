@@ -12,8 +12,8 @@
 
 */
 
-#include "hud.h"
-#include "adm_renderer.h"
+#include "HUD/HUD.h"
+#include "ADMRenderer.h"
 
 void ADM_RendCull(TRICULLSTYLE cull)
 {
@@ -80,7 +80,7 @@ void ADM_RendSTW(float *screen, float *world)
 
 // Some utilities
 
-Vector GetHUDColours()
+Vector GetHudColours()
 {
 	return Vector(CVAR_GET_FLOAT("adm_hud_r"), CVAR_GET_FLOAT("adm_hud_g"), CVAR_GET_FLOAT("adm_hud_b"));
 }
@@ -137,7 +137,7 @@ void ADM_RendDrawLine(float x1, float y1, float x2, float y2)
 	ADM_RendEnd();
 }
 
-// AdmSrc HUD System
+// AdmSrc HUD/hud.h System
 
 /*
 

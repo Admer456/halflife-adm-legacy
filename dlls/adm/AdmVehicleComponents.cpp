@@ -22,14 +22,14 @@
 
 //#include <Eigen/Geometry>
 
-#include "ExtDLL.h"
+#include "Base/ExtDLL.h"
 #include "Util.h"
-#include "CBase.h"
+#include "Base/CBase.h"
 #include "Player.h"
-#include "SaveRestore.h"
+#include "Base/SaveRestore.h"
 
 #include "AdmVehicle.h"
-#include "Animation.h"
+#include "Base/Animation.h"
 
 void VehicleEngine::Damage(float hp)
 {

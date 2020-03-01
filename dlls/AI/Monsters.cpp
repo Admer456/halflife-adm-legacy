@@ -20,19 +20,19 @@
 
 */
 
-#include "extdll.h"
-#include "util.h"
-#include "cbase.h"
+#include "Base/ExtDLL.h"
+#include "Util.h"
+#include "Base/CBase.h"
 #include "nodes.h"
-#include "monsters.h"
-#include "animation.h"
-#include "saverestore.h"
-#include "weapons.h"
-#include "scripted.h"
-#include "squadmonster.h"
+#include "AI/Monsters.h"
+#include "Base/Animation.h"
+#include "Base/SaveRestore.h"
+#include "Weapons/Weapons.h"
+#include "AI/Scripted.h"
+#include "AI/SquadMonster.h"
 #include "decals.h"
 #include "soundent.h"
-#include "gamerules.h"
+#include "Game/GameRules.h"
 
 #define MONSTER_CUT_CORNER_DIST		8 // 8 means the monster's bounding box is contained without the box of the node in WC
 
@@ -48,7 +48,7 @@ extern CGraph WorldGraph;// the world node graph
 
 
 // Global Savedata for monster
-// UNDONE: Save schedule data?  Can this be done?  We may
+// TODO: Save schedule data?  Can this be done?  We may
 // lose our enemy pointer or other data (goal ent, target, etc)
 // that make the current schedule invalid, perhaps it's best
 // to just pick a new one when we start up again.
@@ -218,7 +218,7 @@ void CBaseMonster :: Listen ( void )
 
 	iSound = CSoundEnt::ActiveList();
 
-	// UNDONE: Clear these here?
+	// TODO: Clear these here?
 	ClearConditions( bits_COND_HEAR_SOUND | bits_COND_SMELL_FOOD | bits_COND_SMELL );
 	hearingSensitivity = HearingSensitivity( );
 
@@ -1120,7 +1120,7 @@ int CBaseMonster :: CheckEnemy ( CBaseEntity *pEnemy )
 		}
 		else
 		{
-			// UNDONE: use pev->oldorigin?
+			// TODO: use pev->oldorigin?
 		}
 	}
 	else if ( !HasConditions(bits_COND_ENEMY_OCCLUDED|bits_COND_SEE_ENEMY) && ( flDistToEnemy <= 256 ) )
@@ -1151,7 +1151,7 @@ int CBaseMonster :: CheckEnemy ( CBaseEntity *pEnemy )
 		{
 			if ( m_Route[ i ].iType == (bits_MF_IS_GOAL|bits_MF_TO_ENEMY) )
 			{
-				// UNDONE: Should we allow monsters to override this distance (80?)
+				// TODO: Should we allow monsters to override this distance (80?)
 				if ( (m_Route[ i ].vecLocation - m_vecEnemyLKP).Length() > 80 )
 				{
 					// Refresh
@@ -1175,7 +1175,7 @@ void CBaseMonster :: PushEnemy( CBaseEntity *pEnemy, Vector &vecLastKnownPos )
 	if (pEnemy == NULL)
 		return;
 
-	// UNDONE: blah, this is bad, we should use a stack but I'm too lazy to code one.
+	// TODO: blah, this is bad, we should use a stack but I'm too lazy to code one.
 	for (i = 0; i < MAX_OLD_ENEMIES; i++)
 	{
 		if (m_hOldEnemy[i] == pEnemy)
@@ -1195,7 +1195,7 @@ void CBaseMonster :: PushEnemy( CBaseEntity *pEnemy, Vector &vecLastKnownPos )
 //=========================================================
 BOOL CBaseMonster :: PopEnemy( )
 {
-	// UNDONE: blah, this is bad, we should use a stack but I'm too lazy to code one.
+	// TODO: blah, this is bad, we should use a stack but I'm too lazy to code one.
 	for (int i = MAX_OLD_ENEMIES - 1; i >= 0; i--)
 	{
 		if (m_hOldEnemy[i] != NULL)
@@ -1375,7 +1375,7 @@ int CBaseMonster :: CheckLocalMove ( const Vector &vecStart, const Vector &vecEn
 	if ( iReturn == LOCALMOVE_VALID && 	!(pev->flags & (FL_FLY|FL_SWIM) ) && (!pTarget || (pTarget->pev->flags & FL_ONGROUND)) )
 	{
 		// The monster can move to a spot UNDER the target, but not to it. Don't try to triangulate, go directly to the node graph.
-		// UNDONE: Magic # 64 -- this used to be pev->size.z but that won't work for small creatures like the headcrab
+		// TODO: Magic # 64 -- this used to be pev->size.z but that won't work for small creatures like the headcrab
 		if ( fabs(vecEnd.z - pev->origin.z) > 64 )
 		{
 			iReturn = LOCALMOVE_INVALID_DONT_TRIANGULATE;
@@ -1949,7 +1949,7 @@ void CBaseMonster :: Move ( float flInterval )
 		return;
 	}
 
-	// UNDONE: this is a hack to quit moving farther than it has looked ahead.
+	// TODO: this is a hack to quit moving farther than it has looked ahead.
 	if (flCheckDist < m_flGroundSpeed * flInterval)
 	{
 		flInterval = flCheckDist / m_flGroundSpeed;
@@ -2152,7 +2152,7 @@ void CBaseMonster :: StartMonster ( void )
 	if ( !FStringNull(pev->targetname) )// wait until triggered
 	{
 		SetState( MONSTERSTATE_IDLE );
-		// UNDONE: Some scripted sequence monsters don't have an idle?
+		// TODO: Some scripted sequence monsters don't have an idle?
 		SetActivity( ACT_IDLE );
 		ChangeSchedule( GetScheduleOfType( SCHED_WAIT_TRIGGER ) );
 	}
@@ -2228,7 +2228,7 @@ int CBaseMonster::IRelationship ( CBaseEntity *pTarget )
 // if MaxDist isn't supplied, it defaults to a reasonable 
 // value
 //=========================================================
-// UNDONE: Should this find the nearest node?
+// TODO: Should this find the nearest node?
 
 //float CGraph::PathLength( int iStart, int iDest, int iHull, int afCapMask )
 
@@ -2404,7 +2404,7 @@ BOOL CBaseMonster :: BuildNearestRoute ( Vector vecThreat, Vector vecViewOffset,
 					{
 						flMaxDist = flDist;
 						m_vecMoveGoal = node.m_vecOrigin;
-						return TRUE; // UNDONE: keep looking for something closer!
+						return TRUE; // TODO: keep looking for something closer!
 					}
 				}
 			}
@@ -2422,7 +2422,7 @@ BOOL CBaseMonster :: BuildNearestRoute ( Vector vecThreat, Vector vecViewOffset,
 // a pointer to the enemy entity in that list that is nearest the 
 // caller.
 //
-// !!!UNDONE - currently, this only returns the closest enemy.
+// !!!TODO - currently, this only returns the closest enemy.
 // we'll want to consider distance, relationship, attack types, back turned, etc.
 //=========================================================
 CBaseEntity *CBaseMonster :: BestVisibleEnemy ( void )
@@ -3049,7 +3049,7 @@ BOOL CBaseMonster :: FCheckAITrigger ( void )
 		break;
 /*
 
-  // !!!UNDONE - no persistant game state that allows us to track these two. 
+  // !!!TODO - no persistant game state that allows us to track these two. 
 
 	case AITRIGGER_SQUADMEMBERDIE:
 		break;

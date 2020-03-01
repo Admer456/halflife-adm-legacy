@@ -17,15 +17,15 @@
 //=========================================================
 // UNDONE: Holster weapon?
 
-#include	"extdll.h"
+#include	"Base/ExtDLL.h"
 #include	"util.h"
-#include	"cbase.h"
-#include	"monsters.h"
-#include	"talkmonster.h"
-#include	"schedule.h"
-#include	"defaultai.h"
-#include	"scripted.h"
-#include	"weapons.h"
+#include	"Base/CBase.h"
+#include	"AI/Monsters.h"
+#include	"AI/TalkMonster.h"
+#include	"AI/Schedule.h"
+#include	"AI/DefaultAI.h"
+#include	"AI/Scripted.h"
+#include	"Weapons/Weapons.h"
 #include	"soundent.h"
 
 //=========================================================

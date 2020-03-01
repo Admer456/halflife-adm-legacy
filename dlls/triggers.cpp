@@ -20,13 +20,13 @@
 
 */
 
-#include "extdll.h"
-#include "util.h"
-#include "cbase.h"
+#include "Base/ExtDLL.h"
+#include "Util.h"
+#include "Base/CBase.h"
 #include "player.h"
-#include "saverestore.h"
+#include "Base/SaveRestore.h"
 #include "trains.h"			// trigger_camera has train functionality
-#include "gamerules.h"
+#include "Game/GameRules.h"
 
 #define	SF_TRIGGER_PUSH_START_OFF	2//spawnflag that makes trigger_push spawn turned OFF
 #define SF_TRIGGER_HURT_TARGETONCE	1// Only fire hurt target once
@@ -314,7 +314,7 @@ IMPLEMENT_SAVERESTORE(CMultiManager,CBaseToggle);
 
 void CMultiManager :: KeyValue( KeyValueData *pkvd )
 {
-	// UNDONE: Maybe this should do something like this:
+	// TODO: Maybe this should do something like this:
 	//CBaseToggle::KeyValue( pkvd );
 	// if ( !pkvd->fHandled )
 	// ... etc.
@@ -625,7 +625,7 @@ void CTriggerMonsterJump :: Spawn ( void )
 
 void CTriggerMonsterJump :: Think( void )
 {
-	pev->solid = SOLID_NOT;// kill the trigger for now !!!UNDONE
+	pev->solid = SOLID_NOT;// kill the trigger for now !!!TODO
 	UTIL_SetOrigin( pev, pev->origin ); // Unlink from trigger list
 	SetThink( NULL );
 }
@@ -994,7 +994,7 @@ void CBaseTrigger :: HurtTouch ( CBaseEntity *pOther )
 	case DMG_POISON:		fldmg = POISON_DAMAGE/4; break;
 	case DMG_NERVEGAS:		fldmg = NERVEGAS_DAMAGE/4; break;
 	case DMG_RADIATION:		fldmg = RADIATION_DAMAGE/4; break;
-	case DMG_PARALYZE:		fldmg = PARALYZE_DAMAGE/4; break; // UNDONE: cut this? should slow movement to 50%
+	case DMG_PARALYZE:		fldmg = PARALYZE_DAMAGE/4; break; // TODO: cut this? should slow movement to 50%
 	case DMG_ACID:			fldmg = ACID_DAMAGE/4; break;
 	case DMG_SLOWBURN:		fldmg = SLOWBURN_DAMAGE/4; break;
 	case DMG_SLOWFREEZE:	fldmg = SLOWFREEZE_DAMAGE/4; break;
@@ -1072,7 +1072,7 @@ void CTriggerMultiple :: Spawn( void )
 //		if (FBitSet(pev->spawnflags, SPAWNFLAG_NOTOUCH))
 //			ALERT(at_error, "trigger_multiple spawn: health and notouch don't make sense");
 //		pev->max_health = pev->health;
-//UNDONE: where to get pfnDie from?
+//TODO: where to get pfnDie from?
 //		pev->pfnDie = multi_killed;
 //		pev->takedamage = DAMAGE_YES;
 //		pev->solid = SOLID_BBOX;
@@ -1225,7 +1225,7 @@ void CBaseTrigger::CounterUse( CBaseEntity *pActivator, CBaseEntity *pCaller, US
 	{
 		if (fTellActivator)
 		{
-			// UNDONE: I don't think we want these Quakesque messages
+			// TODO: I don't think we want these Quakesque messages
 			switch (m_cTriggersLeft)
 			{
 			case 1:		ALERT(at_console, "Only 1 more to go...");		break;
@@ -1237,7 +1237,7 @@ void CBaseTrigger::CounterUse( CBaseEntity *pActivator, CBaseEntity *pCaller, US
 		return;
 	}
 
-	// !!!UNDONE: I don't think we want these Quakesque messages
+	// !!!TODO: I don't think we want these Quakesque messages
 	if (fTellActivator)
 		ALERT(at_console, "Sequence completed!");
 	
@@ -1826,7 +1826,7 @@ void CTriggerPush :: Touch( CBaseEntity *pOther )
 {
 	entvars_t* pevToucher = pOther->pev;
 
-	// UNDONE: Is there a better way than health to detect things that have physics? (clients/monsters)
+	// TODO: Is there a better way than health to detect things that have physics? (clients/monsters)
 	switch( pevToucher->movetype )
 	{
 	case MOVETYPE_NONE:

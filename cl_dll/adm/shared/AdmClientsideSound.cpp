@@ -24,7 +24,7 @@
 // DSP effects
 // Reading sound waves, if possible
 
-#include "hud.h"
+#include "HUD/hud.h"
 #include "cl_util.h"
 #include "parsemsg.h"
 #include "pm_shared.h"

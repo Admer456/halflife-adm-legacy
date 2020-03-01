@@ -13,7 +13,7 @@
 *
 ****/
 //			
-//  hud.h
+//  HUD
 //
 // class CHud declaration
 //
@@ -30,11 +30,11 @@
 #define _cdecl 
 #endif
 
-#include "wrect.h"
+#include "WRect.h"
 #include "cl_dll.h"
-#include "ammo.h"
+#include "Ammo.h"
 
-#include "adm/AdmSound.h"
+#include "ADM/AdmSound.h"
 
 #include <vector>
 
@@ -49,7 +49,7 @@ typedef struct {
 	int x, y;
 } POSITION;
 
-#include "global_consts.h"
+#include "GlobalConsts.h"
 
 typedef struct {
 	unsigned char r,g,b,a;
@@ -95,7 +95,7 @@ struct HUDLIST {
 //-----------------------------------------------------
 //
 #include "voice_status.h" // base voice handling class
-#include "hud_spectator.h"
+#include "HUD/hud_spectator.h"
 
 
 //
@@ -264,7 +264,7 @@ struct team_info_t
 	int teamnumber;
 };
 
-#include "player_info.h"
+#include "PlayerInfo.h"
 
 //
 //-----------------------------------------------------
@@ -614,7 +614,7 @@ public:
 class CHud
 {
 private:
-	HUDLIST						*m_pHudList;
+	HUDLIST						*m_pHUDList;
 	HSPRITE						m_hsprLogo;
 	int							m_iLogo;
 	client_sprite_t				*m_pSpriteList;
@@ -632,7 +632,7 @@ public:
 	Vector	m_vecOrigin;
 	Vector	m_vecAngles;
 	int		m_iKeyBits;
-	int		m_iHideHUDDisplay;
+	int		m_iHideHudDisplay;
 	int		m_iFOV;
 	int		m_Teamplay;
 	int		m_iRes;
@@ -647,9 +647,9 @@ public:
 	int GetNumWidth(int iNumber, int iFlags);
 
 private:
-	// the memory for these arrays are allocated in the first call to CHud::VidInit(), when the hud.txt and associated sprites are loaded.
+	// the memory for these arrays are allocated in the first call to CHud::VidInit(), when the HUD.txt and associated sprites are loaded.
 	// freed in ~CHud()
-	HSPRITE *m_rghSprites;	/*[HUD_SPRITE_COUNT]*/			// the sprites loaded from hud.txt
+	HSPRITE *m_rghSprites;	/*[HUD_SPRITE_COUNT]*/			// the sprites loaded from HUD.txt
 	wrect_t *m_rgrcRects;	/*[HUD_SPRITE_COUNT]*/
 	char *m_rgszSpriteNames; /*[HUD_SPRITE_COUNT][MAX_SPRITE_NAME_LENGTH]*/
 
@@ -695,7 +695,7 @@ public:
 	void InitExtensions( void );
 	void VidInitExtensions( void );
 
-	CHud() : m_iSpriteCount(0), m_pHudList(NULL) {}  
+	CHud() : m_iSpriteCount(0), m_pHUDList(NULL) {}  
 	~CHud();			// destructor, frees allocated memory
 
 	// user messages

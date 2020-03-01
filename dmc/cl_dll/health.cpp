@@ -176,7 +176,7 @@ int CHudHealth::Draw(float flTime)
 //	if (m_iHealth <= 0)
 //		return 1;
 
-	if ( gHUD.m_iHideHUDDisplay & HIDEHUD_HEALTH )
+	if ( gHUD.m_iHideHudDisplay & HIDEHUD_HEALTH )
 		return 1;
 
 	if ( !m_hSprite )

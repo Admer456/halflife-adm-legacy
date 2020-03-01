@@ -18,7 +18,7 @@
 // implementation of CHudSayText class
 //
 
-#include "hud.h"
+#include "HUD/hud.h"
 #include "cl_util.h"
 #include "parsemsg.h"
 
@@ -26,7 +26,7 @@
 #include <stdio.h>
 #include <malloc.h> // _alloca
 
-#include "vgui_TeamFortressViewport.h"
+#include "VGUI/vgui_TeamFortressViewport.h"
 
 extern float *GetClientColor( int clientIndex );
 
@@ -56,8 +56,8 @@ int CHudSayText :: Init( void )
 
 	InitHUDData();
 
-	m_HUD_saytext =			gEngfuncs.pfnRegisterVariable( "hud_saytext", "1", 0 );
-	m_HUD_saytext_time =	gEngfuncs.pfnRegisterVariable( "hud_saytext_time", "5", 0 );
+	m_HUD_saytext =			gEngfuncs.pfnRegisterVariable( "HUD_saytext", "1", 0 );
+	m_HUD_saytext_time =	gEngfuncs.pfnRegisterVariable( "HUD_saytext_time", "5", 0 );
 
 	m_iFlags |= HUD_INTERMISSION; // is always drawn during an intermission
 

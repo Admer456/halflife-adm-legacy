@@ -306,7 +306,7 @@ void CHudAmmo::Reset(void)
 	m_iFlags |= HUD_ACTIVE; //!!!
 
 	gpActiveSel = NULL;
-	gHUD.m_iHideHUDDisplay = 0;
+	gHUD.m_iHideHudDisplay = 0;
 
 	gWR.Reset();
 	gHR.Reset();
@@ -426,7 +426,7 @@ void WeaponsResource :: SelectSlot( int iSlot, int fAdvance, int iDirection )
 	if ( iSlot > MAX_WEAPON_SLOTS )
 		return;
 
-	if ( gHUD.m_fPlayerDead || gHUD.m_iHideHUDDisplay & ( HIDEHUD_WEAPONS | HIDEHUD_ALL ) )
+	if ( gHUD.m_fPlayerDead || gHUD.m_iHideHudDisplay & ( HIDEHUD_WEAPONS | HIDEHUD_ALL ) )
 		return;
 
 	WEAPON *p = NULL;
@@ -530,9 +530,9 @@ int CHudAmmo::MsgFunc_HideWeapon( const char *pszName, int iSize, void *pbuf )
 {
 	BEGIN_READ( pbuf, iSize );
 	
-	gHUD.m_iHideHUDDisplay = READ_BYTE();
+	gHUD.m_iHideHudDisplay = READ_BYTE();
 
-	if ( gHUD.m_iHideHUDDisplay & ( HIDEHUD_WEAPONS | HIDEHUD_ALL ) )
+	if ( gHUD.m_iHideHudDisplay & ( HIDEHUD_WEAPONS | HIDEHUD_ALL ) )
 	{
 		static wrect_t nullrc;
 		gpActiveSel = NULL;
@@ -707,7 +707,7 @@ void CHudAmmo::UserCmd_Close(void)
 // Selects the next item in the weapon menu
 void CHudAmmo::UserCmd_NextWeapon(void)
 {
-	if ( gHUD.m_fPlayerDead || (gHUD.m_iHideHUDDisplay & (HIDEHUD_WEAPONS | HIDEHUD_ALL)) )
+	if ( gHUD.m_fPlayerDead || (gHUD.m_iHideHudDisplay & (HIDEHUD_WEAPONS | HIDEHUD_ALL)) )
 		return;
 
 	if ( !gpActiveSel || gpActiveSel == (WEAPON*)1 )
@@ -748,7 +748,7 @@ void CHudAmmo::UserCmd_NextWeapon(void)
 // Selects the previous item in the menu
 void CHudAmmo::UserCmd_PrevWeapon(void)
 {
-	if ( gHUD.m_fPlayerDead || (gHUD.m_iHideHUDDisplay & (HIDEHUD_WEAPONS | HIDEHUD_ALL)) )
+	if ( gHUD.m_fPlayerDead || (gHUD.m_iHideHudDisplay & (HIDEHUD_WEAPONS | HIDEHUD_ALL)) )
 		return;
 
 	if ( !gpActiveSel || gpActiveSel == (WEAPON*)1 )
@@ -805,7 +805,7 @@ int CHudAmmo::Draw(float flTime)
 	/*if (!(gHUD.m_iWeaponBits & (1<<(WEAPON_SUIT)) ))
 		return 1;*/
 
-	if ( (gHUD.m_iHideHUDDisplay & ( HIDEHUD_WEAPONS | HIDEHUD_ALL )) )
+	if ( (gHUD.m_iHideHudDisplay & ( HIDEHUD_WEAPONS | HIDEHUD_ALL )) )
 		return 1;
 
 	// Draw Weapon Menu

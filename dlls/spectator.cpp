@@ -14,14 +14,14 @@
 ****/
 // CBaseSpectator
 
-// YWB:  UNDONE
+// YWB:  TODO
 
 // Spectator functions
 // 
-#include	"extdll.h"
-#include	"util.h"
-#include	"cbase.h"
-#include	"monsters.h"
+#include	"Base/ExtDLL.h"
+#include	"Util.h"
+#include	"Base/CBase.h"
+#include	"AI/Monsters.h"
 #include	"spectator.h"
 
 /*
@@ -136,7 +136,7 @@ void  CBaseSpectator::SpectatorThink(void)
 Spawn
 
   Called when spectator is initialized:
-  UNDONE:  Is this actually being called because spectators are not allocated in normal fashion?
+  TODO:  Is this actually being called because spectators are not allocated in normal fashion?
 ============
 */
 void CBaseSpectator::Spawn()

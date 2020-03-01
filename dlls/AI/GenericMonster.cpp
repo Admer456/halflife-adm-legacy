@@ -15,11 +15,11 @@
 //=========================================================
 // Generic Monster - purely for scripted sequence work.
 //=========================================================
-#include	"extdll.h"
-#include	"util.h"
-#include	"cbase.h"
-#include	"monsters.h"
-#include	"schedule.h"
+#include	"Base/ExtDLL.h"
+#include	"Util.h"
+#include	"Base/CBase.h"
+#include	"AI/Monsters.h"
+#include	"AI/Schedule.h"
 
 // For holograms, make them not solid so the player can walk through them
 #define	SF_GENERICMONSTER_NOTSOLID					4 

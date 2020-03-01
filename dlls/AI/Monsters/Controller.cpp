@@ -18,14 +18,14 @@
 // CONTROLLER
 //=========================================================
 
-#include	"extdll.h"
-#include	"util.h"
-#include	"cbase.h"
-#include	"monsters.h"
+#include	"Base/ExtDLL.h"
+#include	"Util.h"
+#include	"Base/CBase.h"
+#include	"AI/Monsters.h"
 #include	"effects.h"
-#include	"schedule.h"
-#include	"weapons.h"
-#include	"squadmonster.h"
+#include	"AI/Schedule.h"
+#include	"Weapons/Weapons.h"
+#include	"AI/SquadMonster.h"
 
 //=========================================================
 // Monster's Anim Events Go Here
@@ -1027,7 +1027,7 @@ void CController :: Move ( float flInterval )
 			}
 		}
 
-		// UNDONE: this is a hack to quit moving farther than it has looked ahead.
+		// TODO: this is a hack to quit moving farther than it has looked ahead.
 		if (flCheckDist < flMoveDist)
 		{
 			MoveExecute( pTargetEnt, vecDir, flCheckDist / m_flGroundSpeed );

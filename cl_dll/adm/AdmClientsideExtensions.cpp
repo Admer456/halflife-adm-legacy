@@ -6,14 +6,14 @@
 	Clientside extensions system.
 
 	Basically, the client receives messages from the server.
-	However, it's all handled through the HUD.
+	However, it's all handled through the HUD/hud.h.
 	I wanted to make a more separate thing that is reserved more
-	for general clientside things, not just HUD things.
+	for general clientside things, not just HUD/hud.h things.
 
-	Think of it as a piggyback ride off the HUD system.
+	Think of it as a piggyback ride off the HUD/hud.h system.
 */
 
-#include "hud.h"
+#include "HUD/hud.h"
 #include "cl_util.h"
 #include "parsemsg.h"
 #include "pm_shared.h"

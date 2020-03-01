@@ -18,7 +18,7 @@
 // implementation of CHudAmmoSecondary class
 //
 
-#include "hud.h"
+#include "HUD/hud.h"
 #include "cl_util.h"
 #include <string.h>
 #include <stdio.h>
@@ -55,7 +55,7 @@ int CHudAmmoSecondary :: VidInit( void )
 
 int CHudAmmoSecondary :: Draw(float flTime)
 {
-	if ( (gHUD.m_iHideHUDDisplay & ( HIDEHUD_WEAPONS | HIDEHUD_ALL )) )
+	if ( (gHUD.m_iHideHudDisplay & ( HIDEHUD_WEAPONS | HIDEHUD_ALL )) )
 		return 1;
 
 	// draw secondary ammo icons above normal ammo readout
@@ -146,7 +146,7 @@ int CHudAmmoSecondary :: MsgFunc_SecAmmoVal( const char *pszName, int iSize, voi
 	}
 
 	if ( count == 0 ) 
-	{	// the ammo fields are all empty, so turn off this hud area
+	{	// the ammo fields are all empty, so turn off this HUD/hud.h area
 		m_iFlags &= ~HUD_ACTIVE;
 		return 1;
 	}

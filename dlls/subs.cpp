@@ -20,10 +20,10 @@
 
 */
 
-#include "extdll.h"
-#include "util.h"
-#include "cbase.h"
-#include "saverestore.h"
+#include "Base/ExtDLL.h"
+#include "Util.h"
+#include "Base/CBase.h"
+#include "Base/SaveRestore.h"
 #include "nodes.h"
 #include "doors.h"
 
@@ -342,8 +342,8 @@ TYPEDESCRIPTION	CBaseToggle::m_SaveData[] =
 	DEFINE_FIELD( CBaseToggle, m_flTLength, FIELD_FLOAT ),
 	DEFINE_FIELD( CBaseToggle, m_vecPosition1, FIELD_POSITION_VECTOR ),
 	DEFINE_FIELD( CBaseToggle, m_vecPosition2, FIELD_POSITION_VECTOR ),
-	DEFINE_FIELD( CBaseToggle, m_vecAngle1, FIELD_VECTOR ),		// UNDONE: Position could go through transition, but also angle?
-	DEFINE_FIELD( CBaseToggle, m_vecAngle2, FIELD_VECTOR ),		// UNDONE: Position could go through transition, but also angle?
+	DEFINE_FIELD( CBaseToggle, m_vecAngle1, FIELD_VECTOR ),		// TODO: Position could go through transition, but also angle?
+	DEFINE_FIELD( CBaseToggle, m_vecAngle2, FIELD_VECTOR ),		// TODO: Position could go through transition, but also angle?
 	DEFINE_FIELD( CBaseToggle, m_cTriggersLeft, FIELD_INTEGER ),
 	DEFINE_FIELD( CBaseToggle, m_flHeight, FIELD_FLOAT ),
 	DEFINE_FIELD( CBaseToggle, m_hActivator, FIELD_EHANDLE ),

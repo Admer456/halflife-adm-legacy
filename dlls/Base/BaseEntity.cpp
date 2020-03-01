@@ -12,14 +12,14 @@
 *   without written permission from Valve LLC.
 *
 ****/
-#include	"extdll.h"
-#include	"util.h"
-#include	"cbase.h"
-#include	"saverestore.h"
-#include	"client.h"
+#include	"Base/ExtDLL.h"
+#include	"Util.h"
+#include	"Base/CBase.h"
+#include	"Base/SaveRestore.h"
+#include	"Game/Client.h"
 #include	"decals.h"
-#include	"gamerules.h"
-#include	"game.h"
+#include	"Game/GameRules.h"
+#include	"Game/Game.h"
 
 void EntvarsKeyvalue( entvars_t *pev, KeyValueData *pkvd );
 
@@ -139,7 +139,7 @@ int DispatchSpawn( edict_t *pent )
 		pEntity->Spawn();
 
 		// Try to get the pointer again, in case the spawn function deleted the entity.
-		// UNDONE: Spawn() should really return a code to ask that the entity be deleted, but
+		// TODO: Spawn() should really return a code to ask that the entity be deleted, but
 		// that would touch too much code for me to do that right now.
 		pEntity = (CBaseEntity *)GET_PRIVATE(pent);
 
@@ -517,7 +517,7 @@ int CBaseEntity :: TakeDamage( entvars_t* pevInflictor, entvars_t* pevAttacker, 
 	if (!pev->takedamage)
 		return 0;
 
-	// UNDONE: some entity types may be immune or resistant to some bitsDamageType
+	// TODO: some entity types may be immune or resistant to some bitsDamageType
 	
 	// if Attacker == Inflictor, the attack was a melee or other instant-hit attack.
 	// (that is, no actual entity projectile was involved in the attack so use the shooter's origin). 
@@ -585,7 +585,7 @@ TYPEDESCRIPTION	CBaseEntity::m_SaveData[] =
 {
 	DEFINE_FIELD( CBaseEntity, m_pGoalEnt, FIELD_CLASSPTR ),
 
-	DEFINE_FIELD( CBaseEntity, m_pfnThink, FIELD_FUNCTION ),		// UNDONE: Build table of these!!!
+	DEFINE_FIELD( CBaseEntity, m_pfnThink, FIELD_FUNCTION ),		// TODO: Build table of these!!!
 	DEFINE_FIELD( CBaseEntity, m_pfnTouch, FIELD_FUNCTION ),
 	DEFINE_FIELD( CBaseEntity, m_pfnUse, FIELD_FUNCTION ),
 	DEFINE_FIELD( CBaseEntity, m_pfnBlocked, FIELD_FUNCTION ),

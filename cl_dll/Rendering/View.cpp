@@ -1,6 +1,6 @@
 // view/refresh setup functions
 
-#include "hud.h"
+#include "HUD/hud.h"
 #include "cl_util.h"
 #include "cvardef.h"
 #include "usercmd.h"
@@ -9,7 +9,7 @@
 #include "entity_state.h"
 #include "cl_entity.h"
 #include "ref_params.h"
-#include "in_defs.h" // PITCH YAW ROLL
+#include "Input/IN_Defs.h" // PITCH YAW ROLL
 #include "pm_movevars.h"
 #include "pm_shared.h"
 #include "pm_defs.h"
@@ -25,12 +25,12 @@
 #define M_PI		3.14159265358979323846	// matches value in gcc v2 math.h
 #endif
 
-	int CL_IsThirdPerson( void );
-	void CL_CameraOffset( float *ofs );
+	int		CL_IsThirdPerson( void );
+	void	CL_CameraOffset( float *ofs );
 
 	void DLLEXPORT V_CalcRefdef( struct ref_params_s *pparams );
 
-	void PM_ParticleLine( float *start, float *end, int pcolor, float life, float vert);
+	void	PM_ParticleLine( float *start, float *end, int pcolor, float life, float vert);
 	int		PM_GetVisEntInfo( int ent );
 	int		PM_GetPhysEntInfo( int ent );
 	void	InterpolateAngles(  float * start, float * end, float * output, float frac );
@@ -47,7 +47,7 @@ void VectorAngles( const float *forward, float *angles );
 
 #include "r_studioint.h"
 #include "com_model.h"
-#include "kbutton.h"
+#include "Input/KButton.h"
 
 extern engine_studio_api_t IEngineStudio;
 

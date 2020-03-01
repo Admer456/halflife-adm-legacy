@@ -14,13 +14,13 @@
 ****/
 #if !defined( OEM_BUILD ) && !defined( HLDEMO_BUILD )
 
-#include "extdll.h"
-#include "util.h"
-#include "cbase.h"
-#include "weapons.h"
-#include "monsters.h"
+#include "Base/ExtDLL.h"
+#include "Util.h"
+#include "Base/CBase.h"
+#include "Weapons/Weapons.h"
+#include "AI/Monsters.h"
 #include "player.h"
-#include "gamerules.h"
+#include "Game/GameRules.h"
 
 
 enum python_e {

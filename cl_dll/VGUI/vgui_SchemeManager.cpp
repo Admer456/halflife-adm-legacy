@@ -16,7 +16,7 @@
 // $NoKeywords: $
 //=============================================================================
 
-#include "hud.h"
+#include "HUD/hud.h"
 #include "vgui_SchemeManager.h"
 #include "cvardef.h"
 

@@ -15,14 +15,14 @@
 //
 // teamplay_gamerules.cpp
 //
-#include	"extdll.h"
-#include	"util.h"
-#include	"cbase.h"
+#include	"Base/ExtDLL.h"
+#include	"Util.h"
+#include	"Base/CBase.h"
 #include	"player.h"
-#include	"weapons.h"
-#include	"gamerules.h"
+#include	"Weapons/Weapons.h"
+#include	"Game/GameRules.h"
 #include	"skill.h"
-#include	"items.h"
+#include	"Items/Items.h"
 
 extern DLL_GLOBAL CGameRules	*g_pGameRules;
 extern DLL_GLOBAL BOOL	g_fGameOver;

@@ -55,7 +55,7 @@ int CHudAmmoSecondary :: VidInit( void )
 
 int CHudAmmoSecondary :: Draw(float flTime)
 {
-	if ( (gHUD.m_iHideHUDDisplay & ( HIDEHUD_WEAPONS | HIDEHUD_ALL )) )
+	if ( (gHUD.m_iHideHudDisplay & ( HIDEHUD_WEAPONS | HIDEHUD_ALL )) )
 		return 1;
 
 	// draw secondary ammo icons above normal ammo readout

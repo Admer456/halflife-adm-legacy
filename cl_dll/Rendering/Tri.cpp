@@ -7,7 +7,7 @@
 
 // Triangle rendering, if any
 
-#include "hud.h"
+#include "HUD/hud.h"
 #include "cl_util.h"
 
 // Triangle rendering apis are in gEngfuncs.pTriAPI
@@ -22,7 +22,7 @@
 #include "tri.h"
 extern IParticleMan *g_pParticleMan;
 
-#include "adm/adm_renderer.h"
+#include "ADM/AdmRenderer.h"
 
 /*
 =================

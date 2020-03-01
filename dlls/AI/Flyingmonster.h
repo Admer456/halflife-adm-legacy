@@ -39,7 +39,7 @@ public:
 	BOOL		ProbeZ( const Vector &position, const Vector &probe, float *pFraction );
 	
 	
-	// UNDONE:  Save/restore this stuff!!!
+	// TODO:  Save/restore this stuff!!!
 protected:
 	Vector		m_vecTravel;		// Current direction
 	float		m_flightSpeed;		// Current flight speed (decays when not flapping or gliding)

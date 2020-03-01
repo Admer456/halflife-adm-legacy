@@ -13,14 +13,14 @@
 *
 ****/
 //
-// hud_redraw.cpp
+// HUD_redraw.cpp
 //
 #include <math.h>
-#include "hud.h"
+#include "HUD/hud.h"
 #include "cl_util.h"
 #include "bench.h"
 
-#include "vgui_TeamFortressViewport.h"
+#include "VGUI/vgui_TeamFortressViewport.h"
 
 #define MAX_LOGO_FRAMES 56
 
@@ -45,7 +45,7 @@ void CHud::Think(void)
 	GetScreenInfo(&m_scrinfo);
 
 	int newfov;
-	HUDLIST *pList = m_pHudList;
+	HUDLIST *pList = m_pHUDList;
 
 	while (pList)
 	{
@@ -64,7 +64,7 @@ void CHud::Think(void)
 		m_iFOV = newfov;
 	}
 
-	// the clients fov is actually set in the client data update section of the hud
+	// the clients fov is actually set in the client data update section of the HUD/hud.h
 
 	// Set a new sensitivity
 	if ( m_iFOV == default_fov->value )
@@ -130,7 +130,7 @@ int CHud :: Redraw( float flTime, int intermission )
 			gViewPort->UpdateSpectatorPanel();
 
 			// Take a screenshot if the client's got the cvar set
-			if ( CVAR_GET_FLOAT( "hud_takesshots" ) != 0 )
+			if ( CVAR_GET_FLOAT( "HUD_takesshots" ) != 0 )
 				m_flShotTime = flTime + 1.0;	// Take a screenshot in a second
 		}
 	}
@@ -146,10 +146,10 @@ int CHud :: Redraw( float flTime, int intermission )
 	// if no redrawing is necessary
 	// return 0;
 	
-	// draw all registered HUD elements
+	// draw all registered HUD/hud.h elements
 	if ( m_pCvarDraw->value )
 	{
-		HUDLIST *pList = m_pHudList;
+		HUDLIST *pList = m_pHUDList;
 
 		while (pList)
 		{
@@ -157,11 +157,11 @@ int CHud :: Redraw( float flTime, int intermission )
 			{
 				if ( !intermission )
 				{
-					if ( (pList->p->m_iFlags & HUD_ACTIVE) && !(m_iHideHUDDisplay & HIDEHUD_ALL) )
+					if ( (pList->p->m_iFlags & HUD_ACTIVE) && !(m_iHideHudDisplay & HIDEHUD_ALL) )
 						pList->p->Draw(flTime);
 				}
 				else
-				{  // it's an intermission,  so only draw hud elements that are set to draw during intermissions
+				{  // it's an intermission,  so only draw HUD/hud.h elements that are set to draw during intermissions
 					if ( pList->p->m_iFlags & HUD_INTERMISSION )
 						pList->p->Draw( flTime );
 				}
@@ -170,7 +170,7 @@ int CHud :: Redraw( float flTime, int intermission )
 			{
 				if ( ( pList->p == &m_Benchmark ) &&
 					 ( pList->p->m_iFlags & HUD_ACTIVE ) &&
-					 !( m_iHideHUDDisplay & HIDEHUD_ALL ) )
+					 !( m_iHideHudDisplay & HIDEHUD_ALL ) )
 				{
 					pList->p->Draw(flTime);
 				}

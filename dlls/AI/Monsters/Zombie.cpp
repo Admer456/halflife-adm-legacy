@@ -16,13 +16,13 @@
 // Zombie
 //=========================================================
 
-// UNDONE: Don't flinch every time you get hit
+// TODO: Don't flinch every time you get hit
 
-#include	"extdll.h"
-#include	"util.h"
-#include	"cbase.h"
-#include	"monsters.h"
-#include	"schedule.h"
+#include	"Base/ExtDLL.h"
+#include	"Util.h"
+#include	"Base/CBase.h"
+#include	"AI/Monsters.h"
+#include	"AI/Schedule.h"
 
 
 //=========================================================

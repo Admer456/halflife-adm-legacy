@@ -20,12 +20,12 @@
 
 */
 
-#include "extdll.h"
-#include "util.h"
-#include "cbase.h"
-#include "saverestore.h"
+#include "Base/ExtDLL.h"
+#include "Util.h"
+#include "Base/CBase.h"
+#include "Base/SaveRestore.h"
 #include "skill.h"
-#include "gamerules.h"
+#include "Game/GameRules.h"
 
 class CRecharge : public CBaseToggle
 {

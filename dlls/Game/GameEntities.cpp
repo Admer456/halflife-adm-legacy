@@ -22,12 +22,12 @@
 //
 //	-------------------------------------------
 
-#include "extdll.h"
+#include "Base/ExtDLL.h"
 #include "eiface.h"
-#include "util.h"
-#include "gamerules.h"
+#include "Util.h"
+#include "Game/GameRules.h"
 #include "maprules.h"
-#include "cbase.h"
+#include "Base/CBase.h"
 #include "player.h"
 
 class CRuleEntity : public CBaseEntity
@@ -436,7 +436,7 @@ const char *CGameTeamMaster::TeamID( void )
 	if ( m_teamIndex < 0 )		// Currently set to "no team"
 		return "";
 
-	return g_pGameRules->GetIndexedTeamName( m_teamIndex );		// UNDONE: Fill this in with the team from the "teamlist"
+	return g_pGameRules->GetIndexedTeamName( m_teamIndex );		// TODO: Fill this in with the team from the "teamlist"
 }
 
 

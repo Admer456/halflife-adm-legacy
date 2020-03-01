@@ -8,9 +8,9 @@
 	It's planned for this to be dynamic, looking up keyvalues and assigning to each percentage a target
 */
 
-#include "extdll.h"
-#include "util.h"
-#include "cbase.h"
+#include "Base/ExtDLL.h"
+#include "Util.h"
+#include "Base/CBase.h"
 
 #define F_PERCENTAGE1 1 << 0
 #define F_PERCENTAGE2 1 << 1

@@ -141,10 +141,8 @@
     <ClCompile Include="..\..\cl_dll\HUD\HUD_Update.cpp" />
     <ClCompile Include="..\..\cl_dll\HUD\Menu.cpp" />
     <ClCompile Include="..\..\cl_dll\HUD\Message.cpp" />
-    <ClCompile Include="..\..\cl_dll\HUD\MOTD.cpp" />
     <ClCompile Include="..\..\cl_dll\HUD\Overview.cpp" />
     <ClCompile Include="..\..\cl_dll\HUD\SayText.cpp" />
-    <ClCompile Include="..\..\cl_dll\HUD\ScoreBoard.cpp" />
     <ClCompile Include="..\..\cl_dll\HUD\StatusBar.cpp" />
     <ClCompile Include="..\..\cl_dll\HUD\StatusIcons.cpp" />
     <ClCompile Include="..\..\cl_dll\HUD\TextMessage.cpp" />

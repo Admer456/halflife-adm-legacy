@@ -16,14 +16,14 @@
 // schedule.cpp - functions and data pertaining to the 
 // monsters' AI scheduling system.
 //=========================================================
-#include "extdll.h"
-#include "util.h"
-#include "cbase.h"
-#include "monsters.h"
-#include "animation.h"
-#include "scripted.h"
+#include "Base/ExtDLL.h"
+#include "Util.h"
+#include "Base/CBase.h"
+#include "AI/Monsters.h"
+#include "Base/Animation.h"
+#include "AI/Scripted.h"
 #include "nodes.h"
-#include "defaultai.h"
+#include "AI/DefaultAI.h"
 #include "soundent.h"
 
 extern CGraph WorldGraph;
@@ -210,7 +210,7 @@ void CBaseMonster :: MaintainSchedule ( void )
 	Schedule_t	*pNewSchedule;
 	int			i;
 
-	// UNDONE: Tune/fix this 10... This is just here so infinite loops are impossible
+	// TODO: Tune/fix this 10... This is just here so infinite loops are impossible
 	for ( i = 0; i < 10; i++ )
 	{
 		if ( m_pSchedule != NULL && TaskIsComplete() )
@@ -273,7 +273,7 @@ void CBaseMonster :: MaintainSchedule ( void )
 			StartTask( pTask );
 		}
 
-		// UNDONE: Twice?!!!
+		// TODO: Twice?!!!
 		if ( m_Activity != m_IdealActivity )
 		{
 			SetActivity ( m_IdealActivity );
@@ -290,7 +290,7 @@ void CBaseMonster :: MaintainSchedule ( void )
 		RunTask( pTask );
 	}
 
-	// UNDONE: We have to do this so that we have an animation set to blend to if RunTask changes the animation
+	// TODO: We have to do this so that we have an animation set to blend to if RunTask changes the animation
 	// RunTask() will always change animations at the end of a script!
 	// Don't do this twice
 	if ( m_Activity != m_IdealActivity )
@@ -1127,7 +1127,7 @@ case TASK_GET_PATH_TO_BESTSCENT:
 		}
 	case TASK_RUN_PATH:
 		{
-			// UNDONE: This is in some default AI and some monsters can't run? -- walk instead?
+			// TODO: This is in some default AI and some monsters can't run? -- walk instead?
 			if ( LookupActivity( ACT_RUN ) != ACTIVITY_NOT_AVAILABLE )
 			{
 				m_movementActivity = ACT_RUN;

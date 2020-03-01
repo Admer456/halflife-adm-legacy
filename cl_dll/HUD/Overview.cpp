@@ -5,15 +5,16 @@
 // $NoKeywords: $
 //=============================================================================
 
-#include "hud.h"
+#include "HUD/hud.h"
 #include "cl_util.h"
 #include "cl_entity.h"
 #include "triangleapi.h"
-#include "vgui_TeamFortressViewport.h"
+#include "VGUI/vgui_TeamFortressViewport.h"
+#include "HUD/Overview.h"
 
 // these are included for the math functions
 #include "com_model.h"
-#include "studio_util.h"
+#include "Rendering/StudioUtil.h"
 
 #pragma warning(disable: 4244)
 
@@ -48,7 +49,7 @@ int CHudOverview::VidInit()
 int CHudOverview::Draw(float flTime)
 {
 	// only draw in overview mode
-	if (!gEngfuncs.Overview_GetOverviewState())
+	//if (!gEngfuncs.GetOverviewState())
 		return 1;
 
 	// make sure we have player info
@@ -57,8 +58,8 @@ int CHudOverview::Draw(float flTime)
 	// calculate player size on the overview
 	int x1, y1, x2, y2;
 	float v0[3]={0,0,0}, v1[3]={64,64,0};
-	gEngfuncs.Overview_WorldToScreen(v0, &x1, &y1);
-	gEngfuncs.Overview_WorldToScreen(v1, &x2, &y2);
+//	gEngfuncs.WorldToScreen(v0, &x1, &y1);
+//	gEngfuncs.WorldToScreen(v1, &x2, &y2);
 	float scale = abs(x2 - x1);
 
 	// loop through all the players and draw them on the map
@@ -70,7 +71,7 @@ int CHudOverview::Draw(float flTime)
 		{
 			int x, y, z = 0;
 			float v[3]={pl->origin[0], pl->origin[1], 0};
-			gEngfuncs.Overview_WorldToScreen(v, &x, &y);
+			//gEngfuncs.Overview_WorldToScreen(v, &x, &y);
 
 			// hack in some team colors
 			float r, g, bc;

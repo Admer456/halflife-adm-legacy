@@ -28,16 +28,16 @@
 */
 
 
-#include	"extdll.h"
+#include	"Base/ExtDLL.h"
 #include	"plane.h"
-#include	"util.h"
-#include	"cbase.h"
-#include	"monsters.h"
-#include	"schedule.h"
-#include	"animation.h"
-#include	"squadmonster.h"
-#include	"weapons.h"
-#include	"talkmonster.h"
+#include	"Util.h"
+#include	"Base/CBase.h"
+#include	"AI/Monsters.h"
+#include	"AI/Schedule.h"
+#include	"Base/Animation.h"
+#include	"AI/SquadMonster.h"
+#include	"Weapons/Weapons.h"
+#include	"AI/TalkMonster.h"
 #include	"soundent.h"
 #include	"effects.h"
 #include	"customentity.h"
@@ -2416,7 +2416,7 @@ void CHGruntRepel::RepelUse ( CBaseEntity *pActivator, CBaseEntity *pCaller, USE
 	pGrunt->pev->movetype = MOVETYPE_FLY;
 	pGrunt->pev->velocity = Vector( 0, 0, RANDOM_FLOAT( -196, -128 ) );
 	pGrunt->SetActivity( ACT_GLIDE );
-	// UNDONE: position?
+	// TODO: position?
 	pGrunt->m_vecLastPosition = tr.vecEndPos;
 
 	CBeam *pBeam = CBeam::BeamCreate( "sprites/rope.spr", 10 );

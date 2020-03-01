@@ -12,11 +12,11 @@
 *   without written permission from Valve LLC.
 *
 ****/
-#include "extdll.h"
-#include "util.h"
-#include "cbase.h"
+#include "Base/ExtDLL.h"
+#include "Util.h"
+#include "Base/CBase.h"
 #include "effects.h"
-#include "weapons.h"
+#include "Weapons/Weapons.h"
 #include "explode.h"
 
 #include "player.h"

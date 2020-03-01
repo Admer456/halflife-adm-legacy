@@ -20,11 +20,11 @@
 
 */
 
-#include "extdll.h"
-#include "util.h"
-#include "cbase.h"
-#include "animation.h"
-#include "saverestore.h"
+#include "Base/ExtDLL.h"
+#include "Util.h"
+#include "Base/CBase.h"
+#include "Base/Animation.h"
+#include "Base/SaveRestore.h"
 
 TYPEDESCRIPTION	CBaseAnimating::m_SaveData[] = 
 {

@@ -16,11 +16,11 @@
 // cockroach
 //=========================================================
 
-#include	"extdll.h"
-#include	"util.h"
-#include	"cbase.h"
-#include	"monsters.h"
-#include	"schedule.h"
+#include	"Base/ExtDLL.h"
+#include	"Util.h"
+#include	"Base/CBase.h"
+#include	"AI/Monsters.h"
+#include	"AI/Schedule.h"
 #include	"soundent.h"
 #include	"decals.h"
 
@@ -52,7 +52,7 @@ public:
 	void	Look ( int iDistance );
 	int		ISoundMask ( void );
 	
-	// UNDONE: These don't necessarily need to be save/restored, but if we add more data, it may
+	// TODO: These don't necessarily need to be save/restored, but if we add more data, it may
 	BOOL	m_fLightHacked;
 	int		m_iMode;
 	// -----------------------------

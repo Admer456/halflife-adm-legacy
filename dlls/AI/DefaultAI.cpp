@@ -15,15 +15,15 @@
 //=========================================================
 // Default behaviors.
 //=========================================================
-#include	"extdll.h"
-#include	"util.h"
-#include	"cbase.h"
-#include	"monsters.h"
-#include	"schedule.h"
-#include	"defaultai.h"
+#include	"Base/ExtDLL.h"
+#include	"Util.h"
+#include	"Base/CBase.h"
+#include	"AI/Monsters.h"
+#include	"AI/Schedule.h"
+#include	"AI/DefaultAI.h"
 #include	"soundent.h"
 #include	"nodes.h"
-#include	"scripted.h"
+#include	"AI/Scripted.h"
 
 //=========================================================
 // Fail

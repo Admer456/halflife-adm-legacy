@@ -15,7 +15,7 @@
 #include "Base/ExtDLL.h"
 #include "eiface.h"
 #include "util.h"
-#include "game.h"
+#include "Game/Game.h"
 
 cvar_t	displaysoundlist = {"displaysoundlist","0"};
 

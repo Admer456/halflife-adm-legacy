@@ -20,16 +20,16 @@
 
 */
 
-#include "extdll.h"
-#include "util.h"
-#include "cbase.h"
-#include "saverestore.h"
+#include "Base/ExtDLL.h"
+#include "Util.h"
+#include "Base/CBase.h"
+#include "Base/SaveRestore.h"
 #include <time.h>
 #include "shake.h"
 #include "decals.h"
 #include "player.h"
-#include "weapons.h"
-#include "gamerules.h"
+#include "Weapons/Weapons.h"
+#include "Game/GameRules.h"
 
 #include <vector>
 #include "adm/shared/AdmSoundList.h"
@@ -734,10 +734,10 @@ static short FixedSigned16( float value, float scale )
 
 // Shake the screen of all clients within radius
 // radius == 0, shake all clients
-// UNDONE: Allow caller to shake clients not ONGROUND? // AdmSrc - Added two new functions: ScreenShakeAir and ScreenShakeAllAir, 
+// TODO: Allow caller to shake clients not ONGROUND? // AdmSrc - Added two new functions: ScreenShakeAir and ScreenShakeAllAir, 
 //														  which shake players that are not just on the ground. :)
-// UNDONE: Fix falloff model (disabled)?
-// UNDONE: Affect user controls?
+// TODO: Fix falloff model (disabled)?
+// TODO: Affect user controls?
 void UTIL_ScreenShake( const Vector &center, float amplitude, float frequency, float duration, float radius )
 {
 	int			i;
@@ -1712,7 +1712,7 @@ void UTIL_BubbleTrail( Vector from, Vector to, int count )
 		if (flHeight < 8)
 			return;
 
-		// UNDONE: do a ploink sound
+		// TODO: do a ploink sound
 		flHeight = flHeight + to.z - from.z;
 	}
 
@@ -2246,7 +2246,7 @@ int CSave :: WriteFields( const char *pname, void *pBaseData, TYPEDESCRIPTION *p
 		pTest = &pFields[ i ];
 		pOutputData = ((char *)pBaseData + pTest->fieldOffset );
 
-		// UNDONE: Must we do this twice?
+		// TODO: Must we do this twice?
 		if ( DataEmpty( (const char *)pOutputData, pTest->fieldSize * gSizes[pTest->fieldType] ) )
 			continue;
 

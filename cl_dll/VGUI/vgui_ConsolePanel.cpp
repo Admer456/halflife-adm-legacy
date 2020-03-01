@@ -6,7 +6,7 @@
 //=============================================================================
 
 #include"vgui_ConsolePanel.h"
-#include"hud.h"
+#include"HUD/hud.h"
 #include<VGUI_ActionSignal.h>
 #include<VGUI_TextGrid.h>
 #include<VGUI_TextEntry.h>

@@ -17,7 +17,7 @@
 #pragma once
 
 #include "event_flags.h"
-#include "adm/shared/AdmSoundList.h"
+#include "ADM/Shared/AdmSoundList.h"
 
 // Must be provided by user of this code
 extern enginefuncs_t g_engfuncs;

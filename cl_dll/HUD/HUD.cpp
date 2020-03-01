@@ -13,25 +13,25 @@
 *
 ****/
 //
-// hud.cpp
+// HUD.cpp
 //
 // implementation of CHud class
 //
 
-#include "hud.h"
+#include "HUD/hud.h"
 #include "cl_util.h"
 #include <string.h>
 #include <stdio.h>
 #include "parsemsg.h"
-#include "hud_servers.h"
-#include "vgui_int.h"
-#include "vgui_TeamFortressViewport.h"
+#include "HUD/hud_servers.h"
+#include "VGUI/vgui_int.h"
+#include "VGUI/vgui_TeamFortressViewport.h"
 
 #include "demo.h"
 #include "demo_api.h"
-#include "vgui_ScorePanel.h"
+#include "VGUI/vgui_ScorePanel.h"
 
-#include "adm/AdmSound.h"
+#include "ADM/AdmSound.h"
 
 hud_player_info_t	 g_PlayerInfoList[MAX_PLAYERS+1];	   // player info from the engine
 extra_player_info_t  g_PlayerExtraInfo[MAX_PLAYERS+1];   // additional player info sent directly to the client dll
@@ -342,8 +342,8 @@ void CHud :: Init( void )
 //	HOOK_MESSAGE( ADMSIPlay );
 //	gAdmSound.Initialize();
 
-	CVAR_CREATE( "hud_classautokill", "1", FCVAR_ARCHIVE | FCVAR_USERINFO );		// controls whether or not to suicide immediately on TF class switch
-	CVAR_CREATE( "hud_takesshots", "0", FCVAR_ARCHIVE );		// controls whether or not to automatically take screenshots at the end of a round
+	CVAR_CREATE( "HUD_classautokill", "1", FCVAR_ARCHIVE | FCVAR_USERINFO );		// controls whether or not to suicide immediately on TF class switch
+	CVAR_CREATE( "HUD_takesshots", "0", FCVAR_ARCHIVE );		// controls whether or not to automatically take screenshots at the end of a round
 
 	// AdmSrc - customisable HUD colours
 	CVAR_CREATE("adm_hud_r", "255", FCVAR_ARCHIVE);
@@ -390,23 +390,23 @@ void CHud :: Init( void )
 
 	CVAR_CREATE( "zoom_sensitivity_ratio", "1.2", 0 );
 	default_fov = CVAR_CREATE( "default_fov", "90", 0 );
-	m_pCvarStealMouse = CVAR_CREATE( "hud_capturemouse", "1", FCVAR_ARCHIVE );
-	m_pCvarDraw = CVAR_CREATE( "hud_draw", "1", FCVAR_ARCHIVE );
+	m_pCvarStealMouse = CVAR_CREATE( "HUD_capturemouse", "1", FCVAR_ARCHIVE );
+	m_pCvarDraw = CVAR_CREATE( "HUD_draw", "1", FCVAR_ARCHIVE );
 	cl_lw = gEngfuncs.pfnGetCvarPointer( "cl_lw" );
 
 	m_pSpriteList = NULL;
 
 	// Clear any old HUD list
-	if ( m_pHudList )
+	if ( m_pHUDList )
 	{
 		HUDLIST *pList;
-		while ( m_pHudList )
+		while ( m_pHUDList )
 		{
-			pList = m_pHudList;
-			m_pHudList = m_pHudList->pNext;
+			pList = m_pHUDList;
+			m_pHUDList = m_pHUDList->pNext;
 			free( pList );
 		}
-		m_pHudList = NULL;
+		m_pHUDList = NULL;
 	}
 
 	// In case we get messages before the first update -- time will be valid
@@ -449,23 +449,23 @@ CHud :: ~CHud()
 	delete [] m_rgrcRects;
 	delete [] m_rgszSpriteNames;
 
-	if ( m_pHudList )
+	if ( m_pHUDList )
 	{
 		HUDLIST *pList;
-		while ( m_pHudList )
+		while ( m_pHUDList )
 		{
-			pList = m_pHudList;
-			m_pHudList = m_pHudList->pNext;
+			pList = m_pHUDList;
+			m_pHUDList = m_pHUDList->pNext;
 			free( pList );
 		}
-		m_pHudList = NULL;
+		m_pHUDList = NULL;
 	}
 
 	ServersShutdown();
 }
 
 // GetSpriteIndex()
-// searches through the sprite list loaded from hud.txt for a name matching SpriteName
+// searches through the sprite list loaded from HUD.txt for a name matching SpriteName
 // returns an index into the gHUD.m_rghSprites[] array
 // returns 0 if sprite not found
 int CHud :: GetSpriteIndex( const char *SpriteName )
@@ -501,8 +501,8 @@ void CHud :: VidInit( void )
 	// Only load this once
 	if ( !m_pSpriteList )
 	{
-		// we need to load the hud.txt, and all sprites within
-		m_pSpriteList = SPR_GetList("sprites/hud.txt", &m_iSpriteCountAllRes);
+		// we need to load the HUD.txt, and all sprites within
+		m_pSpriteList = SPR_GetList("sprites/HUD.txt", &m_iSpriteCountAllRes);
 
 		if (m_pSpriteList)
 		{
@@ -543,7 +543,7 @@ void CHud :: VidInit( void )
 	}
 	else
 	{
-		// we have already have loaded the sprite reference from hud.txt, but
+		// we have already have loaded the sprite reference from HUD.txt, but
 		// we need to make sure all the sprites have been loaded (we've gone through a transition, or loaded a save game)
 		client_sprite_t *p = m_pSpriteList;
 		int index = 0;
@@ -715,7 +715,7 @@ int CHud::MsgFunc_SetFOV(const char *pszName,  int iSize, void *pbuf)
 		m_iFOV = newfov;
 	}
 
-	// the clients fov is actually set in the client data update section of the hud
+	// the clients fov is actually set in the client data update section of the HUD
 
 	// Set a new sensitivity
 	if ( m_iFOV == def_fov )
@@ -733,13 +733,13 @@ int CHud::MsgFunc_SetFOV(const char *pszName,  int iSize, void *pbuf)
 }
 
 
-void CHud::AddHudElem(CHudBase *phudelem)
+void CHud::AddHudElem(CHudBase *pHUDelem)
 {
 	HUDLIST *pdl, *ptemp;
 
-//phudelem->Think();
+//pHUDelem->Think();
 
-	if (!phudelem)
+	if (!pHUDelem)
 		return;
 
 	pdl = (HUDLIST *)malloc(sizeof(HUDLIST));
@@ -747,15 +747,15 @@ void CHud::AddHudElem(CHudBase *phudelem)
 		return;
 
 	memset(pdl, 0, sizeof(HUDLIST));
-	pdl->p = phudelem;
+	pdl->p = pHUDelem;
 
-	if (!m_pHudList)
+	if (!m_pHUDList)
 	{
-		m_pHudList = pdl;
+		m_pHUDList = pdl;
 		return;
 	}
 
-	ptemp = m_pHudList;
+	ptemp = m_pHUDList;
 
 	while (ptemp->pNext)
 		ptemp = ptemp->pNext;

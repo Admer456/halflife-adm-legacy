@@ -14,16 +14,16 @@
 ****/
 #if !defined( OEM_BUILD ) && !defined( HLDEMO_BUILD )
 
-#include "extdll.h"
+#include "Base/ExtDLL.h"
 #include "util.h"
-#include "cbase.h"
+#include "Base/CBase.h"
 #include "player.h"
-#include "monsters.h"
-#include "weapons.h"
+#include "AI/Monsters.h"
+#include "Weapons/Weapons.h"
 #include "nodes.h"
 #include "effects.h"
 #include "customentity.h"
-#include "gamerules.h"
+#include "Game/GameRules.h"
 
 #define	EGON_PRIMARY_VOLUME		450
 #define EGON_BEAM_SPRITE		"sprites/xbeam1.spr"

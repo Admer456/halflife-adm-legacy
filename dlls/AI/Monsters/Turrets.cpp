@@ -24,11 +24,11 @@
 //		Revisit enemy validation stuff, maybe it's not necessary with the newest monster code
 //
 
-#include "extdll.h"
-#include "util.h"
-#include "cbase.h"
-#include "monsters.h"
-#include "weapons.h"
+#include "Base/ExtDLL.h"
+#include "Util.h"
+#include "Base/CBase.h"
+#include "AI/Monsters.h"
+#include "Weapons/Weapons.h"
 #include "effects.h"
 
 extern Vector VecBModelOrigin( entvars_t* pevBModel );
@@ -64,7 +64,7 @@ public:
 	virtual int	 Classify(void);
 
 	int BloodColor( void ) { return DONT_BLEED; }
-	void GibMonster( void ) {}	// UNDONE: Throw turret gibs?
+	void GibMonster( void ) {}	// TODO: Throw turret gibs?
 
 	// Think functions
 

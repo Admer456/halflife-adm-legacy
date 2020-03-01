@@ -18,7 +18,7 @@
 // implementation of CHudFlashlight class
 //
 
-#include "hud.h"
+#include "HUD/hud.h"
 #include "cl_util.h"
 #include "parsemsg.h"
 
@@ -96,7 +96,7 @@ int CHudFlashlight:: MsgFunc_Flashlight(const char *pszName,  int iSize, void *p
 
 int CHudFlashlight::Draw(float flTime)
 {
-	if ( gHUD.m_iHideHUDDisplay & ( HIDEHUD_FLASHLIGHT | HIDEHUD_ALL ) )
+	if ( gHUD.m_iHideHudDisplay & ( HIDEHUD_FLASHLIGHT | HIDEHUD_ALL ) )
 		return 1;
 
 	int r, g, b, x, y, a;

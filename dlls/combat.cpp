@@ -20,14 +20,14 @@
 
 */
 
-#include "extdll.h"
-#include "util.h"
-#include "cbase.h"
-#include "monsters.h"
+#include "Base/ExtDLL.h"
+#include "Util.h"
+#include "Base/CBase.h"
+#include "AI/Monsters.h"
 #include "soundent.h"
 #include "decals.h"
-#include "animation.h"
-#include "weapons.h"
+#include "Base/Animation.h"
+#include "Weapons/Weapons.h"
 #include "func_break.h"
 
 extern DLL_GLOBAL Vector		g_vecAttackDir;
@@ -307,7 +307,7 @@ void CBaseMonster :: GibMonster( void )
 
 	EMIT_SOUND(ENT(pev), CHAN_WEAPON, "common/bodysplat.wav", 1, ATTN_NORM);		
 
-	// only humans throw skulls !!!UNDONE - eventually monsters will have their own sets of gibs
+	// only humans throw skulls !!!TODO - eventually monsters will have their own sets of gibs
 	if ( HasHumanGibs() )
 	{
 		if ( CVAR_GET_FLOAT("violence_hgibs") != 0 )	// Only the player will ever get here
@@ -811,8 +811,8 @@ int CBaseMonster :: TakeHealth (float flHealth, int bitsDamageType)
 		return 0;
 
 	// clear out any damage types we healed.
-	// UNDONE: generic health should not heal any
-	// UNDONE: time-based damage
+	// TODO: generic health should not heal any
+	// TODO: time-based damage
 
 	m_bitsDamageType &= ~(bitsDamageType & ~DMG_TIMEBASED);
 	
@@ -1059,7 +1059,7 @@ void RadiusDamage( Vector vecSrc, entvars_t *pevInflictor, entvars_t *pevAttacke
 	{
 		if ( pEntity->pev->takedamage != DAMAGE_NO )
 		{
-			// UNDONE: this should check a damage mask, not an ignore
+			// TODO: this should check a damage mask, not an ignore
 			if ( iClassIgnore != CLASS_NONE && pEntity->Classify() == iClassIgnore )
 			{// houndeyes don't hurt other houndeyes with their attack
 				continue;

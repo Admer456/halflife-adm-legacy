@@ -20,19 +20,19 @@
 
 */
 
-#include "extdll.h"
-#include "util.h"
-#include "cbase.h"
+#include "Base/ExtDLL.h"
+#include "Util.h"
+#include "Base/CBase.h"
 #include "nodes.h"
 #include "soundent.h"
-#include "client.h"
+#include "Game/Client.h"
 #include "decals.h"
 #include "skill.h"
 #include "effects.h"
 #include "player.h"
-#include "weapons.h"
-#include "gamerules.h"
-#include "teamplay_gamerules.h"
+#include "Weapons/Weapons.h"
+#include "Game/GameRules.h"
+#include "Game/GameRulesTeamplay.h"
 
 extern CGraph WorldGraph;
 extern CSoundEnt *pSoundEnt;
@@ -113,7 +113,7 @@ public:
 
 LINK_ENTITY_TO_CLASS( infodecal, CDecal );
 
-// UNDONE:  These won't get sent to joining players in multi-player
+// TODO:  These won't get sent to joining players in multi-player
 void CDecal :: Spawn( void )
 {
 	if ( pev->skin < 0 || (gpGlobals->deathmatch && FBitSet( pev->spawnflags, SF_DECAL_NOTINDEATHMATCH )) )
@@ -515,7 +515,7 @@ void CWorld :: Precache( void )
 
 	g_pGameRules = InstallGameRules( );
 
-	//!!!UNDONE why is there so much Spawn code in the Precache function? I'll just keep it here 
+	//!!!TODO why is there so much Spawn code in the Precache function? I'll just keep it here 
 
 	///!!!LATER - do we want a sound ent in deathmatch? (sjb)
 	//pSoundEnt = CBaseEntity::Create( "soundent", g_vecZero, g_vecZero, edict() );
@@ -734,7 +734,7 @@ void CWorld :: KeyValue( KeyValueData *pkvd )
 	}
 	else if ( FStrEq(pkvd->szKeyName, "startdark") )
 	{
-		// UNDONE: This is a gross hack!!! The CVAR is NOT sent over the client/sever link
+		// TODO: This is a gross hack!!! The CVAR is NOT sent over the client/sever link
 		// but it will work for single player
 		int flag = atoi(pkvd->szValue);
 		pkvd->fHandled = TRUE;

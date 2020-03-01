@@ -14,14 +14,14 @@
 ****/
 #if !defined( OEM_BUILD ) && !defined( HLDEMO_BUILD )
 
-#include "extdll.h"
+#include "Base/ExtDLL.h"
 #include "util.h"
-#include "cbase.h"
-#include "monsters.h"
-#include "weapons.h"
+#include "Base/cbase.h"
+#include "AI/monsters.h"
+#include "Weapons/Weapons.h"
 #include "nodes.h"
 #include "player.h"
-#include "gamerules.h"
+#include "Game/gamerules.h"
 
 #ifndef CLIENT_DLL
 #define BOLT_AIR_VELOCITY	2000

@@ -7,13 +7,13 @@
 
 // There are hud.h's coming out of the woodwork so this ensures that we get the right one.
 #if defined(THREEWAVE) || defined(DMC_BUILD)
-	#include "../dmc/cl_dll/hud.h"
+	#include "../dmc/cl_dll/HUD/hud.h"
 #elif defined(CSTRIKE)
-	#include "../cstrike/cl_dll/hud.h"
+	#include "../cstrike/cl_dll/HUD/hud.h"
 #elif defined(DOD)
-	#include "../dod/cl_dll/hud.h"
+	#include "../dod/cl_dll/HUD/hud.h"
 #else
-	#include "hud.h"
+	#include "HUD/hud.h"
 #endif
 
 #include "cl_util.h"
@@ -21,10 +21,10 @@
 #include <string.h>
 #include <stdio.h>
 #include "parsemsg.h"
-#include "hud_servers.h"
+#include "HUD/HUD_servers.h"
 #include "demo.h"
 #include "demo_api.h"
-#include "voice_status.h"
+#include "VoiceStatus.h"
 #include "r_efx.h"
 #include "entity_types.h"
 #include "VGUI_ActionSignal.h"

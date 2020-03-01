@@ -20,13 +20,13 @@
 // this class routes messages through titles.txt for localisation
 //
 
-#include "hud.h"
+#include "HUD/hud.h"
 #include "cl_util.h"
 #include <string.h>
 #include <stdio.h>
 #include "parsemsg.h"
 
-#include "vgui_TeamFortressViewport.h"
+#include "VGUI/vgui_TeamFortressViewport.h"
 
 DECLARE_MESSAGE( m_TextMessage, TextMsg );
 

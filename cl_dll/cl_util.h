@@ -55,7 +55,7 @@ inline struct cvar_s *CVAR_CREATE( const char *cv, const char *val, const int fl
 // SPR_DrawAdditive  adds the sprites RGB values to the background  (additive transulency)
 #define SPR_DrawAdditive (*gEngfuncs.pfnSPR_DrawAdditive)
 
-// SPR_EnableScissor  sets a clipping rect for HUD sprites.  (0,0) is the top-left hand corner of the screen.
+// SPR_EnableScissor  sets a clipping rect for HUD/hud.h sprites.  (0,0) is the top-left hand corner of the screen.
 #define SPR_EnableScissor (*gEngfuncs.pfnSPR_EnableScissor)
 // SPR_DisableScissor  disables the clipping rect
 #define SPR_DisableScissor (*gEngfuncs.pfnSPR_DisableScissor)
@@ -180,7 +180,7 @@ extern vec3_t vec3_origin;
 // disable 'truncation from 'const double' to 'float' warning message
 #pragma warning( disable: 4305 )
 
-/* AdmSrc - Old default HUD colour code
+/* AdmSrc - Old default HUD/hud.h colour code
 inline void UnpackRGB(int &r, int &g, int &b, unsigned long ulRGB)\
 {\
 	r = (ulRGB & 0xFF0000) >>16;\
@@ -189,7 +189,7 @@ inline void UnpackRGB(int &r, int &g, int &b, unsigned long ulRGB)\
 }
 */
 
-// AdmSrc - New customisable HUD colour unpacking
+// AdmSrc - New customisable HUD/hud.h colour unpacking
 inline void UnpackRGB(int &r, int &g, int &b, unsigned long ulRGB)
 {
 	if (ulRGB == RGB_YELLOWISH)

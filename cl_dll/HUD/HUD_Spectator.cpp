@@ -5,11 +5,11 @@
 // $NoKeywords: $
 //=============================================================================
 
-#include "hud.h"
+#include "HUD/hud.h"
 #include "cl_util.h"
 #include "cl_entity.h"
 #include "triangleapi.h"
-#include "vgui_TeamFortressViewport.h"
+#include "VGUI/vgui_TeamFortressViewport.h"
 #include "vgui_SpectatorPanel.h"
 #include "hltv.h"
 
@@ -23,7 +23,7 @@
 #include "com_model.h"
 #include "demo_api.h"
 #include "event_api.h"
-#include "studio_util.h"
+#include "Rendering/StudioUtil.h"
 #include "screenfade.h"
 
 
@@ -696,7 +696,7 @@ void CHudSpectator::DirectorMessage( int iSize, void *pbuf )
 							g_iPlayerClass = 0;
 							g_iTeamNumber = 0;
 
-							// fake a InitHUD & ResetHUD message
+							// fake a InitHUD/hud.h & ResetHUD/hud.h message
 							gHUD.MsgFunc_InitHUD(NULL,0, NULL);
 							gHUD.MsgFunc_ResetHUD(NULL, 0, NULL);
 														
@@ -749,7 +749,7 @@ void CHudSpectator::DirectorMessage( int iSize, void *pbuf )
 
 		case DRC_CMD_MESSAGE:
 							{
-								client_textmessage_t * msg = &m_HUDMessages[m_lastHudMessage];
+								client_textmessage_t * msg = &m_HudMessages[m_lastHudMessage];
 								
 								msg->effect = READ_BYTE();		// effect
 
@@ -767,10 +767,10 @@ void CHudSpectator::DirectorMessage( int iSize, void *pbuf )
 								msg->holdtime	= READ_FLOAT();	// holdtime
 								msg->fxtime		= READ_FLOAT();	// fxtime;
 
-								strncpy( m_HUDMessageText[m_lastHudMessage], READ_STRING(), 128 );
-								m_HUDMessageText[m_lastHudMessage][127]=0;	// text 
+								strncpy( m_HudMessageText[m_lastHudMessage], READ_STRING(), 128 );
+								m_HudMessageText[m_lastHudMessage][127]=0;	// text 
 
-								msg->pMessage = m_HUDMessageText[m_lastHudMessage];
+								msg->pMessage = m_HudMessageText[m_lastHudMessage];
 								msg->pName	  = "HUD_MESSAGE";
 
 								gHUD.m_Message.MessageAdd( msg );
@@ -1556,7 +1556,7 @@ void CHudSpectator::DrawOverviewEntities()
 	
 
 	z = m_OverviewData.layersHeights[0] * zScale;
-	// get yellow/brown HUD color
+	// get yellow/brown HUD/hud.h color
 	UnpackRGB(ir,ig,ib, RGB_YELLOWISH);
 	r = (float)ir/255.0f;
 	g = (float)ig/255.0f;
@@ -1652,7 +1652,7 @@ void CHudSpectator::DrawOverviewEntities()
 		gEngfuncs.pTriAPI->Vertex3f (origin[0]-4, origin[1]+4,z);
 		gEngfuncs.pTriAPI->End ();
 
-		// calculate screen position for name and infromation in hud::draw()
+		// calculate screen position for name and infromation in HUD/hud.h::draw()
 		if ( gEngfuncs.pTriAPI->WorldToScreen(origin,screen) )
 			continue;	// object is behind viewer
 
@@ -1860,7 +1860,7 @@ void CHudSpectator::CheckSettings()
 	// check chat mode
 	if ( m_chatEnabled != (gHUD.m_SayText.m_HUD_saytext->value!=0) )
 	{
-		// hud_saytext changed
+		// HUD_saytext changed
 		m_chatEnabled = (gHUD.m_SayText.m_HUD_saytext->value!=0);
 
 		if ( gEngfuncs.IsSpectateOnly() )
@@ -1933,7 +1933,7 @@ int CHudSpectator::ToggleInset(bool allowOff)
 }
 void CHudSpectator::Reset()
 {
-	// Reset HUD
+	// Reset HUD/hud.h
 	if ( strcmp( m_OverviewData.map, gEngfuncs.pfnGetLevelName() ) )
 	{
 		// update level overview if level changed
@@ -1975,7 +1975,7 @@ void CHudSpectator::InitHUDData()
 
 	g_iUser2 = 0; // fake not target until first camera command
 
-	// reset HUD FOV
+	// reset HUD/hud.h FOV
 	gHUD.m_iFOV =  CVAR_GET_FLOAT("default_fov");
 }
 

@@ -16,9 +16,9 @@
 	but why would you want to do that, lol?
 */
 
-#include "extdll.h"
-#include "util.h"
-#include "cbase.h"
+#include "Base/ExtDLL.h"
+#include "Util.h"
+#include "Base/CBase.h"
 
 void CBaseDelay::GetKeyValueBase(char &szTheValue, char szTargetKeyName[64])
 {

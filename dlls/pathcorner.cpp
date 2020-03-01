@@ -16,11 +16,11 @@
 // ========================== PATH_CORNER ===========================
 //
 
-#include "extdll.h"
-#include "util.h"
-#include "cbase.h"
+#include "Base/ExtDLL.h"
+#include "Util.h"
+#include "Base/CBase.h"
 #include "trains.h"
-#include "saverestore.h"
+#include "Base/SaveRestore.h"
 
 class CPathCorner : public CPointEntity
 {
@@ -90,7 +90,7 @@ void CPathCorner :: Touch( CBaseEntity *pOther )
 		return;		// fighting, not following a path
 	}
 	
-	// UNDONE: support non-zero flWait
+	// TODO: support non-zero flWait
 	/*
 	if (m_flWait != 0)
 		ALERT(at_warning, "Non-zero path-cornder waits NYI");

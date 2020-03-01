@@ -18,11 +18,11 @@
 
 */
 
-#include "extdll.h"
-#include "util.h"
-#include "cbase.h"
-#include "monsters.h"
-#include "weapons.h"
+#include "Base/ExtDLL.h"
+#include "Util.h"
+#include "Base/CBase.h"
+#include "AI/Monsters.h"
+#include "Weapons/Weapons.h"
 #include "nodes.h"
 #include "soundent.h"
 #include "decals.h"
@@ -47,7 +47,7 @@ void CGrenade::Explode( Vector vecSrc, Vector vecAim )
 	Explode( &tr, DMG_BLAST );
 }
 
-// UNDONE: temporary scorching for PreAlpha - find a less sleazy permenant solution.
+// TODO: temporary scorching for PreAlpha - find a less sleazy permenant solution.
 void CGrenade::Explode( TraceResult *pTrace, int bitsDamageType )
 {
 	float		flRndSound;// sound randomizer

@@ -9,9 +9,9 @@
 #include "voice_gamemgr.h"
 #include <string.h>
 #include <assert.h>
-#include "extdll.h"
-#include "util.h"
-#include "cbase.h"
+#include "Base/ExtDLL.h"
+#include "Util.h"
+#include "Base/CBase.h"
 #include "player.h"
 
 

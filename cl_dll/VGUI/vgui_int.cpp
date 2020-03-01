@@ -5,7 +5,7 @@
 // $NoKeywords: $
 //=============================================================================
 
-#include"vgui_int.h"
+#include"VGUI/vgui_int.h"
 #include<VGUI_Label.h>
 #include<VGUI_BorderLayout.h>
 #include<VGUI_LineBorder.h>
@@ -13,16 +13,16 @@
 #include<VGUI_TextEntry.h>
 #include<VGUI_ActionSignal.h>
 #include<string.h>
-#include "hud.h"
+#include "HUD/hud.h"
 #include "cl_util.h"
-#include "camera.h"
-#include "kbutton.h"
+#include "Input/Camera.h"
+#include "Input/KButton.h"
 #include "cvardef.h"
 #include "usercmd.h"
 #include "const.h"
-#include "camera.h"
-#include "in_defs.h"
-#include "vgui_TeamFortressViewport.h"
+#include "Input/Camera.h"
+#include "Input/IN_Defs.h"
+#include "VGUI/vgui_TeamFortressViewport.h"
 #include "vgui_ControlConfigPanel.h"
 
 namespace

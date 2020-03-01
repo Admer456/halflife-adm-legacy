@@ -19,11 +19,11 @@
 */
 
 
-#include	"extdll.h"
-#include	"util.h"
-#include	"cbase.h"
-#include	"monsters.h"
-#include	"game.h"
+#include	"Base/ExtDLL.h"
+#include	"Util.h"
+#include	"Base/CBase.h"
+#include	"AI/Monsters.h"
+#include	"Game/Game.h"
 	
 #define		NUM_LATERAL_CHECKS		13  // how many checks are made on each side of a monster looking for lateral cover
 #define		NUM_LATERAL_LOS_CHECKS		6  // how many checks are made on each side of a monster looking for lateral cover
@@ -36,14 +36,14 @@ DLL_GLOBAL	BOOL	g_fDrawLines = FALSE;
 // 
 // AI UTILITY FUNCTIONS
 //
-// !!!UNDONE - move CBaseMonster functions to monsters.cpp
+// !!!TODO - move CBaseMonster functions to monsters.cpp
 //=========================================================
 
 //=========================================================
 // FBoxVisible - a more accurate ( and slower ) version
 // of FVisible. 
 //
-// !!!UNDONE - make this CBaseMonster?
+// !!!TODO - make this CBaseMonster?
 //=========================================================
 BOOL FBoxVisible ( entvars_t *pevLooker, entvars_t *pevTarget, Vector &vecTargetOrigin, float flSize )
 {
@@ -99,7 +99,7 @@ Vector VecCheckToss ( entvars_t *pev, const Vector &vecSpot1, Vector vecSpot2, f
 	vecSpot2 = vecSpot2 + gpGlobals->v_forward * ( RANDOM_FLOAT(-8,8) + RANDOM_FLOAT(-16,16) );
 	
 	// calculate the midpoint and apex of the 'triangle'
-	// UNDONE: normalize any Z position differences between spot1 and spot2 so that triangle is always RIGHT
+	// TODO: normalize any Z position differences between spot1 and spot2 so that triangle is always RIGHT
 
 	// How much time does it take to get there?
 
@@ -146,7 +146,7 @@ Vector VecCheckToss ( entvars_t *pev, const Vector &vecSpot1, Vector vecSpot2, f
 		return g_vecZero;
 	}
 
-	// UNDONE: either ignore monsters or change it to not care if we hit our enemy
+	// TODO: either ignore monsters or change it to not care if we hit our enemy
 	UTIL_TraceLine(vecSpot2, vecApex, ignore_monsters, ENT(pev), &tr); 
 	if (tr.flFraction != 1.0)
 	{

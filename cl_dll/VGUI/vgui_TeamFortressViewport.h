@@ -710,7 +710,7 @@ public:
 };
 
 // Used instead of CMenuHandler_StringCommand for Class Selection buttons.
-// Checks the state of hud_classautokill and kills the player if set
+// Checks the state of HUD_classautokill and kills the player if set
 class CMenuHandler_StringCommandClassSelect : public CMenuHandler_StringCommand
 {
 private:
@@ -1743,7 +1743,7 @@ public:
 };
 
 //=========================================================
-// Specific Menus to handle old HUD sections
+// Specific Menus to handle old HUD/hud.h sections
 class CHealthPanel : public DragNDropPanel
 {
 private:
@@ -1753,7 +1753,7 @@ public:
 	CHealthPanel(int x,int y,int wide,int tall) : DragNDropPanel(x,y,wide,tall)
 	{
 		// Load the Health icon
-		FileInputStream* fis = new FileInputStream( GetVGUITGAName("%d_hud_health"), false);
+		FileInputStream* fis = new FileInputStream( GetVGUITGAName("%d_HUD_health"), false);
 		m_pHealthTGA = new BitmapTGA(fis,true);
 		fis->close();
 

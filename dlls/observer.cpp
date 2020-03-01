@@ -15,11 +15,11 @@
 //
 // $NoKeywords: $
 //=============================================================================
-#include	"extdll.h"
-#include	"util.h"
-#include	"cbase.h"
+#include	"Base/ExtDLL.h"
+#include	"Util.h"
+#include	"Base/CBase.h"
 #include	"player.h"
-#include	"weapons.h"
+#include	"Weapons/Weapons.h"
 #include	"pm_shared.h"
 
 extern int gmsgCurWeapon;

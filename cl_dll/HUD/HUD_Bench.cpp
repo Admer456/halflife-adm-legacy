@@ -3,7 +3,7 @@
 //
 #define BENCH_TIME 10.0
 
-#include "hud.h"
+#include "HUD/hud.h"
 #include "cl_util.h"
 
 #include "const.h"
@@ -22,7 +22,7 @@
 #include "con_nprint.h"
 
 #include "netadr.h"
-#include "hud_benchtrace.h"
+#include "HUD_benchtrace.h"
 
 #include "net_api.h"
 

@@ -6,7 +6,7 @@
 //=============================================================================
 
 #include <assert.h>
-#include "hud.h"
+#include "HUD/hud.h"
 #include "cl_util.h"
 #include "const.h"
 #include "com_model.h"
@@ -21,7 +21,7 @@
 #include <memory.h>
 #include <math.h>
 
-#include "studio_util.h"
+#include "Rendering/StudioUtil.h"
 #include "r_studioint.h"
 
 #include "StudioModelRenderer.h"

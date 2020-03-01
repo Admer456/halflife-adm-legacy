@@ -12,13 +12,13 @@
 *   without written permission from Valve LLC.
 *
 ****/
-#include "extdll.h"
-#include "util.h"
-#include "cbase.h"
-#include "monsters.h"
+#include "Base/ExtDLL.h"
+#include "Util.h"
+#include "Base/CBase.h"
+#include "AI/Monsters.h"
 #include "customentity.h"
 #include "effects.h"
-#include "weapons.h"
+#include "Weapons/Weapons.h"
 #include "decals.h"
 #include "func_break.h"
 #include "shake.h"
@@ -417,7 +417,7 @@ public:
 LINK_ENTITY_TO_CLASS( env_lightning, CLightning );
 LINK_ENTITY_TO_CLASS( env_beam, CLightning );
 
-// UNDONE: Jay -- This is only a test
+// TODO: Jay -- This is only a test
 #if _DEBUG
 class CTripBeam : public CLightning
 {
@@ -1862,7 +1862,7 @@ LINK_ENTITY_TO_CLASS( env_shake, CShake );
 // NOTE: UTIL_ScreenShake() will only shake players who are on the ground
 
 #define SF_SHAKE_EVERYONE	0x0001		// Don't check radius
-// UNDONE: Disrupt does not work
+// TODO: Disrupt does not work
 #define SF_SHAKE_DISRUPT	0x0002		// Disrupt controls
 #define SF_SHAKE_INAIR		0x0004		// Shake players in air
 

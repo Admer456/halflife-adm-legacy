@@ -16,10 +16,10 @@
 #include "cl_dll.h"
 #include "cl_util.h"
 #include "cl_entity.h"
-#include "util_vector.h"
+#include "UtilVector.h"
 
 #include "triangleapi.h"
-#include "tri.h"
+#include "Rendering/tri.h"
 
 // Set Cull
 // TRI_FRONT 0
@@ -90,7 +90,7 @@ void ADM_RendSTW(float *screen, float *world);
 void ADM_RendDrawLine(vec3_t a, vec3_t b);
 void ADM_RendDrawLine(float x1, float y1, float x2, float y2);
 
-Vector GetHUDColours();
+Vector GetHudColours();
 int    GetAspectRatio();
 
 struct AdmTriApi2D
@@ -193,7 +193,7 @@ struct ARS_Quad3
 	ARS_Vertex3 D;
 };
 
-// HUD system and HUD elements
+// HUD/hud.h system and HUD/hud.h elements
 
 class CAdmHudRenderer
 {

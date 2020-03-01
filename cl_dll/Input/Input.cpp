@@ -4,25 +4,25 @@
 
 // Quake is a trademark of Id Software, Inc., (c) 1996 Id Software, Inc. All
 // rights reserved.
-#include "hud.h"
+#include "HUD/hud.h"
 #include "cl_util.h"
-#include "camera.h"
+#include "Input/Camera.h"
 extern "C"
 {
-#include "kbutton.h"
+#include "Input/KButton.h"
 }
 #include "cvardef.h"
 #include "usercmd.h"
 #include "const.h"
-#include "camera.h"
-#include "in_defs.h"
-#include "view.h"
+#include "Input/Camera.h"
+#include "Input/IN_Defs.h"
+#include "Rendering/view.h"
 #include "bench.h"
 #include <string.h>
 #include <ctype.h>
 #include "Exports.h"
 
-#include "vgui_TeamFortressViewport.h"
+#include "VGUI/vgui_TeamFortressViewport.h"
 #include "adm/shared/AdmControl.h"
 
 //AdmControlAPI ControlAPI;
@@ -448,7 +448,7 @@ void IN_SpeedUp(void) {KeyUp(&in_speed);}
 void IN_StrafeDown(void) {KeyDown(&in_strafe);}
 void IN_StrafeUp(void) {KeyUp(&in_strafe);}
 
-// needs capture by hud/vgui also
+// needs capture by HUD/hud.h/vgui also
 extern void __CmdFunc_InputPlayerSpecial(void);
 
 void IN_Attack2Down(void) 

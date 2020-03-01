@@ -18,17 +18,17 @@
 // icthyosaur - evin, satan fish monster
 //=========================================================
 
-#include	"extdll.h"
-#include	"util.h"
-#include	"cbase.h"
-#include	"monsters.h"
-#include	"schedule.h"
-#include    "flyingmonster.h"
+#include	"Base/ExtDLL.h"
+#include	"Util.h"
+#include	"Base/CBase.h"
+#include	"AI/Monsters.h"
+#include	"AI/Schedule.h"
+#include    "AI/FlyingMonster.h"
 #include	"nodes.h"
 #include	"soundent.h"
-#include	"animation.h"
+#include	"Base/Animation.h"
 #include	"effects.h"
-#include	"weapons.h"
+#include	"Weapons/Weapons.h"
 
 #define SEARCH_RETRY	16
 
@@ -48,7 +48,7 @@ extern CGraph WorldGraph;
 // Monster's Anim Events Go Here
 //=========================================================
 
-// UNDONE: Save/restore here
+// TODO: Save/restore here
 class CIchthyosaur : public CFlyingMonster
 {
 public:
@@ -835,7 +835,7 @@ float CIchthyosaur::ChangeYaw( int speed )
 
 Activity CIchthyosaur:: GetStoppedActivity( void )
 { 
-	if ( pev->movetype != MOVETYPE_FLY )		// UNDONE: Ground idle here, IDLE may be something else
+	if ( pev->movetype != MOVETYPE_FLY )		// TODO: Ground idle here, IDLE may be something else
 		return ACT_IDLE;
 	return ACT_WALK;
 }

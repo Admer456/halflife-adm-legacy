@@ -18,19 +18,19 @@
 
 #include "VGUI_Font.h"
 
-#include "hud.h"
+#include "HUD/hud.h"
 #include "cl_util.h"
-#include "camera.h"
-#include "kbutton.h"
+#include "Input/Camera.h"
+#include "Input/KButton.h"
 #include "cvardef.h"
 #include "usercmd.h"
 #include "const.h"
-#include "camera.h"
-#include "in_defs.h"
+#include "Input/Camera.h"
+#include "Input/IN_Defs.h"
 #include "parsemsg.h"
 
-#include "vgui_int.h"
-#include "vgui_TeamFortressViewport.h"
+#include "VGUI/vgui_int.h"
+#include "VGUI/vgui_TeamFortressViewport.h"
 #include "vgui_ServerBrowser.h"
 #include "vgui_loadtga.h"
 
@@ -73,7 +73,7 @@ BitmapTGA *LoadTGAForRes( const char* pImageName )
 }
 
 //===========================================================
-// All TFC Hud buttons are derived from this one.
+// All TFC HUD/hud.h buttons are derived from this one.
 CommandButton::CommandButton( const char* text,int x,int y,int wide,int tall, bool bNoHighlight) : Button("",x,y,wide,tall)
 {
 	m_iPlayerClass = 0;
@@ -311,7 +311,7 @@ int ClassButton::IsNotValid()
 #endif
 
 	// Only check current class if they've got autokill on
-	bool bAutoKill = CVAR_GET_FLOAT( "hud_classautokill" ) != 0;
+	bool bAutoKill = CVAR_GET_FLOAT( "HUD_classautokill" ) != 0;
 	if ( bAutoKill )
 	{	
 		// Is it the player's current class?
@@ -539,7 +539,7 @@ void CMenuHandler_StringCommandClassSelect::actionPerformed(Panel* panel)
 	// HAVE THE SERVER SAY "SORRY...YOU CAN'T BE THAT CLASS".
 
 #if !defined _TFC
-	bool bAutoKill = CVAR_GET_FLOAT( "hud_classautokill" ) != 0;
+	bool bAutoKill = CVAR_GET_FLOAT( "HUD_classautokill" ) != 0;
 	if ( bAutoKill && g_iPlayerClass != 0 )
 		gEngfuncs.pfnClientCmd("kill");
 #endif

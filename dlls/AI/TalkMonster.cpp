@@ -12,16 +12,16 @@
 *   use or distribution of this code by or to any unlicensed person is illegal.
 *
 ****/
-#include	"extdll.h"
-#include	"util.h"
-#include	"cbase.h"
-#include	"monsters.h"
-#include	"schedule.h"
-#include	"talkmonster.h"
-#include	"defaultai.h"
-#include	"scripted.h"
+#include	"Base/ExtDLL.h"
+#include	"Util.h"
+#include	"Base/CBase.h"
+#include	"AI/Monsters.h"
+#include	"AI/Schedule.h"
+#include	"AI/TalkMonster.h"
+#include	"AI/DefaultAI.h"
+#include	"AI/Scripted.h"
 #include	"soundent.h"
-#include	"animation.h"
+#include	"Base/Animation.h"
 
 //=========================================================
 // Talking monster base class
@@ -721,8 +721,8 @@ void CTalkMonster::ShutUpFriends( void )
 }
 
 
-// UNDONE: Keep a follow time in each follower, make a list of followers in this function and do LRU
-// UNDONE: Check this in Restore to keep restored monsters from joining a full list of followers
+// TODO: Keep a follow time in each follower, make a list of followers in this function and do LRU
+// TODO: Check this in Restore to keep restored monsters from joining a full list of followers
 void CTalkMonster::LimitFollowers( CBaseEntity *pPlayer, int maxFollowers )
 {
 	CBaseEntity *pFriend = NULL;
@@ -1108,7 +1108,7 @@ int CTalkMonster :: FIdleSpeak ( void )
 		// force friend to answer
 		CTalkMonster *pTalkMonster = (CTalkMonster *)pFriend;
 		m_hTalkTarget = pFriend;
-		pTalkMonster->SetAnswerQuestion( this ); // UNDONE: This is EVIL!!!
+		pTalkMonster->SetAnswerQuestion( this ); // TODO: This is EVIL!!!
 		pTalkMonster->m_flStopTalkTime = m_flStopTalkTime;
 
 		m_nSpeak++;

@@ -16,13 +16,13 @@
 // Agrunt - Dominant, warlike alien grunt monster
 //=========================================================
 
-#include	"extdll.h"
+#include	"Base/ExtDLL.h"
 #include	"util.h"
-#include	"cbase.h"
-#include	"monsters.h"
-#include	"schedule.h"
-#include	"squadmonster.h"
-#include	"weapons.h"
+#include	"Base/CBase.h"
+#include	"AI/Monsters.h"
+#include	"AI/Schedule.h"
+#include	"AI/SquadMonster.h"
+#include	"Weapons/Weapons.h"
 #include	"soundent.h"
 #include	"hornet.h"
 

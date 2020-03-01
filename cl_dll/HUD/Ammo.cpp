@@ -18,7 +18,7 @@
 // implementation of CHudAmmo class
 //
 
-#include "hud.h"
+#include "HUD/hud.h"
 #include "cl_util.h"
 #include "parsemsg.h"
 #include "pm_shared.h"
@@ -27,7 +27,7 @@
 #include <stdio.h>
 
 #include "ammohistory.h"
-#include "vgui_TeamFortressViewport.h"
+#include "VGUI/vgui_TeamFortressViewport.h"
 
 WEAPON *gpActiveSel;	// NULL means off, 1 means just the menu bar, otherwise
 						// this points to the active weapon menu item
@@ -287,8 +287,8 @@ int CHudAmmo::Init(void)
 
 	Reset();
 
-	CVAR_CREATE( "hud_drawhistory_time", HISTORY_DRAW_TIME, 0 );
-	CVAR_CREATE( "hud_fastswitch", "0", FCVAR_ARCHIVE );		// controls whether or not weapons can be selected in one keypress
+	CVAR_CREATE( "HUD_drawhistory_time", HISTORY_DRAW_TIME, 0 );
+	CVAR_CREATE( "HUD_fastswitch", "0", FCVAR_ARCHIVE );		// controls whether or not weapons can be selected in one keypress
 
 	m_iFlags |= HUD_ACTIVE; //!!!
 
@@ -304,7 +304,7 @@ void CHudAmmo::Reset(void)
 	m_iFlags |= HUD_ACTIVE; //!!!
 
 	gpActiveSel = NULL;
-	gHUD.m_iHideHUDDisplay = 0;
+	gHUD.m_iHideHudDisplay = 0;
 
 	gWR.Reset();
 	gHR.Reset();
@@ -424,7 +424,7 @@ void WeaponsResource :: SelectSlot( int iSlot, int fAdvance, int iDirection )
 	if ( iSlot > MAX_WEAPON_SLOTS )
 		return;
 
-	if ( gHUD.m_fPlayerDead || gHUD.m_iHideHUDDisplay & ( HIDEHUD_WEAPONS | HIDEHUD_ALL ) )
+	if ( gHUD.m_fPlayerDead || gHUD.m_iHideHudDisplay & ( HIDEHUD_WEAPONS | HIDEHUD_ALL ) )
 		return;
 
 	if (!(gHUD.m_iWeaponBits & (1<<(WEAPON_SUIT)) ))
@@ -434,11 +434,11 @@ void WeaponsResource :: SelectSlot( int iSlot, int fAdvance, int iDirection )
 		return;
 
 	WEAPON *p = NULL;
-	bool fastSwitch = CVAR_GET_FLOAT( "hud_fastswitch" ) != 0;
+	bool fastSwitch = CVAR_GET_FLOAT( "HUD_fastswitch" ) != 0;
 
 	if ( (gpActiveSel == NULL) || (gpActiveSel == (WEAPON *)1) || (iSlot != gpActiveSel->iSlot) )
 	{
-		PlaySound( "common/wpn_hudon.wav", 1 );
+		PlaySound( "common/wpn_HUD/hud.hon.wav", 1 );
 		p = GetFirstPos( iSlot );
 
 		if ( p && fastSwitch ) // check for fast weapon switch mode
@@ -534,12 +534,12 @@ int CHudAmmo::MsgFunc_HideWeapon( const char *pszName, int iSize, void *pbuf )
 {
 	BEGIN_READ( pbuf, iSize );
 	
-	gHUD.m_iHideHUDDisplay = READ_BYTE();
+	gHUD.m_iHideHudDisplay = READ_BYTE();
 
 	if (gEngfuncs.IsSpectateOnly())
 		return 1;
 
-	if ( gHUD.m_iHideHUDDisplay & ( HIDEHUD_WEAPONS | HIDEHUD_ALL ) )
+	if ( gHUD.m_iHideHudDisplay & ( HIDEHUD_WEAPONS | HIDEHUD_ALL ) )
 	{
 		static wrect_t nullrc;
 		gpActiveSel = NULL;
@@ -555,7 +555,7 @@ int CHudAmmo::MsgFunc_HideWeapon( const char *pszName, int iSize, void *pbuf )
 }
 
 // 
-//  CurWeapon: Update hud state with the current weapon and clip count. Ammo
+//  CurWeapon: Update HUD/hud.h state with the current weapon and clip count. Ammo
 //  counts are updated with AmmoX. Server assures that the Weapon ammo type 
 //  numbers match a real ammo type.
 //
@@ -633,7 +633,7 @@ int CHudAmmo::MsgFunc_CurWeapon(const char *pszName, int iSize, void *pbuf )
 }
 
 //
-// WeaponList -- Tells the hud about a new weapon type.
+// WeaponList -- Tells the HUD/hud.h about a new weapon type.
 //
 int CHudAmmo::MsgFunc_WeaponList(const char *pszName, int iSize, void *pbuf )
 {
@@ -733,7 +733,7 @@ void CHudAmmo::UserCmd_Close(void)
 	{
 		gpLastSel = gpActiveSel;
 		gpActiveSel = NULL;
-		PlaySound("common/wpn_hudoff.wav", 1);
+		PlaySound("common/wpn_HUD/hud.hoff.wav", 1);
 	}
 	else
 		EngineClientCmd("escape");
@@ -743,7 +743,7 @@ void CHudAmmo::UserCmd_Close(void)
 // Selects the next item in the weapon menu
 void CHudAmmo::UserCmd_NextWeapon(void)
 {
-	if ( gHUD.m_fPlayerDead || (gHUD.m_iHideHUDDisplay & (HIDEHUD_WEAPONS | HIDEHUD_ALL)) )
+	if ( gHUD.m_fPlayerDead || (gHUD.m_iHideHudDisplay & (HIDEHUD_WEAPONS | HIDEHUD_ALL)) )
 		return;
 
 	if ( !gpActiveSel || gpActiveSel == (WEAPON*)1 )
@@ -784,7 +784,7 @@ void CHudAmmo::UserCmd_NextWeapon(void)
 // Selects the previous item in the menu
 void CHudAmmo::UserCmd_PrevWeapon(void)
 {
-	if ( gHUD.m_fPlayerDead || (gHUD.m_iHideHUDDisplay & (HIDEHUD_WEAPONS | HIDEHUD_ALL)) )
+	if ( gHUD.m_fPlayerDead || (gHUD.m_iHideHudDisplay & (HIDEHUD_WEAPONS | HIDEHUD_ALL)) )
 		return;
 
 	if ( !gpActiveSel || gpActiveSel == (WEAPON*)1 )
@@ -836,7 +836,7 @@ int CHudAmmo::Draw(float flTime)
 	if (!(gHUD.m_iWeaponBits & (1<<(WEAPON_SUIT)) ))
 		return 1;
 
-	if ( (gHUD.m_iHideHUDDisplay & ( HIDEHUD_WEAPONS | HIDEHUD_ALL )) )
+	if ( (gHUD.m_iHideHudDisplay & ( HIDEHUD_WEAPONS | HIDEHUD_ALL )) )
 		return 1;
 
 	// Draw Weapon Menu
@@ -946,7 +946,7 @@ int CHudAmmo::Draw(float flTime)
 
 
 //
-// Draws the ammo bar on the hud
+// Draws the ammo bar on the HUD/hud.h
 //
 int DrawBar(int x, int y, int width, int height, float f)
 {

@@ -16,8 +16,8 @@
 // GameRules
 //=========================================================
 
-//#include "weapons.h"
-//#include "items.h"
+//#include "Weapons/Weapons.h"
+//#include "Items/Items.h"
 class CBasePlayerItem;
 class CBasePlayer;
 class CItem;

@@ -13,10 +13,10 @@
 *
 ****/
 //
-//  hud_msg.cpp
+//  HUD_msg.cpp
 //
 
-#include "hud.h"
+#include "HUD/hud.h"
 #include "cl_util.h"
 #include "parsemsg.h"
 #include "r_efx.h"
@@ -43,8 +43,8 @@ int CHud :: MsgFunc_ResetHUD(const char *pszName, int iSize, void *pbuf )
 {
 	ASSERT( iSize == 0 );
 
-	// clear all hud data
-	HUDLIST *pList = m_pHudList;
+	// clear all HUD/hud.h data
+	HUDLIST *pList = m_pHUDList;
 
 	while ( pList )
 	{
@@ -71,8 +71,8 @@ void CHud :: MsgFunc_ViewMode( const char *pszName, int iSize, void *pbuf )
 
 void CHud :: MsgFunc_InitHUD( const char *pszName, int iSize, void *pbuf )
 {
-	// prepare all hud data
-	HUDLIST *pList = m_pHudList;
+	// prepare all HUD/hud.h data
+	HUDLIST *pList = m_pHUDList;
 
 	while (pList)
 	{

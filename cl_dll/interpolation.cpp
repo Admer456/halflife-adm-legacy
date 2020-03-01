@@ -13,7 +13,7 @@
 **
 ******************************************************************************/
 
-#include "hud.h"
+#include "HUD/hud.h"
 #include "cl_util.h"
 #include "interpolation.h"
 

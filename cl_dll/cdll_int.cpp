@@ -18,7 +18,7 @@
 // this implementation handles the linking of the engine to the DLL
 //
 
-#include "hud.h"
+#include "HUD/hud.h"
 #include "cl_util.h"
 #include "netadr.h"
 #undef INTERFACE_H
@@ -28,15 +28,15 @@
 #include "pm_shared.h"
 
 #include <string.h>
-#include "hud_servers.h"
-#include "vgui_int.h"
+#include "HUD/HUD_servers.h"
+#include "VGUI/vgui_int.h"
 #include "interface.h"
 
 #include "Platform.h"
 #include "Exports.h"
 
-#include "tri.h"
-#include "vgui_TeamFortressViewport.h"
+#include "Rendering/tri.h"
+#include "VGUI/vgui_TeamFortressViewport.h"
 #include "../public/interface.h"
 #include "adm/AdmSound.h"
 
@@ -162,13 +162,13 @@ int DLLEXPORT Initialize( cl_enginefunc_t *pEnginefuncs, int iVersion )
 
 Called when the game initializes
 and whenever the vid_mode is changed
-so the HUD can reinitialize itself.
+so the HUD/hud.h can reinitialize itself.
 ==========================
 */
 
 int DLLEXPORT HUD_VidInit( void )
 {
-//	RecClHudVidInit();
+//	RecClHUD/hud.hVidInit();
 	gHUD.VidInit();
 
 	VGui_Startup();
@@ -182,13 +182,13 @@ int DLLEXPORT HUD_VidInit( void )
 
 Called whenever the client connects
 to a server.  Reinitializes all 
-the hud variables.
+the HUD/hud.h variables.
 ==========================
 */
 
 void DLLEXPORT HUD_Init( void )
 {
-//	RecClHudInit();
+//	RecClHUD/hud.hInit();
 	InitInput();
 	gHUD.Init();
 	Scheme_Init();
@@ -200,13 +200,13 @@ void DLLEXPORT HUD_Init( void )
 	HUD_Redraw
 
 called every screen frame to
-redraw the HUD.
+redraw the HUD/hud.h.
 ===========================
 */
 
 int DLLEXPORT HUD_Redraw( float time, int intermission )
 {
-//	RecClHudRedraw(time, intermission);
+//	RecClHUD/hud.hRedraw(time, intermission);
 
 	gHUD.Redraw( time, intermission );
 
@@ -229,7 +229,7 @@ returns 1 if anything has been changed, 0 otherwise.
 
 int DLLEXPORT HUD_UpdateClientData(client_data_t *pcldata, float flTime )
 {
-//	RecClHudUpdateClientData(pcldata, flTime);
+//	RecClHUD/hud.hUpdateClientData(pcldata, flTime);
 
 	IN_Commands();
 
@@ -240,13 +240,13 @@ int DLLEXPORT HUD_UpdateClientData(client_data_t *pcldata, float flTime )
 ==========================
 	HUD_Reset
 
-Called at start and end of demos to restore to "non"HUD state.
+Called at start and end of demos to restore to "non"HUD/hud.h state.
 ==========================
 */
 
 void DLLEXPORT HUD_Reset( void )
 {
-//	RecClHudReset();
+//	RecClHUD/hud.hReset();
 
 	gHUD.VidInit();
 }
@@ -261,7 +261,7 @@ Called by engine every frame that client .dll is loaded
 
 void DLLEXPORT HUD_Frame( double time )
 {
-//	RecClHudFrame(time);
+//	RecClHUD/hud.hFrame(time);
 
 	ServersThink( time );
 

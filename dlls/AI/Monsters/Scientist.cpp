@@ -16,15 +16,15 @@
 // human scientist (passive lab worker)
 //=========================================================
 
-#include	"extdll.h"
-#include	"util.h"
-#include	"cbase.h"
-#include	"monsters.h"
-#include	"talkmonster.h"
-#include	"schedule.h"
-#include	"defaultai.h"
-#include	"scripted.h"
-#include	"animation.h"
+#include	"Base/ExtDLL.h"
+#include	"Util.h"
+#include	"Base/CBase.h"
+#include	"AI/Monsters.h"
+#include	"AI/TalkMonster.h"
+#include	"AI/Schedule.h"
+#include	"AI/DefaultAI.h"
+#include	"AI/Scripted.h"
+#include	"Base/Animation.h"
 #include	"soundent.h"
 
 
@@ -947,7 +947,7 @@ Schedule_t *CScientist :: GetSchedule ( void )
 		{
 			if ( !m_hTargetEnt->IsAlive() )
 			{
-				// UNDONE: Comment about the recently dead player here?
+				// TODO: Comment about the recently dead player here?
 				StopFollowing( FALSE );
 				break;
 			}
@@ -958,7 +958,7 @@ Schedule_t *CScientist :: GetSchedule ( void )
 			if ( pEnemy != NULL )
 				relationship = IRelationship( pEnemy );
 
-			// UNDONE: Model fear properly, fix R_FR and add multiple levels of fear
+			// TODO: Model fear properly, fix R_FR and add multiple levels of fear
 			if ( relationship != R_DL && relationship != R_HT )
 			{
 				// If I'm already close enough to my target
@@ -971,7 +971,7 @@ Schedule_t *CScientist :: GetSchedule ( void )
 				}
 				return GetScheduleOfType( SCHED_TARGET_FACE );	// Just face and follow.
 			}
-			else	// UNDONE: When afraid, scientist won't move out of your way.  Keep This?  If not, write move away scared
+			else	// TODO: When afraid, scientist won't move out of your way.  Keep This?  If not, write move away scared
 			{
 				if ( HasConditions( bits_COND_NEW_ENEMY ) ) // I just saw something new and scary, react
 					return GetScheduleOfType( SCHED_FEAR );					// React to something scary
@@ -1153,7 +1153,7 @@ void CDeadScientist :: Spawn( )
 		ALERT ( at_console, "Dead scientist with bad pose\n" );
 	}
 
-	//	pev->skin += 2; // use bloody skin -- UNDONE: Turn this back on when we have a bloody skin again!
+	//	pev->skin += 2; // use bloody skin -- TODO: Turn this back on when we have a bloody skin again!
 	MonsterInitDead();
 }
 

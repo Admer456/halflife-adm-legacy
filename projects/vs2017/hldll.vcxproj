@@ -143,6 +143,7 @@
     <ClCompile Include="..\..\dlls\AI\Monsters\Hassassin.cpp" />
     <ClCompile Include="..\..\dlls\AI\Monsters\HeadCrab.cpp" />
     <ClCompile Include="..\..\dlls\AI\Monsters\HGrunt.cpp" />
+    <ClCompile Include="..\..\dlls\AI\Monsters\Hornet.cpp" />
     <ClCompile Include="..\..\dlls\AI\Monsters\Houndeye.cpp" />
     <ClCompile Include="..\..\dlls\AI\Monsters\Ichthyosaur.cpp" />
     <ClCompile Include="..\..\dlls\AI\Monsters\ISlave.cpp" />
@@ -179,7 +180,6 @@
     <ClCompile Include="..\..\dlls\Game\GamerulesTeamplay.cpp" />
     <ClCompile Include="..\..\dlls\Grenade.cpp" />
     <ClCompile Include="..\..\dlls\Globals.cpp" />
-    <ClCompile Include="..\..\dlls\AI\Hornet.cpp" />
     <ClCompile Include="..\..\dlls\Cycler.cpp" />
     <ClCompile Include="..\..\dlls\HExport.cpp" />
     <ClCompile Include="..\..\dlls\Items\Airtank.cpp" />

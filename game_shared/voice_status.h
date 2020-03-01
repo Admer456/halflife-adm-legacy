@@ -48,7 +48,7 @@ public:
 
 
 
-class IVoiceHud
+class IVoiceHUD/hud.h
 {
 public:
 
@@ -196,7 +196,7 @@ private:
 CVoiceStatus* GetClientVoice();
 
 // Get the (global) voice manager. 
-IVoiceHud* GetClientVoiceHud();
+IVoiceHUD* GetClientVoiceHud();
 
 
 

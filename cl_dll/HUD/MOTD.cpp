@@ -18,7 +18,7 @@
 // for displaying a server-sent message of the day
 //
 
-#include "hud.h"
+#include "HUD/hud.h"
 #include "cl_util.h"
 #include "parsemsg.h"
 

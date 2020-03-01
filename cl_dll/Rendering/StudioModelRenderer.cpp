@@ -1,7 +1,7 @@
 // studio_model.cpp
 // routines for setting up to draw 3DStudio models
 
-#include "hud.h"
+#include "HUD/hud.h"
 #include "cl_util.h"
 #include "const.h"
 #include "com_model.h"
@@ -16,7 +16,7 @@
 #include <memory.h>
 #include <math.h>
 
-#include "studio_util.h"
+#include "Rendering/StudioUtil.h"
 #include "r_studioint.h"
 
 #include "StudioModelRenderer.h"
@@ -375,7 +375,7 @@ mstudioanim_t *CStudioModelRenderer::StudioGetAnim( model_t *m_pSubModel, mstudi
 
 	if (paSequences == NULL)
 	{
-		paSequences = (cache_user_t *)IEngineStudio.Mem_Calloc( 16, sizeof( cache_user_t ) ); // UNDONE: leak!
+		paSequences = (cache_user_t *)IEngineStudio.Mem_Calloc( 16, sizeof( cache_user_t ) ); // TODO: leak!
 		m_pSubModel->submodels = (dmodel_t *)paSequences;
 	}
 

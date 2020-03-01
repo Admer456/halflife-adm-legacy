@@ -200,16 +200,10 @@
     <ClCompile Include="..\..\cl_dll\VGUI\vgui_ControlConfigPanel.cpp">
       <Filter>Source Files\VGUI</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\cl_dll\HUD\MOTD.cpp">
-      <Filter>Source Files\HUD</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\cl_dll\HUD\Overview.cpp">
       <Filter>Source Files\HUD</Filter>
     </ClCompile>
     <ClCompile Include="..\..\cl_dll\HUD\SayText.cpp">
-      <Filter>Source Files\HUD</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\cl_dll\HUD\ScoreBoard.cpp">
       <Filter>Source Files\HUD</Filter>
     </ClCompile>
     <ClCompile Include="..\..\cl_dll\HUD\StatusBar.cpp">

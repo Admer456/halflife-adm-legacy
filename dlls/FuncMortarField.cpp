@@ -20,11 +20,11 @@
 
 */
 
-#include "extdll.h"
-#include "util.h"
-#include "cbase.h"
-#include "saverestore.h"
-#include "weapons.h"
+#include "Base/ExtDLL.h"
+#include "Util.h"
+#include "Base/CBase.h"
+#include "Base/SaveRestore.h"
+#include "Weapons/Weapons.h"
 #include "decals.h"
 #include "soundent.h"
 

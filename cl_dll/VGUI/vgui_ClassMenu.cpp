@@ -19,19 +19,19 @@
 #include "VGUI_Font.h"
 #include <VGUI_TextImage.h>
 
-#include "hud.h"
+#include "HUD/hud.h"
 #include "cl_util.h"
-#include "camera.h"
-#include "kbutton.h"
+#include "Input/Camera.h"
+#include "Input/KButton.h"
 #include "cvardef.h"
 #include "usercmd.h"
 #include "const.h"
-#include "camera.h"
-#include "in_defs.h"
+#include "Input/Camera.h"
+#include "Input/IN_Defs.h"
 #include "parsemsg.h"
 
-#include "vgui_int.h"
-#include "vgui_TeamFortressViewport.h"
+#include "VGUI/vgui_int.h"
+#include "VGUI/vgui_TeamFortressViewport.h"
 #include "vgui_ServerBrowser.h"
 
 // Class Menu Dimensions

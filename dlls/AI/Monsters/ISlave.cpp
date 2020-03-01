@@ -16,14 +16,14 @@
 // Alien slave monster
 //=========================================================
 
-#include	"extdll.h"
-#include	"util.h"
-#include	"cbase.h"
-#include	"monsters.h"
-#include	"squadmonster.h"
-#include	"schedule.h"
+#include	"Base/ExtDLL.h"
+#include	"Util.h"
+#include	"Base/CBase.h"
+#include	"AI/Monsters.h"
+#include	"AI/SquadMonster.h"
+#include	"AI/Schedule.h"
 #include	"effects.h"
-#include	"weapons.h"
+#include	"Weapons/Weapons.h"
 #include	"soundent.h"
 
 extern DLL_GLOBAL int		g_iSkillLevel;

@@ -25,13 +25,13 @@
 
 */
 
-#include "extdll.h"
-#include "util.h"
-#include "cbase.h"
+#include "Base/ExtDLL.h"
+#include "Util.h"
+#include "Base/CBase.h"
 #include "player.h"
-#include "saverestore.h"
+#include "Base/SaveRestore.h"
 #include "trains.h"			// trigger_camera has train functionality
-#include "gamerules.h"
+#include "Game/GameRules.h"
 #include "skill.h"
 #include "adm/shared/AdmTime.h"
 

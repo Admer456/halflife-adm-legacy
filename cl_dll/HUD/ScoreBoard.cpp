@@ -18,13 +18,13 @@
 // implementation of CHudScoreboard class
 //
 
-#include "hud.h"
+#include "HUD/hud.h"
 #include "cl_util.h"
 #include "parsemsg.h"
 
 #include <string.h>
 #include <stdio.h>
-#include "vgui_TeamFortressViewport.h"
+#include "VGUI/vgui_TeamFortressViewport.h"
 
 DECLARE_COMMAND( m_Scoreboard, ShowScores );
 DECLARE_COMMAND( m_Scoreboard, HideScores );
@@ -353,7 +353,7 @@ int CHudScoreboard :: DrawPlayers( int xpos_rel, float list_slot, int nameoffset
 			break;
 
 		// draw out the best player
-		hud_player_info_t *pl_info = &g_PlayerInfoList[best_player];
+		HUD_player_info_t *pl_info = &g_PlayerInfoList[best_player];
 
 		int ypos = ROW_RANGE_MIN + (list_slot * ROW_GAP);
 

@@ -20,14 +20,14 @@
 
 */
 
-#include "extdll.h"
+#include "Base/ExtDLL.h"
 #include "util.h"
-#include "cbase.h"
-#include "weapons.h"
+#include "Base/CBase.h"
+#include "Weapons/Weapons.h"
 #include "player.h"
 #include "skill.h"
-#include "items.h"
-#include "gamerules.h"
+#include "Items/Items.h"
+#include "Game/GameRules.h"
 
 extern int gmsgItemPickup;
 

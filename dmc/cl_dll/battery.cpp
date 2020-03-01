@@ -74,7 +74,7 @@ int CHudBattery:: MsgFunc_Battery(const char *pszName,  int iSize, void *pbuf )
 
 int CHudBattery::Draw(float flTime)
 {
-	if ( gHUD.m_iHideHUDDisplay & HIDEHUD_HEALTH )
+	if ( gHUD.m_iHideHudDisplay & HIDEHUD_HEALTH )
 		return 1;
 
 	int r, g, b, x, y, a;

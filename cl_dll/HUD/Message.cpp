@@ -18,7 +18,7 @@
 // implementation of CHudMessage class
 //
 
-#include "hud.h"
+#include "HUD/hud.h"
 #include "cl_util.h"
 #include <string.h>
 #include <stdio.h>

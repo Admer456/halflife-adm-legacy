@@ -15,14 +15,14 @@
 //=========================================================
 // Squadmonster  functions
 //=========================================================
-#include "extdll.h"
-#include "util.h"
-#include "cbase.h"
+#include "Base/ExtDLL.h"
+#include "Util.h"
+#include "Base/CBase.h"
 #include "nodes.h"
-#include "monsters.h"
-#include "animation.h"
-#include "saverestore.h"
-#include "squadmonster.h"
+#include "AI/Monsters.h"
+#include "Base/Animation.h"
+#include "Base/SaveRestore.h"
+#include "AI/SquadMonster.h"
 #include "plane.h"
 
 //=========================================================
@@ -437,7 +437,7 @@ void CSquadMonster :: StartMonster( void )
 
 		if ( IsLeader() && FClassnameIs ( pev, "monster_human_grunt" ) )
 		{
-			SetBodygroup( 1, 1 ); // UNDONE: truly ugly hack
+			SetBodygroup( 1, 1 ); // TODO: truly ugly hack
 			pev->skin = 0;
 		}
 

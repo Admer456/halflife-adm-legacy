@@ -21,9 +21,9 @@
 //
 //  This DLL is linked by the client when they first initialize.
 // This DLL is responsible for the following tasks:
-//		- Loading the HUD graphics upon initialization
-//		- Drawing the HUD graphics every frame
-//		- Handling the custum HUD-update packets
+//		- Loading the HUD/hud.h graphics upon initialization
+//		- Drawing the HUD/hud.h graphics every frame
+//		- Handling the custum HUD/hud.h-update packets
 //
 
 #include "Platform.h"
@@ -33,9 +33,9 @@ typedef unsigned short word;
 typedef float vec_t;
 typedef int (*pfnUserMsgHook)(const char *pszName, int iSize, void *pbuf);
 
-#include "util_vector.h"
+#include "UtilVector.h"
 
 #include "../engine/cdll_int.h"
-#include "../dlls/cdll_dll.h"
+#include "../dlls/Base/CDLL_DLL.h"
 
 extern cl_enginefunc_t gEngfuncs;

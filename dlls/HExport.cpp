@@ -20,10 +20,10 @@
 
 */
 
-#include "extdll.h"
-#include "util.h"
+#include "Base/ExtDLL.h"
+#include "Util.h"
 
-#include "cbase.h"
+#include "Base/CBase.h"
 
 // Holds engine functionality callbacks
 enginefuncs_t g_engfuncs;

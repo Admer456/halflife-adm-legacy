@@ -12,12 +12,12 @@
 *   use or distribution of this code by or to any unlicensed person is illegal.
 *
 ****/
-#include	"extdll.h"
-#include	"util.h"
-#include	"cbase.h"
-#include	"monsters.h"
-#include	"schedule.h"
-#include	"flyingmonster.h"
+#include	"Base/ExtDLL.h"
+#include	"Util.h"
+#include	"Base/CBase.h"
+#include	"AI/Monsters.h"
+#include	"AI/Schedule.h"
+#include	"AI/FlyingMonster.h"
 
 #define FLYING_AE_FLAP		(8)
 #define FLYING_AE_FLAPSOUND	(9)
@@ -27,7 +27,7 @@ extern DLL_GLOBAL edict_t		*g_pBodyQueueHead;
 
 int CFlyingMonster :: CheckLocalMove ( const Vector &vecStart, const Vector &vecEnd, CBaseEntity *pTarget, float *pflDist )
 {
-	// UNDONE: need to check more than the endpoint
+	// TODO: need to check more than the endpoint
 	if (FBitSet(pev->flags, FL_SWIM) && (UTIL_PointContents(vecEnd) != CONTENTS_WATER))
 	{
 		// ALERT(at_aiconsole, "can't swim out of water\n");
@@ -66,7 +66,7 @@ BOOL CFlyingMonster :: FTriangulate ( const Vector &vecStart , const Vector &vec
 
 Activity CFlyingMonster :: GetStoppedActivity( void )
 { 
-	if ( pev->movetype != MOVETYPE_FLY )		// UNDONE: Ground idle here, IDLE may be something else
+	if ( pev->movetype != MOVETYPE_FLY )		// TODO: Ground idle here, IDLE may be something else
 		return ACT_IDLE;
 
 	return ACT_HOVER; 

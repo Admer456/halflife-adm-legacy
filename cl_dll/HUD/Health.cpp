@@ -22,7 +22,7 @@
 #include "stdlib.h"
 #include "math.h"
 
-#include "hud.h"
+#include "HUD/hud.h"
 #include "cl_util.h"
 #include "parsemsg.h"
 #include <string.h>
@@ -184,7 +184,7 @@ int CHudHealth::Draw(float flTime)
 	int HudFlashing_Health		= CVAR_GET_FLOAT("adm_hud_hp");
 	float flHealth				= m_iHealth;
 
-	if ( (gHUD.m_iHideHUDDisplay & HIDEHUD_HEALTH) || gEngfuncs.IsSpectateOnly() )
+	if ( (gHUD.m_iHideHudDisplay & HIDEHUD_HEALTH) || gEngfuncs.IsSpectateOnly() )
 		return 1;
 
 	if ( !m_hSprite )
@@ -225,14 +225,14 @@ int CHudHealth::Draw(float flTime)
 			{
 				a = 255;
 				r = (255 * sin(m_flCycle));
-				g = (255 / CVAR_GET_FLOAT("adm_Hud_g")) * (r * 0.15) * ((flHealth / (0.2 * HudFlashing_Health)) * HudFlash_Coefficient) + HudFlash_CoefShift;
+				g = (255 / CVAR_GET_FLOAT("adm_hud_g")) * (r * 0.15) * ((flHealth / (0.2 * HudFlashing_Health)) * HudFlash_Coefficient) + HudFlash_CoefShift;
 				b = (255 / CVAR_GET_FLOAT("adm_hud_b")) * (r * 0.15) * ((flHealth / (0.2 * HudFlashing_Health)) * HudFlash_Coefficient) + HudFlash_CoefShift;
 			}
 			else
 			{
 				a = 255;
 				r = 255 * m_flCycle;
-				g = (255 / CVAR_GET_FLOAT("adm_Hud_g")) * (r * 0.15) * ((flHealth / (0.2 * HudFlashing_Health)) * HudFlash_Coefficient) + HudFlash_CoefShift;
+				g = (255 / CVAR_GET_FLOAT("adm_hud_g")) * (r * 0.15) * ((flHealth / (0.2 * HudFlashing_Health)) * HudFlash_Coefficient) + HudFlash_CoefShift;
 				b = (255 / CVAR_GET_FLOAT("adm_hud_b")) * (r * 0.15) * ((flHealth / (0.2 * HudFlashing_Health)) * HudFlash_Coefficient) + HudFlash_CoefShift;
 			}
 		}

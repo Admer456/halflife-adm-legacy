@@ -16,7 +16,7 @@
 // leech - basic little swimming monster
 //=========================================================
 //
-// UNDONE:
+// TODO:
 // DONE:Steering force model for attack
 // DONE:Attack animation control / damage
 // DONE:Establish range of up/down motion and steer around vertical obstacles
@@ -36,10 +36,10 @@
 
 
 #include	"float.h"
-#include	"extdll.h"
-#include	"util.h"
-#include	"cbase.h"
-#include	"monsters.h"
+#include	"Base/ExtDLL.h"
+#include	"Util.h"
+#include	"Base/CBase.h"
+#include	"AI/Monsters.h"
 
 
 
@@ -121,7 +121,7 @@ public:
 	static const char *pAlertSounds[];
 
 private:
-	// UNDONE: Remove unused boid vars, do group behavior
+	// TODO: Remove unused boid vars, do group behavior
 	float	m_flTurning;// is this boid turning?
 	BOOL	m_fPathBlocked;// TRUE if there is an obstacle ahead
 	float	m_flAccelerate;

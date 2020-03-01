@@ -16,13 +16,13 @@
 // sound.cpp 
 //=========================================================
 
-#include "extdll.h"
-#include "util.h"
-#include "cbase.h"
-#include "weapons.h"
+#include "Base/ExtDLL.h"
+#include "Util.h"
+#include "Base/CBase.h"
+#include "Weapons/Weapons.h"
 #include "player.h"
-#include "talkmonster.h"
-#include "gamerules.h"
+#include "AI/TalkMonster.h"
+#include "Game/GameRules.h"
 
 #if !defined ( _WIN32 )
 #include <ctype.h>

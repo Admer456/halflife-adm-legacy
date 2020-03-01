@@ -27,17 +27,17 @@ typedef unsigned char byte;
 #include "studio.h"
 
 #ifndef ACTIVITY_H
-#include "activity.h"
+#include "AI/activity.h"
 #endif
 
-#include "activitymap.h"
+#include "AI/ActivityMap.h"
 
 #ifndef ANIMATION_H
-#include "animation.h"
+#include "Base/Animation.h"
 #endif
 
 #ifndef SCRIPTEVENT_H
-#include "scriptevent.h"
+#include "AI/ScriptEvent.h"
 #endif
 
 #ifndef ENGINECALLBACK_H
@@ -203,7 +203,7 @@ void SequencePrecache( void *pmodel, const char *pSequenceName )
 			if ( pevent[i].event >= EVENT_CLIENT )
 				continue;
 
-			// UNDONE: Add a callback to check to see if a sound is precached yet and don't allocate a copy
+			// TODO: Add a callback to check to see if a sound is precached yet and don't allocate a copy
 			// of it's name if it is.
 			if ( IsSoundEvent( pevent[i].event ) )
 			{

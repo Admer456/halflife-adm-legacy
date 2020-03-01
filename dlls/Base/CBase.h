@@ -43,11 +43,11 @@ CBaseEntity
 #define		FCAP_FORCE_TRANSITION		0x00000080		// ALWAYS goes across transitions
 
 #include "archtypes.h"     // DAL
-#include "saverestore.h"
-#include "schedule.h"
+#include "Base/SaveRestore.h"
+#include "AI/Schedule.h"
 
 #ifndef MONSTEREVENT_H
-#include "monsterevent.h"
+#include "AI/MonsterEvent.h"
 #endif
 
 #include "Platform.h"
@@ -714,7 +714,7 @@ class CBaseMonster;
 class CCineMonster;
 class CSound;
 
-#include "basemonster.h"
+#include "AI/BaseMonster.h"
 
 
 char *ButtonSound( int sound );				// get string of button sound number

@@ -19,22 +19,22 @@
 
 */
 
-#include "extdll.h"
-#include "util.h"
-#include "cbase.h"
-#include "monsters.h"
+#include "Base/ExtDLL.h"
+#include "Util.h"
+#include "Base/CBase.h"
+#include "AI/Monsters.h"
 
 #ifndef ANIMATION_H
-#include "animation.h"
+#include "Base/Animation.h"
 #endif
 
 #ifndef SAVERESTORE_H
-#include "saverestore.h"
+#include "Base/SaveRestore.h"
 #endif
 
-#include "schedule.h"
-#include "scripted.h"
-#include "defaultai.h"
+#include "AI/Schedule.h"
+#include "AI/Scripted.h"
+#include "AI/DefaultAI.h"
 
 
 
@@ -243,7 +243,7 @@ void CCineMonster :: Touch( CBaseEntity *pOther )
 	pevOther->velocity.z += m_flHeight;
 
 
-	pev->solid = SOLID_NOT;// kill the trigger for now !!!UNDONE
+	pev->solid = SOLID_NOT;// kill the trigger for now !!!TODO
 }
 */
 
@@ -371,7 +371,7 @@ void CCineMonster :: PossessEntity( void )
 			pTarget->pev->angles.y = pev->angles.y;
 			pTarget->m_scriptState = SCRIPT_WAIT;
 			m_startTime = gpGlobals->time + 1E6;
-			// UNDONE: Add a flag to do this so people can fixup physics after teleporting monsters
+			// TODO: Add a flag to do this so people can fixup physics after teleporting monsters
 			//			pTarget->pev->flags &= ~FL_ONGROUND;
 			break;
 		}
@@ -442,7 +442,7 @@ void CCineAI :: PossessEntity( void )
 			pTarget->pev->angles.y = pev->angles.y;
 			pTarget->m_scriptState = SCRIPT_WAIT;
 			m_startTime = gpGlobals->time + 1E6;
-			// UNDONE: Add a flag to do this so people can fixup physics after teleporting monsters
+			// TODO: Add a flag to do this so people can fixup physics after teleporting monsters
 			pTarget->pev->flags &= ~FL_ONGROUND;
 			break;
 		default:
@@ -858,10 +858,10 @@ BOOL CBaseMonster :: CineCleanup( )
 			// !!!HACKHACK: Float the origin up and drop to floor because some sequences have
 			// irregular motion that can't be properly accounted for.
 
-			// UNDONE: THIS SHOULD ONLY HAPPEN IF WE ACTUALLY PLAYED THE SEQUENCE.
+			// TODO: THIS SHOULD ONLY HAPPEN IF WE ACTUALLY PLAYED THE SEQUENCE.
 			Vector oldOrigin = pev->origin;
 
-			// UNDONE: ugly hack.  Don't move monster if they don't "seem" to move
+			// TODO: ugly hack.  Don't move monster if they don't "seem" to move
 			// this really needs to be done with the AX,AY,etc. flags, but that aren't consistantly
 			// being set, so animations that really do move won't be caught.
 			if ((oldOrigin - new_origin).Length2D() < 8.0)

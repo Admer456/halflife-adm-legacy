@@ -17,14 +17,14 @@
 //=========================================================
 // Gargantua
 //=========================================================
-#include	"extdll.h"
-#include	"util.h"
-#include	"cbase.h"
+#include	"Base/ExtDLL.h"
+#include	"Util.h"
+#include	"Base/CBase.h"
 #include	"nodes.h"
-#include	"monsters.h"
-#include	"schedule.h"
+#include	"AI/Monsters.h"
+#include	"AI/Schedule.h"
 #include	"customentity.h"
-#include	"weapons.h"
+#include	"Weapons/Weapons.h"
 #include	"effects.h"
 #include	"soundent.h"
 #include	"decals.h"
@@ -84,7 +84,7 @@ public:
 	static CStomp *StompCreate( const Vector &origin, const Vector &end, float speed );
 
 private:
-// UNDONE: re-use this sprite list instead of creating new ones all the time
+// TODO: re-use this sprite list instead of creating new ones all the time
 //	CSprite		*m_pSprites[ STOMP_SPRITE_COUNT ];
 };
 
@@ -623,7 +623,7 @@ void CGargantua :: FlameDamage( Vector vecStart, Vector vecEnd, entvars_t *pevIn
 	{
 		if ( pEntity->pev->takedamage != DAMAGE_NO )
 		{
-			// UNDONE: this should check a damage mask, not an ignore
+			// TODO: this should check a damage mask, not an ignore
 			if ( iClassIgnore != CLASS_NONE && pEntity->Classify() == iClassIgnore )
 			{// houndeyes don't hurt other houndeyes with their attack
 				continue;
@@ -833,7 +833,7 @@ void CGargantua::TraceAttack( entvars_t *pevAttacker, float flDamage, Vector vec
 		return;
 	}
 
-	// UNDONE: Hit group specific damage?
+	// TODO: Hit group specific damage?
 	if ( bitsDamageType & (GARG_DAMAGE|DMG_BLAST) )
 	{
 		if ( m_painSoundTime < gpGlobals->time )
