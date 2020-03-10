@@ -1561,6 +1561,7 @@ void CBasePlayer::PlayerUse ( void )
 
 	// Perform search by radius just in case we're encountering a momentary rotating button
 	// Traceline for some reason doesn't detect that specfiic entity
+	// TODO: Fix func_tank stuff
 	if ( hasHit && isWorld )
 	{
 		float flMaxDot = VIEW_FIELD_ULTRA_NARROW;

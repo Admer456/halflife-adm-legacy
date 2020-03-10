@@ -928,12 +928,12 @@ void V_CalcNormalRefdef(struct ref_params_s *pparams)
 	for (i = 0; i < 2; i++)
 	{
 		ViewModel->origin[ i ] += 2.00 * v_positionbob_sway	* pparams->right[i];
-		ViewModel->origin[ i ] += 1.00 * flBlendForwardMove	* pparams->forward[i];
+		ViewModel->origin[ i ] += 0.65 * flBlendForwardMove	* pparams->forward[i];
 		ViewModel->origin[ i ] += 1.00 * flBlendSideMove	* pparams->right[i];
 		ViewModel->origin[ i ] += 0.25 * flBlendUpMove		* pparams->up[i];
 	}
 
-	ViewModel->origin[ 2 ] -= flBlendUpMove;
+	ViewModel->origin[ 2 ] -= 0.65 * flBlendUpMove;
 
 //	gEngfuncs.Con_Printf( "bs %f\tos %f\ts %f", flBlendUpMove, flOldUpMove, flUpMove );
 	
@@ -985,7 +985,7 @@ void V_CalcNormalRefdef(struct ref_params_s *pparams)
 			{
 				flAngFallSway += 1.0;
 				flAngSway	  += flAngFallSway * (M_PI / 7200);
-				flAngJump	  += 0.128;
+				flAngJump	  += 0.11 * pparams->frametime;
 
 				if (flAngFallSway > 60)
 				{
@@ -1001,7 +1001,7 @@ void V_CalcNormalRefdef(struct ref_params_s *pparams)
 			else
 			{
 				flAngFallSway /= 1.05f;
-				flAngJump	  /= 1.1f;
+				flAngJump	  /= 1.02f;
 			}
 
 			if (adm_cam_turnback)
@@ -1057,11 +1057,11 @@ void V_CalcNormalRefdef(struct ref_params_s *pparams)
 
 		if (flAngJump)
 		{
-			vecClientPunch[PITCH] += 3 * sin(flAngJump);
-			vecClientPunch[ROLL]  += 3 * sin(flAngJump);
-			ViewModel->origin.z   -= 3 * sin(flAngJump * 1.75);
-			vecAdditive[PITCH]	  -= 0.6 * sin(flAngJump * 1.5);
-			vecAdditive[YAW]	  += 1.1 * sin(flAngJump * 2.0);
+			vecClientPunch[PITCH] += 2.6 * sin(flAngJump);
+			vecClientPunch[ROLL]  += 2.6 * sin(flAngJump);
+			ViewModel->origin.z   -= 0.2 * sin(flAngJump * 1.75);
+			vecAdditive[PITCH]	  -= 0.4 * sin(flAngJump * 1.5);
+			vecAdditive[YAW]	  += 0.8 * sin(flAngJump * 2.0);
 		}
 
 		vecClientPunch = vecClientPunch / 1.05;
@@ -1128,7 +1128,7 @@ void V_CalcNormalRefdef(struct ref_params_s *pparams)
 //			gEngfuncs.Con_Printf("\n3View angles: viewmodel %f vecold %f vecdelta %f", ViewModel->angles.y, vecOld.y, vecDelta.y);
 	}
 
-	vecDelta = vecDelta / 3.0f;
+	vecDelta = vecDelta / 4.5f;
 	vecDelta.z = vecDelta.z + (vecDelta.y / 2.333f);
 
 	if (vecDelta.z >= 5)
@@ -1155,6 +1155,16 @@ void V_CalcNormalRefdef(struct ref_params_s *pparams)
 		vecFinalAngles[PITCH] += vecClientPunch[PITCH];
 		vecFinalAngles[YAW]	  += vecClientPunch[YAW];
 		vecFinalAngles[ROLL]  += vecClientPunch[ROLL];
+
+		// gun rotating around its pivot
+		vecAdditive[YAW]	  -= vecDelta[YAW]*0.15;
+		vecAdditive[PITCH]    -= vecDelta[PITCH]*0.15;
+
+		for ( int i = 0; i < 3; i++ )
+		{
+			ViewModel->origin[ i ] -= pparams->right[ i ] * vecDelta[ YAW ] * 0.35;
+			ViewModel->origin[ i ] += pparams->up[ i ] * vecDelta[ PITCH ] * 0.35;
+		}
 	}
 
 	vecBlendAngles = ViewModel->angles + vecDelta;
@@ -1216,6 +1226,20 @@ void V_CalcNormalRefdef(struct ref_params_s *pparams)
 	// gun a very nice 'shifting' effect when the player looks up/down. If there is a problem
 	// with view model distortion, this may be a cause. (SJB). 
 	ViewModel->origin[2] -= 1;
+
+	if ( !pparams->onground )
+	{
+		flAngJump += 0.128;
+
+		if ( flAngJump >= M_PI )
+			flAngJump = M_PI;
+	}
+	else
+	{
+		flAngJump /= 1.1f;
+	}
+
+	ViewModel->origin.z -= 1.5 * sin( flAngJump * 1.75 );
 
 	// fudge position around to keep amount of weapon visible
 	// roughly equal with different FOV
