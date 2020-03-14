@@ -47,7 +47,7 @@ int CHudStatusBar :: Init( void )
 
 	Reset();
 
-	CVAR_CREATE( "HUD_centerid", "0", FCVAR_ARCHIVE );
+	CVAR_CREATE( "hud_centerid", "0", FCVAR_ARCHIVE );
 
 	return 1;
 }
@@ -200,10 +200,10 @@ int CHudStatusBar :: Draw( float fTime )
 		int y = Y_START - ( 4 + TextHeight * i ); // draw along bottom of screen
 
 		// let user set status ID bar centering
-		if ( (i == STATUSBAR_ID_LINE) && CVAR_GET_FLOAT("HUD_centerid") )
+		if ( (i == STATUSBAR_ID_LINE) && CVAR_GET_FLOAT("hud_centerid") )
 		{
 			x = V_max( 0, V_max(2, (ScreenWidth - TextWidth)) / 2 );
-			y = (ScreenHeight / 2) + (TextHeight*CVAR_GET_FLOAT("HUD_centerid"));
+			y = (ScreenHeight / 2) + (TextHeight*CVAR_GET_FLOAT("hud_centerid"));
 		}
 
 		if ( m_pflNameColors[i] )

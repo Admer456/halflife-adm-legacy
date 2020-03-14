@@ -957,13 +957,16 @@ void V_CalcNormalRefdef(struct ref_params_s *pparams)
 		vecOrgDelta[1] = v_origin[1] - pparams->vieworg[1];
 		vecOrgDelta[2] = v_origin[2] - pparams->vieworg[2];
 
-		if (vecOrgDelta.Length2D() > 0.01)
+		float movingSpeedXY = vecOrgDelta.Length2D();
+		float movingSpeed = vecOrgDelta.Length();
+
+		if ( movingSpeedXY > 0.01)
 		{
-			vecClientPunch[PITCH] += sin(flAngSway) + 2 * sin(4 * flAngSway) * (vecOrgDelta.Length2D() * 0.125);
-			vecClientPunch[YAW]	  += sin(flAngSway) + 3 * sin(2 * flAngSway) * (vecOrgDelta.Length2D() * 0.125);
+			vecClientPunch[PITCH] += sin(flAngSway) + 2 * sin(4 * flAngSway) * (movingSpeedXY * 0.125);
+			vecClientPunch[YAW]	  += sin(flAngSway) + 3 * sin(2 * flAngSway) * (movingSpeedXY * 0.125);
 
 			vecClientPunch = vecClientPunch / 50;
-			vecClientPunch = vecClientPunch * vecOrgDelta.Length2D();
+			vecClientPunch = vecClientPunch * movingSpeedXY;
 			vecClientPunch = vecClientPunch * adm_cam_sway;
 		}
 
@@ -1042,26 +1045,26 @@ void V_CalcNormalRefdef(struct ref_params_s *pparams)
 
 		if (flAngFallSway)
 		{
-			vecClientPunch[PITCH] += adm_cam_falleffect * ((flAngFallSway * sin(flAngSway) / 2.0) + 1.0);
-			vecClientPunch[ROLL]  += adm_cam_falleffect *  (flAngFallSway * sin(flAngSway) / 1.5);
+			vecClientPunch[PITCH] += adm_cam_falleffect * min(3.0, movingSpeed*0.05) * ((flAngFallSway * sin(flAngSway*2.0) / 2.0) + 1.0);
+			vecClientPunch[ROLL]  += adm_cam_falleffect * min(3.0, movingSpeed*0.05) *  (flAngFallSway * pow(sin(flAngSway*2.0),3) / 1.5);
 		}
 
 		if (flAngSwim)
 		{
 			vecClientPunch[PITCH] += 4   * sin(2 * flAngSwim);
 			vecClientPunch[YAW]   += 2   * sin(4 * flAngSwim);
-			vecClientPunch[ROLL]  += 5   * sin(4 * flAngSwim);
+			vecClientPunch[ROLL]  += 3   * pow(sin(2 * flAngSwim), 3);
 			vecAdditive[YAW]	  -= 0.2 * sin(2 * flAngSwim);
 			vecAdditive[ROLL]	  -= 0.6 * sin(4 * flAngSwim);
 		}
 
 		if (flAngJump)
 		{
-			vecClientPunch[PITCH] += 2.6 * sin(flAngJump);
-			vecClientPunch[ROLL]  += 2.6 * sin(flAngJump);
-			ViewModel->origin.z   -= 0.2 * sin(flAngJump * 1.75);
-			vecAdditive[PITCH]	  -= 0.4 * sin(flAngJump * 1.5);
-			vecAdditive[YAW]	  += 0.8 * sin(flAngJump * 2.0);
+			vecClientPunch[PITCH] += 1.6 * sin(flAngJump);
+			vecClientPunch[ROLL]  += 1.6 * sin(flAngJump);
+			ViewModel->origin.z   -= 0.4 * sin(flAngJump * 1.75);
+			vecAdditive[PITCH]	  -= 1.7 * pow(sin(flAngJump * 2.0), 3);
+			vecAdditive[YAW]	  += 0.9 * sin(flAngJump * 2.0);
 		}
 
 		vecClientPunch = vecClientPunch / 1.05;
@@ -1131,14 +1134,21 @@ void V_CalcNormalRefdef(struct ref_params_s *pparams)
 	vecDelta = vecDelta / 4.5f;
 	vecDelta.z = vecDelta.z + (vecDelta.y / 2.333f);
 
-	if (vecDelta.z >= 5)
-	{
-		vecDelta.z += ((vecDelta.x + 0.1) / 1.333f);
-	}
-	else if (vecDelta.z < -5)
-	{
-		vecDelta.z -= ((vecDelta.x + 0.1) / 1.333f);
-	}
+	float horizontalDelta = 0.5 + fabs(vecDelta.x / 0.25f);
+
+//	if (vecDelta.z > 0)
+//	{
+//		vecDelta.z = vecDelta.z*0.8 + (vecDelta.z + horizontalDelta)*0.2;
+//	}
+//	else if (vecDelta.z < 0)
+//	{
+//		vecDelta.z = vecDelta.z*0.8 + (vecDelta.z - horizontalDelta)*0.2;
+//	}
+	float oldZDelta = vecDelta.z;
+
+	vecDelta.z = vecDelta.z*0.95 + (vecDelta.z * (horizontalDelta))*0.05;
+
+	gEngfuncs.Con_Printf( "delta vecDelta.z %f\n", oldZDelta - vecDelta.z );
 
 	if (adm_cam_roll)
 	{
@@ -1197,7 +1207,7 @@ void V_CalcNormalRefdef(struct ref_params_s *pparams)
 	vecResultAngles = vecResultAngles + vecAdditive;
 
 	// Thank you Shepard for telling me about that one line <3
-	if (adm_classicbob_enable)
+	if (adm_classicbob_enable && !gEngfuncs.IsNoClipping())
 	{
 		VectorCopy(vecResultAngles, ViewModel->curstate.angles);
 		VectorCopy(vecFinalAngles, pparams->viewangles);
@@ -1207,7 +1217,7 @@ void V_CalcNormalRefdef(struct ref_params_s *pparams)
 		VectorCopy(ViewModel->angles, ViewModel->curstate.angles);
 	}
 
-	if (developer == 3)
+	if (developer == 4)
 	{
 		// Debugging, gotta display all the angles here...
 		gEngfuncs.Con_Printf("View\nAngles: old %d delta %d blend %d vm %d result %d final %d\nposbob %d posbobsw %d rbobp %d rboby %d last %f \n",

@@ -130,7 +130,7 @@ int CHud :: Redraw( float flTime, int intermission )
 			gViewPort->UpdateSpectatorPanel();
 
 			// Take a screenshot if the client's got the cvar set
-			if ( CVAR_GET_FLOAT( "HUD_takesshots" ) != 0 )
+			if ( CVAR_GET_FLOAT( "hud_takesshots" ) != 0 )
 				m_flShotTime = flTime + 1.0;	// Take a screenshot in a second
 		}
 	}

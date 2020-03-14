@@ -247,6 +247,55 @@ void CViewSway::Sway_CalcComplexSines(Vector &vecPlayerView)
 	vecPlayerView.z = 1.26 * vecSwayIntensity.z * sin(1.4 * fViewAngle)  * sin(1.0 * fViewAngle) + 3.0  * vecSwayIntensity.z * sin(4.2 * fViewAngle);
 }
 
+// Temporary class for a certain test
+class CTraceChecker : public CBaseEntity
+{
+public:
+	void		Spawn( void );
+	void		Think( void );
+};
+
+LINK_ENTITY_TO_CLASS( env_tracechecker, CTraceChecker );
+
+void CTraceChecker::Spawn()
+{
+	pev->nextthink = gpGlobals->time + 1.5;
+}
+
+void CTraceChecker::Think( void )
+{
+	static Vector anglesAim = Vector( 0, 0, 0 );
+
+	Vector startPosition = pev->origin;
+	Vector endPosition;
+
+	TraceResult tr;
+
+	anglesAim.y += 0.09;
+	if ( anglesAim.y > 360.f )
+		anglesAim.y -= 360.f;
+
+	endPosition = startPosition + UTIL_VecPolarCoords( 256.f, anglesAim );
+
+	UTIL_TraceLine( startPosition, endPosition, ignore_monsters, ENT( pev ), &tr );
+
+	MESSAGE_BEGIN( MSG_PVS, SVC_TEMPENTITY, pev->origin );
+	WRITE_BYTE( TE_LINE );
+	WRITE_COORD( startPosition.x );
+	WRITE_COORD( startPosition.y );
+	WRITE_COORD( startPosition.z );
+	WRITE_COORD( tr.vecEndPos.x );
+	WRITE_COORD( tr.vecEndPos.y );
+	WRITE_COORD( tr.vecEndPos.z );
+	WRITE_SHORT( 1 );
+	WRITE_BYTE( tr.flFraction * 255 );
+	WRITE_BYTE( 240 );
+	WRITE_BYTE( 0 );
+	MESSAGE_END();
+
+	pev->nextthink = gpGlobals->time + 0.01;
+}
+
 // Temporary class for Valentine's Day
 // It uses a heart model and attracts some sprites to it. :3
 class CHeart : public CBaseAnimating

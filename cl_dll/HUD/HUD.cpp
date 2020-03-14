@@ -342,8 +342,8 @@ void CHud :: Init( void )
 //	HOOK_MESSAGE( ADMSIPlay );
 //	gAdmSound.Initialize();
 
-	CVAR_CREATE( "HUD_classautokill", "1", FCVAR_ARCHIVE | FCVAR_USERINFO );		// controls whether or not to suicide immediately on TF class switch
-	CVAR_CREATE( "HUD_takesshots", "0", FCVAR_ARCHIVE );		// controls whether or not to automatically take screenshots at the end of a round
+	CVAR_CREATE( "hud_classautokill", "1", FCVAR_ARCHIVE | FCVAR_USERINFO );		// controls whether or not to suicide immediately on TF class switch
+	CVAR_CREATE( "hud_takesshots", "0", FCVAR_ARCHIVE );		// controls whether or not to automatically take screenshots at the end of a round
 
 	// AdmSrc - customisable HUD colours
 	CVAR_CREATE("adm_hud_r", "255", FCVAR_ARCHIVE);
@@ -390,8 +390,8 @@ void CHud :: Init( void )
 
 	CVAR_CREATE( "zoom_sensitivity_ratio", "1.2", 0 );
 	default_fov = CVAR_CREATE( "default_fov", "90", 0 );
-	m_pCvarStealMouse = CVAR_CREATE( "HUD_capturemouse", "1", FCVAR_ARCHIVE );
-	m_pCvarDraw = CVAR_CREATE( "HUD_draw", "1", FCVAR_ARCHIVE );
+	m_pCvarStealMouse = CVAR_CREATE( "hud_capturemouse", "1", FCVAR_ARCHIVE );
+	m_pCvarDraw = CVAR_CREATE( "hud_draw", "1", FCVAR_ARCHIVE );
 	cl_lw = gEngfuncs.pfnGetCvarPointer( "cl_lw" );
 
 	m_pSpriteList = NULL;
