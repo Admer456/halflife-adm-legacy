@@ -33,6 +33,7 @@
 #include "func_break.h"
 #include "shake.h"
 //#include "doors.h"
+#include "AdmEffects.h"
 
 // ========================================================================================================= //
 //		ENV_ ENTITIIES
@@ -245,6 +246,153 @@ void CViewSway::Sway_CalcComplexSines(Vector &vecPlayerView)
 	vecPlayerView.x = 0.45 * vecSwayIntensity.x * sin(1.7 * fViewAngle)  * sin(4.3 * fViewAngle);
 	vecPlayerView.y = 0.55 * vecSwayIntensity.y * sin(1.33 * fViewAngle) * sin(0.25 * fViewAngle) + 0.08 * vecSwayIntensity.y * sin(4.3 * fViewAngle);
 	vecPlayerView.z = 1.26 * vecSwayIntensity.z * sin(1.4 * fViewAngle)  * sin(1.0 * fViewAngle) + 3.0  * vecSwayIntensity.z * sin(4.2 * fViewAngle);
+}
+
+// COspreyDustManager class methods
+COspreyDustManager* COspreyDustManager::CreateManager()
+{
+	COspreyDustManager *pManager = GetClassPtr( (COspreyDustManager *)nullptr );
+	return pManager;
+}
+
+void COspreyDustManager::Spawn()
+{
+	PRECACHE_MODEL( "sprites/vp_oriented.spr" );
+
+	for ( int i = 0; i < 32; i++ )
+	{
+		m_prgParticles[ i ] = CSprite::SpriteCreate( "sprites/vp_oriented.spr", m_pParent->pev->origin, true );
+
+		m_prgParticles[ i ]->pev->origin.z += 16;
+		m_prgParticles[ i ]->pev->velocity.x += RANDOM_FLOAT( -128, 128 );
+		m_prgParticles[ i ]->pev->velocity.y += RANDOM_FLOAT( -128, 128 );
+		m_prgParticles[ i ]->pev->framerate = 10;
+		m_prgParticles[ i ]->pev->renderamt = 0;
+		m_prgParticles[ i ]->pev->rendermode = kRenderTransAdd;
+		m_prgParticles[ i ]->pev->rendercolor = Vector( 210, 210, 255 );
+		m_prgParticles[ i ]->pev->scale = RANDOM_FLOAT( 0.5, 2.0 );
+	}
+
+	pev->nextthink = gpGlobals->time + 0.02;
+}
+
+void COspreyDustManager::Think()
+{
+	DustEffect();
+	pev->nextthink = gpGlobals->time + 0.02;
+}
+
+void COspreyDustManager::DustEffect()
+{
+	UTIL_TraceLine( m_pParent->pev->origin, 
+					m_pParent->pev->origin - Vector( 0, 0, 4096 ),
+					ignore_monsters, ENT( m_pParent->pev ), &traceOsprey );
+
+	float height = m_pParent->pev->origin.z - traceOsprey.vecEndPos.z;
+
+	// Osprey is close enough to ground, dust is rising
+	if ( height < 512 )
+	{
+		for ( int i = 0; i < 32; i++ )
+		{
+			// XY - sprite, Z - osprey
+			Vector vecSprite = m_prgParticles[ i ]->pev->origin;
+			vecSprite.z = m_pParent->pev->origin.z;
+
+			UTIL_TraceLine( vecSprite, 
+							vecSprite - Vector(0,0,4096),
+							ignore_monsters, ENT(m_pParent->pev), &traceSprite);
+
+			Vector vecDelta = m_prgParticles[ i ]->pev->origin - m_pParent->pev->origin;
+			Vector vecCurrentVel = m_prgParticles[ i ]->pev->velocity;
+
+			// The movement is being done on a 2D plane, so we will zero all the Z dimensions
+			vecDelta.z = 0;
+			vecCurrentVel.z = 0;
+			m_prgParticles[ i ]->pev->origin.z = traceSprite.vecEndPos.z + 8;
+
+			float distance = vecDelta.Length();
+
+			// 90° pitch, variable yaw depending on the direction
+			// only works on VP_ORIENTED sprites
+			m_prgParticles[ i ]->pev->angles.x = 90;
+			m_prgParticles[ i ]->pev->angles.y = UTIL_VecToYaw( vecCurrentVel );
+
+			// As the sprite gets farther away, it gets bigger too
+			m_prgParticles[ i ]->pev->scale = distance * distance / 60000;
+			
+			// between 50 and 128 units away from the osprey,
+			// the renderamt will go from 0 to 255 respectively
+			// same goes for between 128 and 256
+			float newRenderAmt;
+			if ( distance > 50 && distance < 128 )
+				newRenderAmt = min( max( 0, (3.27 * distance - 163) ), 255 );
+			else if ( distance > 128 && distance < 256 )
+				newRenderAmt = min( max( 0, (-2 * distance + 510) ), 255 );
+			else
+				newRenderAmt = 0;
+
+			m_prgParticles[ i ]->pev->renderamt *= 0.92;
+			m_prgParticles[ i ]->pev->renderamt += newRenderAmt*0.08;
+
+			// If we're too close from the osprey, push away, else slow down
+			if ( distance < 50 )
+				m_prgParticles[ i ]->pev->velocity = vecCurrentVel * 0.85 + (vecDelta*8)*0.15;
+			else
+				m_prgParticles[ i ]->pev->velocity = vecCurrentVel / 1.01;
+
+			// If sprites are close enough to the osprey, they will push each other away
+			if ( distance < 256 )
+			{
+				for ( int j = 0; j < 32; j++ )
+				{
+					if ( j == i )
+						continue;
+
+					Vector vecPDelta = m_prgParticles[ i ]->pev->origin - m_prgParticles[ j ]->pev->origin;
+					float particleDistance = vecPDelta.Length() + 1.0;
+
+					// Sprites have to be a minimum of 180 units away from each other
+					// Then they push each other away randomly, achieving chaotic movement
+					if ( particleDistance < 180 )
+					{
+						m_prgParticles[ i ]->pev->velocity = vecCurrentVel + vecPDelta / 16.0;
+
+						float flRand = particleDistance / 48.0;
+
+						m_prgParticles[ i ]->pev->velocity.x += RANDOM_FLOAT( -flRand, flRand );
+						m_prgParticles[ i ]->pev->velocity.y += RANDOM_FLOAT( -flRand, flRand );
+					}
+				}
+			}
+
+			// If sprites are far away enough and are invisible, 
+			// teleport them back to the starting position
+			else if ( distance > 256 && m_prgParticles[ i ]->pev->renderamt < 2 )
+			{
+				m_prgParticles[ i ]->pev->origin = m_pParent->pev->origin;
+//				m_prgParticles[ i ]->pev->origin.z = tr.vecEndPos.z + 8;
+				m_prgParticles[ i ]->pev->velocity = m_prgParticles[ i ]->pev->velocity * 1.3;
+			}
+		}
+	}
+
+	// Disappear slowly
+	else
+	{
+		for ( int i = 0; i < 32; i++ )
+		{
+			float sprX = m_prgParticles[ i ]->pev->origin.x;
+			float sprY = m_prgParticles[ i ]->pev->origin.y;
+			float &parX = m_pParent->pev->origin.x;
+			float &parY = m_pParent->pev->origin.y;
+
+			m_prgParticles[ i ]->pev->origin.x = sprX * 0.98 + parX * 0.02;
+			m_prgParticles[ i ]->pev->origin.y = sprY * 0.98 + parY * 0.02;
+
+			m_prgParticles[ i ]->pev->renderamt /= 1.05;
+		}
+	}
 }
 
 // Temporary class for a certain test

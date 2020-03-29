@@ -189,7 +189,7 @@ int CHudHealth::Draw(float flTime)
 
 	if ( !m_hSprite )
 		m_hSprite = LoadSprite(PAIN_NAME);
-	
+
 	// Has health changed? Flash the health #
 	if (m_fFade)
 	{

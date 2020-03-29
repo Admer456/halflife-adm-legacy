@@ -2622,7 +2622,12 @@
 		64 : "Start Inactive" : 0
 	]
 ]
-@PointClass base(Monster, Sequence) size(-16 -16 0, 16 16 72) studio("models/zombie.mdl") = monster_zombie : "Scientist Zombie" []
+@PointClass base(Monster, Sequence) size(-16 -16 0, 16 16 72) studio("models/zombie.mdl") = monster_zombie : "Scientist Zombie" 
+[
+	custom_model(studio) : "Custom model"
+	custom_health(integer) : "Custom health"
+]
+
 @PointClass base(Targetname, Angles) size(-16 -16 -16, 16 16 16) = monstermaker : "Monster Maker"
 [
 	target(string) : "Target On Release" 

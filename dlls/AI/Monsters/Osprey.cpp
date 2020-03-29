@@ -21,6 +21,7 @@
 #include "soundent.h"
 #include "effects.h"
 #include "customentity.h"
+#include "ADM/AdmEffects.h"
 
 typedef struct 
 {
@@ -67,6 +68,8 @@ public:
 	// int  TakeDamage( entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType );
 	void TraceAttack( entvars_t *pevAttacker, float flDamage, Vector vecDir, TraceResult *ptr, int bitsDamageType);
 	void ShowDamage( void );
+
+	COspreyDustManager* pDuster;
 
 	CBaseEntity *m_pGoalEnt;
 	Vector m_vel1;

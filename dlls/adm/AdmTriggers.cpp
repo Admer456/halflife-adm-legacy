@@ -985,7 +985,8 @@ void CTriggerDifficulty::Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_
 {
 	if (m_iSkill < 0 && m_iSkill > 6)
 	{
-		return; // Mapper set an out-of-range skill level
+		ALERT( at_console, "\ntrigger_difficulty, out of range skill level %i!", m_iSkill );
+		return;
 	}
 
 	if (m_iSkill < 4)
@@ -997,17 +998,17 @@ void CTriggerDifficulty::Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_
 		}
 	}
 
-	else // if (m_iSkill >= 4) // 4,5,6
+	else
 	{
 		m_iSkill -= 3; // Gotta make it comparable to easy, medium and hard
 
 		if (m_iSkill != g_iSkillLevel)
 		{
-			m_iSkill += 3; // Security measure, this will bring it back to 4, 5 or 6, or else it'll stop being NOT [difficulty], it'll just be [difficulty]
-			
 			SUB_UseTargets(this, useType, value);
 			SUB_KillTargets(m_iszKillTarget);
 		}
+
+		m_iSkill += 3;
 	}
 }
 

@@ -1470,9 +1470,12 @@ void CChangeLevel :: ChangeLevelNow( CBaseEntity *pActivator )
 
 	ASSERT(!FStrEq(m_szMapName, ""));
 
-	// Don't work in deathmatch
+	// Work in deathmatch too, Sven Co-op-style
 	if ( g_pGameRules->IsDeathmatch() )
+	{
+		CHANGE_LEVEL( m_szMapName, NULL );
 		return;
+	}
 
 	// Some people are firing these multiple times in a frame, disable
 	if ( gpGlobals->time == pev->dmgtime )

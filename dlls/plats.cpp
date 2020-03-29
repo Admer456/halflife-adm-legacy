@@ -25,6 +25,8 @@
 #include "Base/CBase.h"
 #include "trains.h"
 #include "Base/SaveRestore.h"
+#include "Effects.h"
+#include "ADM/AdmEffects.h"
 
 static void PlatSpawnInsideTrigger(entvars_t* pevPlatform);
 
@@ -637,7 +639,6 @@ public:
 	void Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
 	void KeyValue( KeyValueData *pkvd );
 
-
 	void EXPORT Wait( void );
 	void EXPORT Next( void );
 	virtual int		Save( CSave &save );
@@ -659,7 +660,6 @@ TYPEDESCRIPTION	CFuncTrain::m_SaveData[] =
 
 IMPLEMENT_SAVERESTORE( CFuncTrain, CBasePlatTrain );
 
-
 void CFuncTrain :: KeyValue( KeyValueData *pkvd )
 {
 	if (FStrEq(pkvd->szKeyName, "sounds"))
@@ -671,7 +671,6 @@ void CFuncTrain :: KeyValue( KeyValueData *pkvd )
 		CBasePlatTrain::KeyValue( pkvd );
 }
 
-
 void CFuncTrain :: Blocked( CBaseEntity *pOther )
 
 {
@@ -682,7 +681,6 @@ void CFuncTrain :: Blocked( CBaseEntity *pOther )
 	
 	pOther->TakeDamage(pev, pev, pev->dmg, DMG_CRUSH);
 }
-
 
 void CFuncTrain :: Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value )
 {
@@ -704,7 +702,6 @@ void CFuncTrain :: Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE 
 			EMIT_SOUND (ENT(pev), CHAN_VOICE, (char*)STRING(pev->noiseStopMoving), m_volume, ATTN_NORM);
 	}
 }
-
 
 void CFuncTrain :: Wait( void )
 {
@@ -746,14 +743,12 @@ void CFuncTrain :: Wait( void )
 	}
 }
 
-
 //
 // Train next - path corner needs to change to next target 
 //
 void CFuncTrain :: Next( void )
 {
 	CBaseEntity	*pTarg;
-
 	
 	// now find our next target
 	pTarg = GetNextTarget();
@@ -807,7 +802,6 @@ void CFuncTrain :: Next( void )
 	}
 }
 
-
 void CFuncTrain :: Activate( void )
 {
 	// Not yet active, so teleport to first target
@@ -845,6 +839,7 @@ sounds
 void CFuncTrain :: Spawn( void )
 {
 	Precache();
+
 	if (pev->speed == 0)
 		pev->speed = 100;
 	

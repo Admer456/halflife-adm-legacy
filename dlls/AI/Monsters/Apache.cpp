@@ -21,6 +21,7 @@
 #include "Weapons/Weapons.h"
 #include "nodes.h"
 #include "effects.h"
+#include "ADM/AdmEffects.h"
 
 extern DLL_GLOBAL int		g_iSkillLevel;
 
@@ -60,6 +61,8 @@ class CApache : public CBaseMonster
 	
 	int  TakeDamage( entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType );
 	void TraceAttack( entvars_t *pevAttacker, float flDamage, Vector vecDir, TraceResult *ptr, int bitsDamageType);
+
+	COspreyDustManager* pDuster;
 
 	int m_iRockets;
 	float m_flForce;
@@ -117,6 +120,11 @@ IMPLEMENT_SAVERESTORE( CApache, CBaseMonster );
 void CApache :: Spawn( void )
 {
 	Precache( );
+
+	pDuster = COspreyDustManager::CreateManager();
+	pDuster->m_pParent = this;
+	pDuster->Spawn();
+
 	// motor
 	pev->movetype = MOVETYPE_FLY;
 	pev->solid = SOLID_BBOX;

@@ -227,6 +227,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\common\Platform.h" />
+    <ClInclude Include="..\..\dlls\ADM\AdmEffects.h" />
     <ClInclude Include="..\..\dlls\AI\Activity.h" />
     <ClInclude Include="..\..\dlls\AI\ActivityMap.h" />
     <ClInclude Include="..\..\dlls\ADM\AdmPhysics.h" />

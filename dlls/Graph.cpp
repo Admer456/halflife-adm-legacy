@@ -1462,23 +1462,23 @@ void CTestHull :: Spawn( entvars_t *pevMasterNode )
 	pev->movetype		= MOVETYPE_STEP;
 	pev->effects		= 0;
 	pev->health			= 50;
-	pev->yaw_speed		= 8;
+	pev->yaw_speed		= 20;
 
 	if ( WorldGraph.m_fGraphPresent )
 	{// graph loaded from disk, so we don't need the test hull
 		SetThink ( &CTestHull::SUB_Remove );
-		pev->nextthink = gpGlobals->time;
+		pev->nextthink = gpGlobals->time + 10;
 	}
 	else
 	{
 		SetThink ( &CTestHull::DropDelay );
-		pev->nextthink = gpGlobals->time + 1;
+		pev->nextthink = gpGlobals->time + 5;
 	}
 
 	// Make this invisible
 	// TODO: Shouldn't we just use EF_NODRAW?  This doesn't need to go to the client.
 	pev->rendermode = kRenderTransTexture;
-	pev->renderamt = 0;
+	pev->renderamt = 255;
 }
 
 //=========================================================
@@ -1493,7 +1493,7 @@ void CTestHull::DropDelay ( void )
 
 	SetThink ( &CTestHull::CallBuildNodeGraph );
 
-	pev->nextthink = gpGlobals->time + 1;
+	pev->nextthink = gpGlobals->time + 5;
 }
 
 //=========================================================
@@ -1639,7 +1639,9 @@ void CTestHull :: BuildNodeGraph( void )
 	float	flDist;
 	int		step;
 
-	SetThink ( &CTestHull::SUB_Remove );// no matter what happens, the hull gets rid of itself.
+	// Let's see it anyway
+	SetThink( nullptr );
+	//SetThink ( &CTestHull::SUB_Remove );// no matter what happens, the hull gets rid of itself.
 	pev->nextthink = gpGlobals->time;
 
 // 	malloc a swollen temporary connection pool that we trim down after we know exactly how many connections there are.

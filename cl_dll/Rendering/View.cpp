@@ -1148,7 +1148,7 @@ void V_CalcNormalRefdef(struct ref_params_s *pparams)
 
 	vecDelta.z = vecDelta.z*0.95 + (vecDelta.z * (horizontalDelta))*0.05;
 
-	gEngfuncs.Con_Printf( "delta vecDelta.z %f\n", oldZDelta - vecDelta.z );
+	//gEngfuncs.Con_Printf( "delta vecDelta.z %f\n", oldZDelta - vecDelta.z );
 
 	if (adm_cam_roll)
 	{

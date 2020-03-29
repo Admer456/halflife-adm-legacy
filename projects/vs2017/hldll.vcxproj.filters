@@ -556,6 +556,9 @@
     <ClInclude Include="..\..\dlls\Vector.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\dlls\ADM\AdmEffects.h">
+      <Filter>Source Files\ADM</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Versions\adm.fgd">

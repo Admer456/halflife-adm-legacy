@@ -1108,6 +1108,48 @@ void UTIL_SetSize( entvars_t *pev, const Vector &vecMin, const Vector &vecMax )
 	SET_SIZE( ENT(pev), vecMin, vecMax );
 }
 
+char* UTIL_GetBodygroupName(entvars_t *pev, int bodygroupNumber)
+{
+	// 1. Grab studio header
+	studiohdr_t *studioHeader;
+	studioHeader = (studiohdr_t*)GET_MODEL_PTR( ENT( pev ) );
+
+	if ( !studioHeader )
+	{
+		return nullptr;
+	}
+
+	if ( bodygroupNumber >= studioHeader->numbodyparts )
+		return nullptr;
+
+	// 2. Grab mstudiobodyparts_t
+	mstudiobodyparts_t *studioBodygroup;
+
+	byte* resultingAddress = (byte*)studioHeader;	// starting location
+	resultingAddress += studioHeader->bodypartindex; // seek to the first bodygroup
+	resultingAddress += sizeof( mstudiobodyparts_t )*bodygroupNumber; // advance to our needed bodygroup
+
+	studioBodygroup = (mstudiobodyparts_t*)resultingAddress;
+
+	return studioBodygroup->name;
+}
+
+void SetBodygroupByName( void* pmodel, entvars_t *pev, const char *Group, const char *Value )
+{
+	int i = 0;
+
+	while ( UTIL_GetBodygroupName( pev, i ) != nullptr )
+	{
+		if ( FStrEq( UTIL_GetBodygroupName( pev, i ), Value ) )
+		{
+			pev->body = i;
+			return;
+		}
+	}
+
+	ALERT( at_console, "\nFailed to find bodygroup name: %s", Value );
+}
+
 void UTIL_SetSizeAuto(entvars_t *pev) // This isn't my code :P
 {
 	studiohdr_t *pstudiohdr;
