@@ -2595,97 +2595,93 @@ void CBasePlayer :: UpdatePlayerSound ( void )
 
 void CBasePlayer::PostThink()
 {
-	// TO-DO: Get rid of these gotos
-	if ( g_fGameOver )
-		goto pt_end;         // intermission or finale
-
-	if (!IsAlive())
-		goto pt_end;
-
-	// Handle Tank controlling
-	if ( m_pTank != NULL )
-	{ // if they've moved too far from the gun,  or selected a weapon, unuse the gun
-		if ( m_pTank->OnControls( pev ) && !pev->weaponmodel )
-		{  
-			m_pTank->Use( this, this, USE_SET, 2 );	// try fire the gun
-		}
-		else
-		{  // they've moved off the platform
-			m_pTank->Use( this, this, USE_OFF, 0 );
-			m_pTank = NULL;
-		}
-	}
-
-// do weapon stuff
-	ItemPostFrame( );
-
-// check to see if player landed hard enough to make a sound
-// falling farther than half of the maximum safe distance, but not as far a max safe distance will
-// play a bootscrape sound, and no damage will be inflicted. Fallling a distance shorter than half
-// of maximum safe distance will make no sound. Falling farther than max safe distance will play a 
-// fallpain sound, and damage will be inflicted based on how far the player fell
-
-	if ( (FBitSet(pev->flags, FL_ONGROUND)) && (pev->health > 0) && m_flFallVelocity >= PLAYER_FALL_PUNCH_THRESHHOLD )
+	if ( !g_fGameOver || IsAlive() )
 	{
-		// ALERT ( at_console, "%f\n", m_flFallVelocity );
-
-		if (pev->watertype == CONTENT_WATER)
-		{
-			// Did he hit the world or a non-moving entity?
-			// BUG - this happens all the time in water, especially when 
-			// BUG - water has current force
-			// if ( !pev->groundentity || VARS(pev->groundentity)->velocity.z == 0 )
-				// EMIT_SOUND(ENT(pev), CHAN_BODY, "player/pl_wade1.wav", 1, ATTN_NORM);
-		}
-		else if ( m_flFallVelocity > PLAYER_MAX_SAFE_FALL_SPEED )
-		{// after this point, we start doing damage
-			
-			float flFallDamage = g_pGameRules->FlPlayerFallDamage( this );
-
-			if ( flFallDamage > pev->health )
-			{//splat
-				// note: play on item channel because we play footstep landing on body channel
-				EMIT_SOUND(ENT(pev), CHAN_ITEM, "common/bodysplat.wav", 1, ATTN_NORM);
-			}
-
-			if ( flFallDamage > 0 )
+		// Handle Tank controlling
+		if ( m_pTank != NULL )
+		{	// if they've moved too far from the gun,  or selected a weapon, unuse the gun
+			if ( m_pTank->OnControls( pev ) && !pev->weaponmodel )
 			{
-				TakeDamage(VARS(eoNullEntity), VARS(eoNullEntity), flFallDamage, DMG_FALL ); 
-				pev->punchangle.x = 0;
+				m_pTank->Use( this, this, USE_SET, 2 );	// try fire the gun
+			}
+			else
+			{  // they've moved off the platform
+				m_pTank->Use( this, this, USE_OFF, 0 );
+				m_pTank = NULL;
 			}
 		}
 
+		// do weapon stuff
+		ItemPostFrame();
+
+		// check to see if player landed hard enough to make a sound
+		// falling farther than half of the maximum safe distance, but not as far a max safe distance will
+		// play a bootscrape sound, and no damage will be inflicted. Fallling a distance shorter than half
+		// of maximum safe distance will make no sound. Falling farther than max safe distance will play a 
+		// fallpain sound, and damage will be inflicted based on how far the player fell
+
+		if ( (FBitSet( pev->flags, FL_ONGROUND )) && (pev->health > 0) && m_flFallVelocity >= PLAYER_FALL_PUNCH_THRESHHOLD )
+		{
+			// ALERT ( at_console, "%f\n", m_flFallVelocity );
+
+			if ( pev->watertype == CONTENT_WATER )
+			{
+				// Did he hit the world or a non-moving entity?
+				// BUG - this happens all the time in water, especially when 
+				// BUG - water has current force
+				// if ( !pev->groundentity || VARS(pev->groundentity)->velocity.z == 0 )
+					// EMIT_SOUND(ENT(pev), CHAN_BODY, "player/pl_wade1.wav", 1, ATTN_NORM);
+			}
+			else if ( m_flFallVelocity > PLAYER_MAX_SAFE_FALL_SPEED )
+			{// after this point, we start doing damage
+
+				float flFallDamage = g_pGameRules->FlPlayerFallDamage( this );
+
+				if ( flFallDamage > pev->health )
+				{//splat
+					// note: play on item channel because we play footstep landing on body channel
+					EMIT_SOUND( ENT( pev ), CHAN_ITEM, "common/bodysplat.wav", 1, ATTN_NORM );
+				}
+
+				if ( flFallDamage > 0 )
+				{
+					TakeDamage( VARS( eoNullEntity ), VARS( eoNullEntity ), flFallDamage, DMG_FALL );
+					pev->punchangle.x = 0;
+				}
+			}
+
+			if ( IsAlive() )
+			{
+				SetAnimation( PLAYER_WALK );
+			}
+		}
+
+		if ( FBitSet( pev->flags, FL_ONGROUND ) )
+		{
+			if ( m_flFallVelocity > 64 && !g_pGameRules->IsMultiplayer() )
+			{
+				CSoundEnt::InsertSound( bits_SOUND_PLAYER, pev->origin, m_flFallVelocity, 0.2 );
+				// ALERT( at_console, "fall %f\n", m_flFallVelocity );
+			}
+			m_flFallVelocity = 0;
+		}
+
+		// select the proper animation for the player character	
 		if ( IsAlive() )
 		{
-			SetAnimation( PLAYER_WALK );
+			if ( !pev->velocity.x && !pev->velocity.y )
+				SetAnimation( PLAYER_IDLE );
+			else if ( (pev->velocity.x || pev->velocity.y) && (FBitSet( pev->flags, FL_ONGROUND )) )
+				SetAnimation( PLAYER_WALK );
+			else if ( pev->waterlevel > 1 )
+				SetAnimation( PLAYER_WALK );
 		}
-    }
 
-	if (FBitSet(pev->flags, FL_ONGROUND))
-	{		
-		if (m_flFallVelocity > 64 && !g_pGameRules->IsMultiplayer())
-		{
-			CSoundEnt::InsertSound ( bits_SOUND_PLAYER, pev->origin, m_flFallVelocity, 0.2 );
-			// ALERT( at_console, "fall %f\n", m_flFallVelocity );
-		}
-		m_flFallVelocity = 0;
+		StudioFrameAdvance();
+		CheckPowerups( pev );
+
+		UpdatePlayerSound();
 	}
-
-	// select the proper animation for the player character	
-	if ( IsAlive() )
-	{
-		if (!pev->velocity.x && !pev->velocity.y)
-			SetAnimation( PLAYER_IDLE );
-		else if ((pev->velocity.x || pev->velocity.y) && (FBitSet(pev->flags, FL_ONGROUND)))
-			SetAnimation( PLAYER_WALK );
-		else if (pev->waterlevel > 1)
-			SetAnimation( PLAYER_WALK );
-	}
-
-	StudioFrameAdvance( );
-	CheckPowerups(pev);
-
-	UpdatePlayerSound();
 
 pt_end:
 #if defined( CLIENT_WEAPONS )
