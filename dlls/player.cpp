@@ -2595,6 +2595,7 @@ void CBasePlayer :: UpdatePlayerSound ( void )
 
 void CBasePlayer::PostThink()
 {
+	// TO-DO: Get rid of these gotos
 	if ( g_fGameOver )
 		goto pt_end;         // intermission or finale
 
@@ -2780,7 +2781,7 @@ pt_end:
 
 	if (m_KeyButton[3] == true)
 	{
-			pev->maxspeed = CVAR_GET_FLOAT("cl_backspeed") + 300;
+		pev->maxspeed = CVAR_GET_FLOAT("cl_backspeed") + 300;
 	}
 	else
 	{

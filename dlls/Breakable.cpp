@@ -802,6 +802,7 @@ public:
 	int		m_lastSound;	// no need to save/restore, just keeps the same sound from playing twice in a row
 	float	m_maxSpeed;
 	float	m_soundTime;
+	int		m_iSize;
 };
 
 TYPEDESCRIPTION	CPushable::m_SaveData[] = 
@@ -858,29 +859,28 @@ void CPushable :: KeyValue( KeyValueData *pkvd )
 {
 	if ( FStrEq(pkvd->szKeyName, "size") )
 	{
-		int bbox = atoi(pkvd->szValue);
+		m_iSize = atoi(pkvd->szValue);
 		pkvd->fHandled = TRUE;
 
-		switch( bbox )
+		switch ( m_iSize )
 		{
 		case 0:	// Point
-			UTIL_SetSize(pev, Vector(-8, -8, -8), Vector(8, 8, 8));
+			UTIL_SetSize( pev, Vector( -8, -8, -8 ), Vector( 8, 8, 8 ) );
 			break;
 
 		case 2: // Big Hull!?!?	!!!BUGBUG Figure out what this hull really is
-			UTIL_SetSize(pev, VEC_DUCK_HULL_MIN*2, VEC_DUCK_HULL_MAX*2);
+			UTIL_SetSize( pev, VEC_DUCK_HULL_MIN * 2, VEC_DUCK_HULL_MAX * 2 );
 			break;
 
 		case 3: // Player duck
-			UTIL_SetSize(pev, VEC_DUCK_HULL_MIN, VEC_DUCK_HULL_MAX);
+			UTIL_SetSize( pev, VEC_DUCK_HULL_MIN, VEC_DUCK_HULL_MAX );
 			break;
 
 		default:
 		case 1: // Player
-			UTIL_SetSize(pev, VEC_HULL_MIN, VEC_HULL_MAX);
+			UTIL_SetSize( pev, VEC_HULL_MIN, VEC_HULL_MAX );
 			break;
 		}
-
 	}
 	else if ( FStrEq(pkvd->szKeyName, "buoyancy") )
 	{
