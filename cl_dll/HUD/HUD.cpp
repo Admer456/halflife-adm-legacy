@@ -362,28 +362,28 @@ void CHud :: Init( void )
 	CVAR_CREATE("adm_hud_coefshift",	"0",   FCVAR_ARCHIVE);
 
 	// AdmSrc - view bobbing stuffs :3
-	CVAR_CREATE("adm_bob_roll_timediv",	"1", FCVAR_ARCHIVE);
+	CVAR_CREATE("adm_bob_roll_timediv",	"3.14159", FCVAR_ARCHIVE);
 	CVAR_CREATE("adm_bob_roll_freq",	"1", FCVAR_ARCHIVE);
 	CVAR_CREATE("adm_bob_roll_p",		"1", FCVAR_ARCHIVE);
-	CVAR_CREATE("adm_bob_roll_y",		"1", FCVAR_ARCHIVE);
-	CVAR_CREATE("adm_bob_roll_r",		"1", FCVAR_ARCHIVE);
-	CVAR_CREATE("adm_bob_pos",			"1", FCVAR_ARCHIVE);
-	CVAR_CREATE("adm_bob_pos2",			"1", FCVAR_ARCHIVE);
+	CVAR_CREATE("adm_bob_roll_y",		"0.5", FCVAR_ARCHIVE);
+	CVAR_CREATE("adm_bob_roll_r",		"2.4", FCVAR_ARCHIVE);
+	CVAR_CREATE("adm_bob_pos",			"0.08", FCVAR_ARCHIVE);
+	CVAR_CREATE("adm_bob_pos2",			"0.3", FCVAR_ARCHIVE);
 	CVAR_CREATE("adm_bob_height",		"2", FCVAR_ARCHIVE);
 
 	CVAR_CREATE("adm_classicbob_enable","1", FCVAR_ARCHIVE);
 
 	CVAR_CREATE("adm_cam_sway",			"1", FCVAR_ARCHIVE);
-	CVAR_CREATE("adm_cam_roll",			"1", FCVAR_ARCHIVE);
-	CVAR_CREATE("adm_cam_falleffect",	"1", FCVAR_ARCHIVE);
-	CVAR_CREATE("adm_cam_turnback",		"1", FCVAR_ARCHIVE);
-	CVAR_CREATE("adm_cam_ofs_side",		"0", FCVAR_ARCHIVE);
+	CVAR_CREATE("adm_cam_roll",			"0.5", FCVAR_ARCHIVE);
+	CVAR_CREATE("adm_cam_falleffect",	"0.05", FCVAR_ARCHIVE);
+	CVAR_CREATE("adm_cam_turnback",		"20", FCVAR_ARCHIVE);
+	CVAR_CREATE("adm_cam_ofs_side",		"16", FCVAR_ARCHIVE);
 
 	CVAR_CREATE("adm_dbg_yawlow",		"90", FCVAR_ARCHIVE);
 	CVAR_CREATE("adm_dbg_yawhi",		"180", FCVAR_ARCHIVE);
 
-	CVAR_CREATE("adm_view_lerp1",		"0.5", FCVAR_ARCHIVE);
-	CVAR_CREATE("adm_view_lerp2",		"0.45", FCVAR_ARCHIVE);
+	CVAR_CREATE("adm_view_lerp1",		"0.8", FCVAR_ARCHIVE);
+	CVAR_CREATE("adm_view_lerp2",		"0.4", FCVAR_ARCHIVE);
 
 	m_iLogo = 0;
 	m_iFOV = 0;
