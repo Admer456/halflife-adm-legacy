@@ -21,6 +21,11 @@
 #include "hltv.h"
 #include "Exports.h"
 
+// Since ADM should not affect HL gameplay,
+// I've decided to disable this feature as it makes a significant change in aiming,
+// as well as bringing back the old view bobbing.
+#define ADM_CustomClientPunch 0
+
 #ifndef M_PI
 #define M_PI		3.14159265358979323846	// matches value in gcc v2 math.h
 #endif
@@ -431,7 +436,6 @@ void V_AddIdle ( struct ref_params_s *pparams )
 	pparams->viewangles[YAW] += v_idlescale * sin(pparams->time*v_iyaw_cycle.value) * v_iyaw_level.value;
 }
 
- 
 /*
 ==============
 V_CalcViewRoll
@@ -773,6 +777,14 @@ void V_CalcWaterOffset( ref_params_t* pparams, float &waterOffset )
 	pparams->vieworg[ 2 ] += waterOffset;
 }
 
+void V_CalculatePunchCLView( ref_params_t* pparams )
+{
+	Vector totalPunch = gHUD.m_clPunch.GetTotalPunch();
+
+	for ( int i = 0; i < 3; i++ )
+		pparams->cl_viewangles[ i ] += totalPunch[ i ] * pparams->frametime;
+}
+
 /*
 ==================
 V_CalcRefdef
@@ -931,6 +943,8 @@ void V_CalcRefdef_HL( struct ref_params_s *pparams )
 
 	V_DropPunchAngle( pparams->frametime, (float *)&ev_punchangle );
 
+	V_CalculatePunchCLView( pparams );
+
 	V_CalcViewSmoothing( pparams, oldz, lasttime, ViewModel, ViewInterp );
 
 	// Store off v_angles before munging for third person
@@ -959,10 +973,6 @@ void V_CalcRefdef_HL( struct ref_params_s *pparams )
 	}
 
 	V_ViewNonClient( pparams );
-
-	gEngfuncs.Con_Printf( "%i %i",
-						(int)ViewModel->angles.y,
-						(int)ViewModel->curstate.angles.y );
 
 	lasttime = pparams->time;
 	v_origin = pparams->vieworg;
@@ -2310,6 +2320,11 @@ void V_DropPunchAngle ( float frametime, float *ev_punchangle )
 	VectorScale ( ev_punchangle, len, ev_punchangle );
 }
 
+void V_PunchCLView( Vector angles, float speed )
+{
+	gHUD.m_clPunch.AddPunch( angles, speed );
+}
+
 /*
 =============
 V_PunchAxis
@@ -2319,7 +2334,25 @@ Client side punch effect
 */
 void V_PunchAxis( int axis, float punch )
 {
+#if ADM_CustomClientPunch == 0
+
 	ev_punchangle[ axis ] = punch;
+
+#else 
+
+	Vector angle( 0, 0, 0 );
+	angle[ axis ] = punch * 4.0;
+
+	V_PunchCLView( angle, 25.0f );
+
+#endif
+}
+
+void V_PunchAxis( float pitch, float yaw, float roll )
+{
+	ev_punchangle[ PITCH ] = pitch;
+	ev_punchangle[ YAW ] = yaw;
+	ev_punchangle[ ROLL ] = roll;
 }
 
 /*

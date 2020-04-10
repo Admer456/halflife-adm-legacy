@@ -338,12 +338,6 @@ public:
 
 	// VehicleAPI part
 	InVehicleType m_InVehicle;
-
-	// Sweet succulent view bobby mobby :3
-	vec3_t m_vecViewCamPunch = { 0, 0, 0 }; // our "target" angles
-	vec3_t m_vecViewCamReal = { 0, 0, 0 };  // our current angles
-	float m_flViewCamInterp = 0; // 0 to 1 between Real and Punch
-	int m_iViewCamMode = 0; // 0 - view punch getting smoothened back to normal, 1 - view punch going to m_vecViewCamPunch, 2 - view punch staying there too
 };
 
 #define AUTOAIM_2DEGREES  0.0348994967025

@@ -41,7 +41,9 @@ static int tracerCount[ 32 ];
 
 #include "pm_shared.h"
 
+// God, I hate forward declarations in .cpp files
 void V_PunchAxis( int axis, float punch );
+void V_PunchCLView( Vector angles, float speed );
 void VectorAngles( const float *forward, float *angles );
 
 extern cvar_t *cl_lw;
@@ -473,6 +475,7 @@ void EV_FireGlock1( event_args_t *args )
 		gEngfuncs.pEventAPI->EV_WeaponAnimation( empty ? GLOCK_SHOOT_EMPTY : GLOCK_SHOOT, 2 );
 
 		V_PunchAxis( 0, -2.0 );
+		//V_PunchCLView( Vector( -2.0, 0.0, 0.0 ), 10 );
 	}
 
 	EV_GetDefaultShellInfo( args, origin, velocity, ShellVelocity, ShellOrigin, forward, right, up, 20, -12, 4 );

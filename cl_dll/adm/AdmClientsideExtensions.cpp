@@ -38,6 +38,7 @@ CClientFMOD m_clFMOD;
 void CHud::InitExtensions( void )
 {
 	m_clFMOD.Init();
+	m_clPunch.Init();
 }
 
 void CHud::VidInitExtensions( void )

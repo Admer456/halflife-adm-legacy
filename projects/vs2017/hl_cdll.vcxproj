@@ -111,6 +111,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\cl_dll\adm\AdmClientsideExtensions.cpp" />
+    <ClCompile Include="..\..\cl_dll\ADM\AdmClientsidePunch.cpp" />
     <ClCompile Include="..\..\cl_dll\ADM\AdmClientsideSound.cpp" />
     <ClCompile Include="..\..\cl_dll\CDLL_Int.cpp" />
     <ClCompile Include="..\..\cl_dll\COM_Weapons.cpp" />

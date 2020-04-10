@@ -607,6 +607,30 @@ public:
 	std::string GetStringFromTable( int index );
 };
 
+class CClientPunch : public CBaseClientExtension
+{
+public:
+	void			InitExtension( void );
+	void			Think( void );
+
+	int				MsgFunc_VPunch( const char* pszName, int iSize, void *pbuf );
+	void			AddPunch( Vector angles, float speed );
+
+	Vector			GetTotalPunch();
+
+private:
+	static constexpr int maxPunches = 64;
+	struct viewPunch
+	{
+		bool	active{false};
+		Vector	punch{Vector(0,0,0)};
+		float	speed{0};
+		float	wishSpeed{0};
+	};
+
+	viewPunch		punchRegistry[ maxPunches ];
+};
+
 //
 //-----------------------------------------------------
 //
@@ -625,10 +649,10 @@ private:
 
 public:
 
-	HSPRITE						m_hsprCursor;
-	float m_flTime;	   // the current client time
-	float m_fOldTime;  // the time at which the HUD was last redrawn
-	double m_flTimeDelta; // the difference between flTime and fOldTime
+	HSPRITE	m_hsprCursor;
+	float	m_flTime;	   // the current client time
+	float	m_fOldTime;  // the time at which the HUD was last redrawn
+	double	m_flTimeDelta; // the difference between flTime and fOldTime
 	Vector	m_vecOrigin;
 	Vector	m_vecAngles;
 	int		m_iKeyBits;
@@ -685,6 +709,7 @@ public:
 	CHudBenchmark		m_Benchmark;
 
 	CClientFMOD			m_clFMOD;
+	CClientPunch		m_clPunch;
 
 	void Init( void );
 	void VidInit( void );

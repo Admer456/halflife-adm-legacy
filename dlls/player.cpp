@@ -2758,33 +2758,6 @@ pt_end:
 	//	pev->maxspeed = sv_maxspeed->value;
 	//else
 	//	pev->maxspeed = sv_maxspeed->value / 2.0;
-
-	if (m_iViewCamMode == 0)
-	{
-		m_vecViewCamPunch = m_vecViewCamPunch / 1.1;
-		m_flViewCamInterp /= 1.1;
-	}
-
-	else if (m_iViewCamMode == 1)
-	{
-		m_flViewCamInterp += 0.1;
-
-		if (m_flViewCamInterp >= 1)
-			m_iViewCamMode = 0;
-	}
-
-	else if (m_iViewCamMode == 2)
-	{
-		m_flViewCamInterp += 0.1;
-
-		if (m_flViewCamInterp == 1)
-			m_flViewCamInterp = 1;
-	}
-
-	m_vecViewCamReal = (m_vecViewCamPunch * m_flViewCamInterp) / 3;
-	pev->punchangle[0] -= m_vecViewCamReal[0];
-	pev->punchangle[1] += m_vecViewCamReal[1];
-	pev->punchangle[2] += m_vecViewCamReal[2];
 }
 
 
