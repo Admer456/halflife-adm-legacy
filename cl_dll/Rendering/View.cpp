@@ -159,146 +159,61 @@ void V_InterpolateAngles( float *start, float *end, float *output, float frac )
 	V_NormalizeAngles( output );
 } */
 
-// Quakeworld bob code, this fixes jitters in the mutliplayer since the clock (pparams->time) isn't quite linear
-float V_CalcBob ( struct ref_params_s *pparams )
+enum calcBobMode_t
 {
-	static	double	bobtime;
-	static float	bob;
+	VB_COS,
+	VB_SIN,
+	VB_COS2,
+	VB_SIN2
+};
+
+// Quakeworld bob code, this fixes jitters in the mutliplayer since the clock (pparams->time) isn't quite linear
+void V_CalcBob( struct ref_params_s *pparams, float freqmod, calcBobMode_t mode, double &bobtime, float &bob, float &lasttime )
+{
 	float	cycle;
-	static float	lasttime;
 	vec3_t	vel;
-	
 
 	if ( pparams->onground == -1 ||
 		 pparams->time == lasttime )
 	{
 		// just use old value
-		return bob;	
+		return;// bob;	
 	}
 
 	lasttime = pparams->time;
 
-	bobtime += pparams->frametime;
-	cycle = bobtime - (int)( bobtime / cl_bobcycle->value ) * cl_bobcycle->value;
+	bobtime += pparams->frametime * freqmod;
+	cycle = bobtime - (int)(bobtime / cl_bobcycle->value) * cl_bobcycle->value;
 	cycle /= cl_bobcycle->value;
-	
+
 	if ( cycle < cl_bobup->value )
 	{
 		cycle = M_PI * cycle / cl_bobup->value;
 	}
 	else
 	{
-		cycle = M_PI + M_PI * ( cycle - cl_bobup->value )/( 1.0 - cl_bobup->value );
+		cycle = M_PI + M_PI * (cycle - cl_bobup->value) / (1.0 - cl_bobup->value);
 	}
 
 	// bob is proportional to simulated velocity in the xy plane
 	// (don't count Z, or jumping messes it up)
 	VectorCopy( pparams->simvel, vel );
-	vel[2] = 0;
+	vel[ 2 ] = 0;
 
-	bob = sqrt( vel[0] * vel[0] + vel[1] * vel[1] ) * cl_bob->value;
-	bob = bob * 0.3 + bob * 0.7 * sin(cycle);
+	bob = sqrt( vel[ 0 ] * vel[ 0 ] + vel[ 1 ] * vel[ 1 ] ) * cl_bob->value;
+
+	if ( mode == VB_SIN )
+		bob = bob * 0.3 + bob * 0.7 * sin( cycle );
+	else if ( mode == VB_COS )
+		bob = bob * 0.3 + bob * 0.7 * cos( cycle );
+	else if ( mode == VB_SIN2 )
+		bob = bob * 0.3 + bob * 0.7 * sin( cycle ) * sin( cycle );
+	else if ( mode == VB_COS2 )
+		bob = bob * 0.3 + bob * 0.7 * cos( cycle ) * cos( cycle );
+
 	bob = V_min( bob, 4 );
 	bob = V_max( bob, -7 );
-	return bob;	
-}
-
-// QuakeWorld bob code - with a frequency parameter
-// speed -> frequency of the bobbing
-// timediv -> some inverse coefficient, used to tell how long the cycle will be
-float V_CalcBob2(struct ref_params_s *pparams, float speed, float timediv)
-{
-	static	double	bobtime;
-	static float	bob;
-	float	cycle;
-	static float	lasttime;
-	vec3_t	vel;
-
-
-	if (pparams->onground == -1 ||
-		pparams->time == lasttime)
-	{
-		// just use old value
-		return bob;
-	}
-
-	lasttime = pparams->time;
-
-	bobtime += pparams->frametime / timediv;
-	cycle = bobtime - (int)(bobtime / cl_bobcycle->value) * cl_bobcycle->value;
-	cycle /= cl_bobcycle->value;
-
-	if (cycle < cl_bobup->value)
-	{
-		cycle = M_PI * cycle / cl_bobup->value;
-	}
-	else
-	{
-		cycle = M_PI + M_PI * (cycle - cl_bobup->value) / (1.0 - cl_bobup->value);
-	}
-
-	// bob is proportional to simulated velocity in the xy plane
-	// (don't count Z, or jumping messes it up)
-	VectorCopy(pparams->simvel, vel);
-	vel[2] = 0;
-
-	cycle /= speed;
-
-	bob = sqrt(vel[0] * vel[0] + vel[1] * vel[1]) * cl_bob->value;
-//	bob = bob * 0.3 + bob * 0.7 * sin(cycle * speed);
-	bob = bob * sin(cycle * speed);
-	bob = V_min(bob, 4);
-	bob = V_max(bob, -7);
-	return bob;
-}
-
-// QuakeWorld bob code the third - gotta have more of them because of statics
-// speed -> frequency of the bobbing
-// timediv -> some inverse coefficient, used to tell how long the cycle will be
-float V_CalcBob3(struct ref_params_s *pparams, float speed, float timediv)
-{
-	static	double	bobtime;
-	static float	bob;
-	float	cycle;
-	static float	lasttime;
-	vec3_t	vel;
-
-
-	if (pparams->onground == -1 ||
-		pparams->time == lasttime)
-	{
-		// just use old value
-		return bob;
-	}
-
-	lasttime = pparams->time;
-
-	bobtime += pparams->frametime / timediv;
-	cycle = bobtime - (int)(bobtime / cl_bobcycle->value) * cl_bobcycle->value;
-	cycle /= cl_bobcycle->value;
-
-	if (cycle < cl_bobup->value)
-	{
-		cycle = M_PI * cycle / cl_bobup->value;
-	}
-	else
-	{
-		cycle = M_PI + M_PI * (cycle - cl_bobup->value) / (1.0 - cl_bobup->value);
-	}
-
-	// bob is proportional to simulated velocity in the xy plane
-	// (don't count Z, or jumping messes it up)
-	VectorCopy(pparams->simvel, vel);
-	vel[2] = 0;
-
-	cycle /= speed;
-
-	bob = sqrt(vel[0] * vel[0] + vel[1] * vel[1]) * cl_bob->value; // Square root of X^2 and Y^2 + cl_bob value
-	//	bob = bob * 0.3 + bob * 0.7 * sin(cycle * speed);
-	bob = bob * sin(cycle);
-	bob = V_min(bob, 4);
-	bob = V_max(bob, -7);
-	return bob;
+	//return bob;
 }
 
 /*
@@ -681,9 +596,13 @@ void V_CalcNormalRefdef(struct ref_params_s *pparams)
 	int				i;
 	vec3_t			angles;
 	float			v_positionbob, v_rollbob_y, v_rollbob_p, v_rollbob_r, v_positionbob_sway, waterOffset;
-	float			RollBob_TimeDiv, RollBob_Frequency, RBPitch, RBYaw, RBRoll, BobPos, BobPosSway, BobHeight;
+	float			rollBobTimeDiv, rollBobFrequency, RBPitch, RBYaw, RBRoll, bobPos, bobPosSway, bobHeight;
 //	float			developer, adm_classicbob, adm_cam_sway, adm_cam_roll, adm_cam_falleffect;
 	
+	// double &bobtime, float &bob, float &lasttime
+	static double bobtimes[ 5 ] = { 0,0,0,0,0 };
+	static float lasttimes[ 5 ] = { 0,0,0,0,0 };
+
 	static viewinterp_t		ViewInterp;
 
 	// View angles
@@ -741,39 +660,45 @@ void V_CalcNormalRefdef(struct ref_params_s *pparams)
 	vecFinalAngles = { 0, 0, 0 };
 
 	// AdmSrc - yet again, customisation :3
-	RollBob_TimeDiv		= CVAR_GET_FLOAT("adm_bob_roll_timediv");
-	RollBob_Frequency	= CVAR_GET_FLOAT("adm_bob_roll_freq");
-	RBPitch				= CVAR_GET_FLOAT("adm_bob_roll_p");
-	RBYaw				= CVAR_GET_FLOAT("adm_bob_roll_y");
-	RBRoll				= CVAR_GET_FLOAT("adm_bob_roll_r");
-	BobPos				= CVAR_GET_FLOAT("adm_bob_pos");
-	BobPosSway			= CVAR_GET_FLOAT("adm_bob_pos2");
-	BobHeight			= CVAR_GET_FLOAT("adm_bob_height");
+	rollBobTimeDiv			= adm_bob_roll_timediv->value;
+	rollBobFrequency		= adm_bob_roll_freq->value;
+	RBPitch					= adm_bob_roll_p->value;
+	RBYaw					= adm_bob_roll_y->value;
+	RBRoll					= adm_bob_roll_r->value;
+	bobPos					= adm_bob_pos->value;
+	bobPosSway				= adm_bob_pos2->value;
+	bobHeight				= adm_bob_height->value;
 
-	float flSideMove = V_CalcRoll(ViewModel->angles, pparams->simvel, 60, 6000);
-	float flForwardMove = V_CalcRoll( ViewModel->angles, pparams->simvel, 8, 600, 0 ) * 0.5;
-	float flUpMove = V_CalcRoll( ViewModel->angles, pparams->simvel, 6, 300, 2 ) * 1.333;
+	float classicBobEnable	= adm_classicbob_enable->value;
+	float camSway			= adm_cam_sway->value;
+	float camRoll			= adm_cam_roll->value;
+	float camFallEffect		= adm_cam_falleffect->value;
+	float camTurnBack		= adm_cam_turnback->value;
+	float viewLerp			= adm_view_lerp1->value;
+	float viewWeaponLerp	= adm_view_lerp2->value;
+	float camOfsSide		= adm_cam_ofs_side->value;
+
+	float flSideMove		= V_CalcRoll(ViewModel->angles, pparams->simvel, 60, 6000);
+	float flForwardMove		= V_CalcRoll( ViewModel->angles, pparams->simvel, 8, 600, 0 ) * 0.5;
+	float flUpMove			= V_CalcRoll( ViewModel->angles, pparams->simvel, 6, 300, 2 ) * 1.333;
 
 	if ( flUpMove < 0 )
 		flUpMove *= 0.36;
 
-	LocalConFloat(developer);
-	LocalConFloat(adm_classicbob_enable);
-	LocalConFloat(adm_cam_sway);
-	LocalConFloat(adm_cam_roll);
-	LocalConFloat(adm_cam_falleffect);
-	LocalConFloat(adm_cam_turnback);
-	LocalConFloat(adm_view_lerp1);
-	LocalConFloat(adm_view_lerp2);
-	LocalConFloat(adm_cam_ofs_side);
-
 	// transform the view offset by the model's matrix to get the offset from
 	// model origin for the view
-	v_positionbob		= V_CalcBob2(pparams, 1, 0.5) * BobPos;
-	v_positionbob_sway	= V_CalcBob(pparams) * BobPosSway;
-	v_rollbob_y			= V_CalcBob3(pparams, RollBob_Frequency, RollBob_TimeDiv);
-	v_rollbob_p			= V_CalcBob3(pparams, RollBob_Frequency, RollBob_TimeDiv);
-	v_rollbob_r			= V_CalcBob3(pparams, RollBob_Frequency, RollBob_TimeDiv);
+	V_CalcBob(pparams, 1.60 + (flForwardMove / 4.0),					VB_SIN, bobtimes[0], v_positionbob,		lasttimes[0]);
+	V_CalcBob(pparams, 0.8 + (flForwardMove / 8.0),						VB_SIN, bobtimes[1], v_positionbob_sway,lasttimes[1]);
+	V_CalcBob(pparams, rollBobFrequency  + (flForwardMove / 8.0),		VB_SIN, bobtimes[2], v_rollbob_y,		lasttimes[2]);
+	V_CalcBob(pparams, (rollBobFrequency + (flForwardMove / 8.0))*2,	VB_SIN, bobtimes[3], v_rollbob_p,		lasttimes[3]);
+	V_CalcBob(pparams, rollBobFrequency  + (flForwardMove / 8.0),		VB_SIN, bobtimes[4], v_rollbob_r,		lasttimes[4]);
+
+	v_positionbob *= bobPos;
+	v_positionbob_sway *= bobPosSway;
+
+	v_rollbob_y *= flForwardMove * RBYaw;
+	v_rollbob_p *= flForwardMove * RBPitch;
+	v_rollbob_r *= flForwardMove * RBRoll;
 
 	/*
 		v_positionbob -> this is supposed to be your head going up and down
@@ -785,9 +710,9 @@ void V_CalcNormalRefdef(struct ref_params_s *pparams)
 
 	// refresh position
 	VectorCopy(pparams->simorg, pparams->vieworg);
-	pparams->vieworg[2] += (v_positionbob / BobHeight);
+	pparams->vieworg[2] += (v_positionbob / bobHeight);
 	VectorAdd(pparams->vieworg, pparams->viewheight, pparams->vieworg);
-	pparams->vieworg[2] += (v_positionbob * BobHeight);
+	pparams->vieworg[2] += (v_positionbob * bobHeight);
 
 	pparams->cl_viewangles[ ROLL ] = 0;
 	VectorCopy(pparams->cl_viewangles, pparams->viewangles);
@@ -900,7 +825,7 @@ void V_CalcNormalRefdef(struct ref_params_s *pparams)
 		for (i = 0; i < 3; i++)
 		{
 			pparams->vieworg[i] += -ofs[2] * camForward[i];
-			pparams->vieworg[i] += adm_cam_ofs_side * camRight[i];
+			pparams->vieworg[i] += camOfsSide * camRight[i];
 		}
 	}
 
@@ -952,7 +877,7 @@ void V_CalcNormalRefdef(struct ref_params_s *pparams)
 
 //	ViewModel->angles[PITCH] += ViewModel->curstate.velocity.Length() * 1000;
 
-	if (adm_cam_sway)
+	if (camSway)
 	{
 		vecOrgDelta[0] = v_origin[0] - pparams->vieworg[0];
 		vecOrgDelta[1] = v_origin[1] - pparams->vieworg[1];
@@ -968,7 +893,7 @@ void V_CalcNormalRefdef(struct ref_params_s *pparams)
 
 			vecClientPunch = vecClientPunch / 50;
 			vecClientPunch = vecClientPunch * movingSpeedXY;
-			vecClientPunch = vecClientPunch * adm_cam_sway;
+			vecClientPunch = vecClientPunch * camSway;
 		}
 
 		else
@@ -977,12 +902,12 @@ void V_CalcNormalRefdef(struct ref_params_s *pparams)
 			vecClientPunch[YAW]	  += sin(flAngSway) + (1 * sin(4 * flAngSway));
 
 			vecClientPunch = vecClientPunch / 100;
-			vecClientPunch = vecClientPunch * adm_cam_sway;
+			vecClientPunch = vecClientPunch * camSway;
 
 			flAngSway += pparams->frametime * 60.0 * M_PI / 3600;
 		}
 
-		if (adm_cam_falleffect && !pparams->waterlevel)
+		if (camFallEffect && !pparams->waterlevel)
 		{
 
 			if (!pparams->onground)
@@ -1008,10 +933,10 @@ void V_CalcNormalRefdef(struct ref_params_s *pparams)
 				flAngJump	  /= 1.02f;
 			}
 
-			if (adm_cam_turnback)
+			if (camTurnBack)
 			{
-				vecClientPunch[ROLL] += (adm_cam_turnback * vecDelta.z) / 10;
-				vecClientPunch[ROLL] *= adm_cam_falleffect * (((flAngFallSway + 1) / 12) + vecOrgDelta.Length() * 0.125);
+				vecClientPunch[ROLL] += (camTurnBack * vecDelta.z) / 10;
+				vecClientPunch[ROLL] *= camFallEffect * (((flAngFallSway + 1) / 12) + vecOrgDelta.Length() * 0.125);
 			}
 
 			vecClientPunch[ROLL] /= 1.19;
@@ -1046,8 +971,8 @@ void V_CalcNormalRefdef(struct ref_params_s *pparams)
 
 		if (flAngFallSway)
 		{
-			vecClientPunch[PITCH] += pparams->frametime * 30.0 * adm_cam_falleffect * min(3.0, movingSpeed*0.05) * ((flAngFallSway * sin(flAngSway*2.0) / 2.0) + 1.0);
-			vecClientPunch[ROLL]  += pparams->frametime * 30.0 * adm_cam_falleffect * min(3.0, movingSpeed*0.05) *  (flAngFallSway * pow(sin(flAngSway*2.0),3) / 1.5);
+			vecClientPunch[PITCH] += pparams->frametime * 30.0 * camFallEffect * min(3.0, movingSpeed*0.05) * ((flAngFallSway * sin(flAngSway*2.0) / 2.0) + 1.0);
+			vecClientPunch[ROLL]  += pparams->frametime * 30.0 * camFallEffect * min(3.0, movingSpeed*0.05) *  (flAngFallSway * pow(sin(flAngSway*2.0),3) / 1.5);
 		}
 
 		if (flAngSwim)
@@ -1151,18 +1076,18 @@ void V_CalcNormalRefdef(struct ref_params_s *pparams)
 
 	//gEngfuncs.Con_Printf( "delta vecDelta.z %f\n", oldZDelta - vecDelta.z );
 
-	if (adm_cam_roll)
+	if (camRoll)
 	{
 		if (CL_IsThirdPerson())
-			vecFinalAngles[ROLL] += (vecDelta.z * adm_cam_roll) / 3.5f;
+			vecFinalAngles[ROLL] += (vecDelta.z * camRoll) / 3.5f;
 		else
-			vecFinalAngles[ROLL] -= (vecDelta.z * adm_cam_roll) / 3.5f;
+			vecFinalAngles[ROLL] -= (vecDelta.z * camRoll) / 3.5f;
 		
-		vecFinalAngles[ROLL]	+= pparams->frametime * 60.0 * (flSideMove * adm_cam_roll) * 2;
-		vecFinalAngles[ PITCH ] -= pparams->frametime * 60.0 * (flForwardMove * adm_cam_roll) * 0.5;
+		vecFinalAngles[ROLL]	+= pparams->frametime * 60.0 * (flSideMove * camRoll) * 2;
+		vecFinalAngles[ PITCH ] -= pparams->frametime * 60.0 * (flForwardMove * camRoll) * 0.5;
 	}
 
-	if (adm_cam_sway)
+	if (camSway)
 	{
 		vecFinalAngles[PITCH] += vecClientPunch[PITCH];
 		vecFinalAngles[YAW]	  += vecClientPunch[YAW];
@@ -1180,10 +1105,10 @@ void V_CalcNormalRefdef(struct ref_params_s *pparams)
 	}
 
 	vecBlendAngles = ViewModel->angles + vecDelta;
-	InterpolateAngles(vecBlendAngles, ViewModel->angles, vecResultAngles, adm_view_lerp1); // adm_view_lerp1
+	InterpolateAngles(vecBlendAngles, ViewModel->angles, vecResultAngles, viewLerp); // adm_view_lerp1
 
 	vecOld = vecOld + vecDelta;
-	InterpolateAngles(vecOld, vecBlendAngles, vecOld, adm_view_lerp2); // adm_view_lerp2
+	InterpolateAngles(vecOld, vecBlendAngles, vecOld, viewWeaponLerp); // adm_view_lerp2
 
 	for (int i = 0; i < 3; i++)
 	{
@@ -1208,8 +1133,15 @@ void V_CalcNormalRefdef(struct ref_params_s *pparams)
 
 	vecResultAngles = vecResultAngles + vecAdditive;
 
+	if ( rollBobFrequency > 0.0 )
+	{
+		vecResultAngles[ PITCH ] += v_rollbob_p;
+		vecResultAngles[ ROLL ] += v_rollbob_r;
+		vecResultAngles[ YAW ] += v_rollbob_y;
+	}
+
 	// Thank you Shepard for telling me about that one line <3
-	if (adm_classicbob_enable && !gEngfuncs.IsNoClipping())
+	if (classicBobEnable && !gEngfuncs.IsNoClipping())
 	{
 		VectorCopy( vecResultAngles, ViewModel->curstate.angles );
 		VectorCopy( vecFinalAngles, pparams->viewangles );
@@ -1221,7 +1153,7 @@ void V_CalcNormalRefdef(struct ref_params_s *pparams)
 		VectorCopy(ViewModel->angles, ViewModel->curstate.angles);
 	}
 
-	if (developer == 4)
+	if (developer->value == 4)
 	{
 		// Debugging, gotta display all the angles here...
 		gEngfuncs.Con_Printf("View\nAngles: old %d delta %d blend %d vm %d result %d final %d\nposbob %d posbobsw %d rbobp %d rboby %d last %f \n",

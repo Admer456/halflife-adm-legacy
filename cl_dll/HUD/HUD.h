@@ -734,3 +734,27 @@ extern int g_iUser1;
 extern int g_iUser2;
 extern int g_iUser3;
 
+extern cvar_t* adm_bob_roll_timediv;
+extern cvar_t* adm_bob_roll_freq;
+extern cvar_t* adm_bob_roll_p;
+extern cvar_t* adm_bob_roll_y;
+extern cvar_t* adm_bob_roll_r;
+extern cvar_t* adm_bob_pos;
+extern cvar_t* adm_bob_pos2;
+extern cvar_t* adm_bob_height;
+
+extern cvar_t* adm_classicbob_enable;
+
+extern cvar_t* adm_cam_sway;
+extern cvar_t* adm_cam_roll;
+extern cvar_t* adm_cam_falleffect;
+extern cvar_t* adm_cam_turnback;
+extern cvar_t* adm_cam_ofs_side;
+
+extern cvar_t* adm_dbg_yawlow;
+extern cvar_t* adm_dbg_yawhi;
+
+extern cvar_t* adm_view_lerp1;
+extern cvar_t* adm_view_lerp2;
+
+extern cvar_t* developer;

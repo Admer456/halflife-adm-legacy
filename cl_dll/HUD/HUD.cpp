@@ -296,6 +296,48 @@ int __MsgFunc_AllowSpec(const char *pszName, int iSize, void *pbuf)
 //	return gHUD.MsgFunc_ADMSIPlay(pszName, iSize, pbuf);
 //}
 
+// CVars
+
+cvar_t* adm_hud_r;
+cvar_t* adm_hud_g;
+cvar_t* adm_hud_b;
+cvar_t* adm_hud_a;
+
+cvar_t* adm_hud_frequency;
+cvar_t* adm_hud_hp_ratio;
+cvar_t* adm_hud_elev;
+cvar_t* adm_hud_shift;
+cvar_t* adm_hud_flash;
+cvar_t* adm_hud_flashwave;
+cvar_t* adm_hud_hp;
+cvar_t* adm_hud_coef;
+cvar_t* adm_hud_coefshift;
+
+cvar_t* adm_bob_roll_timediv;
+cvar_t* adm_bob_roll_freq;
+cvar_t* adm_bob_roll_p;
+cvar_t* adm_bob_roll_y;
+cvar_t* adm_bob_roll_r;
+cvar_t* adm_bob_pos;
+cvar_t* adm_bob_pos2;
+cvar_t* adm_bob_height;
+
+cvar_t* adm_classicbob_enable;
+
+cvar_t* adm_cam_sway;
+cvar_t* adm_cam_roll;
+cvar_t* adm_cam_falleffect;
+cvar_t* adm_cam_turnback;
+cvar_t* adm_cam_ofs_side;
+
+cvar_t* adm_dbg_yawlow;
+cvar_t* adm_dbg_yawhi;
+
+cvar_t* adm_view_lerp1;
+cvar_t* adm_view_lerp2;
+
+cvar_t* developer;
+
 // This is called every time the DLL is loaded
 void CHud :: Init( void )
 {
@@ -346,44 +388,46 @@ void CHud :: Init( void )
 	CVAR_CREATE( "hud_takesshots", "0", FCVAR_ARCHIVE );		// controls whether or not to automatically take screenshots at the end of a round
 
 	// AdmSrc - customisable HUD colours
-	CVAR_CREATE("adm_hud_r", "255", FCVAR_ARCHIVE);
-	CVAR_CREATE("adm_hud_g", "255", FCVAR_ARCHIVE);
-	CVAR_CREATE("adm_hud_b", "255", FCVAR_ARCHIVE);
-	CVAR_CREATE("adm_hud_a", "1",   FCVAR_ARCHIVE);
+	adm_hud_r = CVAR_CREATE("adm_hud_r", "255", FCVAR_ARCHIVE);
+	adm_hud_g = CVAR_CREATE("adm_hud_g", "255", FCVAR_ARCHIVE);
+	adm_hud_b = CVAR_CREATE("adm_hud_b", "255", FCVAR_ARCHIVE);
+	adm_hud_a = CVAR_CREATE("adm_hud_a", "1",   FCVAR_ARCHIVE);
 
-	CVAR_CREATE("adm_hud_frequency",	"60" , FCVAR_ARCHIVE);
-	CVAR_CREATE("adm_hud_hp_ratio",		"0.5", FCVAR_ARCHIVE);
-	CVAR_CREATE("adm_hud_elev",			"0.2", FCVAR_ARCHIVE);
-	CVAR_CREATE("adm_hud_shift",		"0",   FCVAR_ARCHIVE);
-	CVAR_CREATE("adm_hud_flash",		"0",   FCVAR_ARCHIVE);
-	CVAR_CREATE("adm_hud_flashwave",	"0",   FCVAR_ARCHIVE);
-	CVAR_CREATE("adm_hud_hp",			"50",  FCVAR_ARCHIVE);
-	CVAR_CREATE("adm_hud_coef",			"1",   FCVAR_ARCHIVE);
-	CVAR_CREATE("adm_hud_coefshift",	"0",   FCVAR_ARCHIVE);
+	adm_hud_frequency		= CVAR_CREATE("adm_hud_frequency",		"60" , FCVAR_ARCHIVE);
+	adm_hud_hp_ratio		= CVAR_CREATE("adm_hud_hp_ratio",		"0.5", FCVAR_ARCHIVE);
+	adm_hud_elev			= CVAR_CREATE("adm_hud_elev",			"0.2", FCVAR_ARCHIVE);
+	adm_hud_shift			= CVAR_CREATE("adm_hud_shift",			"0",   FCVAR_ARCHIVE);
+	adm_hud_flash			= CVAR_CREATE("adm_hud_flash",			"0",   FCVAR_ARCHIVE);
+	adm_hud_flashwave		= CVAR_CREATE("adm_hud_flashwave",		"0",   FCVAR_ARCHIVE);
+	adm_hud_hp				= CVAR_CREATE("adm_hud_hp",				"50",  FCVAR_ARCHIVE);
+	adm_hud_coef			= CVAR_CREATE("adm_hud_coef",			"1",   FCVAR_ARCHIVE);
+	adm_hud_coefshift		= CVAR_CREATE("adm_hud_coefshift",		"0",   FCVAR_ARCHIVE);
 
 	// AdmSrc - view bobbing stuffs :3
-	CVAR_CREATE("adm_bob_roll_timediv",	"3.14159", FCVAR_ARCHIVE);
-	CVAR_CREATE("adm_bob_roll_freq",	"1", FCVAR_ARCHIVE);
-	CVAR_CREATE("adm_bob_roll_p",		"1", FCVAR_ARCHIVE);
-	CVAR_CREATE("adm_bob_roll_y",		"0.5", FCVAR_ARCHIVE);
-	CVAR_CREATE("adm_bob_roll_r",		"2.4", FCVAR_ARCHIVE);
-	CVAR_CREATE("adm_bob_pos",			"0.08", FCVAR_ARCHIVE);
-	CVAR_CREATE("adm_bob_pos2",			"0.3", FCVAR_ARCHIVE);
-	CVAR_CREATE("adm_bob_height",		"2", FCVAR_ARCHIVE);
+	adm_bob_roll_timediv	= CVAR_CREATE("adm_bob_roll_timediv",	"3.14159", FCVAR_ARCHIVE);
+	adm_bob_roll_freq		= CVAR_CREATE("adm_bob_roll_freq",		"1", FCVAR_ARCHIVE);
+	adm_bob_roll_p			= CVAR_CREATE("adm_bob_roll_p",			"1", FCVAR_ARCHIVE);
+	adm_bob_roll_y			= CVAR_CREATE("adm_bob_roll_y",			"0.5", FCVAR_ARCHIVE);
+	adm_bob_roll_r			= CVAR_CREATE("adm_bob_roll_r",			"2.4", FCVAR_ARCHIVE);
+	adm_bob_pos				= CVAR_CREATE("adm_bob_pos",			"0.08", FCVAR_ARCHIVE);
+	adm_bob_pos2			= CVAR_CREATE("adm_bob_pos2",			"0.3", FCVAR_ARCHIVE);
+	adm_bob_height			= CVAR_CREATE("adm_bob_height",			"2", FCVAR_ARCHIVE);
 
-	CVAR_CREATE("adm_classicbob_enable","1", FCVAR_ARCHIVE);
+	adm_classicbob_enable	= CVAR_CREATE("adm_classicbob_enable",	"1", FCVAR_ARCHIVE);
 
-	CVAR_CREATE("adm_cam_sway",			"1", FCVAR_ARCHIVE);
-	CVAR_CREATE("adm_cam_roll",			"0.5", FCVAR_ARCHIVE);
-	CVAR_CREATE("adm_cam_falleffect",	"0.05", FCVAR_ARCHIVE);
-	CVAR_CREATE("adm_cam_turnback",		"20", FCVAR_ARCHIVE);
-	CVAR_CREATE("adm_cam_ofs_side",		"16", FCVAR_ARCHIVE);
+	adm_cam_sway			= CVAR_CREATE("adm_cam_sway",			"1", FCVAR_ARCHIVE);
+	adm_cam_roll			= CVAR_CREATE("adm_cam_roll",			"0.5", FCVAR_ARCHIVE);
+	adm_cam_falleffect		= CVAR_CREATE("adm_cam_falleffect",		"0.05", FCVAR_ARCHIVE);
+	adm_cam_turnback		= CVAR_CREATE("adm_cam_turnback",		"20", FCVAR_ARCHIVE);
+	adm_cam_ofs_side		= CVAR_CREATE("adm_cam_ofs_side",		"16", FCVAR_ARCHIVE);
 
-	CVAR_CREATE("adm_dbg_yawlow",		"90", FCVAR_ARCHIVE);
-	CVAR_CREATE("adm_dbg_yawhi",		"180", FCVAR_ARCHIVE);
+	adm_dbg_yawlow			= CVAR_CREATE("adm_dbg_yawlow",			"90", FCVAR_ARCHIVE);
+	adm_dbg_yawhi			= CVAR_CREATE("adm_dbg_yawhi",			"180", FCVAR_ARCHIVE);
 
-	CVAR_CREATE("adm_view_lerp1",		"0.8", FCVAR_ARCHIVE);
-	CVAR_CREATE("adm_view_lerp2",		"0.4", FCVAR_ARCHIVE);
+	adm_view_lerp1			= CVAR_CREATE("adm_view_lerp1",			"0.8", FCVAR_ARCHIVE);
+	adm_view_lerp2			= CVAR_CREATE("adm_view_lerp2",			"0.4", FCVAR_ARCHIVE);
+
+	developer				= gEngfuncs.pfnGetCvarPointer( "developer" );
 
 	m_iLogo = 0;
 	m_iFOV = 0;
