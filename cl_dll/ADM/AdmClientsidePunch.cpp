@@ -70,11 +70,5 @@ Vector CClientPunch::GetTotalPunch()
 			result = result + p.punch;
 	}
 
-	gEngfuncs.Con_Printf( "\n%i %i %i",
-						  (int)(result.x*100),
-						  (int)(result.y*100),
-						  (int)(result.z*100)
-	);
-
 	return result;
 }
