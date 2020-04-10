@@ -336,6 +336,11 @@ cvar_t* adm_dbg_yawhi;
 cvar_t* adm_view_lerp1;
 cvar_t* adm_view_lerp2;
 
+cvar_t* v_wonbob;
+cvar_t* v_wontilt;
+cvar_t* v_rollspeed;
+cvar_t* v_rollangle;
+
 cvar_t* developer;
 
 // This is called every time the DLL is loaded
@@ -426,6 +431,12 @@ void CHud :: Init( void )
 
 	adm_view_lerp1			= CVAR_CREATE("adm_view_lerp1",			"0.8", FCVAR_ARCHIVE);
 	adm_view_lerp2			= CVAR_CREATE("adm_view_lerp2",			"0.4", FCVAR_ARCHIVE);
+
+	v_wonbob				= CVAR_CREATE("v_wonbob",				"1", FCVAR_ARCHIVE);
+	v_wontilt				= CVAR_CREATE("v_wontilt",				"1", FCVAR_ARCHIVE);
+
+	v_rollspeed				= CVAR_CREATE( "v_rollspeed",			"600", FCVAR_ARCHIVE );
+	v_rollangle				= CVAR_CREATE( "v_rollangle",			"5", FCVAR_ARCHIVE );
 
 	developer				= gEngfuncs.pfnGetCvarPointer( "developer" );
 

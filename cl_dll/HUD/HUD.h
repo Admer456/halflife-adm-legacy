@@ -757,4 +757,10 @@ extern cvar_t* adm_dbg_yawhi;
 extern cvar_t* adm_view_lerp1;
 extern cvar_t* adm_view_lerp2;
 
+// HL WON view bobbin'
+extern cvar_t* v_wonbob;
+extern cvar_t* v_wontilt;
+extern cvar_t* v_rollspeed;
+extern cvar_t* v_rollangle;
+
 extern cvar_t* developer;

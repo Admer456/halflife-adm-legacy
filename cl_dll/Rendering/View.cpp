@@ -584,13 +584,391 @@ void V_SmoothInterpolateAngles(float * startAngle, float * endAngle, float * fin
 	NormalizeAngles(finalAngle);
 }
 
+void V_CalcViewSmoothing( struct ref_params_s* pparams, float &oldz, float &lasttime, cl_entity_t* ViewModel, viewinterp_t &ViewInterp )
+{
+	// smooth out stair step ups
+#if 1
+	if ( !pparams->smoothing && pparams->onground && pparams->simorg[ 2 ] - oldz > 0 )
+	{
+		float steptime;
+
+		steptime = pparams->time - lasttime;
+		if ( steptime < 0 )
+	//FIXME		I_Error ("steptime < 0");
+			steptime = 0;
+
+		oldz += steptime * 150;
+		if ( oldz > pparams->simorg[ 2 ] )
+			oldz = pparams->simorg[ 2 ];
+		if ( pparams->simorg[ 2 ] - oldz > 18 )
+			oldz = pparams->simorg[ 2 ] - 18;
+		pparams->vieworg[ 2 ] += oldz - pparams->simorg[ 2 ];
+		ViewModel->origin[ 2 ] += oldz - pparams->simorg[ 2 ];
+	}
+	else
+	{
+		oldz = pparams->simorg[ 2 ];
+	}
+#endif
+
+	{
+		static float lastorg[ 3 ];
+		vec3_t delta;
+
+		VectorSubtract( pparams->simorg, lastorg, delta );
+
+		if ( Length( delta ) != 0.0 )
+		{
+			VectorCopy( pparams->simorg, ViewInterp.Origins[ ViewInterp.CurrentOrigin & ORIGIN_MASK ] );
+			ViewInterp.OriginTime[ ViewInterp.CurrentOrigin & ORIGIN_MASK ] = pparams->time;
+			ViewInterp.CurrentOrigin++;
+
+			VectorCopy( pparams->simorg, lastorg );
+		}
+	}
+
+	// Smooth out whole view in multiplayer when on trains, lifts
+	if ( cl_vsmoothing && cl_vsmoothing->value &&
+		(pparams->smoothing && (pparams->maxclients > 1)) )
+	{
+		int foundidx;
+		int i;
+		float t;
+
+		if ( cl_vsmoothing->value < 0.0 )
+		{
+			gEngfuncs.Cvar_SetValue( "cl_vsmoothing", 0.0 );
+		}
+
+		t = pparams->time - cl_vsmoothing->value;
+
+		for ( i = 1; i < ORIGIN_MASK; i++ )
+		{
+			foundidx = ViewInterp.CurrentOrigin - 1 - i;
+			if ( ViewInterp.OriginTime[ foundidx & ORIGIN_MASK ] <= t )
+				break;
+		}
+
+		if ( i < ORIGIN_MASK &&  ViewInterp.OriginTime[ foundidx & ORIGIN_MASK ] != 0.0 )
+		{
+			// Interpolate
+			vec3_t delta;
+			double frac;
+			double dt;
+			vec3_t neworg;
+
+			dt = ViewInterp.OriginTime[ (foundidx + 1) & ORIGIN_MASK ] - ViewInterp.OriginTime[ foundidx & ORIGIN_MASK ];
+			if ( dt > 0.0 )
+			{
+				frac = (t - ViewInterp.OriginTime[ foundidx & ORIGIN_MASK ]) / dt;
+				frac = V_min( 1.0, frac );
+				VectorSubtract( ViewInterp.Origins[ (foundidx + 1) & ORIGIN_MASK ], ViewInterp.Origins[ foundidx & ORIGIN_MASK ], delta );
+				VectorMA( ViewInterp.Origins[ foundidx & ORIGIN_MASK ], frac, delta, neworg );
+
+				// Dont interpolate large changes
+				if ( Length( delta ) < 64 )
+				{
+					VectorSubtract( neworg, pparams->simorg, delta );
+
+					VectorAdd( pparams->simorg, delta, pparams->simorg );
+					VectorAdd( pparams->vieworg, delta, pparams->vieworg );
+					VectorAdd( ViewModel->origin, delta, ViewModel->origin );
+
+				}
+			}
+		}
+	}
+}
+
+void V_ViewNonClient( struct ref_params_s* pparams )
+{
+	// override all previous settings if the viewent isn't the client
+	if ( pparams->viewentity > pparams->maxclients )
+	{
+		cl_entity_t *viewentity;
+		viewentity = gEngfuncs.GetEntityByIndex( pparams->viewentity );
+		if ( viewentity )
+		{
+			VectorCopy( viewentity->origin, pparams->vieworg );
+			VectorCopy( viewentity->angles, pparams->viewangles );
+
+			// Store off overridden viewangles
+			v_angles = pparams->viewangles;
+		}
+	}
+}
+
+void V_CalcWaterOffset( ref_params_t* pparams, float &waterOffset )
+{
+		// never let view origin sit exactly on a node line, because a water plane can
+	// dissapear when viewed with the eye exactly on it.
+	// FIXME, we send origin at 1/128 now, change this?
+	// the server protocol only specifies to 1/16 pixel, so add 1/32 in each axis
+
+	pparams->vieworg[ 0 ] += 1.0 / 32;
+	pparams->vieworg[ 1 ] += 1.0 / 32;
+	pparams->vieworg[ 2 ] += 1.0 / 32;
+
+	// Check for problems around water, move the viewer artificially if necessary 
+	// -- this prevents drawing errors in GL due to waves
+
+	cl_entity_t* pwater;
+	waterOffset = 0;
+	if ( pparams->waterlevel >= 2 )
+	{
+		int		i, contents, waterDist, waterEntity;
+		vec3_t	point;
+		waterDist = cl_waterdist->value;
+
+		if ( pparams->hardware )
+		{
+			waterEntity = gEngfuncs.PM_WaterEntity( pparams->simorg );
+			if ( waterEntity >= 0 && waterEntity < pparams->max_entities )
+			{
+				pwater = gEngfuncs.GetEntityByIndex( waterEntity );
+				if ( pwater && (pwater->model != NULL) )
+				{
+					waterDist += (pwater->curstate.scale * 16);	// Add in wave height
+				}
+			}
+		}
+		else
+		{
+			waterEntity = 0;	// Don't need this in software
+		}
+
+		VectorCopy( pparams->vieworg, point );
+
+		// Eyes are above water, make sure we're above the waves
+		if ( pparams->waterlevel == 2 )
+		{
+			point[ 2 ] -= waterDist / 3.0f;
+			for ( i = 0; i < waterDist; i++ )
+			{
+				contents = gEngfuncs.PM_PointContents( point, NULL );
+				if ( contents > CONTENTS_WATER )
+					break;
+				point[ 2 ] += 1 / 3.0f;
+			}
+			waterOffset = (point[ 2 ] + waterDist) - pparams->vieworg[ 2 ];
+			waterOffset /= 4.0f;
+		}
+		else
+		{
+			// eyes are under water.  Make sure we're far enough under
+			point[ 2 ] += waterDist / 3.0f;
+
+			for ( i = 0; i < waterDist; i++ )
+			{
+				contents = gEngfuncs.PM_PointContents( point, NULL );
+				if ( contents <= CONTENTS_WATER )
+					break;
+				point[ 2 ] -= 1 / 3.0f;
+			}
+			waterOffset = (point[ 2 ] - waterDist) - pparams->vieworg[ 2 ];
+			waterOffset /= 4.0f;
+		}
+	}
+
+	pparams->vieworg[ 2 ] += waterOffset;
+}
+
 /*
 ==================
 V_CalcRefdef
 
 ==================
 */
-void V_CalcNormalRefdef(struct ref_params_s *pparams)
+void V_CalcRefdef_HL( struct ref_params_s *pparams )
+{
+	cl_entity_t		*ent, *ViewModel;
+	int				i;
+	vec3_t			angles;
+	float			bob, waterOffset;
+	static viewinterp_t		ViewInterp;
+
+	static float oldz = 0;
+	static float lasttime;
+	static float bobLastTime = 0;
+	static double bobTime = 0;
+
+	vec3_t camAngles, camForward, camRight, camUp;
+
+	V_DriftPitch( pparams );
+
+	if ( gEngfuncs.IsSpectateOnly() )
+	{
+		ent = gEngfuncs.GetEntityByIndex( g_iUser2 );
+	}
+	else
+	{
+		// ent is the player model ( visible when out of body )
+		ent = gEngfuncs.GetLocalPlayer();
+	}
+
+	// ViewModel is the weapon model (only visible from inside body )
+	ViewModel = gEngfuncs.GetViewModel();
+
+	// transform the ViewModel offset by the model's matrix to get the offset from
+	// model origin for the ViewModel
+	V_CalcBob( pparams, 1.0, VB_SIN, bobTime, bob, bobLastTime );
+
+	// refresh position
+	VectorCopy( pparams->simorg, pparams->vieworg );
+	pparams->vieworg[ 2 ] += (bob);
+	VectorAdd( pparams->vieworg, pparams->viewheight, pparams->vieworg );
+
+	VectorCopy( pparams->cl_viewangles, pparams->viewangles );
+
+	gEngfuncs.V_CalcShake();
+	gEngfuncs.V_ApplyShake( pparams->vieworg, pparams->viewangles, 1.0 );
+
+	V_CalcWaterOffset( pparams, waterOffset );
+	V_CalcViewRoll( pparams );
+
+	V_AddIdle( pparams );
+
+	// offsets
+	VectorCopy( pparams->cl_viewangles, angles );
+
+	AngleVectors( angles, pparams->forward, pparams->right, pparams->up );
+
+	// don't allow cheats in multiplayer
+	if ( pparams->maxclients <= 1 )
+	{
+		for ( i = 0; i < 3; i++ )
+		{
+			pparams->vieworg[ i ] += scr_ofsx->value*pparams->forward[ i ] + scr_ofsy->value*pparams->right[ i ] + scr_ofsz->value*pparams->up[ i ];
+		}
+	}
+
+	// Treating cam_ofs[2] as the distance
+	if ( CL_IsThirdPerson() )
+	{
+		vec3_t ofs;
+
+		ofs[ 0 ] = ofs[ 1 ] = ofs[ 2 ] = 0.0;
+
+		CL_CameraOffset( (float *)&ofs );
+
+		VectorCopy( ofs, camAngles );
+		camAngles[ ROLL ] = 0;
+
+		AngleVectors( camAngles, camForward, camRight, camUp );
+
+		for ( i = 0; i < 3; i++ )
+		{
+			pparams->vieworg[ i ] += -ofs[ 2 ] * camForward[ i ];
+		}
+	}
+
+	// Give gun our viewangles
+	VectorCopy( pparams->cl_viewangles, ViewModel->angles );
+
+	// set up gun position
+	V_CalcGunAngle( pparams );
+
+	// Use predicted origin as ViewModel origin.
+	VectorCopy( pparams->simorg, ViewModel->origin );
+	ViewModel->origin[ 2 ] += (waterOffset);
+	VectorAdd( ViewModel->origin, pparams->viewheight, ViewModel->origin );
+
+	// Let the viewmodel shake at about 10% of the amplitude
+	gEngfuncs.V_ApplyShake( ViewModel->origin, ViewModel->angles, 0.9 );
+
+	for ( i = 0; i < 3; i++ )
+	{
+		ViewModel->origin[ i ] += bob * 0.4 * pparams->forward[ i ];
+	}
+
+	ViewModel->origin[ 2 ] += bob;
+
+	if ( v_wonbob->value )
+	{
+		// throw in a little tilt.
+		ViewModel->angles[ YAW ] -= bob * 0.5;
+		ViewModel->angles[ ROLL ] -= bob * 1;
+		ViewModel->angles[ PITCH ] -= bob * 0.3;
+	}
+
+	if ( v_wontilt->value )
+	{
+		float side = V_CalcRoll( ViewModel->angles, pparams->simvel, v_rollangle->value, v_rollspeed->value );
+		pparams->viewangles[ ROLL ] += side;
+	}
+
+	// pushing the ViewModel origin down off of the same X/Z plane as the ent's origin will give the
+	// gun a very nice 'shifting' effect when the player looks up/down. If there is a problem
+	// with ViewModel model distortion, this may be a cause. (SJB). 
+	ViewModel->origin[ 2 ] -= 1;
+
+	VectorCopy( ViewModel->angles, ViewModel->curstate.angles );
+
+	// fudge position around to keep amount of weapon visible
+	// roughly equal with different FOV
+	if ( pparams->viewsize == 110 )
+	{
+		ViewModel->origin[ 2 ] += 1;
+	}
+	else if ( pparams->viewsize == 100 )
+	{
+		ViewModel->origin[ 2 ] += 2;
+	}
+	else if ( pparams->viewsize == 90 )
+	{
+		ViewModel->origin[ 2 ] += 1;
+	}
+	else if ( pparams->viewsize == 80 )
+	{
+		ViewModel->origin[ 2 ] += 0.5;
+	}
+
+	// Add in the punchangle, if any
+	VectorAdd( pparams->viewangles, pparams->punchangle, pparams->viewangles );
+
+	// Include client side punch, too
+	VectorAdd( pparams->viewangles, (float *)&ev_punchangle, pparams->viewangles );
+
+	V_DropPunchAngle( pparams->frametime, (float *)&ev_punchangle );
+
+	V_CalcViewSmoothing( pparams, oldz, lasttime, ViewModel, ViewInterp );
+
+	// Store off v_angles before munging for third person
+	v_angles = pparams->viewangles;
+	v_lastAngles = pparams->viewangles;
+//	v_cl_angles = pparams->cl_viewangles;	// keep old user mouse angles !
+	if ( CL_IsThirdPerson() )
+	{
+		VectorCopy( camAngles, pparams->viewangles );
+		float pitch = camAngles[ 0 ];
+
+		// Normalize angles
+		if ( pitch > 180 )
+			pitch -= 360.0;
+		else if ( pitch < -180 )
+			pitch += 360;
+
+		// Player pitch is inverted
+		pitch /= -3.0;
+
+		// Slam local player's pitch value
+		ent->angles[ 0 ] = pitch;
+		ent->curstate.angles[ 0 ] = pitch;
+		ent->prevstate.angles[ 0 ] = pitch;
+		ent->latched.prevangles[ 0 ] = pitch;
+	}
+
+	V_ViewNonClient( pparams );
+
+	gEngfuncs.Con_Printf( "%i %i",
+						(int)ViewModel->angles.y,
+						(int)ViewModel->curstate.angles.y );
+
+	lasttime = pparams->time;
+	v_origin = pparams->vieworg;
+}
+
+void V_CalcRefdef_ADM( struct ref_params_s* pparams )
 {
 	cl_entity_t		*ent, *ViewModel;
 	int				i;
@@ -632,16 +1010,12 @@ void V_CalcNormalRefdef(struct ref_params_s *pparams)
 	static float flAngFallSway = 0;		// 0 to 60 angle, used to elevate the view a bit when falling
 	static float flAngSwim = 0;		// another 0 to 360 angle, used for separate sine waves when swimming
 	static float flAngJump = 1.57;	// this angle punches the view a bit, the moment you jump
-	static bool fDeltaReachedMax = false;
 	
 	static float flOldSideMove = 0;
 	static float flOldForwardMove = 0;
 	static float flOldUpMove = 0;
 
-	vecFinalAngles = { 0, 0, 0 };
-
 	vec3_t camAngles, camForward, camRight, camUp;
-	cl_entity_t *pwater;
 
 	V_DriftPitch(pparams);
 
@@ -659,7 +1033,6 @@ void V_CalcNormalRefdef(struct ref_params_s *pparams)
 	ViewModel = gEngfuncs.GetViewModel();
 	vecFinalAngles = { 0, 0, 0 };
 
-	// AdmSrc - yet again, customisation :3
 	rollBobTimeDiv			= adm_bob_roll_timediv->value;
 	rollBobFrequency		= adm_bob_roll_freq->value;
 	RBPitch					= adm_bob_roll_p->value;
@@ -700,14 +1073,6 @@ void V_CalcNormalRefdef(struct ref_params_s *pparams)
 	v_rollbob_p *= flForwardMove * RBPitch;
 	v_rollbob_r *= flForwardMove * RBRoll;
 
-	/*
-		v_positionbob -> this is supposed to be your head going up and down
-		v_positionbob_sway -> this is the viewmodel going back/forth, left/right, up/down
-		v_rollbob_x -> angles of rolling for the viewmodel
-
-		BobHeight -> let's find out
-	*/
-
 	// refresh position
 	VectorCopy(pparams->simorg, pparams->vieworg);
 	pparams->vieworg[2] += (v_positionbob / bobHeight);
@@ -720,77 +1085,7 @@ void V_CalcNormalRefdef(struct ref_params_s *pparams)
 	gEngfuncs.V_CalcShake();
 	gEngfuncs.V_ApplyShake(pparams->vieworg, pparams->viewangles, 1.0);
 
-	// never let view origin sit exactly on a node line, because a water plane can
-	// dissapear when viewed with the eye exactly on it.
-	// FIXME, we send origin at 1/128 now, change this?
-	// the server protocol only specifies to 1/16 pixel, so add 1/32 in each axis
-
-	pparams->vieworg[0] += 1.0 / 32;
-	pparams->vieworg[1] += 1.0 / 32;
-	pparams->vieworg[2] += 1.0 / 32;
-
-	// Check for problems around water, move the viewer artificially if necessary 
-	// -- this prevents drawing errors in GL due to waves
-
-	waterOffset = 0;
-	if (pparams->waterlevel >= 2)
-	{
-		int		i, contents, waterDist, waterEntity;
-		vec3_t	point;
-		waterDist = cl_waterdist->value;
-
-		if (pparams->hardware)
-		{
-			waterEntity = gEngfuncs.PM_WaterEntity(pparams->simorg);
-			if (waterEntity >= 0 && waterEntity < pparams->max_entities)
-			{
-				pwater = gEngfuncs.GetEntityByIndex(waterEntity);
-				if (pwater && (pwater->model != NULL))
-				{
-					waterDist += (pwater->curstate.scale * 16);	// Add in wave height
-				}
-			}
-		}
-		else
-		{
-			waterEntity = 0;	// Don't need this in software
-		}
-
-		VectorCopy(pparams->vieworg, point);
-
-		// Eyes are above water, make sure we're above the waves
-		if (pparams->waterlevel == 2)
-		{
-			point[2] -= waterDist / 3.0f;
-			for (i = 0; i < waterDist; i++)
-			{
-				contents = gEngfuncs.PM_PointContents(point, NULL);
-				if (contents > CONTENTS_WATER)
-					break;
-				point[2] += 1 / 3.0f;
-			}
-			waterOffset = (point[2] + waterDist) - pparams->vieworg[2];
-			waterOffset /= 4.0f;
-		}
-		else
-		{
-			// eyes are under water.  Make sure we're far enough under
-			point[2] += waterDist / 3.0f;
-
-			for (i = 0; i < waterDist; i++)
-			{
-				contents = gEngfuncs.PM_PointContents(point, NULL);
-				if (contents <= CONTENTS_WATER)
-					break;
-				point[2] -= 1 / 3.0f;
-			}
-			waterOffset = (point[2] - waterDist) - pparams->vieworg[2];
-			waterOffset /= 4.0f;
-		}
-	}
-
-	pparams->vieworg[2] += waterOffset;
-
+	V_CalcWaterOffset( pparams, waterOffset );
 	V_CalcViewRoll(pparams);
 	V_AddIdle(pparams);
 
@@ -861,21 +1156,9 @@ void V_CalcNormalRefdef(struct ref_params_s *pparams)
 
 	ViewModel->origin[ 2 ] -= 0.65 * flBlendUpMove;
 
-//	gEngfuncs.Con_Printf( "bs %f\tos %f\ts %f", flBlendUpMove, flOldUpMove, flUpMove );
-	
 	// NOTE TO NEW PROGRAMMERS
 	// BUGGY SHIT STARTS HERE
-	// WARNING: DO NOT TOUCH
-
-	// throw in a little tilt.
-//	ViewModel->angles[YAW] += v_rollbob_y * RBYaw;
-//	ViewModel->angles[ROLL] += v_rollbob_r * RBRoll;
-//	ViewModel->angles[PITCH] += v_rollbob_p * RBPitch;
-//	vecFinalAngles[YAW] += v_rollbob_y * RBYaw;
-//	vecFinalAngles[ROLL] += v_rollbob_r * RBRoll;
-//	vecFinalAngles[PITCH] += v_rollbob_p * RBPitch;
-
-//	ViewModel->angles[PITCH] += ViewModel->curstate.velocity.Length() * 1000;
+	// DO NOT TOUCH UNLESS YOU KNOW VECTOR MATHS
 
 	if (camSway)
 	{
@@ -1004,9 +1287,6 @@ void V_CalcNormalRefdef(struct ref_params_s *pparams)
 
 		if (flAngSwim >= M_PI)
 			flAngSwim *= -1;
-
-//		gEngfuncs.Con_Printf("\nflAlpha: %f \t \t flBeta: %f \t \tflGamma %f \t \nflDelta %f", flAngSway, flAngFallSway, flAngSwim, flAngJump);
-
 	}
 
 	if (lasttime < 0.017)
@@ -1024,9 +1304,6 @@ void V_CalcNormalRefdef(struct ref_params_s *pparams)
 		vecDelta = vecOld - ViewModel->angles;
 
 		ViewModel->angles.y -= 360;
-
-//		if (developer == 4)
-//			gEngfuncs.Con_Printf("\n1View angles: viewmodel %f vecold %f vecdelta %f", ViewModel->angles.y, vecOld.y, vecDelta.y);
 	}
 
 	else if (vecOld.y <= 90 && ViewModel->angles.y >= 180)
@@ -1039,9 +1316,6 @@ void V_CalcNormalRefdef(struct ref_params_s *pparams)
 		{
 			vecOld.y -= 360;
 		}
-
-//		if (developer == 4)
-//			gEngfuncs.Con_Printf("\n2View angles: viewmodel %f vecold %f vecdelta %f", ViewModel->angles.y, vecOld.y, vecDelta.y);
 	}
 
 	else
@@ -1052,9 +1326,6 @@ void V_CalcNormalRefdef(struct ref_params_s *pparams)
 		{
 			vecDelta.y += 360;
 		}
-
-//		if (developer == 4)
-//			gEngfuncs.Con_Printf("\n3View angles: viewmodel %f vecold %f vecdelta %f", ViewModel->angles.y, vecOld.y, vecDelta.y);
 	}
 
 	vecDelta = vecDelta / 4.5f;
@@ -1062,19 +1333,9 @@ void V_CalcNormalRefdef(struct ref_params_s *pparams)
 
 	float horizontalDelta = 0.5 + fabs(vecDelta.x / 0.25f);
 
-//	if (vecDelta.z > 0)
-//	{
-//		vecDelta.z = vecDelta.z*0.8 + (vecDelta.z + horizontalDelta)*0.2;
-//	}
-//	else if (vecDelta.z < 0)
-//	{
-//		vecDelta.z = vecDelta.z*0.8 + (vecDelta.z - horizontalDelta)*0.2;
-//	}
 	float oldZDelta = vecDelta.z;
 
 	vecDelta.z = vecDelta.z*0.95 + (vecDelta.z * (horizontalDelta))*0.05;
-
-	//gEngfuncs.Con_Printf( "delta vecDelta.z %f\n", oldZDelta - vecDelta.z );
 
 	if (camRoll)
 	{
@@ -1193,26 +1454,9 @@ void V_CalcNormalRefdef(struct ref_params_s *pparams)
 
 	ViewModel->origin.z -= pparams->frametime * 60.0 * 1.5 * sin( flAngJump * 1.75 );
 
-	// fudge position around to keep amount of weapon visible
-	// roughly equal with different FOV
-	/*if (pparams->viewsize == 110)
-	{
-		ViewModel->origin[2] += 1;
-	}
-	else if (pparams->viewsize == 100)
-	{
-		ViewModel->origin[2] += 2;
-	}
-	else if (pparams->viewsize == 90)
-	{
-		ViewModel->origin[2] += 1;
-	}
-	else if (pparams->viewsize == 80)
-	{
-		ViewModel->origin[2] += 0.5;
-	}*/
-
 	// Mathematically determine the position according to FOV
+	// to keep amount of weapon visible roughly equal with 
+	// different FOV
 	for ( int i = 0; i < 3; i++ )
 		ViewModel->origin[ i ] += (pparams->up[ i ] * (pparams->viewsize * pparams->viewsize) / 8000.0) -Vector( 0, 0, 2 )[ i ];
 
@@ -1224,98 +1468,7 @@ void V_CalcNormalRefdef(struct ref_params_s *pparams)
 
 	V_DropPunchAngle ( pparams->frametime, (float *)&ev_punchangle );
 
-	// smooth out stair step ups
-#if 1
-	if ( !pparams->smoothing && pparams->onground && pparams->simorg[2] - oldz > 0)
-	{
-		float steptime;
-		
-		steptime = pparams->time - lasttime;
-		if (steptime < 0)
-	//FIXME		I_Error ("steptime < 0");
-			steptime = 0;
-
-		oldz += steptime * 150;
-		if (oldz > pparams->simorg[2])
-			oldz = pparams->simorg[2];
-		if (pparams->simorg[2] - oldz > 18)
-			oldz = pparams->simorg[2]- 18;
-		pparams->vieworg[2] += oldz - pparams->simorg[2];
-		ViewModel->origin[2] += oldz - pparams->simorg[2];
-	}
-	else
-	{
-		oldz = pparams->simorg[2];
-	}
-#endif
-
-	{
-		static float lastorg[3];
-		vec3_t delta;
-
-		VectorSubtract( pparams->simorg, lastorg, delta );
-
-		if ( Length( delta ) != 0.0 )
-		{
-			VectorCopy( pparams->simorg, ViewInterp.Origins[ ViewInterp.CurrentOrigin & ORIGIN_MASK ] );
-			ViewInterp.OriginTime[ ViewInterp.CurrentOrigin & ORIGIN_MASK ] = pparams->time;
-			ViewInterp.CurrentOrigin++;
-
-			VectorCopy( pparams->simorg, lastorg );
-		}
-	}
-
-	// Smooth out whole view in multiplayer when on trains, lifts
-	if ( cl_vsmoothing && cl_vsmoothing->value &&
-		( pparams->smoothing && ( pparams->maxclients > 1 ) ) )
-	{
-		int foundidx;
-		int i;
-		float t;
-
-		if ( cl_vsmoothing->value < 0.0 )
-		{
-			gEngfuncs.Cvar_SetValue( "cl_vsmoothing", 0.0 );
-		}
-
-		t = pparams->time - cl_vsmoothing->value;
-
-		for ( i = 1; i < ORIGIN_MASK; i++ )
-		{
-			foundidx = ViewInterp.CurrentOrigin - 1 - i;
-			if ( ViewInterp.OriginTime[ foundidx & ORIGIN_MASK ] <= t )
-				break;
-		}
-
-		if ( i < ORIGIN_MASK &&  ViewInterp.OriginTime[ foundidx & ORIGIN_MASK ] != 0.0 )
-		{
-			// Interpolate
-			vec3_t delta;
-			double frac;
-			double dt;
-			vec3_t neworg;
-
-			dt = ViewInterp.OriginTime[ (foundidx + 1) & ORIGIN_MASK ] - ViewInterp.OriginTime[ foundidx & ORIGIN_MASK ];
-			if ( dt > 0.0 )
-			{
-				frac = ( t - ViewInterp.OriginTime[ foundidx & ORIGIN_MASK] ) / dt;
-				frac = V_min( 1.0, frac );
-				VectorSubtract( ViewInterp.Origins[ ( foundidx + 1 ) & ORIGIN_MASK ], ViewInterp.Origins[ foundidx & ORIGIN_MASK ], delta );
-				VectorMA( ViewInterp.Origins[ foundidx & ORIGIN_MASK ], frac, delta, neworg );
-
-				// Dont interpolate large changes
-				if ( Length( delta ) < 64 )
-				{
-					VectorSubtract( neworg, pparams->simorg, delta );
-
-					VectorAdd( pparams->simorg, delta, pparams->simorg );
-					VectorAdd( pparams->vieworg, delta, pparams->vieworg );
-					VectorAdd( ViewModel->origin, delta, ViewModel->origin );
-
-				}
-			}
-		}
-	}
+	V_CalcViewSmoothing( pparams, oldz, lasttime, ViewModel, ViewInterp );
 
 	// Store off v_angles before munging for third person
 	v_angles = pparams->viewangles;
@@ -1357,24 +1510,14 @@ void V_CalcNormalRefdef(struct ref_params_s *pparams)
 		ent->latched.prevangles[2] = roll;
 	}
 
-	// override all previous settings if the viewent isn't the client
-	if ( pparams->viewentity > pparams->maxclients )
-	{
-		cl_entity_t *viewentity;
-		viewentity = gEngfuncs.GetEntityByIndex( pparams->viewentity );
-		if ( viewentity )
-		{
-			VectorCopy( viewentity->origin, pparams->vieworg );
-			VectorCopy( viewentity->angles, pparams->viewangles );
-
-			// Store off overridden viewangles
-			v_angles = pparams->viewangles;
-		}
-	}
-
 	lasttime = pparams->time;
-
 	v_origin = pparams->vieworg;
+}
+
+void V_CalcNormalRefdef( struct ref_params_s* pparams )
+{
+	V_CalcRefdef_HL( pparams );
+	//V_CalcRefdef_ADM( pparams );
 }
 
 // Get the origin of the Observer based around the target's position and angles
@@ -1772,7 +1915,6 @@ void V_ResetChaseCam()
 	v_resetCamera = true;
 }
 
-
 void V_GetInEyePos(int target, float * origin, float * angles )
 {
 	if ( !target)
@@ -1935,7 +2077,6 @@ int V_FindViewModelByWeaponModel(int weaponindex)
 		return 0;
 
 }
-
 
 /*
 ==================
@@ -2114,8 +2255,6 @@ void V_CalcSpectatorRefdef ( struct ref_params_s * pparams )
 	VectorCopy ( v_origin, pparams->vieworg );
 
 }
-
-
 
 void DLLEXPORT V_CalcRefdef( struct ref_params_s *pparams )
 {
