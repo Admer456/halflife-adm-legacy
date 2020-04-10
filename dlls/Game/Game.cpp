@@ -84,9 +84,11 @@ cvar_t  allow_spectators = { "allow_spectators", "0.0", FCVAR_SERVER };		// 0 pr
 cvar_t  mp_chattime = {"mp_chattime","10", FCVAR_SERVER };
 
 // Engine Cvars
-cvar_t 	*g_psv_gravity = NULL;
-cvar_t	*g_psv_aim = NULL;
-cvar_t	*g_footsteps = NULL;
+cvar_t* g_psv_gravity = nullptr;
+cvar_t* g_psv_aim = nullptr;
+cvar_t* g_footsteps = nullptr;
+
+cvar_t* sv_maxspeed = nullptr;
 
 //CVARS FOR SKILL LEVEL SETTINGS
 // Agrunt
@@ -499,6 +501,8 @@ void GameDLLInit( void )
 	g_psv_gravity = CVAR_GET_POINTER( "sv_gravity" );
 	g_psv_aim = CVAR_GET_POINTER( "sv_aim" );
 	g_footsteps = CVAR_GET_POINTER( "mp_footsteps" );
+
+	sv_maxspeed = CVAR_GET_POINTER( "sv_maxspeed" );
 
 	CVAR_REGISTER (&displaysoundlist);
 	CVAR_REGISTER( &allow_spectators );

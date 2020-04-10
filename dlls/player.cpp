@@ -2751,41 +2751,13 @@ pt_end:
 	// Track button info so we can detect 'pressed' and 'released' buttons next frame
 	m_afButtonLast = pev->button;
 
-	// AdmSrc - ControlAPI piece
-
-	if (CVAR_GET_FLOAT("developer") >= 2)
-	{
-		if (m_KeyButton[0] == true)
-			ALERT(at_console, "\nA key is held");
-	}
-
-	if (m_KeyButton[1] == true)
-	{
-		if (!(pev->effects & EF_BRIGHTLIGHT))
-		{
-			pev->effects |= EF_BRIGHTLIGHT;
-		}
-	}
-
-	if (m_KeyButton[1] == false)
-	{
-		if (pev->effects & EF_BRIGHTLIGHT)
-		{
-			pev->effects ^= EF_BRIGHTLIGHT;
-		}
-	}
-
-	if (m_KeyButton[3] == true)
-	{
-		pev->maxspeed = CVAR_GET_FLOAT("cl_backspeed") + 300;
-	}
-	else
-	{
-		pev->maxspeed = CVAR_GET_FLOAT("cl_backspeed");
-	} 
-
 	// AdmSrc - View bobbing stuff
 //	pev->fixangle = 1;
+
+	//if ( m_KeyButton[ 3 ] )
+	//	pev->maxspeed = sv_maxspeed->value;
+	//else
+	//	pev->maxspeed = sv_maxspeed->value / 2.0;
 
 	if (m_iViewCamMode == 0)
 	{

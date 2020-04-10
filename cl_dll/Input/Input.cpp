@@ -48,24 +48,27 @@ extern cvar_t *in_joystick;
 int	in_impulse	= 0;
 int	in_cancel	= 0;
 
-cvar_t	*m_pitch;
-cvar_t	*m_yaw;
-cvar_t	*m_forward;
-cvar_t	*m_side;
+cvar_t* m_pitch;
+cvar_t* m_yaw;
+cvar_t* m_forward;
+cvar_t* m_side;
+	    
+cvar_t* lookstrafe;
+cvar_t* lookspring;
+cvar_t* cl_pitchup;
+cvar_t* cl_pitchdown;
+cvar_t* cl_upspeed;
+cvar_t* cl_forwardspeed;
+cvar_t* cl_backspeed;
+cvar_t* cl_sidespeed;
+cvar_t* cl_movespeedkey;
+cvar_t* cl_yawspeed;
+cvar_t* cl_pitchspeed;
+cvar_t* cl_anglespeedkey;
+cvar_t* cl_vsmoothing;
 
-cvar_t	*lookstrafe;
-cvar_t	*lookspring;
-cvar_t	*cl_pitchup;
-cvar_t	*cl_pitchdown;
-cvar_t	*cl_upspeed;
-cvar_t	*cl_forwardspeed;
-cvar_t	*cl_backspeed;
-cvar_t	*cl_sidespeed;
-cvar_t	*cl_movespeedkey;
-cvar_t	*cl_yawspeed;
-cvar_t	*cl_pitchspeed;
-cvar_t	*cl_anglespeedkey;
-cvar_t	*cl_vsmoothing;
+cvar_t* cl_sprintspeed;
+
 /*
 ===============================================================================
 
@@ -113,6 +116,8 @@ kbutton_t	in_alt1;
 kbutton_t	in_score;
 kbutton_t	in_break;
 kbutton_t	in_graph;  // Display the netgraph
+
+kbutton_t	in_sprint;
 
 typedef struct kblist_s
 {
@@ -669,6 +674,8 @@ void DLLEXPORT CL_CreateMove ( float frametime, struct usercmd_s *cmd, int activ
 
 	if ( active && !Bench_Active() )
 	{
+		float sprint = ((cl_sprintspeed->value-1.0)*CL_KeyState( &in_sprint )) + 1.0;
+
 		//memset( viewangles, 0, sizeof( vec3_t ) );
 		//viewangles[ 0 ] = viewangles[ 1 ] = viewangles[ 2 ] = 0.0;
 		gEngfuncs.GetViewAngles( (float *)viewangles );
@@ -693,7 +700,7 @@ void DLLEXPORT CL_CreateMove ( float frametime, struct usercmd_s *cmd, int activ
 
 		if ( !(in_klook.state & 1 ) )
 		{	
-			cmd->forwardmove += cl_forwardspeed->value * CL_KeyState (&in_forward);
+			cmd->forwardmove += cl_forwardspeed->value * CL_KeyState (&in_forward) * sprint;
 			cmd->forwardmove -= cl_backspeed->value * CL_KeyState (&in_back);
 		}	
 
@@ -706,7 +713,7 @@ void DLLEXPORT CL_CreateMove ( float frametime, struct usercmd_s *cmd, int activ
 		}
 
 		// clip to maxspeed
-		spd = gEngfuncs.GetClientMaxspeed();
+		spd = gEngfuncs.GetClientMaxspeed() * sprint;
 		if ( spd != 0.0 )
 		{
 			// scale the 3 speeds so that the total velocity is not > cl.maxspeed
@@ -934,9 +941,17 @@ void IN_Adm2Up()		{ EngineClientCmd("-key_adm_k2"); }
 
 void IN_Adm2Down()		{ EngineClientCmd("+key_adm_k2"); }
 
-void IN_SprintUp()		{ EngineClientCmd("-key_sprint"); }
+void IN_SprintUp()		
+{ 
+	KeyUp( &in_sprint );
+	EngineClientCmd("-key_sprint"); 
+}
 
-void IN_SprintDown()	{ EngineClientCmd("+key_sprint"); }
+void IN_SprintDown()	
+{ 
+	KeyDown( &in_sprint );
+	EngineClientCmd("+key_sprint"); 
+}
 
 // Car
 					  
@@ -1122,6 +1137,8 @@ void InitInput (void)
 	cl_pitchdown		= gEngfuncs.pfnRegisterVariable ( "cl_pitchdown", "89", 0 );
 
 	cl_vsmoothing		= gEngfuncs.pfnRegisterVariable ( "cl_vsmoothing", "0.05", FCVAR_ARCHIVE );
+
+	cl_sprintspeed		= gEngfuncs.pfnRegisterVariable ( "cl_sprintspeed", "1.5", FCVAR_ARCHIVE );
 
 	m_pitch			    = gEngfuncs.pfnRegisterVariable ( "m_pitch","0.022", FCVAR_ARCHIVE );
 	m_yaw				= gEngfuncs.pfnRegisterVariable ( "m_yaw","0.022", FCVAR_ARCHIVE );

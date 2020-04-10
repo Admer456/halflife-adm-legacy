@@ -38,8 +38,10 @@ extern cvar_t	defaultteam;
 extern cvar_t	allowmonsters;
 
 // Engine Cvars
-extern cvar_t	*g_psv_gravity;
-extern cvar_t	*g_psv_aim;
-extern cvar_t	*g_footsteps;
+extern cvar_t*	g_psv_gravity;
+extern cvar_t*	g_psv_aim;
+extern cvar_t*	g_footsteps;
+
+extern cvar_t*	sv_maxspeed;
 
 #endif		// GAME_H
