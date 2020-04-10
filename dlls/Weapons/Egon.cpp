@@ -49,7 +49,7 @@ enum egon_e {
 	EGON_HOLSTER
 };
 
-LINK_ENTITY_TO_CLASS( weapon_egon, CEgon );
+LINK_WEAPON_TO_CLASS( weapon_egon, CEgon );
 
 void CEgon::Spawn( )
 {

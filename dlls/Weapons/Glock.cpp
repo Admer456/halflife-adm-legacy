@@ -35,7 +35,7 @@ enum glock_e {
 };
 
 LINK_ENTITY_TO_CLASS( weapon_glock, CGlock );
-LINK_ENTITY_TO_CLASS( weapon_9mmhandgun, CGlock );
+LINK_WEAPON_TO_CLASS( weapon_9mmhandgun, CGlock );
 
 /*
 #define WPN_ISEMPTY		0x0001

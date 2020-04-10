@@ -236,7 +236,7 @@ enum crossbow_e {
 	CROSSBOW_IDLE3		// custom anim
 };
 
-LINK_ENTITY_TO_CLASS( weapon_crossbow, CCrossbow );
+LINK_WEAPON_TO_CLASS( weapon_crossbow, CCrossbow );
 
 void CCrossbow::Spawn( )
 {

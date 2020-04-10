@@ -190,6 +190,7 @@
     <ClCompile Include="..\..\dlls\Weapons\Shotgun.cpp" />
     <ClCompile Include="..\..\dlls\Weapons\SqueakGrenade.cpp" />
     <ClCompile Include="..\..\dlls\Weapons\TripmineGrenade.cpp" />
+    <ClCompile Include="..\..\dlls\Weapons\WeaponsShared.cpp" />
     <ClCompile Include="..\..\game_shared\adm\DelayLoad.cpp" />
     <ClCompile Include="..\..\game_shared\vgui_checkbutton2.cpp" />
     <ClCompile Include="..\..\game_shared\vgui_grid.cpp" />

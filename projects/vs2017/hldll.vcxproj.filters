@@ -392,6 +392,9 @@
     <ClCompile Include="..\..\dlls\AI\Monsters\Hornet.cpp">
       <Filter>Source Files\AI\Monsters</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\dlls\Weapons\WeaponsShared.cpp">
+      <Filter>Source Files\Weapons</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\engine\eiface.h">

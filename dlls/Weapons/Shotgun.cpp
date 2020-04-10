@@ -39,7 +39,7 @@ enum shotgun_e {
 	SHOTGUN_IDLE_DEEP
 };
 
-LINK_ENTITY_TO_CLASS( weapon_shotgun, CShotgun );
+LINK_WEAPON_TO_CLASS( weapon_shotgun, CShotgun );
 
 void CShotgun::Spawn( )
 {

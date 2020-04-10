@@ -217,6 +217,7 @@
     <ClCompile Include="..\..\dlls\Weapons\SqueakGrenade.cpp" />
     <ClCompile Include="..\..\dlls\Weapons\TripmineGrenade.cpp" />
     <ClCompile Include="..\..\dlls\Weapons\Weapons.cpp" />
+    <ClCompile Include="..\..\dlls\Weapons\WeaponsShared.cpp" />
     <ClCompile Include="..\..\dlls\World.cpp" />
     <ClCompile Include="..\..\dlls\XenPlants.cpp" />
     <ClCompile Include="..\..\game_shared\adm\DelayLoad.cpp" />
