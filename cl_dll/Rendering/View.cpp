@@ -712,7 +712,7 @@ void V_CalcNormalRefdef(struct ref_params_s *pparams)
 	static float flAngSway = 0;		// 0 to 360 angle, used for sine waves in view bobbin'
 	static float flAngFallSway = 0;		// 0 to 60 angle, used to elevate the view a bit when falling
 	static float flAngSwim = 0;		// another 0 to 360 angle, used for separate sine waves when swimming
-	static float flAngJump = 10.0;	// this angle punches the view a bit, the moment you jump
+	static float flAngJump = 1.57;	// this angle punches the view a bit, the moment you jump
 	static bool fDeltaReachedMax = false;
 	
 	static float flOldSideMove = 0;
@@ -789,6 +789,7 @@ void V_CalcNormalRefdef(struct ref_params_s *pparams)
 	VectorAdd(pparams->vieworg, pparams->viewheight, pparams->vieworg);
 	pparams->vieworg[2] += (v_positionbob * BobHeight);
 
+	pparams->cl_viewangles[ ROLL ] = 0;
 	VectorCopy(pparams->cl_viewangles, pparams->viewangles);
 
 	gEngfuncs.V_CalcShake();
@@ -962,8 +963,8 @@ void V_CalcNormalRefdef(struct ref_params_s *pparams)
 
 		if ( movingSpeedXY > 0.01)
 		{
-			vecClientPunch[PITCH] += sin(flAngSway) + 2 * sin(4 * flAngSway) * (movingSpeedXY * 0.125);
-			vecClientPunch[YAW]	  += sin(flAngSway) + 3 * sin(2 * flAngSway) * (movingSpeedXY * 0.125);
+			vecClientPunch[PITCH] += pparams->frametime * 30.0 * sin(flAngSway) + 2 * sin(4 * flAngSway) * (movingSpeedXY * 0.125);
+			vecClientPunch[YAW]	  += pparams->frametime * 30.0 * sin(flAngSway) + 3 * sin(2 * flAngSway) * (movingSpeedXY * 0.125);
 
 			vecClientPunch = vecClientPunch / 50;
 			vecClientPunch = vecClientPunch * movingSpeedXY;
@@ -978,7 +979,7 @@ void V_CalcNormalRefdef(struct ref_params_s *pparams)
 			vecClientPunch = vecClientPunch / 100;
 			vecClientPunch = vecClientPunch * adm_cam_sway;
 
-			flAngSway += M_PI / 3600;
+			flAngSway += pparams->frametime * 60.0 * M_PI / 3600;
 		}
 
 		if (adm_cam_falleffect && !pparams->waterlevel)
@@ -1018,7 +1019,7 @@ void V_CalcNormalRefdef(struct ref_params_s *pparams)
 		
 		if (pparams->waterlevel > 2) // If we're strictly under water!!!
 		{
-			flAngSwim += M_PI / 180;
+			flAngSwim += pparams->frametime * 60.0 * M_PI / 180;
 			flAngJump /= 1.015;
 		}
 
@@ -1045,33 +1046,33 @@ void V_CalcNormalRefdef(struct ref_params_s *pparams)
 
 		if (flAngFallSway)
 		{
-			vecClientPunch[PITCH] += adm_cam_falleffect * min(3.0, movingSpeed*0.05) * ((flAngFallSway * sin(flAngSway*2.0) / 2.0) + 1.0);
-			vecClientPunch[ROLL]  += adm_cam_falleffect * min(3.0, movingSpeed*0.05) *  (flAngFallSway * pow(sin(flAngSway*2.0),3) / 1.5);
+			vecClientPunch[PITCH] += pparams->frametime * 30.0 * adm_cam_falleffect * min(3.0, movingSpeed*0.05) * ((flAngFallSway * sin(flAngSway*2.0) / 2.0) + 1.0);
+			vecClientPunch[ROLL]  += pparams->frametime * 30.0 * adm_cam_falleffect * min(3.0, movingSpeed*0.05) *  (flAngFallSway * pow(sin(flAngSway*2.0),3) / 1.5);
 		}
 
 		if (flAngSwim)
 		{
-			vecClientPunch[PITCH] += 4   * sin(2 * flAngSwim);
-			vecClientPunch[YAW]   += 2   * sin(4 * flAngSwim);
-			vecClientPunch[ROLL]  += 3   * pow(sin(2 * flAngSwim), 3);
-			vecAdditive[YAW]	  -= 0.2 * sin(2 * flAngSwim);
-			vecAdditive[ROLL]	  -= 0.6 * sin(4 * flAngSwim);
+			vecClientPunch[PITCH] += pparams->frametime * 15.0 * 4   * sin(2 * flAngSwim);
+			vecClientPunch[YAW]   += pparams->frametime * 15.0 * 2   * sin(4 * flAngSwim);
+			vecClientPunch[ROLL]  += pparams->frametime * 15.0 * 3   * pow(sin(2 * flAngSwim), 3);
+			vecAdditive[YAW]	  -= pparams->frametime * 15.0 * 0.2 * sin(2 * flAngSwim);
+			vecAdditive[ROLL]	  -= pparams->frametime * 15.0 * 0.6 * sin(4 * flAngSwim);
 		}
 
 		if (flAngJump)
 		{
-			vecClientPunch[PITCH] += 1.6 * sin(flAngJump);
-			vecClientPunch[ROLL]  += 1.6 * sin(flAngJump);
-			ViewModel->origin.z   -= 0.4 * sin(flAngJump * 1.75);
-			vecAdditive[PITCH]	  -= 1.7 * pow(sin(flAngJump * 2.0), 3);
-			vecAdditive[YAW]	  += 0.9 * sin(flAngJump * 2.0);
+			vecClientPunch[PITCH] += pparams->frametime * 50.0 * 1.6 * sin(flAngJump);
+			vecClientPunch[ROLL]  += pparams->frametime * 50.0 * 1.6 * sin(flAngJump);
+			ViewModel->origin.z   -= pparams->frametime * 30.0 * 0.4 * sin(flAngJump * 1.75);
+			vecAdditive[PITCH]	  -= pparams->frametime * 40.0 * 1.7 * pow(sin(flAngJump * 2.0), 3);
+			vecAdditive[YAW]	  += pparams->frametime * 15.0 * 0.9 * sin(flAngJump * 2.0) * flBlendSideMove;
 		}
 
 		vecClientPunch = vecClientPunch / 1.05;
 		vecAdditive = vecAdditive / 1.05;
 
-		flAngSway += (1 + vecOrgDelta.Length2D() * 0.1) * M_PI / 90;
-		flAngSway += M_PI / 120;
+		flAngSway += pparams->frametime * 60.0 * (1 + vecOrgDelta.Length2D() * 0.1) * M_PI / 90;
+		flAngSway += pparams->frametime * 60.0 * M_PI / 120;
 
 		if (flAngSway >= M_PI)
 			flAngSway *= -1;
@@ -1157,7 +1158,8 @@ void V_CalcNormalRefdef(struct ref_params_s *pparams)
 		else
 			vecFinalAngles[ROLL] -= (vecDelta.z * adm_cam_roll) / 3.5f;
 		
-		vecFinalAngles[ROLL] += (flSideMove * adm_cam_roll) * 2;
+		vecFinalAngles[ROLL]	+= pparams->frametime * 60.0 * (flSideMove * adm_cam_roll) * 2;
+		vecFinalAngles[ PITCH ] -= pparams->frametime * 60.0 * (flForwardMove * adm_cam_roll) * 0.5;
 	}
 
 	if (adm_cam_sway)
@@ -1209,8 +1211,10 @@ void V_CalcNormalRefdef(struct ref_params_s *pparams)
 	// Thank you Shepard for telling me about that one line <3
 	if (adm_classicbob_enable && !gEngfuncs.IsNoClipping())
 	{
-		VectorCopy(vecResultAngles, ViewModel->curstate.angles);
-		VectorCopy(vecFinalAngles, pparams->viewangles);
+		VectorCopy( vecResultAngles, ViewModel->curstate.angles );
+		VectorCopy( vecFinalAngles, pparams->viewangles );
+		//VectorCopy(vecFinalAngles, pparams->cl_viewangles);
+		//pparams->viewangles[ ROLL ] = vecFinalAngles[ ROLL ];
 	}
 	else
 	{
@@ -1229,17 +1233,23 @@ void V_CalcNormalRefdef(struct ref_params_s *pparams)
 			(int)vecFinalAngles[YAW],
 			(int)v_positionbob, (int)v_positionbob_sway, (int)v_rollbob_p, (int)v_rollbob_y,
 			lasttime);
-		//	ConsolePrintf("View angles: p %f y %f r %f", view->curstate.angles[PITCH], view->curstate.angles[YAW], view->curstate.angles[ROLL]);
+		//ConsolePrintf("View angles: p %f y %f r %f", view->curstate.angles[PITCH], view->curstate.angles[YAW], view->curstate.angles[ROLL]);
 	}
 
 	// pushing the view origin down off of the same X/Z plane as the ent's origin will give the
 	// gun a very nice 'shifting' effect when the player looks up/down. If there is a problem
 	// with view model distortion, this may be a cause. (SJB). 
-	ViewModel->origin[2] -= 1;
+	//ViewModel->origin[2] -= 1;
+
+	// HL2-style, viewmodel goes up when we look up or down, but stays still when we look straight
+	ViewModel->origin[ 2 ] += 1.0;
+
+	for ( int i = 0; i < 2; i++ )
+		ViewModel->origin[ i ] += 2.0 * pparams->up[i] * (pparams->cl_viewangles[ PITCH ] / 90.0);
 
 	if ( !pparams->onground )
 	{
-		flAngJump += 0.128;
+		flAngJump += pparams->frametime * 60.0 * 0.128;
 
 		if ( flAngJump >= M_PI )
 			flAngJump = M_PI;
@@ -1249,11 +1259,11 @@ void V_CalcNormalRefdef(struct ref_params_s *pparams)
 		flAngJump /= 1.1f;
 	}
 
-	ViewModel->origin.z -= 1.5 * sin( flAngJump * 1.75 );
+	ViewModel->origin.z -= pparams->frametime * 60.0 * 1.5 * sin( flAngJump * 1.75 );
 
 	// fudge position around to keep amount of weapon visible
 	// roughly equal with different FOV
-	if (pparams->viewsize == 110)
+	/*if (pparams->viewsize == 110)
 	{
 		ViewModel->origin[2] += 1;
 	}
@@ -1268,7 +1278,11 @@ void V_CalcNormalRefdef(struct ref_params_s *pparams)
 	else if (pparams->viewsize == 80)
 	{
 		ViewModel->origin[2] += 0.5;
-	}
+	}*/
+
+	// Mathematically determine the position according to FOV
+	for ( int i = 0; i < 3; i++ )
+		ViewModel->origin[ i ] += (pparams->up[ i ] * (pparams->viewsize * pparams->viewsize) / 8000.0) -Vector( 0, 0, 2 )[ i ];
 
 	// Add in the punchangle, if any
 	VectorAdd ( pparams->viewangles, pparams->punchangle, pparams->viewangles );
