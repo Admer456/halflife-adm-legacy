@@ -427,9 +427,10 @@ void CCrossbow::FireBolt()
 	}
 	else
 	{
-		pBolt->pev->velocity = vecDir * 4096;
-		pBolt->pev->speed = 0;
+		pBolt->pev->velocity = vecDir * BOLT_AIR_VELOCITY;
+		pBolt->pev->speed = BOLT_AIR_VELOCITY;
 	}
+
 	pBolt->pev->avelocity.z = 10;
 
 	ALERT( at_console, "\npBolt->pev->speed = %f", pBolt->pev->speed );
@@ -448,7 +449,6 @@ void CCrossbow::FireBolt()
 	else
 		m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + 0.75;
 }
-
 
 void CCrossbow::SecondaryAttack()
 {

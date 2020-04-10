@@ -140,7 +140,7 @@ int CGlock::GetItemInfo(ItemInfo *p)
 
 BOOL CGlock::Deploy( )
 {
-	TriggerReleased = FALSE;
+	//triggerReleased = FALSE;
 
 	// pev->body = 1;
 	return DefaultDeploy( "models/v_9mmhandgun.mdl", "models/p_9mmhandgun.mdl", GLOCK_DRAW, "onehanded", /*UseDecrement() ? 1 : 0*/ 0 );
@@ -148,32 +148,17 @@ BOOL CGlock::Deploy( )
 
 void CGlock::SecondaryAttack( void )
 {
-	GlockFire( 0.06, 0.08, FALSE );
-
-	if( m_iClip < 17 )
-		m_iClip += 2;
-
-#ifndef CLIENT_DLL
-//	UTIL_ScreenShakeAir( m_pPlayer->pev->origin, 16, 1, 0.1, 32) ;
-	m_pPlayer->pev->punchangle.x -= RANDOM_LONG( 1, 3 );
-	m_pPlayer->pev->punchangle.y -= RANDOM_LONG( 1, 3 );
-//	m_pPlayer->pev->fixangle = 1;
-//	m_pPlayer->pev->v_angle.x += RANDOM_LONG(-5, 5);
-//	m_pPlayer->pev->v_angle.y += RANDOM_LONG(-5, 5);
-#endif
+	GlockFire( 0.1, 0.2, FALSE );
 }
 
 void CGlock::PrimaryAttack( void )
 {
-	if( !TriggerReleased )
-		return;
+	//if( !triggerReleased )
+	//	return;
 
-	GlockFire( 0.004, 0.01, TRUE );
-	TriggerReleased = FALSE;
-
-	m_pPlayer->m_vecViewCamPunch.x += RANDOM_FLOAT(0.0, 0.5);
-	m_pPlayer->m_vecViewCamPunch.z -= RANDOM_FLOAT(0.0, 1.0);
-	m_pPlayer->m_iViewCamMode = 1;
+	GlockFire( 0.01, 0.3, TRUE );
+	
+	//triggerReleased = FALSE;
 }
 
 void CGlock::GlockFire( float flSpread , float flCycleTime, BOOL fUseAutoAim )
@@ -265,11 +250,9 @@ void CGlock::Reload( void )
 	}
 }
 
-
-
 void CGlock::WeaponIdle( void )
 {
-	TriggerReleased = TRUE;
+	//triggerReleased = TRUE;
 
 	ResetEmptySound( );
 

@@ -341,7 +341,7 @@ public:
 	
 	int	PrimaryAmmoIndex(); 
 	int	SecondaryAmmoIndex();
-	BOOL TriggerReleased;
+	BOOL triggerReleased;
 
 	void PrintState( void );
 

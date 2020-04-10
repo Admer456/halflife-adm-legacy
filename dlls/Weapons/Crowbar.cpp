@@ -219,10 +219,6 @@ int CCrowbar::Swing( int fFirst )
 
 	if ( tr.flFraction >= 1.0 )
 	{
-		m_pPlayer->m_vecViewCamPunch.y += RANDOM_FLOAT(-5, 5);
-		m_pPlayer->m_vecViewCamPunch.x += RANDOM_FLOAT(-5, 5);
-		m_pPlayer->m_iViewCamMode = 1;
-
 		if (fFirst)
 		{
 			// miss
@@ -237,18 +233,10 @@ int CCrowbar::Swing( int fFirst )
 		switch( ((m_iSwing++) % 2) + 1 )
 		{
 		case 0:
-			m_pPlayer->m_vecViewCamPunch.y += 5;
-			m_pPlayer->m_iViewCamMode = 1;
 			SendWeaponAnim( CROWBAR_ATTACK1HIT ); break;
 		case 1:
-			m_pPlayer->m_vecViewCamPunch.z += RANDOM_FLOAT(-5, 5);
-			m_pPlayer->m_vecViewCamPunch.x += RANDOM_FLOAT(-5, 5);
-			m_pPlayer->m_iViewCamMode = 1;
 			SendWeaponAnim( CROWBAR_ATTACK2HIT ); break;
 		case 2:
-			m_pPlayer->m_vecViewCamPunch.y += RANDOM_FLOAT(-5, 5);
-			m_pPlayer->m_vecViewCamPunch.z -= RANDOM_FLOAT(-5, 5);
-			m_pPlayer->m_iViewCamMode = 1;
 			SendWeaponAnim( CROWBAR_ATTACK3HIT ); break;
 		}
 
