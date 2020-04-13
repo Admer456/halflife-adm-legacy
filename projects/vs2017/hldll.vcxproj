@@ -114,12 +114,12 @@
     <ClCompile Include="..\..\dlls\adm\AdmFunc.cpp" />
     <ClCompile Include="..\..\dlls\adm\AdmGetSetKV.cpp" />
     <ClCompile Include="..\..\dlls\adm\AdmPhysics.cpp" />
-    <ClCompile Include="..\..\dlls\adm\AdmSound.cpp" />
     <ClCompile Include="..\..\dlls\adm\AdmTriggers.cpp" />
     <ClCompile Include="..\..\dlls\adm\AdmVehicle.cpp" />
     <ClCompile Include="..\..\dlls\adm\AdmVehicleComponents.cpp" />
     <ClCompile Include="..\..\dlls\adm\AdmStory.cpp" />
     <ClCompile Include="..\..\dlls\adm\shared\AdmControl.cpp" />
+    <ClCompile Include="..\..\dlls\ADM\Shared\AdmSound.cpp" />
     <ClCompile Include="..\..\dlls\adm\shared\AdmSoundList.cpp" />
     <ClCompile Include="..\..\dlls\adm\shared\AdmTime.cpp" />
     <ClCompile Include="..\..\dlls\AI\AIUtil.cpp" />
@@ -229,10 +229,10 @@
   <ItemGroup>
     <ClInclude Include="..\..\common\Platform.h" />
     <ClInclude Include="..\..\dlls\ADM\AdmEffects.h" />
+    <ClInclude Include="..\..\dlls\ADM\Shared\AdmSound.h" />
     <ClInclude Include="..\..\dlls\AI\Activity.h" />
     <ClInclude Include="..\..\dlls\AI\ActivityMap.h" />
     <ClInclude Include="..\..\dlls\ADM\AdmPhysics.h" />
-    <ClInclude Include="..\..\dlls\ADM\AdmSound.h" />
     <ClInclude Include="..\..\dlls\ADM\AdmVehicle.h" />
     <ClInclude Include="..\..\dlls\ADM\Shared\AdmControl.h" />
     <ClInclude Include="..\..\dlls\ADM\Shared\AdmTime.h" />

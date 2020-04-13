@@ -173,8 +173,8 @@
     <ClCompile Include="..\..\cl_dll\VGUI\vgui_teammenu.cpp" />
     <ClCompile Include="..\..\common\parsemsg.cpp" />
     <ClCompile Include="..\..\dlls\adm\AdmRenderer.cpp" />
-    <ClCompile Include="..\..\dlls\adm\AdmSound.cpp" />
     <ClCompile Include="..\..\dlls\adm\shared\AdmControl.cpp" />
+    <ClCompile Include="..\..\dlls\ADM\Shared\AdmSound.cpp" />
     <ClCompile Include="..\..\dlls\adm\shared\AdmSoundList.cpp" />
     <ClCompile Include="..\..\dlls\ADM\shared\AdmTime.cpp" />
     <ClCompile Include="..\..\dlls\Weapons\Crossbow.cpp" />
@@ -252,6 +252,7 @@
     <ClInclude Include="..\..\common\Platform.h" />
     <ClInclude Include="..\..\dlls\ADM\AdmRenderer.h" />
     <ClInclude Include="..\..\dlls\ADM\shared\AdmControl.h" />
+    <ClInclude Include="..\..\dlls\ADM\Shared\AdmSound.h" />
     <ClInclude Include="..\..\dlls\ADM\shared\AdmSoundList.h" />
     <ClInclude Include="..\..\dlls\ADM\shared\AdmTime.h" />
     <ClInclude Include="..\..\game_shared\adm\DelayLoad.h" />

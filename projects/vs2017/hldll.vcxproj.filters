@@ -293,9 +293,6 @@
     <ClCompile Include="..\..\dlls\adm\shared\AdmControl.cpp">
       <Filter>Source Files\ADM\Shared</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\dlls\adm\AdmSound.cpp">
-      <Filter>Source Files\ADM\Shared</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\dlls\AI\FlyingMonster.cpp">
       <Filter>Source Files\AI</Filter>
     </ClCompile>
@@ -395,6 +392,9 @@
     <ClCompile Include="..\..\dlls\Weapons\WeaponsShared.cpp">
       <Filter>Source Files\Weapons</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\dlls\ADM\Shared\AdmSound.cpp">
+      <Filter>Source Files\ADM\Shared</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\engine\eiface.h">
@@ -410,9 +410,6 @@
       <Filter>Source Files\ADM</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\adm\shared\AdmControl.h">
-      <Filter>Source Files\ADM\Shared</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\dlls\adm\AdmSound.h">
       <Filter>Source Files\ADM\Shared</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\adm\shared\AdmSoundList.h">
@@ -561,6 +558,9 @@
     </ClInclude>
     <ClInclude Include="..\..\dlls\ADM\AdmEffects.h">
       <Filter>Source Files\ADM</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dlls\ADM\Shared\AdmSound.h">
+      <Filter>Source Files\ADM\Shared</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

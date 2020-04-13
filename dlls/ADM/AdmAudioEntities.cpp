@@ -2,7 +2,7 @@
 #include "Util.h"
 #include "Base/CBase.h"
 
-#include "adm/AdmSound.h"
+#include "ADM/Shared/AdmSound.h"
 
 extern int gmsgFSSMusic;
 SoundTable g_ServerSoundTable;

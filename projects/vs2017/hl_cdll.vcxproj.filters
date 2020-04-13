@@ -116,9 +116,6 @@
     <ClCompile Include="..\..\dlls\adm\shared\AdmControl.cpp">
       <Filter>Source Files\ADM\Shared</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\dlls\adm\AdmSound.cpp">
-      <Filter>Source Files\ADM\Shared</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\dlls\Weapons\Glock.cpp">
       <Filter>Source Files\Weapons</Filter>
     </ClCompile>
@@ -335,6 +332,9 @@
     <ClCompile Include="..\..\cl_dll\ADM\AdmClientsidePunch.cpp">
       <Filter>Source Files\ADM</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\dlls\ADM\Shared\AdmSound.cpp">
+      <Filter>Source Files\ADM\Shared</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\pm_shared\pm_debug.h">
@@ -509,6 +509,9 @@
       <Filter>Source Files\ADM\Shared</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\ADM\shared\AdmSoundList.h">
+      <Filter>Source Files\ADM\Shared</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dlls\ADM\Shared\AdmSound.h">
       <Filter>Source Files\ADM\Shared</Filter>
     </ClInclude>
   </ItemGroup>
