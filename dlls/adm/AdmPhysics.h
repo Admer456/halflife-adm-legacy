@@ -13,10 +13,10 @@
 
 #pragma once
 
-#include "bullet/btBulletDynamicsCommon.h"
-#include "bullet/BulletCollision/Gimpact/btGImpactShape.h"
-#include "bullet/ConvexDecomposition/ConvexDecomposition.h"
-#include "bullet/ConvexDecomposition/cd_wavefront.h"
+#include "btBulletDynamicsCommon.h"
+#include "BulletCollision/Gimpact/btGImpactShape.h"
+#include "ConvexDecomposition/ConvexDecomposition.h"
+#include "ConvexDecomposition/cd_wavefront.h"
 
 class CAdmPhysicsBase
 {

@@ -17,7 +17,7 @@
 
 #pragma once
 
-#include "../FMOD/inc/fmod.hpp"
+#include "FMOD/inc/fmod.hpp"
 #include <vector>
 
 struct FMODSound

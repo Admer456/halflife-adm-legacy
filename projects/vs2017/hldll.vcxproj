@@ -63,7 +63,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;_DEBUG;_WINDOWS;QUIVER;VOXEL;QUAKE2;VALVE_DLL;CLIENT_WEAPONS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
-      <AdditionalIncludeDirectories>..\..\dlls;..\..\engine;..\..\common;..\..\pm_shared;..\..\game_shared;..\..\public;..\..\FMOD\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\dlls;..\..\engine;..\..\common;..\..\pm_shared;..\..\game_shared;..\..\public;..\..\external\FMOD\inc;..\..\external\bullet;..\..\external;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <AdditionalOptions>/Zc:threadSafeInit- %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
@@ -72,8 +72,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ModuleDefinitionFile>$(ProjectDir)..\..\dlls\hl.def</ModuleDefinitionFile>
       <AdditionalLibraryDirectories>..\..\dlls\bullet\lib\Debug;..\..\FMOD\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>..\..\lib\bullet\BulletDynamics_Debug.lib;..\..\lib\bullet\BulletCollision_Debug.lib;..\..\lib\bullet\LinearMath_Debug.lib;..\..\lib\bullet\ConvexDecomposition_Debug.lib;..\..\FMOD\lib\fmod_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <DelayLoadDLLs>..\..\FMOD\lib\fmod.dll</DelayLoadDLLs>
+      <AdditionalDependencies>..\..\external\bullet\lib\Debug\BulletDynamics_Debug.lib;..\..\external\bullet\lib\Debug\BulletCollision_Debug.lib;..\..\external\bullet\lib\Debug\LinearMath_Debug.lib;..\..\external\bullet\lib\Debug\ConvexDecomposition_Debug.lib;..\..\external\FMOD\lib\fmod_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <DelayLoadDLLs>..\..\external\FMOD\lib\fmod.dll</DelayLoadDLLs>
     </Link>
     <PostBuildEvent>
       <Command>
@@ -90,7 +90,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;NDEBUG;_WINDOWS;QUIVER;VOXEL;QUAKE2;VALVE_DLL;CLIENT_WEAPONS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\..\dlls;..\..\engine;..\..\common;..\..\pm_shared;..\..\game_shared;..\..\public;..\..\FMOD;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\dlls;..\..\engine;..\..\common;..\..\pm_shared;..\..\game_shared;..\..\public;..\..\external\FMOD\inc;..\..\external\bullet;..\..\external;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <AdditionalOptions>/Zc:threadSafeInit- %(AdditionalOptions)</AdditionalOptions>
