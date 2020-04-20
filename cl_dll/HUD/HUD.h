@@ -631,6 +631,18 @@ private:
 	viewPunch		punchRegistry[ maxPunches ];
 };
 
+class CClientRCCar : public CBaseClientExtension
+{
+public:
+
+	void			InitExtension( void );
+	void			Think( void );
+
+	void			PollEvents( void );
+	void			OpenWindow( void );
+	void			CloseWindow( void );
+};
+
 //
 //-----------------------------------------------------
 //
@@ -710,6 +722,7 @@ public:
 
 	CClientFMOD			m_clFMOD;
 	CClientPunch		m_clPunch;
+	CClientRCCar		m_clRC;
 
 	void Init( void );
 	void VidInit( void );

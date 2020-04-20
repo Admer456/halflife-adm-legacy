@@ -1014,6 +1014,16 @@ void IN_VShoot2Up()		{ EngineClientCmd( "-key_vfire2" ); }
 	gEngfuncs.pfnAddCommand("+vspec_dec", IN_VSpecDecDown);
 	gEngfuncs.pfnAddCommand("-vspec_dec", IN_VSpecDecUp);*/
 
+void IN_RCOpen()
+{
+	gHUD.m_clRC.OpenWindow();
+}
+
+void IN_RCClose()
+{
+	gHUD.m_clRC.CloseWindow();
+}
+
 /*
 ============
 InitInput
@@ -1122,6 +1132,8 @@ void InitInput (void)
 	gEngfuncs.pfnAddCommand("+veh_fire2", IN_VShoot2Down);
 	gEngfuncs.pfnAddCommand("-veh_fire2", IN_VShoot2Up); */
 
+	gEngfuncs.pfnAddCommand( "rc_open", IN_RCOpen );
+	gEngfuncs.pfnAddCommand( "rc_close", IN_RCClose );
 
 	lookstrafe			= gEngfuncs.pfnRegisterVariable ( "lookstrafe", "0", FCVAR_ARCHIVE );
 	lookspring			= gEngfuncs.pfnRegisterVariable ( "lookspring", "0", FCVAR_ARCHIVE );
