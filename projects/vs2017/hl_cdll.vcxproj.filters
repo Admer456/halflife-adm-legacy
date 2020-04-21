@@ -48,6 +48,15 @@
     <Filter Include="Source Files\Common">
       <UniqueIdentifier>{6887a889-19a5-42f7-8af9-2af4b64cbf2b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\External">
+      <UniqueIdentifier>{239b810d-31d6-4d9e-8d4f-da8afa7174f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\External\imgui">
+      <UniqueIdentifier>{84a0abbd-5b1c-474b-aae8-bc885255bc39}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\External\imgui\examples">
+      <UniqueIdentifier>{907ed3b0-c843-422a-96ba-86a663d95b41}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\cl_dll\hl\hl_weapons.cpp">
@@ -334,6 +343,21 @@
     </ClCompile>
     <ClCompile Include="..\..\dlls\ADM\Shared\AdmSound.cpp">
       <Filter>Source Files\ADM\Shared</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cl_dll\ADM\AdmClientsideImgui.cpp">
+      <Filter>Source Files\ADM</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external\imgui\imgui.cpp">
+      <Filter>Source Files\External\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external\imgui\imgui_draw.cpp">
+      <Filter>Source Files\External\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external\imgui\imgui_widgets.cpp">
+      <Filter>Source Files\External\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\Documents\Visual Studio 2017 Projects\Packages\imgui-1.76\examples\imgui_impl_opengl2.cpp">
+      <Filter>Source Files\External\imgui\examples</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

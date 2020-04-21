@@ -631,6 +631,13 @@ private:
 	viewPunch		punchRegistry[ maxPunches ];
 };
 
+class CClientImgui : public CBaseClientExtension
+{
+public:
+	void			InitExtension( void );
+	void			DrawImgui( void );
+};
+
 //
 //-----------------------------------------------------
 //
@@ -710,6 +717,7 @@ public:
 
 	CClientFMOD			m_clFMOD;
 	CClientPunch		m_clPunch;
+	CClientImgui		m_clImgui;
 
 	void Init( void );
 	void VidInit( void );

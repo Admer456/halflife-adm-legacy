@@ -39,6 +39,7 @@ void CHud::InitExtensions( void )
 {
 	m_clFMOD.Init();
 	m_clPunch.Init();
+	m_clImgui.Init();
 }
 
 void CHud::VidInitExtensions( void )
