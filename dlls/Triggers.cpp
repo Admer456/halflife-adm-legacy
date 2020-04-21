@@ -704,7 +704,7 @@ void PlayCDTrack( int iTrack )
 	if ( !pClient )
 		return;
 
-	if ( iTrack < -1 || iTrack > 30 )
+	if ( iTrack < -1 )
 	{
 		ALERT ( at_console, "TriggerCDAudio - Track %d out of range\n" );
 		return;
