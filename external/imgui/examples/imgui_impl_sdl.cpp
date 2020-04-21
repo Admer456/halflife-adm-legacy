@@ -47,8 +47,8 @@
 #include "imgui_impl_sdl.h"
 
 // SDL
-#include <SDL.h>
-#include <SDL_syswm.h>
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_syswm.h>
 #if defined(__APPLE__)
 #include "TargetConditionals.h"
 #endif
@@ -348,8 +348,15 @@ void ImGui_ImplSDL2_NewFrame(SDL_Window* window)
     int w, h;
     int display_w, display_h;
     SDL_GetWindowSize(window, &w, &h);
-    SDL_GL_GetDrawableSize(window, &display_w, &display_h);
-    io.DisplaySize = ImVec2((float)w, (float)h);
+    
+	// HL SDK uses an slightly reduced version of SDL2, it seems
+	// So there's no SDL_GL_GetDrawableSize :(
+	//SDL_GL_GetDrawableSize(window, &display_w, &display_h);
+	
+	display_w = w;
+	display_h = h;
+
+	io.DisplaySize = ImVec2((float)w, (float)h);
     if (w > 0 && h > 0)
         io.DisplayFramebufferScale = ImVec2((float)display_w / w, (float)display_h / h);
 
