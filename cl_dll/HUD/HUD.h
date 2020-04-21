@@ -635,7 +635,9 @@ class CClientImgui : public CBaseClientExtension
 {
 public:
 	void			InitExtension( void );
-	void			DrawImgui( void );
+	void			TestDrawImgui( void );
+	void			DisplayImgui( void );
+	void			CloseImgui( void );
 };
 
 //

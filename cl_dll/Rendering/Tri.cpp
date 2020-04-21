@@ -57,7 +57,8 @@ void DLLEXPORT HUD_DrawTransparentTriangles( void )
 	RunEventList();
 #endif
 
-	gHUD.m_clImgui.DrawImgui();
+	//gHUD.m_clImgui.TestDrawImgui();
+	//gHUD.m_clImgui.DisplayImgui();
 
 	if ( g_pParticleMan )
 		 g_pParticleMan->Update();

@@ -1173,11 +1173,15 @@ void CL_UnloadParticleMan( void );
 void ClearEventList( void );
 #endif
 
+// Who the hell thought they should put HUD_ functions in input.cpp?!
+// TO-DO: Move all the HUD_ crap in a single place
 void DLLEXPORT HUD_Shutdown( void )
 {
 //	RecClShutdown();
 
 	ShutdownInput();
+
+	gHUD.m_clImgui.CloseImgui();
 
 #if defined( _TFC )
 	ClearEventList();

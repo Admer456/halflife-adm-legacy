@@ -29,7 +29,7 @@ void CClientImgui::InitExtension()
 	io.DisplaySize.y = ScreenHeight;
 }
 
-void CClientImgui::DrawImgui()
+void CClientImgui::TestDrawImgui()
 {
 	static float angle = 0;
 	angle += M_PI * 2.0 / 180;
@@ -39,6 +39,7 @@ void CClientImgui::DrawImgui()
 	ImGui::NewFrame();
 
 	ImGui::SetNextWindowSize( ImVec2( 200 + cos(angle)*50, 200 + sin(angle)*50 ) );
+	ImGui::SetNextWindowBgAlpha( cos(angle*4.0) );
 
 	ImGui::Begin( "Test" );
 
@@ -46,10 +47,18 @@ void CClientImgui::DrawImgui()
 	ImGui::Text( "Nyaaaa!!!" );
 	ImGui::Button( "OwO" );
 
-	ImGui::End();
+	ImGui::End();	
+}
 
-	//glViewport( 0, 0, (int)ImGui::GetIO().DisplaySize.x, (int)ImGui::GetIO().DisplaySize.y );
-
+void CClientImgui::DisplayImgui()
+{
 	ImGui::Render();
 	ImGui_ImplOpenGL2_RenderDrawData( ImGui::GetDrawData() );
+}
+
+void CClientImgui::CloseImgui()
+{
+	ImGui_ImplOpenGL2_Shutdown();
+	ImGui_ImplSDL2_Shutdown();
+	ImGui::DestroyContext();
 }
