@@ -469,7 +469,7 @@ LINK_ENTITY_TO_CLASS( worldspawn, CWorld );
 extern DLL_GLOBAL BOOL		g_fGameOver;
 float g_flWeaponCheat; 
 
-CAdmPhysicsBase AdmPhysEngine;
+CPhysicsWorld g_Physics;
 
 void CWorld :: Spawn( void )
 {
@@ -481,9 +481,9 @@ void CWorld :: Spawn( void )
 	{
 		ALERT(at_console, "\nWorld has physics.\nInitialising physics engine...\n");
 
-		AdmPhysEngine.Init();
+		g_Physics.Init();
 		g_iszWorldModel = pev->model;
-		AdmPhysEngine.CreateWorldCollision(STRING(pev->model)); // To-do: fix crashing
+		g_Physics.CreateWorldCollision(STRING(pev->model)); // To-do: fix crashing
 	}
 	else
 	{

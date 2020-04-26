@@ -18,46 +18,26 @@
 #include "ConvexDecomposition/ConvexDecomposition.h"
 #include "ConvexDecomposition/cd_wavefront.h"
 
-class CAdmPhysicsBase
+class CPhysicsWorld
 {
 public:
+	void				Init(void);
 
-	// FRICK, I hope this new/delete stuff will work properly, it's really cancerous sometimes
-	btDefaultCollisionConfiguration *admp_CollisionConfiguration; // admp -> AdmPhysics
+	void				AddRigidBody( btRigidBody* body );
+	void				AddCollisionShape( btCollisionShape* colshape );
+	void				StepSimulation( float deltaTime, int steps );
 
-	// default collision dispatcher
-	btCollisionDispatcher *admp_Dispatcher;
+	void				SetGravity(float x, float y, float z);
+	void				SetGravity(float z);
 
-	// general purpose broadphase, btAxis3Sweep is also an alternative
-	btBroadphaseInterface *admp_overlappingPairCache;
+	bool				HasWorldCollision() { return physWorldShape != nullptr; }
+	void				PostUpdate() { }
 
-	// default constraint solver, this guy's gonna do quite some work
-	btSequentialImpulseConstraintSolver *admp_Solver;
-
-	// the world, the universe, everything that we're in
-	btDiscreteDynamicsWorld *admp_World;
-
-	// the array of all collision shapes
-	btAlignedObjectArray<btCollisionShape*> collisionShapes;
-
-	// stuff for map geometry loading
-	btTriangleIndexVertexArray *colonVertexArrays;
-	btBvhTriangleMeshShape *PhysMeshShape;
-	btCollisionShape *groundShape;
-	btTransform groundTrans;
-
-	btDefaultMotionState *groundMS;
-	btRigidBody *groundBody;
-
-	void Init(void);
-	void SetGravity(float x, float y, float z);
-	void SetGravity(float z);
-
-	btCollisionObject *NewCollisionObject()
+	btCollisionObject*	NewCollisionObject()
 	{
 		iCollObjIndex++;
 		int i = iCollObjIndex - 1;
-		return admp_World->getCollisionObjectArray()[i];
+		return world->getCollisionObjectArray()[i];
 	}
 
 	void CreateShapeWithVerts()
@@ -71,6 +51,39 @@ public:
 	// Interface with GoldSrc world coordinates - DONE
 	// Read a BSP
 private:
+	// FRICK, I hope this new/delete stuff will work properly, it's really cancerous sometimes
+	btDefaultCollisionConfiguration* physCollisionConfig; // admp -> AdmPhysics
+
+	// default collision dispatcher
+	btCollisionDispatcher* physDispatcher;
+
+	// general purpose broadphase, btAxis3Sweep is also an alternative
+	btBroadphaseInterface* overlappingPairCache;
+
+	// default constraint solver, this guy's gonna do quite some work
+	btSequentialImpulseConstraintSolver* physSolver;
+
+	// the world, the universe, everything that we're in
+	btDiscreteDynamicsWorld* world;
+
+	// the array of all collision shapes
+	btAlignedObjectArray<btCollisionShape*> collisionShapes;
+
+	// serializer, I dunno what we really need it for :P
+	btDefaultSerializer* serializer;
+	static constexpr int maxSerializeSize = 1024 * 1024 * 5;
+
+	// stuff for map geometry loading
+	btTriangleIndexVertexArray* colonVertexArrays;
+	btBvhTriangleMeshShape* physWorldShape;
+//	btCollisionShape*	groundShape;
+	btTransform			groundTrans;
+
+	btDefaultMotionState* groundMS;
+	btRigidBody*		groundBody;
+
+	ConvexDecomposition::WavefrontObj objLoader;
+
 	int iCollObjIndex = 0;
 };
 
@@ -80,5 +93,5 @@ float utom(float units);
 // Function to convert from metres to units
 float mtou(float metres);
 
-extern CAdmPhysicsBase AdmPhysEngine; // The base is everywhere
+extern CPhysicsWorld g_Physics; // The base is everywhere
 extern string_t g_iszWorldModel; // e.g. mapname.bsp
