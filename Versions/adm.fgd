@@ -1546,7 +1546,24 @@
 	skin(choices) : "Contents" : -1 =
 	[
 		-1: "Empty"
+		-2: "Solid (don't)"
+		-3: "Water"
+		-4: "Slime"
+		-5: "Lava"
+		-6: "Sky (don't)"
 		-7: "Volumetric Light"
+		-8: "Clip (don't)"
+		-9: "Current 0"
+		-10: "Current 90"
+		-11: "Current 180"
+		-12: "Current 270"
+		-13: "Current up"
+		-14: "Current down"
+		-15: "Translucent (don't)"
+		-16: "Ladder"
+		-17: "Flyfield"
+		-18: "Gravity flyfield"
+		-19: "Fog"
 	]
 	_minlight(string) : "Minimum light level"
 ]
