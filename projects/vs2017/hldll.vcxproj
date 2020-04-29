@@ -276,6 +276,7 @@
     <ClInclude Include="..\..\dlls\Weapons\Weapons.h" />
     <ClInclude Include="..\..\engine\EIFace.h" />
     <ClInclude Include="..\..\game_shared\adm\DelayLoad.h" />
+    <ClInclude Include="..\..\game_shared\adm\VersionInfo.h" />
     <ClInclude Include="..\..\pm_shared\pm_debug.h" />
     <ClInclude Include="..\..\pm_shared\pm_defs.h" />
     <ClInclude Include="..\..\pm_shared\pm_info.h" />

@@ -16,6 +16,7 @@
 #include "eiface.h"
 #include "Util.h"
 #include "Game/Game.h"
+#include "../game_shared/adm/VersionInfo.h"
 
 cvar_t	displaysoundlist = {"displaysoundlist","0"};
 
@@ -492,10 +493,24 @@ cvar_t	sk_player_leg3	= { "sk_player_leg3","1" };
 
 // END Cvars for Skill Level settings
 
+void PrintVersion()
+{
+	ALERT( at_console, "||---------------------------------------------||\n" );
+	ALERT( at_console, "             Advanced Development Mod\n\n" );
+	ALERT( at_console, "  Version: %i.%i.%i (%s)\n\n", buildMajor, buildMinor, buildRevision, buildDate );
+	ALERT( at_console, "  Authors:\n" );
+	ALERT( at_console, "  %s\n\n", buildAuthors );
+	ALERT( at_console, "  Repository:\n" );
+	ALERT( at_console, "  %s\n", buildRepo );
+	ALERT( at_console, "||---------------------------------------------||\n" );
+}
+
 // Register your console variables here
 // This gets called one time when the game is initialied
 void GameDLLInit( void )
 {
+	PrintVersion();
+
 	// Register cvars here:
 
 	g_psv_gravity = CVAR_GET_POINTER( "sv_gravity" );

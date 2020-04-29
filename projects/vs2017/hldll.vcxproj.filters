@@ -562,6 +562,9 @@
     <ClInclude Include="..\..\dlls\ADM\Shared\AdmSound.h">
       <Filter>Source Files\ADM\Shared</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\game_shared\adm\VersionInfo.h">
+      <Filter>Source Files\Game_Shared</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Versions\adm.fgd">
