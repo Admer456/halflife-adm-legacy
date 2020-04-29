@@ -166,8 +166,8 @@
 		4: "Solid"
 		5: "Additive"
 	]
-	renderamt(integer) : "FX Amount (1 - 255)"
-	rendercolor(color255) : "FX Color (R G B)" : "0 0 0"
+	renderamt(integer) : "Render Amount (1-255)" : 255
+	rendercolor(color255) : "Render Color (RGB)" : "0 0 0"
 ]
 
 @BaseClass base(Appearflags, Angles) flags(Angle) size(-16 -16 -36, 16 16 36) color(0 255 0) offset(0 0 36) = PlayerClass []
@@ -1003,8 +1003,8 @@
 		4: "Solid"
 		5: "Additive"
 	]
-	renderamt(integer) : "FX Amount (1 - 255)"
-	rendercolor(color255) : "FX Color (R G B)" : "0 0 0"
+	renderamt(integer) : "Render Amount (1-255)" : 255
+	rendercolor(color255) : "Render Color (RGB)" : "0 0 0"
 ]
 
 
@@ -1045,8 +1045,8 @@
 		4: "Solid"
 		5: "Additive"
 	]
-	renderamt(integer) : "FX Amount (1 - 255)"
-	rendercolor(color255) : "FX Color (R G B)" : "0 0 0"
+	renderamt(integer) : "Render Amount (1-255)" : 255
+	rendercolor(color255) : "Render Color (RGB)" : "0 0 0"
 ]
 
 @PointClass base(Targetname, Angles) sprite() = cycler_sprite : "Sprite Cycler" 
@@ -1083,8 +1083,8 @@
 		4: "Solid"
 		5: "Additive"
 	]
-	renderamt(integer) : "FX Amount (1 - 255)"
-	rendercolor(color255) : "FX Color (R G B)" : "0 0 0"
+	renderamt(integer) : "Render Amount (1-255)" : 255
+	rendercolor(color255) : "Render Color (RGB)" : "0 0 0"
 ]
 
 @PointClass base(Monster, Sequence) flags(Angle) size(-16 -16 -16, 16 16 16) studio() = cycler_weapon : "Weapon Cycler" 
@@ -1565,6 +1565,7 @@
 		-18: "Gravity flyfield"
 		-19: "Fog"
 	]
+
 	_minlight(string) : "Minimum light level"
 ]
 
