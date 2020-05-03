@@ -110,7 +110,6 @@
     <PostBuildEvent />
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\..\..\Documents\Visual Studio 2017 Projects\Packages\imgui-1.76\examples\imgui_impl_opengl2.cpp" />
     <ClCompile Include="..\..\cl_dll\adm\AdmClientsideExtensions.cpp" />
     <ClCompile Include="..\..\cl_dll\ADM\AdmClientsideImgui.cpp" />
     <ClCompile Include="..\..\cl_dll\ADM\AdmClientsidePunch.cpp" />
@@ -194,6 +193,7 @@
     <ClCompile Include="..\..\dlls\Weapons\SqueakGrenade.cpp" />
     <ClCompile Include="..\..\dlls\Weapons\TripmineGrenade.cpp" />
     <ClCompile Include="..\..\dlls\Weapons\WeaponsShared.cpp" />
+    <ClCompile Include="..\..\external\imgui\examples\imgui_impl_opengl2.cpp" />
     <ClCompile Include="..\..\external\imgui\examples\imgui_impl_sdl.cpp" />
     <ClCompile Include="..\..\external\imgui\imgui.cpp" />
     <ClCompile Include="..\..\external\imgui\imgui_draw.cpp" />

@@ -356,10 +356,10 @@
     <ClCompile Include="..\..\external\imgui\imgui_widgets.cpp">
       <Filter>Source Files\External\imgui</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Documents\Visual Studio 2017 Projects\Packages\imgui-1.76\examples\imgui_impl_opengl2.cpp">
+    <ClCompile Include="..\..\external\imgui\examples\imgui_impl_sdl.cpp">
       <Filter>Source Files\External\imgui\examples</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\external\imgui\examples\imgui_impl_sdl.cpp">
+    <ClCompile Include="..\..\external\imgui\examples\imgui_impl_opengl2.cpp">
       <Filter>Source Files\External\imgui\examples</Filter>
     </ClCompile>
   </ItemGroup>
