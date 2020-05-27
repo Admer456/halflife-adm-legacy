@@ -61,10 +61,27 @@ string_t g_iszWorldModel; // e.g. mapname.bsp
 // CAdmPhysicsBase a.k.a. AdmPhys
 // class implementation
 
+CPhysicsWorld::~CPhysicsWorld()
+{
+	delete physCollisionConfig;
+	delete physDispatcher;
+	delete overlappingPairCache;
+	delete physSolver;
+	delete world;
+
+//	delete serializer;
+
+	delete colonVertexArrays;
+	delete physWorldShape;
+
+	delete groundMS;
+	delete groundBody;
+}
+
 void CPhysicsWorld::Init()
 {
 	physCollisionConfig = new btDefaultCollisionConfiguration();
-	physDispatcher = new btCollisionDispatcher(physCollisionConfig);
+	physDispatcher = new btCollisionDispatcher( physCollisionConfig );
 	overlappingPairCache = new btDbvtBroadphase();
 	physSolver = new btSequentialImpulseConstraintSolver();
 
@@ -129,14 +146,13 @@ void CPhysicsWorld::CreateWorldCollision(const char* path)
 	szPath = strGame + szPath; // "adm/" "maps/map.bsp"
 	szPath += ".obj"; // "adm/maps/map.bsp.obj" This is gonna work ;)
 
-	auto fPhysMeshExists = objLoader.loadObj(szPath.c_str());
+	auto fPhysMeshExists = objLoader.loadObj( szPath.c_str() );
 
 	if (fPhysMeshExists)
 		ALERT(at_console, "\nYAAAAAY, PhysMesh does exist! %i triangles!", fPhysMeshExists);
 	else
 		ALERT(at_console, "\nWoof. ;w;\nPhysMesh doesn't exist or I can't load it... sowwy Master. >w<");
 	
-
 	if ( !fPhysMeshExists )
 		return;
 
@@ -147,22 +163,19 @@ void CPhysicsWorld::CreateWorldCollision(const char* path)
 		3 * sizeof(float)
 	);
 
-	physWorldShape = new btBvhTriangleMeshShape( colonVertexArrays, true, btVector3( -4000, -4000, -4000 ), btVector3( 4000, 4000, 4000 ) );
-//	physWorldShape->setLocalScaling( btVector3( utom( 1 ), utom( 1 ), utom( 1 ) ) );
+	physWorldShape = new btBvhTriangleMeshShape( colonVertexArrays, true, btVector3( -12000, -12000, -4000 ), btVector3( 12000, 12000, 12000 ) );
 	physWorldShape->setLocalScaling( 39.37007874f * btVector3( 1, 1, 1 ) );
-//	physWorldShape->setLocalScaling( btVector3( 1, 1, 1 ) );
-	physWorldShape->setMargin(0.125f);
+	physWorldShape->setMargin( 0.125f );
 	physWorldShape->buildOptimizedBvh();
 
 	// I dunno, maybe this can be used to write to files?
-	serializer = new btDefaultSerializer( maxSerializeSize );
+	//serializer = new btDefaultSerializer( maxSerializeSize );
 	
-	serializer->startSerialization();
-	physWorldShape->serializeSingleBvh( serializer );
-	serializer->finishSerialization();
+	//serializer->startSerialization();
+	//physWorldShape->serializeSingleBvh( serializer );
+	//serializer->finishSerialization();
 
-//	groundShape = new btBvhTriangleMeshShape( *physWorldShape );
-
+	// Rotate the world properly, OBJ uses a different orientation
 	btVector3 angles( 0, 90 * M_PI/180.0f, 0 );
 	btQuaternion q;
 	q.setEuler( angles.x(), angles.y(), angles.z() );
@@ -177,31 +190,13 @@ void CPhysicsWorld::CreateWorldCollision(const char* path)
 	groundMS = new btDefaultMotionState( groundTrans );
 	btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, groundMS, physWorldShape, localInertia);
 
-	groundBody = new btRigidBody(rbInfo);
+	groundBody = new btRigidBody( rbInfo );
 
 	collisionShapes.push_back( physWorldShape );
 	world->addRigidBody( groundBody ); // assumption is that treating a static body as a rigid body is not good
 
-//	delete colonVertexArrays;
-
-	ALERT(at_console, "\nCreated world PhysMesh!\n");
-	ALERT(at_console, "\nCreated world PhysMesh!\n");
-	
+	ALERT( at_console, "\nCreated world PhysMesh!\n" );
 } 
-
-/*
-	// the array of all collision shapes
-	btAlignedObjectArray<btCollisionShape*> collisionShapes;
-
-	// stuff for map geometry loading
-	btTriangleIndexVertexArray *colonVertexArrays;
-	btBvhTriangleMeshShape *PhysMeshShape;
-	btCollisionShape *groundShape;
-	btTransform groundTrans;
-
-	btDefaultMotionState *groundMS;
-	btRigidBody *groundBody;
-*/
 
 // Utilities
 
@@ -268,41 +263,32 @@ void EXPORT CBasePhysical::SpawnThink( void )
 	m_Trans.setIdentity();
 	m_Trans.setOrigin( btVector3( utom( pev->origin.x ), utom( pev->origin.z ), utom( pev->origin.y ) ) );
 
+	// The rigid body is dynamic if the mass is not 0
 	btScalar mass( m_flMass );
-
-	//rigidbody is dynamic if and only if mass is non zero, otherwise static
 	m_fDynamic = (mass != 0.f);
-
 	btVector3 localInertia( 0, 0, 0 );
 
 	if ( m_fDynamic )
 		m_CollisionShape->calculateLocalInertia( mass, localInertia );
 
-	//using motionstate is recommended, it provides interpolation capabilities, and only synchronizes 'active' objects
+	// Using motionstate is recommended, it provides interpolation capabilities, and only synchronizes 'active' objects
 	m_MotionState = new btDefaultMotionState( m_Trans );
 	btRigidBody::btRigidBodyConstructionInfo rbInfo( mass, m_MotionState, m_CollisionShape, localInertia );
 	m_Body = new btRigidBody( rbInfo );
 
+	// Add the rigid body to the world
 	g_Physics.AddRigidBody( m_Body );
 
+	// Set the default orientation
 	vecPos = m_Body->getWorldTransform().getOrigin();
 	btScalar ang_yaw, ang_pitch, ang_roll;
 	m_Body->getWorldTransform().getRotation().getEulerZYX( ang_yaw, ang_pitch, ang_roll );
 	vecAngles = { ang_yaw, ang_pitch, ang_roll };
 
 	if ( m_fDynamic )
-	{
 		SetThink( &CBasePhysical::PhysicalThink );
-
-		ALERT( at_console, "Created dynamic CBasePhysical!\n" );
-//		ALERT( at_console, "\nCBasePhysical::SpawnThink() time %f", gpGlobals->time );
-	}
 	else
-	{
 		SetThink( NULL );
-
-		ALERT( at_console, "Created static CBasePhysical!\n" );
-	}
 
 	pev->nextthink = gpGlobals->time + 0.016;
 }
@@ -329,6 +315,7 @@ void EXPORT CBasePhysical::PhysicalThink(void)
 
 	vecAngles = { ang_yaw, ang_pitch, ang_roll };
 
+	// This is so sad. .w.
 	pev->origin.x = mtou(vecPos.getX());
 	pev->origin.y = mtou(vecPos.getZ());
 	pev->origin.z = mtou(vecPos.getY());
@@ -343,9 +330,6 @@ void EXPORT CBasePhysical::PhysicalThink(void)
 
 	UTIL_SetOrigin(pev, pev->origin);
 
-	ALERT( at_console, "\nCBasePhysical::PhysicalThink()" );
-
-//	pev->nextthink = gpGlobals->time + (1.0f / 60.0f);
 	pev->nextthink = gpGlobals->time + (1.0f / 60.0f);
 }
 

@@ -21,6 +21,9 @@
 class CPhysicsWorld
 {
 public:
+
+						~CPhysicsWorld();
+
 	void				Init(void);
 
 	void				AddRigidBody( btRigidBody* body );
@@ -33,26 +36,14 @@ public:
 	bool				HasWorldCollision() { return physWorldShape != nullptr; }
 	void				PostUpdate() { }
 
-	btCollisionObject*	NewCollisionObject()
-	{
-		iCollObjIndex++;
-		int i = iCollObjIndex - 1;
-		return world->getCollisionObjectArray()[i];
-	}
-
-	void CreateShapeWithVerts()
-	{
-
-	}
-
-	void CreateWorldCollision(const char* path);
+	void				CreateWorldCollision(const char* path);
 
 	// To-do:
-	// Interface with GoldSrc world coordinates - DONE
 	// Read a BSP
+	// Fix jittery box physics
+	// Add physics wireframe mode
 private:
-	// FRICK, I hope this new/delete stuff will work properly, it's really cancerous sometimes
-	btDefaultCollisionConfiguration* physCollisionConfig; // admp -> AdmPhysics
+	btDefaultCollisionConfiguration* physCollisionConfig;
 
 	// default collision dispatcher
 	btCollisionDispatcher* physDispatcher;
