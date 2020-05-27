@@ -2,6 +2,7 @@
 #include <ctime>
 
 // TODO: make a namespace for this
+// TODO: nuke or do sth with chrono
 
 bool isDate(int year, int month, int day)
 {

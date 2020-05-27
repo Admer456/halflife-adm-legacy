@@ -76,7 +76,6 @@ void CCrossbowBolt::Spawn( )
 	pev->nextthink = gpGlobals->time + 0.2;
 }
 
-
 void CCrossbowBolt::Precache( )
 {
 	PRECACHE_MODEL ("models/crossbow_bolt.mdl");
@@ -87,7 +86,6 @@ void CCrossbowBolt::Precache( )
 	PRECACHE_SOUND("fvox/beep.wav");
 	m_iTrail = PRECACHE_MODEL("sprites/streak.spr");
 }
-
 
 int	CCrossbowBolt :: Classify ( void )
 {
@@ -276,7 +274,6 @@ void CCrossbow::Precache( void )
 	m_usCrossbow2 = PRECACHE_EVENT( 1, "events/crossbow2.sc" );
 }
 
-
 int CCrossbow::GetItemInfo(ItemInfo *p)
 {
 	p->pszName = STRING(pev->classname);
@@ -292,7 +289,6 @@ int CCrossbow::GetItemInfo(ItemInfo *p)
 	p->iWeight = CROSSBOW_WEIGHT;
 	return 1;
 }
-
 
 BOOL CCrossbow::Deploy( )
 {
@@ -489,23 +485,23 @@ void CCrossbow::WeaponIdle( void )
 {
 	m_pPlayer->GetAutoaimVector( AUTOAIM_2DEGREES );  // get the autoaim vector but ignore it;  used for autoaim crosshair in DM
 
-	ResetEmptySound( );
-	
+	ResetEmptySound();
+
 	if ( m_flTimeWeaponIdle < UTIL_WeaponTimeBase() )
 	{
 		float flRand = UTIL_SharedRandomFloat( m_pPlayer->random_seed, 0, 1 );
-		if (flRand <= 0.75)
+		if ( flRand <= 0.75 )
 		{
-			if (m_iClip)
+			if ( m_iClip )
 			{
-				if (flRand < 0.72) // 96% chance of hitting idle1
+				if ( flRand < 0.72 ) // 96% chance of hitting idle1
 				{
-					SendWeaponAnim(CROSSBOW_IDLE1);
+					SendWeaponAnim( CROSSBOW_IDLE1 );
 				}
-			
+
 				else
 				{
-					SendWeaponAnim(CROSSBOW_IDLE3);
+					SendWeaponAnim( CROSSBOW_IDLE3 );
 				}
 			}
 			else
@@ -516,7 +512,7 @@ void CCrossbow::WeaponIdle( void )
 		}
 		else
 		{
-			if (m_iClip)
+			if ( m_iClip )
 			{
 				SendWeaponAnim( CROSSBOW_FIDGET1 );
 				m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + 90.0 / 30.0;
@@ -529,8 +525,6 @@ void CCrossbow::WeaponIdle( void )
 		}
 	}
 }
-
-
 
 class CCrossbowAmmo : public CBasePlayerAmmo
 {
@@ -555,8 +549,7 @@ class CCrossbowAmmo : public CBasePlayerAmmo
 		return FALSE;
 	}
 };
+
 LINK_ENTITY_TO_CLASS( ammo_crossbow, CCrossbowAmmo );
-
-
 
 #endif

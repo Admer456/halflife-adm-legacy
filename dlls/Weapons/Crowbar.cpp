@@ -26,8 +26,8 @@
 #define	CROWBAR_BODYHIT_VOLUME 128
 #define	CROWBAR_WALLHIT_VOLUME 512
 
+// This thing is sooo cool, thank you Solokiller <3
 LINK_WEAPON_TO_CLASS( weapon_crowbar, CCrowbar );
-
 
 
 enum crowbar_e {
@@ -42,7 +42,6 @@ enum crowbar_e {
 	CROWBAR_ATTACK3HIT
 };
 
-
 void CCrowbar::Spawn( )
 {
 	Precache( );
@@ -52,7 +51,6 @@ void CCrowbar::Spawn( )
 
 	FallInit();// get ready to fall down.
 }
-
 
 void CCrowbar::Precache( void )
 {
@@ -84,8 +82,6 @@ int CCrowbar::GetItemInfo(ItemInfo *p)
 	return 1;
 }
 
-
-
 BOOL CCrowbar::Deploy( )
 {
 	return DefaultDeploy( "models/v_crowbar.mdl", "models/p_crowbar.mdl", CROWBAR_DRAW, "crowbar" );
@@ -96,7 +92,6 @@ void CCrowbar::Holster( int skiplocal /* = 0 */ )
 	m_pPlayer->m_flNextAttack = UTIL_WeaponTimeBase() + 0.5;
 	SendWeaponAnim( CROWBAR_HOLSTER );
 }
-
 
 void FindHullIntersection( const Vector &vecSrc, TraceResult &tr, float *mins, float *maxs, edict_t *pEntity )
 {
@@ -142,7 +137,6 @@ void FindHullIntersection( const Vector &vecSrc, TraceResult &tr, float *mins, f
 	}
 }
 
-
 void CCrowbar::PrimaryAttack()
 {
 	int PlayerIndex = 1;
@@ -153,36 +147,19 @@ void CCrowbar::PrimaryAttack()
 	if (! Swing( 1 ))
 	{
 		SetThink( &CCrowbar::SwingAgain );
-		pev->nextthink = gpGlobals->time + 0.1;						// AdmSrc - changed time from 0.1 to 0.5
-
-
-
-//#ifndef CLIENT_DLL													// Putting a preprocessor block, because there would be an error while compiling cl.dll otherwise (unresolved ext. symbol)
-//		UTIL_ScreenShakeAir( pev->origin, 6, 0.25, 1, 64 );			// Shake the view slowly, subtly, while just swinging without a hit
-
-//		for (PlayerIndex = 1; PlayerIndex <= gpGlobals->maxClients; PlayerIndex++)
-//		{
-//			pPlayer->pev->punchangle.z = RANDOM_LONG(-5, 5);						// For extra effect, let's do a PUNCH! >:D
-//		}
-//#endif
+		pev->nextthink = gpGlobals->time + 0.1;
 	}
 }
-
 
 void CCrowbar::Smack( )
 {
 	DecalGunshot( &m_trHit, BULLET_PLAYER_CROWBAR );
-//#ifndef CLIENT_DLL
-//	UTIL_ScreenShakeAir( pev->origin, RANDOM_LONG(4, 12), 0.75, 0.1, 64 );		// AdmSrc - shake the view upon a successful smack
-//#endif
 }
-
 
 void CCrowbar::SwingAgain( void )
 {
 	Swing( 0 );
 }
-
 
 int CCrowbar::Swing( int fFirst )
 {
