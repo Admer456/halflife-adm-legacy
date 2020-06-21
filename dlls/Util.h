@@ -325,14 +325,18 @@ extern float		UTIL_SplineFraction( float value, float scale );
 
 // AdmSrc stuff
 extern Vector		UTIL_VecPolarCoords( float radius, Vector angles );
-inline void			UTIL_Deg2Rad( float &value ) { value *= M_PI / 180; };
-inline void			UTIL_Rad2Deg( float &value ) { value *= 180 / M_PI; };
+inline void			UTIL_Deg2Rad( float& value ) { value *= M_PI / 180; };
+inline void			UTIL_Rad2Deg( float& value ) { value *= 180 / M_PI; };
 
 inline void			UTIL_LimitBetween( float &value, float min, float max ) { if (value < min) value = min; if (value > max) value = max; };
 
-inline void			FBitToggle( int &input, int bit ) { input ^= bit; };
-inline void			FBitClear( int &input, int bit ) { input &= bit; };
-inline bool			FBitCheck( int input, int bit ) { return input & bit; };
+inline void			FBitToggle( int& input, int bit ) { input ^= bit; };
+inline void			FBitClear( int& input, int bit ) { input &= bit; };
+inline bool			FBitCheck( int& input, int bit ) { return input & bit; };
+
+inline short		BIT16( int offset ) { return 1 << offset; }
+inline int			BIT( int offset ) { return 1 << offset; }
+inline long long	BIT64( int offset ) { return 1 << offset; }
 
 inline void			FBitToggle(unsigned char &input, unsigned char bit) { input ^= bit; };
 inline void			FBitClear(unsigned char &input, unsigned char bit) { input &= ~(bit); };
