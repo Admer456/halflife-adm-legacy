@@ -334,9 +334,9 @@ inline void			FBitToggle( int& input, int bit ) { input ^= bit; };
 inline void			FBitClear( int& input, int bit ) { input &= bit; };
 inline bool			FBitCheck( int& input, int bit ) { return input & bit; };
 
-inline short		BIT16( int offset ) { return 1 << offset; }
+inline short		BIT16( short offset ) { return 1 << offset; }
 inline int			BIT( int offset ) { return 1 << offset; }
-inline long long	BIT64( int offset ) { return 1 << offset; }
+inline uint64		BIT64( uint64 offset ) { return 1LL << offset; }
 
 inline void			FBitToggle(unsigned char &input, unsigned char bit) { input ^= bit; };
 inline void			FBitClear(unsigned char &input, unsigned char bit) { input &= ~(bit); };
