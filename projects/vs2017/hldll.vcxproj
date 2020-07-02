@@ -111,13 +111,15 @@
   <ItemGroup>
     <ClCompile Include="..\..\dlls\adm\AdmAudioEntities.cpp" />
     <ClCompile Include="..\..\dlls\adm\AdmEffects.cpp" />
-    <ClCompile Include="..\..\dlls\adm\AdmFunc.cpp" />
     <ClCompile Include="..\..\dlls\adm\AdmGetSetKV.cpp" />
     <ClCompile Include="..\..\dlls\adm\AdmPhysics.cpp" />
     <ClCompile Include="..\..\dlls\adm\AdmTriggers.cpp" />
     <ClCompile Include="..\..\dlls\adm\AdmVehicle.cpp" />
     <ClCompile Include="..\..\dlls\adm\AdmVehicleComponents.cpp" />
     <ClCompile Include="..\..\dlls\adm\AdmStory.cpp" />
+    <ClCompile Include="..\..\dlls\ADM\Func\CFuncLag.cpp" />
+    <ClCompile Include="..\..\dlls\ADM\Func\CFuncLoadbar.cpp" />
+    <ClCompile Include="..\..\dlls\ADM\Func\CFuncNovis.cpp" />
     <ClCompile Include="..\..\dlls\adm\shared\AdmControl.cpp" />
     <ClCompile Include="..\..\dlls\ADM\Shared\AdmSound.cpp" />
     <ClCompile Include="..\..\dlls\adm\shared\AdmSoundList.cpp" />
@@ -169,6 +171,7 @@
     <ClCompile Include="..\..\dlls\AI\FlyingMonster.cpp" />
     <ClCompile Include="..\..\dlls\Func\CBaseButton.cpp" />
     <ClCompile Include="..\..\dlls\Func\CBaseDoor.cpp" />
+    <ClCompile Include="..\..\dlls\Func\CBasePlatTrain.cpp" />
     <ClCompile Include="..\..\dlls\Func\CBreakable.cpp" />
     <ClCompile Include="..\..\dlls\Func\CFrictionModifier.cpp" />
     <ClCompile Include="..\..\dlls\Func\CFuncConveyor.cpp" />
@@ -197,8 +200,10 @@
     <ClCompile Include="..\..\dlls\Func\CMortar.cpp" />
     <ClCompile Include="..\..\dlls\Func\CPendulum.cpp" />
     <ClCompile Include="..\..\dlls\Func\CPushable.cpp" />
+    <ClCompile Include="..\..\dlls\Func\CRecharge.cpp" />
     <ClCompile Include="..\..\dlls\Func\CRotButton.cpp" />
     <ClCompile Include="..\..\dlls\Func\CRotDoor.cpp" />
+    <ClCompile Include="..\..\dlls\Func\CWallHealth.cpp" />
     <ClCompile Include="..\..\dlls\Game\Client.cpp" />
     <ClCompile Include="..\..\dlls\Game\Game.cpp" />
     <ClCompile Include="..\..\dlls\Game\GameEntities.cpp" />
@@ -218,9 +223,9 @@
     <ClCompile Include="..\..\dlls\MonsterMaker.cpp" />
     <ClCompile Include="..\..\dlls\Graph.cpp" />
     <ClCompile Include="..\..\dlls\Observer.cpp" />
-    <ClCompile Include="..\..\dlls\PathCorner.cpp" />
+    <ClCompile Include="..\..\dlls\Path\CPathCorner.cpp" />
+    <ClCompile Include="..\..\dlls\Path\CPathTrack.cpp" />
     <ClCompile Include="..\..\dlls\Plane.cpp" />
-    <ClCompile Include="..\..\dlls\Plats.cpp" />
     <ClCompile Include="..\..\dlls\Player.cpp" />
     <ClCompile Include="..\..\dlls\Skill.cpp" />
     <ClCompile Include="..\..\dlls\Sound.cpp" />
@@ -256,6 +261,9 @@
   <ItemGroup>
     <ClInclude Include="..\..\common\Platform.h" />
     <ClInclude Include="..\..\dlls\ADM\AdmEffects.h" />
+    <ClInclude Include="..\..\dlls\ADM\Func\CFuncLag.h" />
+    <ClInclude Include="..\..\dlls\ADM\Func\CFuncLoadbar.h" />
+    <ClInclude Include="..\..\dlls\ADM\Func\CFuncNovis.h" />
     <ClInclude Include="..\..\dlls\ADM\Shared\AdmSound.h" />
     <ClInclude Include="..\..\dlls\AI\Activity.h" />
     <ClInclude Include="..\..\dlls\AI\ActivityMap.h" />
@@ -270,6 +278,7 @@
     <ClInclude Include="..\..\dlls\Base\CDLL_DLL.h" />
     <ClInclude Include="..\..\dlls\Func\CBaseButton.h" />
     <ClInclude Include="..\..\dlls\Func\CBaseDoor.h" />
+    <ClInclude Include="..\..\dlls\Func\CBasePlatTrain.h" />
     <ClInclude Include="..\..\dlls\Func\CBreakable.h" />
     <ClInclude Include="..\..\dlls\Func\CFrictionModifier.h" />
     <ClInclude Include="..\..\dlls\Func\CFuncConveyor.h" />
@@ -298,8 +307,10 @@
     <ClInclude Include="..\..\dlls\Func\CMortar.h" />
     <ClInclude Include="..\..\dlls\Func\CPendulum.h" />
     <ClInclude Include="..\..\dlls\Func\CPushable.h" />
+    <ClInclude Include="..\..\dlls\Func\CRecharge.h" />
     <ClInclude Include="..\..\dlls\Func\CRotButton.h" />
     <ClInclude Include="..\..\dlls\Func\CRotDoor.h" />
+    <ClInclude Include="..\..\dlls\Func\CWallHealth.h" />
     <ClInclude Include="..\..\dlls\Game\Client.h" />
     <ClInclude Include="..\..\dlls\Decals.h" />
     <ClInclude Include="..\..\dlls\AI\DefaultAI.h" />
@@ -315,6 +326,8 @@
     <ClInclude Include="..\..\dlls\AI\Monsters.h" />
     <ClInclude Include="..\..\dlls\Items\Items.h" />
     <ClInclude Include="..\..\dlls\Nodes.h" />
+    <ClInclude Include="..\..\dlls\Path\CPathCorner.h" />
+    <ClInclude Include="..\..\dlls\Path\CPathTrack.h" />
     <ClInclude Include="..\..\dlls\Plane.h" />
     <ClInclude Include="..\..\dlls\Player.h" />
     <ClInclude Include="..\..\dlls\Base\SaveRestore.h" />
@@ -327,7 +340,6 @@
     <ClInclude Include="..\..\dlls\AI\SquadMonster.h" />
     <ClInclude Include="..\..\dlls\AI\TalkMonster.h" />
     <ClInclude Include="..\..\dlls\Game\GamerulesTeamplay.h" />
-    <ClInclude Include="..\..\dlls\Trains.h" />
     <ClInclude Include="..\..\dlls\Trigger\CBaseTrigger.h" />
     <ClInclude Include="..\..\dlls\Util.h" />
     <ClInclude Include="..\..\dlls\Vector.h" />

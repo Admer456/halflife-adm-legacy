@@ -19,6 +19,7 @@
 #include "Base/ExtDLL.h"
 #include "Util.h"
 #include "Base/CBase.h"
+#include "Func/CBaseButton.h"
 
 void CBaseDelay::GetKeyValueBase(char &szTheValue, char szTargetKeyName[64])
 {

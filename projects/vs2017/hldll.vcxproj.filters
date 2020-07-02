@@ -69,6 +69,12 @@
     <Filter Include="Source Files\Trigger">
       <UniqueIdentifier>{bf25760c-77f1-4ce5-8bda-4ace03c47d60}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Path">
+      <UniqueIdentifier>{a8df70ed-4602-4d22-a482-851594920642}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ADM\Func">
+      <UniqueIdentifier>{020dc8e7-4428-4ab1-b808-0708506662cb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\game_shared\voice_gamemgr.cpp">
@@ -90,9 +96,6 @@
       <Filter>Source Files\ADM</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\adm\AdmEffects.cpp">
-      <Filter>Source Files\ADM</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\dlls\adm\AdmFunc.cpp">
       <Filter>Source Files\ADM</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\adm\AdmGetSetKV.cpp">
@@ -356,13 +359,7 @@
     <ClCompile Include="..\..\dlls\Observer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\dlls\PathCorner.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\dlls\Plane.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\dlls\Plats.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Player.cpp">
@@ -499,6 +496,30 @@
     </ClCompile>
     <ClCompile Include="..\..\dlls\Func\CRotButton.cpp">
       <Filter>Source Files\Func</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\Func\CBasePlatTrain.cpp">
+      <Filter>Source Files\Func</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\Path\CPathTrack.cpp">
+      <Filter>Source Files\Path</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\Path\CPathCorner.cpp">
+      <Filter>Source Files\Path</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\Func\CRecharge.cpp">
+      <Filter>Source Files\Func</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\Func\CWallHealth.cpp">
+      <Filter>Source Files\Func</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\ADM\Func\CFuncLag.cpp">
+      <Filter>Source Files\ADM\Func</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\ADM\Func\CFuncLoadbar.cpp">
+      <Filter>Source Files\ADM\Func</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\ADM\Func\CFuncNovis.cpp">
+      <Filter>Source Files\ADM\Func</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -646,9 +667,6 @@
     <ClInclude Include="..\..\dlls\Spectator.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\dlls\Trains.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\dlls\Util.h">
       <Filter>Source Files</Filter>
     </ClInclude>
@@ -762,6 +780,30 @@
     </ClInclude>
     <ClInclude Include="..\..\dlls\Trigger\CBaseTrigger.h">
       <Filter>Source Files\Trigger</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dlls\Func\CBasePlatTrain.h">
+      <Filter>Source Files\Func</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dlls\Path\CPathTrack.h">
+      <Filter>Source Files\Path</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dlls\Path\CPathCorner.h">
+      <Filter>Source Files\Path</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dlls\Func\CRecharge.h">
+      <Filter>Source Files\Func</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dlls\Func\CWallHealth.h">
+      <Filter>Source Files\Func</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dlls\ADM\Func\CFuncLag.h">
+      <Filter>Source Files\ADM\Func</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dlls\ADM\Func\CFuncLoadbar.h">
+      <Filter>Source Files\ADM\Func</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dlls\ADM\Func\CFuncNovis.h">
+      <Filter>Source Files\ADM\Func</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

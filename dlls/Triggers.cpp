@@ -25,9 +25,9 @@
 #include "Base/CBase.h"
 #include "player.h"
 #include "Base/SaveRestore.h"
-#include "trains.h"			// trigger_camera has train functionality
 #include "Game/GameRules.h"
 #include "Trigger/CBaseTrigger.h"
+#include "Path/CPathCorner.h"
 
 #define	SF_TRIGGER_PUSH_START_OFF	2//spawnflag that makes trigger_push spawn turned OFF
 #define SF_TRIGGER_HURT_TARGETONCE	1// Only fire hurt target once

@@ -25,7 +25,7 @@
 
 #include "Base/CBase.h"
 #include "player.h"
-#include "trains.h"
+#include "Func/CBasePlatTrain.h"
 #include "nodes.h"
 #include "Weapons/Weapons.h"
 #include "soundent.h"

@@ -30,7 +30,6 @@
 #include "Base/CBase.h"
 #include "player.h"
 #include "Base/SaveRestore.h"
-#include "trains.h"			// trigger_camera has train functionality
 #include "Game/GameRules.h"
 #include "skill.h"
 #include "adm/shared/AdmTime.h"
