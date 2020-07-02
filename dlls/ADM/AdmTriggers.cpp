@@ -80,25 +80,25 @@ void SUB_KillTargets(string_t target)
 class CTriggerValueOperator : public CBaseDelay // a.k.a. CChangeValue
 {
 public:
-	void Spawn(void);
-	void KeyValue(KeyValueData *pkvd);
-	void GetKeyValueCustom(char &szTheValue, char szTargetKeyName[64]);
-	void SetKeyValueCustom(char szTargetKeyName[64], char szTheValue[64]);
+	void				Spawn(void);
+	void				KeyValue(KeyValueData *pkvd);
+	void				GetKeyValueCustom(char &szTheValue, char szTargetKeyName[64]);
+	void				SetKeyValueCustom(char szTargetKeyName[64], char szTheValue[64]);
 
-	void Use		(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value);
-	void UseString	(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value);
-	void UseVector	(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value);
-	void UseInt		(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value);
-	void UseFloat	(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value);
+	void				Use			(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value);
+	void				UseString	(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value);
+	void				UseVector	(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value);
+	void				UseInt		(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value);
+	void				UseFloat	(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value);
 
 private:
-	string_t	m_iszNewValue;
-	string_t	m_iszTargetKey;
-	string_t	m_iszTargetEntity;
-	string_t	m_iszTargetEntityForFire;
+	string_t			m_iszNewValue;
+	string_t			m_iszTargetKey;
+	string_t			m_iszTargetEntity;
+	string_t			m_iszTargetEntityForFire;
 
-	unsigned short int iOperatingMode;
-	USE_TYPE	triggerType;
+	unsigned short int	iOperatingMode;
+	USE_TYPE			triggerType;
 };
 
 enum ValueOpMode
@@ -707,18 +707,18 @@ void CTriggerValueOperator::UseVector(CBaseEntity *pActivator, CBaseEntity *pCal
 class CTriggerDate : public CBaseEntity
 {
 public:
-	void Spawn(void);
+	void				Spawn(void);
 
-	void KeyValue(KeyValueData *pkvd);
-	void GetKeyValueCustom(char &szTheValue, char szTargetKeyName[64]);
-	void SetKeyValueCustom(char szTargetKeyName[64], char szTheValue[64]);
+	void				KeyValue(KeyValueData *pkvd);
+	void				GetKeyValueCustom(char &szTheValue, char szTargetKeyName[64]);
+	void				SetKeyValueCustom(char szTargetKeyName[64], char szTheValue[64]);
 
-	void Use(CBaseEntity *pActivator, CBaseEntity *pOther, USE_TYPE useType, float value);
+	void				Use(CBaseEntity *pActivator, CBaseEntity *pOther, USE_TYPE useType, float value);
 
 private:
-	int m_iYear;
-	int m_iMonth;
-	int m_iDay;
+	int					m_iYear;
+	int					m_iMonth;
+	int					m_iDay;
 };
 
 LINK_ENTITY_TO_CLASS(trigger_date, CTriggerDate);
@@ -802,22 +802,21 @@ void CTriggerDate::Use(CBaseEntity *pActivator, CBaseEntity *pOther, USE_TYPE us
 	Triggers something if a specific time of day is met.
 	3 AM horrors!!!
 */
-
 class CTriggerDate2 : public CBaseEntity
 {
 public:
-	void Spawn(void);
+	void				Spawn(void);
 
-	void KeyValue(KeyValueData *pkvd);
-	void GetKeyValueCustom(char &szTheValue, char szTargetKeyName[64]);
-	void SetKeyValueCustom(char szTargetKeyName[64], char szTheValue[64]);
+	void				KeyValue(KeyValueData *pkvd);
+	void				GetKeyValueCustom(char &szTheValue, char szTargetKeyName[64]);
+	void				SetKeyValueCustom(char szTargetKeyName[64], char szTheValue[64]);
 
-	void Use(CBaseEntity *pActivator, CBaseEntity *pOther, USE_TYPE useType, float value);
+	void				Use(CBaseEntity *pActivator, CBaseEntity *pOther, USE_TYPE useType, float value);
 
 private:
-	int m_iHour;
-	int m_iMinute;
-	int m_iSecond;
+	int					m_iHour;
+	int					m_iMinute;
+	int					m_iSecond;
 };
 
 LINK_ENTITY_TO_CLASS(trigger_date2, CTriggerDate2);
@@ -906,17 +905,17 @@ void CTriggerDate2::Use(CBaseEntity *pActivator, CBaseEntity *pOther, USE_TYPE u
 class CTriggerDifficulty : public CBaseEntity
 {
 public:
-	void Spawn(void);
+	void				Spawn(void);
 
-	void KeyValue(KeyValueData *pkvd);
-	void GetKeyValueCustom(char &szTheValue, char szTargetKeyName[64]);
-	void SetKeyValueCustom(char szTargetKeyName[64], char szTheValue[64]);
+	void				KeyValue(KeyValueData *pkvd);
+	void				GetKeyValueCustom(char &szTheValue, char szTargetKeyName[64]);
+	void				SetKeyValueCustom(char szTargetKeyName[64], char szTheValue[64]);
 
-	void Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value);
+	void				Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value);
 
 private:
-	int m_iSkill;
-	int	m_iszKillTarget;
+	int					m_iSkill;
+	int					m_iszKillTarget;
 };
 
 LINK_ENTITY_TO_CLASS(trigger_difficulty, CTriggerDifficulty);
@@ -1025,21 +1024,21 @@ void CTriggerDifficulty::Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_
 class CTriggerTimer : public CBaseEntity
 {
 public:
-	void Spawn();
-	void KeyValue(KeyValueData *pkvd);
+	void				Spawn();
+	void				KeyValue(KeyValueData *pkvd);
 //	int ObjectCaps() override { return FCAP_ACROSS_TRANSITION };
 
-	void EXPORT UseStart(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value);
-	void EXPORT UseStop(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value);
+	void EXPORT			UseStart(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value);
+	void EXPORT			UseStop(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value);
 
-	void EXPORT TimerThink();
+	void EXPORT			TimerThink();
 
 private:
-	CBaseEntity *m_pActivator;
-	USE_TYPE	m_useType;
-	float		m_value;
-	float		m_flDelay;
-	float		m_flDelay2;
+	CBaseEntity*		m_pActivator;
+	USE_TYPE			m_useType;
+	float				m_value;
+	float				m_flDelay;
+	float				m_flDelay2;
 };
 
 LINK_ENTITY_TO_CLASS(trigger_timer, CTriggerTimer);
@@ -1143,68 +1142,67 @@ void EXPORT CTriggerTimer::TimerThink(void)
 	like ERROR:, WARNING:, NOTE:, logging
 	to the server console and whatnot. :)
 */
-
 class CUtilConsolePrinter : public CBaseEntity
 {
 public:
-	void KeyValue(KeyValueData *pkvd);
-	void GetKeyValueCustom(char &szTheValue, char szTargetKeyName[64]);
-	void SetKeyValueCustom(char szTargetKeyName[64], char szTheValue[64]);
-	void Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value);
+	void				KeyValue( KeyValueData* pkvd );
+	void				GetKeyValueCustom( char& szTheValue, char szTargetKeyName[64] );
+	void				SetKeyValueCustom( char szTargetKeyName[64], char szTheValue[64] );
+	void				Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value );
 
 private:
-	string_t m_strMessage;
-	int m_iPrefix;
-	ALERT_TYPE m_alertPrefix;
+	string_t			m_strMessage;
+	int					m_iPrefix;
+	ALERT_TYPE			m_alertPrefix;
 };
 
-LINK_ENTITY_TO_CLASS(util_consoleprinter, CUtilConsolePrinter);
+LINK_ENTITY_TO_CLASS( util_consoleprinter, CUtilConsolePrinter );
 
-void CUtilConsolePrinter::KeyValue(KeyValueData *pkvd)
+void CUtilConsolePrinter::KeyValue( KeyValueData* pkvd )
 {
-	if (FStrEq(pkvd->szKeyName, "m_strMessage"))
+	if ( FStrEq( pkvd->szKeyName, "m_strMessage" ) )
 	{
-		m_strMessage = ALLOC_STRING(pkvd->szValue);
+		m_strMessage = ALLOC_STRING( pkvd->szValue );
 		pkvd->fHandled = TRUE;
 	}
 
-	else if (FStrEq(pkvd->szKeyName, "m_iPrefix"))
+	else if ( FStrEq( pkvd->szKeyName, "m_iPrefix" ) )
 	{
-		m_iPrefix = atoi(pkvd->szValue);
+		m_iPrefix = atoi( pkvd->szValue );
 		pkvd->fHandled = TRUE;
 	}
 
 	else
 	{
-		CBaseEntity::KeyValue(pkvd);
+		CBaseEntity::KeyValue( pkvd );
 	}
 }
 
-void CUtilConsolePrinter::GetKeyValueCustom(char &szTheValue, char szTargetKeyName[64])
+void CUtilConsolePrinter::GetKeyValueCustom( char& szTheValue, char szTargetKeyName[64] )
 {
-	if (FStrEq(szTargetKeyName, "m_strMessage"))
-		printf(&szTheValue, "%s", STRING(m_strMessage));
+	if ( FStrEq( szTargetKeyName, "m_strMessage" ) )
+		printf( &szTheValue, "%s", STRING( m_strMessage ) );
 
-	else if (FStrEq(szTargetKeyName, "m_iPrefix"))
-		printf(&szTheValue, "%i", m_iPrefix);
+	else if ( FStrEq( szTargetKeyName, "m_iPrefix" ) )
+		printf( &szTheValue, "%i", m_iPrefix );
 
 	else
-		printf(&szTheValue, "%s", "null (no matching KV)");
+		printf( &szTheValue, "%s", "null (no matching KV)" );
 }
 
-void CUtilConsolePrinter::SetKeyValueCustom(char szTargetKeyName[64], char szTheValue[64])
+void CUtilConsolePrinter::SetKeyValueCustom( char szTargetKeyName[64], char szTheValue[64] )
 {
-	if (FStrEq(szTargetKeyName, "m_strMessage"))
-		m_strMessage = ALLOC_STRING(szTheValue);
+	if ( FStrEq( szTargetKeyName, "m_strMessage" ) )
+		m_strMessage = ALLOC_STRING( szTheValue );
 
-	else if (FStrEq(szTargetKeyName, "m_iPrefix"))
-		m_iPrefix = atoi(szTheValue);
+	else if ( FStrEq( szTargetKeyName, "m_iPrefix" ) )
+		m_iPrefix = atoi( szTheValue );
 
 	else
-		ALERT(at_error, "No matching KV %s in %s", szTargetKeyName, STRING(pev->targetname));
+		ALERT( at_error, "No matching KV %s in %s", szTargetKeyName, STRING( pev->targetname ) );
 }
 
-void CUtilConsolePrinter::Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value)
+void CUtilConsolePrinter::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value )
 {
 	switch (m_iPrefix)
 	{
@@ -1237,7 +1235,7 @@ void CUtilConsolePrinter::Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE
 		break;
 	}
 
-	ALERT(m_alertPrefix, (char*)STRING(m_strMessage));
+	ALERT( m_alertPrefix, (char*)STRING( m_strMessage ) );
 }
 
 #define Deg2Rad (M_PI / 360) // A lil' bit ugly, but will work :) Trigonometric functions here apparently take radians only, so :p
@@ -1265,24 +1263,23 @@ void CUtilConsolePrinter::Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE
 	6-11 follow the same style, except both origins are taken
 	into consideration. Could've used spawnflags TBH,
 */
-
 class CUtilRotator : public CBaseToggle
 {
 public:
-	void	KeyValue(KeyValueData *pkvd);
-	void	GetKeyValueCustom(char &szTheValue, char szTargetKeyName[64]);
-	void	SetKeyValueCustom(char szTargetKeyName[64], char szTheValue[64]);
-	void	Spawn(void);
+	void				KeyValue(KeyValueData* pkvd);
+	void				GetKeyValueCustom(char& szTheValue, char szTargetKeyName[64]);
+	void				SetKeyValueCustom(char szTargetKeyName[64], char szTheValue[64]);
+	void				Spawn(void);
 
-	int		ObjectCaps() override { return FCAP_ACROSS_TRANSITION; }
+	int					ObjectCaps() override { return FCAP_ACROSS_TRANSITION; }
 
-	void	EXPORT RotateThink(void);
-	void	EXPORT RotateStart(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value);
-	void	EXPORT RotateUse(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value);
-	void	EXPORT RotateStop(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value);
+	void EXPORT			RotateThink( void );
+	void EXPORT			RotateStart( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value );
+	void EXPORT			RotateUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value );
+	void EXPORT			RotateStop( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value );
 
-	void	RotateApply(CBaseEntity *pTarget); // Just to discern between the actual target member and this function declaration
-	float	DistToOrigin(void);
+	void				RotateApply(CBaseEntity* pTarget); // Just to discern between the actual target member and this function declaration
+	float				DistToOrigin(void);
 
 	// How it works:
 	// 
@@ -1293,36 +1290,36 @@ public:
 	//       z = RadiusPriSec * sin(angle.pitch) + PrimaryOrigin.z;
 
 private:
-	vec3_t	m_vecPrimaryOrigin;
-	vec3_t	m_vecSecondaryOrigin;
-	vec3_t	m_vecOriginalOrigin;
+	Vector				m_vecPrimaryOrigin;
+	Vector				m_vecSecondaryOrigin;
+	Vector				m_vecOriginalOrigin;
 
-	float	m_flDelay;
-	int		m_iOperationMode;
+	float				m_flDelay;
+	int					m_iOperationMode;
 
-	vec3_t	m_vecPrimaryAngles;
-	vec3_t	m_vecPrimaryAnglePhase = { 0, 0, 0 };
-	vec3_t	m_vecSecondaryAngles;
-	vec3_t	m_vecSecondaryAnglePhase = { 0, 0, 0 };
-	vec3_t	m_vecOriginalAngles;
+	Vector				m_vecPrimaryAngles;
+	Vector				m_vecPrimaryAnglePhase = { 0, 0, 0 };
+	Vector				m_vecSecondaryAngles;
+	Vector				m_vecSecondaryAnglePhase = { 0, 0, 0 };
+	Vector				m_vecOriginalAngles;
 
-	string_t m_iszPrimaryTarget;
-	string_t m_iszSecondaryTarget;
+	string_t			m_iszPrimaryTarget;
+	string_t			m_iszSecondaryTarget;
 
-	CBaseEntity *pPrimaryTarget;	// PrimaryTarget is actually an entity whose origin will be taken.
-	CBaseEntity *pSecondaryTarget;	// Look at PrimaryTarget.
-	CBaseEntity *pTarget;			// Now this is the entity which will get affected by the rotations. Hope that clears up the confusion.
+	CBaseEntity*		pPrimaryTarget;		// PrimaryTarget is actually an entity whose origin will be taken.
+	CBaseEntity*		pSecondaryTarget;	// Look at PrimaryTarget.
+	CBaseEntity*		pTarget;			// Now this is the entity which will get affected by the rotations. Hope that clears up the confusion.
 
-	char szPrimaryOrigin[64];
-	char szSecondaryOrigin[64];
-	char szPrimaryAngles[64];
-	char szSecondaryAngles[64];
+	char				szPrimaryOrigin[64];
+	char				szSecondaryOrigin[64];
+	char				szPrimaryAngles[64];
+	char				szSecondaryAngles[64];
 
-	qboolean m_fIsUsingPredefRadiusXY;
-	qboolean m_fIsUsingPredefRadiusZ;
+	qboolean			m_fIsUsingPredefRadiusXY;
+	qboolean			m_fIsUsingPredefRadiusZ;
 
-	float m_flRadiusXY;
-	float m_flRadiusZ;
+	float				m_flRadiusXY;
+	float				m_flRadiusZ;
 };
 
 LINK_ENTITY_TO_CLASS(util_rotator, CUtilRotator);
@@ -1331,317 +1328,299 @@ LINK_ENTITY_TO_CLASS(util_rotator, CUtilRotator);
 #define SF_SC_ROTATING	2
 #define SF_START_ON		4
 
-void CUtilRotator::KeyValue(KeyValueData *pkvd)
+void CUtilRotator::KeyValue( KeyValueData *pkvd )
 {
-	if (FStrEq(pkvd->szKeyName, "pr_origin"))
+	if ( FStrEq( pkvd->szKeyName, "pr_origin" ) )
 	{
-		sscanf(pkvd->szValue, "%f %f %f\n",
+		sscanf( pkvd->szValue, "%f %f %f\n",
 			&m_vecPrimaryOrigin.x,
 			&m_vecPrimaryOrigin.y,
-			&m_vecPrimaryOrigin.z); // I apologise if this style really bothers you. :p
+			&m_vecPrimaryOrigin.z ); // I apologise if this style really bothers you. :p
 
-		sprintf(szPrimaryOrigin, "%f %f %f",
+		sprintf( szPrimaryOrigin, "%f %f %f",
 			m_vecPrimaryOrigin.x,
 			m_vecPrimaryOrigin.y,
-			m_vecPrimaryOrigin.z);
-
-		//		ALERT(at_console, "\nInfo: first origin of %s = \n(%s)\n", STRING(pev->targetname), szPrimaryOrigin);
+			m_vecPrimaryOrigin.z );
 
 		pkvd->fHandled = TRUE;
 	}
 
-	else if (FStrEq(pkvd->szKeyName, "sc_origin"))
+	else if ( FStrEq( pkvd->szKeyName, "sc_origin" ) )
 	{
-		sscanf(pkvd->szValue, "%f %f %f\n",
+		sscanf( pkvd->szValue, "%f %f %f\n",
 			&m_vecSecondaryOrigin.x,
 			&m_vecSecondaryOrigin.y,
-			&m_vecSecondaryOrigin.z);
+			&m_vecSecondaryOrigin.z );
 
-		sprintf(szSecondaryOrigin, "%f %f %f",
+		sprintf( szSecondaryOrigin, "%f %f %f",
 			m_vecSecondaryOrigin.x,
 			m_vecSecondaryOrigin.y,
-			m_vecSecondaryOrigin.z);
-
-		//		ALERT(at_console, "\nInfo: second origin of %s = \n(%s)\n", STRING(pev->targetname), szSecondaryOrigin);
+			m_vecSecondaryOrigin.z );
 
 		pkvd->fHandled = TRUE;
 	}
 
-	else if (FStrEq(pkvd->szKeyName, "pr_angles"))
+	else if ( FStrEq( pkvd->szKeyName, "pr_angles" ) )
 	{
-		sscanf(pkvd->szValue, "%f %f %f\n",
+		sscanf( pkvd->szValue, "%f %f %f\n",
 			&m_vecPrimaryAngles.x,
 			&m_vecPrimaryAngles.y,
-			&m_vecPrimaryAngles.z);
+			&m_vecPrimaryAngles.z );
 
-		sprintf(szPrimaryAngles, "%f %f %f",
+		sprintf( szPrimaryAngles, "%f %f %f",
 			m_vecPrimaryAngles.x,
 			m_vecPrimaryAngles.y,
-			m_vecPrimaryAngles.z);
-
-		//		ALERT(at_console, "\nInfo: prim angles of %s = \n%s\n", STRING(pev->targetname), szPrimaryAngles);
+			m_vecPrimaryAngles.z );
 
 		pkvd->fHandled = TRUE;
 	}
 
-	else if (FStrEq(pkvd->szKeyName, "sc_angles"))
+	else if ( FStrEq( pkvd->szKeyName, "sc_angles" ) )
 	{
-		sscanf(pkvd->szValue, "%f %f %f\n",
+		sscanf( pkvd->szValue, "%f %f %f\n",
 			&m_vecSecondaryAngles.x,
 			&m_vecSecondaryAngles.y,
-			&m_vecSecondaryAngles.z);
+			&m_vecSecondaryAngles.z );
 
-		sprintf(szSecondaryAngles, "%f %f %f",
+		sprintf( szSecondaryAngles, "%f %f %f",
 			m_vecSecondaryAngles.x,
 			m_vecSecondaryAngles.y,
-			m_vecSecondaryAngles.z);
-
-		//		ALERT(at_console, "\nInfo: second angles of %s = \n%s\n", STRING(pev->targetname), szSecondaryAngles);
+			m_vecSecondaryAngles.z );
 
 		pkvd->fHandled = TRUE;
 	}
 
-	else if (FStrEq(pkvd->szKeyName, "pr_target"))
+	else if ( FStrEq( pkvd->szKeyName, "pr_target" ) )
 	{
-		m_iszPrimaryTarget = ALLOC_STRING(pkvd->szValue);
+		m_iszPrimaryTarget = ALLOC_STRING( pkvd->szValue );
 	}
 
-	else if (FStrEq(pkvd->szKeyName, "sc_target"))
+	else if ( FStrEq( pkvd->szKeyName, "sc_target" ) )
 	{
-		m_iszSecondaryTarget = ALLOC_STRING(pkvd->szValue);
+		m_iszSecondaryTarget = ALLOC_STRING( pkvd->szValue );
 	}
 
-	else if (FStrEq(pkvd->szKeyName, "delay"))
+	else if ( FStrEq( pkvd->szKeyName, "delay" ) )
 	{
-		m_flDelay = atof(pkvd->szValue);
+		m_flDelay = atof( pkvd->szValue );
 		pkvd->fHandled = TRUE;
 	}
 
-	else if (FStrEq(pkvd->szKeyName, "opmode"))
+	else if ( FStrEq( pkvd->szKeyName, "opmode" ) )
 	{
-		m_iOperationMode = atoi(pkvd->szValue);
+		m_iOperationMode = atoi( pkvd->szValue );
 		pkvd->fHandled = TRUE;
 	}
 
-	else if (FStrEq(pkvd->szKeyName, "radius1"))
+	else if ( FStrEq( pkvd->szKeyName, "radius1" ) )
 	{
-		if (FStrEq(pkvd->szValue, "0"))
+		if ( FStrEq( pkvd->szValue, "0" ) )
 		{
 			m_fIsUsingPredefRadiusXY = FALSE;
-			ALERT(at_console, "\nPredefRadiusXY FALSE");
+			ALERT( at_console, "\nPredefRadiusXY FALSE" );
 		}
 
 		else
 		{
-			m_flRadiusXY = atof(pkvd->szValue);
+			m_flRadiusXY = atof( pkvd->szValue );
 			m_fIsUsingPredefRadiusXY = TRUE;
-			ALERT(at_console, "\nPredefRadiusXY TRUE");
+			ALERT( at_console, "\nPredefRadiusXY TRUE" );
 		}
 		pkvd->fHandled = TRUE;
 	}
 
-	else if (FStrEq(pkvd->szKeyName, "radius2"))
+	else if ( FStrEq( pkvd->szKeyName, "radius2" ) )
 	{
-		if (FStrEq(pkvd->szValue, "0"))
+		if ( FStrEq( pkvd->szValue, "0" ) )
 		{
 			m_fIsUsingPredefRadiusZ = FALSE;
 		}
 
 		else
 		{
-			m_flRadiusZ = atof(pkvd->szValue);
+			m_flRadiusZ = atof( pkvd->szValue );
 			m_fIsUsingPredefRadiusZ = TRUE;
 		}
 		pkvd->fHandled = TRUE;
 	}
 
 	else
-		CBaseEntity::KeyValue(pkvd);
+		CBaseEntity::KeyValue( pkvd );
 }
 
-void CUtilRotator::GetKeyValueCustom(char &szTheValue, char szTargetKeyName[64])
+void CUtilRotator::GetKeyValueCustom( char& szTheValue, char szTargetKeyName[64] )
 {
-	if (FStrEq(szTargetKeyName, "pr_origin"))
-		sprintf(&szTheValue, "%f %f %f", m_vecPrimaryOrigin.x, m_vecPrimaryOrigin.y, m_vecPrimaryOrigin.z);
+	if ( FStrEq( szTargetKeyName, "pr_origin" ) )
+		sprintf( &szTheValue, "%f %f %f", m_vecPrimaryOrigin.x, m_vecPrimaryOrigin.y, m_vecPrimaryOrigin.z );
 
-	else if (FStrEq(szTargetKeyName, "sc_origin"))
-		sprintf(&szTheValue, "%f %f %f", m_vecSecondaryOrigin.x, m_vecSecondaryOrigin.y, m_vecSecondaryOrigin.z);
+	else if ( FStrEq( szTargetKeyName, "sc_origin" ) )
+		sprintf( &szTheValue, "%f %f %f", m_vecSecondaryOrigin.x, m_vecSecondaryOrigin.y, m_vecSecondaryOrigin.z );
 
-	else if (FStrEq(szTargetKeyName, "pr_angles"))
-		sprintf(&szTheValue, "%f %f %f", m_vecPrimaryAngles.x, m_vecPrimaryAngles.y, m_vecPrimaryAngles.z);
+	else if ( FStrEq( szTargetKeyName, "pr_angles" ) )
+		sprintf( &szTheValue, "%f %f %f", m_vecPrimaryAngles.x, m_vecPrimaryAngles.y, m_vecPrimaryAngles.z );
 
-	else if (FStrEq(szTargetKeyName, "sc_angles"))
-		sprintf(&szTheValue, "%f %f %f", m_vecSecondaryAngles.x, m_vecSecondaryAngles.y, m_vecSecondaryAngles.z);
+	else if ( FStrEq( szTargetKeyName, "sc_angles" ) )
+		sprintf( &szTheValue, "%f %f %f", m_vecSecondaryAngles.x, m_vecSecondaryAngles.y, m_vecSecondaryAngles.z );
 
-	else if (FStrEq(szTargetKeyName, "pr_target"))
-		sprintf(&szTheValue, "%s", STRING(m_iszPrimaryTarget));
+	else if ( FStrEq( szTargetKeyName, "pr_target" ) )
+		sprintf( &szTheValue, "%s", STRING( m_iszPrimaryTarget ) );
 
-	else if (FStrEq(szTargetKeyName, "sc_target"))
-		sprintf(&szTheValue, "%s", STRING(m_iszSecondaryTarget));
+	else if ( FStrEq( szTargetKeyName, "sc_target" ) )
+		sprintf( &szTheValue, "%s", STRING( m_iszSecondaryTarget ) );
 
 	else
-		printf(&szTheValue, "%s", "null (no matching KV)");
+		printf( &szTheValue, "%s", "null (no matching KV)" );
 }
 
-void CUtilRotator::SetKeyValueCustom(char szTargetKeyName[64], char szTheValue[64])
+void CUtilRotator::SetKeyValueCustom( char szTargetKeyName[64], char szTheValue[64] )
 {
-	if (FStrEq(szTargetKeyName, "pr_origin"))
-		sscanf(szTheValue, "%f %f %f", &m_vecPrimaryOrigin.x, &m_vecPrimaryOrigin.y, &m_vecPrimaryOrigin.z);
+	if ( FStrEq( szTargetKeyName, "pr_origin" ) )
+		sscanf( szTheValue, "%f %f %f", &m_vecPrimaryOrigin.x, &m_vecPrimaryOrigin.y, &m_vecPrimaryOrigin.z );
 
-	else if (FStrEq(szTargetKeyName, "sc_origin"))
-		sscanf(szTheValue, "%f %f %f", &m_vecPrimaryAngles.x, &m_vecPrimaryAngles.y, &m_vecPrimaryAngles.z);
+	else if ( FStrEq( szTargetKeyName, "sc_origin" ) )
+		sscanf( szTheValue, "%f %f %f", &m_vecPrimaryAngles.x, &m_vecPrimaryAngles.y, &m_vecPrimaryAngles.z );
 
-	else if (FStrEq(szTargetKeyName, "pr_angles"))
-		sscanf(szTheValue, "%f %f %f", &m_vecPrimaryAngles.x, &m_vecPrimaryAngles.y, &m_vecPrimaryAngles.z);
+	else if ( FStrEq( szTargetKeyName, "pr_angles" ) )
+		sscanf( szTheValue, "%f %f %f", &m_vecPrimaryAngles.x, &m_vecPrimaryAngles.y, &m_vecPrimaryAngles.z );
 
-	else if (FStrEq(szTargetKeyName, "sc_angles"))
-		sscanf(szTheValue, "%f %f %f", &m_vecSecondaryAngles.x, &m_vecSecondaryAngles.y, &m_vecSecondaryAngles.z);
+	else if ( FStrEq( szTargetKeyName, "sc_angles" ) )
+		sscanf( szTheValue, "%f %f %f", &m_vecSecondaryAngles.x, &m_vecSecondaryAngles.y, &m_vecSecondaryAngles.z );
 
-	else if (FStrEq(szTargetKeyName, "pr_target"))
-		m_iszPrimaryTarget = ALLOC_STRING(szTheValue);
+	else if ( FStrEq( szTargetKeyName, "pr_target" ) )
+		m_iszPrimaryTarget = ALLOC_STRING( szTheValue );
 
-	else if (FStrEq(szTargetKeyName, "pr_target"))
-		m_iszPrimaryTarget = ALLOC_STRING(szTheValue);
+	else if ( FStrEq( szTargetKeyName, "pr_target" ) )
+		m_iszPrimaryTarget = ALLOC_STRING( szTheValue );
 
 	else
-		ALERT(at_error, "No matching KV %s in %s", szTargetKeyName, STRING(pev->targetname));
+		ALERT( at_error, "No matching KV %s in %s", szTargetKeyName, STRING( pev->targetname ) );
 }
 
-void CUtilRotator::Spawn(void)
+void CUtilRotator::Spawn( void )
 {
-	UTIL_SetOrigin(pev, pev->origin);
-//	pev->solid = SOLID_BSP;
-//	pev->movetype = MOVETYPE_PUSH;
+	UTIL_SetOrigin( pev, pev->origin );
 
-	SetThink(NULL);
-	SetUse(NULL);
+	SetThink( NULL );
+	SetUse( NULL );
 
-	switch (m_iOperationMode)
+	switch ( m_iOperationMode )
 	{
 	case 0:	// Rotate once, set angles
-		SetUse(&CUtilRotator::RotateUse);
+		SetUse( &CUtilRotator::RotateUse );
 		break;
 
 	case 1:	// Rotate once, add angles
-		SetUse(&CUtilRotator::RotateUse);
+		SetUse( &CUtilRotator::RotateUse );
 		break;
 
 	case 2:	// Rotate every x seconds, set angles
-		SetUse(&CUtilRotator::RotateStart);
-		SetThink(&CUtilRotator::RotateThink);
+		SetUse( &CUtilRotator::RotateStart );
+		SetThink( &CUtilRotator::RotateThink );
 		break;
 
 	case 3:	// Rotate every x seconds, add angles
-		SetUse(&CUtilRotator::RotateStart);
-		SetThink(&CUtilRotator::RotateThink);
+		SetUse( &CUtilRotator::RotateStart );
+		SetThink( &CUtilRotator::RotateThink );
 		break;
 
 	case 4: // Rotate every x seconds, accelerate angles
-		SetUse(&CUtilRotator::RotateStart);
-		SetThink(&CUtilRotator::RotateThink);
+		SetUse( &CUtilRotator::RotateStart );
+		SetThink( &CUtilRotator::RotateThink );
 
 	default:
-		ALERT(at_error, "\nBoop, util_rotator (%s) has no operation mode, fix this please\n", STRING(pev->targetname));
+		ALERT( at_error, "\nBoop, util_rotator (%s) has no operation mode, fix this please\n", STRING( pev->targetname ) );
 		break;
 	}
-
-	ALERT(at_console, "\nutil_rotator %s\nPrim: %s\nSec: %s\nPrimA: %s\nSecA: %s\n", STRING(pev->targetname), szPrimaryOrigin, szSecondaryOrigin, szPrimaryAngles, szSecondaryAngles);
 }
 
-void EXPORT CUtilRotator::RotateThink(void)
+void EXPORT CUtilRotator::RotateThink( void )
 {
-	ALERT(at_console, "\nutil_rotator RotateThink");
+	RotateApply( pTarget );
 
-	RotateApply(pTarget);
-	
-	pTarget->SUB_NullThink(m_flDelay);
+	pTarget->SUB_NullThink( m_flDelay );
 	pev->nextthink = pev->ltime + m_flDelay;
 }
 
-void EXPORT CUtilRotator::RotateStart(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value)
+void EXPORT CUtilRotator::RotateStart( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
 {
-	pTarget = UTIL_FindEntityByTargetname(NULL, STRING(pev->target));
+	pTarget = UTIL_FindEntityByTargetname( NULL, STRING( pev->target ) );
 
-	if (pTarget)
+	if ( pTarget )
 	{
-		ALERT(at_console, "\nutil_rotator, entity found!\n");
+		ALERT( at_aiconsole, "\nutil_rotator, entity found!\n" );
 	}
 
 	m_vecOriginalOrigin = pTarget->pev->origin;
 	m_vecOriginalAngles = pTarget->pev->angles;
 
-	if (m_iszPrimaryTarget)
+	if ( m_iszPrimaryTarget )
 	{
-		pPrimaryTarget = UTIL_FindEntityByTargetname(NULL, STRING(m_iszPrimaryTarget));
+		pPrimaryTarget = UTIL_FindEntityByTargetname( NULL, STRING( m_iszPrimaryTarget ) );
 
 		Vector vecDistanceP = pev->origin - pPrimaryTarget->pev->origin;
-		m_vecPrimaryAngles = UTIL_VecToAngles(vecDistanceP);
+		m_vecPrimaryAngles = UTIL_VecToAngles( vecDistanceP );
 	}
 
-	if (m_vecPrimaryAngles)
+	if ( m_vecPrimaryAngles )
 	{
 		m_vecPrimaryAnglePhase = m_vecPrimaryAngles;
 	}
 
-	if (m_iszSecondaryTarget) // Will finish this later on
+	if ( m_iszSecondaryTarget ) // Will finish this later on
 	{
-		pSecondaryTarget = UTIL_FindEntityByTargetname(NULL, STRING(m_iszSecondaryTarget));
+		pSecondaryTarget = UTIL_FindEntityByTargetname( NULL, STRING( m_iszSecondaryTarget ) );
 
 		Vector vecDistanceS = pev->origin - pSecondaryTarget->pev->origin;
-		m_vecSecondaryAngles = UTIL_VecToAngles(vecDistanceS);
+		m_vecSecondaryAngles = UTIL_VecToAngles( vecDistanceS );
 		m_flRadiusXY = m_flRadiusZ = vecDistanceS.Length();
 	}
 
-	if (m_vecSecondaryAngles)
+	if ( m_vecSecondaryAngles )
 	{
 		m_vecSecondaryAnglePhase = m_vecSecondaryAngles;
 	}
 
-	ALERT(at_console, "\n\n----\nRotateStart\nSetThink RotateThink\nSetUse RotateStop");
+	SetThink( &CUtilRotator::RotateThink );
+	SetUse( &CUtilRotator::RotateStop );
 
-	SetThink(&CUtilRotator::RotateThink);
-	SetUse(&CUtilRotator::RotateStop);
-
-	pTarget->SUB_NullThink(0.001);
+	pTarget->SUB_NullThink( 0.001 );
 	pev->nextthink = pev->ltime + m_flDelay;
 }
 
-void EXPORT CUtilRotator::RotateUse(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value)
+void EXPORT CUtilRotator::RotateUse( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
 {
-	if (m_iszPrimaryTarget)
-		pPrimaryTarget = UTIL_FindEntityByTargetname(NULL, STRING(m_iszPrimaryTarget));
+	if ( m_iszPrimaryTarget )
+		pPrimaryTarget = UTIL_FindEntityByTargetname( NULL, STRING( m_iszPrimaryTarget ) );
 
-	if (m_iszSecondaryTarget)
-		pSecondaryTarget = UTIL_FindEntityByTargetname(NULL, STRING(m_iszSecondaryTarget));
+	if ( m_iszSecondaryTarget )
+		pSecondaryTarget = UTIL_FindEntityByTargetname( NULL, STRING( m_iszSecondaryTarget ) );
 
-	pTarget = UTIL_FindEntityByTargetname(NULL, STRING(pev->target));
+	pTarget = UTIL_FindEntityByTargetname( NULL, STRING( pev->target ) );
 
-	if (pTarget)
+	if ( pTarget )
 	{
-		ALERT(at_console, "\nutil_rotator, entity found!\n");
+		ALERT( at_aiconsole, "\nutil_rotator, entity found!\n" );
 	}
 
 	m_vecOriginalOrigin = pTarget->pev->origin;
 	m_vecOriginalAngles = pTarget->pev->angles;
 
-	if (m_vecPrimaryAngles)
+	if ( m_vecPrimaryAngles )
 		m_vecPrimaryAnglePhase = m_vecPrimaryAngles;
 
-	if (m_vecSecondaryAngles)
+	if ( m_vecSecondaryAngles )
 		m_vecSecondaryAnglePhase = m_vecSecondaryAngles;
 
-	RotateApply(pTarget);
+	RotateApply( pTarget );
 }
 
-void EXPORT CUtilRotator::RotateStop(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value)
+void EXPORT CUtilRotator::RotateStop(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value)
 {
 	SetThink(NULL);
 	SetUse(&CUtilRotator::RotateStart);
-
-	ALERT(at_console, "\n\n----\nRotateStop\nSetThink NULL\nSetUse RotateStart");
 }
 
-void CUtilRotator::RotateApply(CBaseEntity *pTarget)
+void CUtilRotator::RotateApply(CBaseEntity* pTarget)
 {
 	float flRadius = DistToOrigin();
 	Vector vecNewOrigin;
@@ -1740,13 +1719,6 @@ void CUtilRotator::RotateApply(CBaseEntity *pTarget)
 
 		UTIL_SetOrigin(pTarget->pev, vecNewOrigin);
 	}
-	
-	ALERT(at_console, "\nRotator %s anglephase %f %f %f",
-		STRING(pev->targetname),
-
-		m_vecSecondaryAnglePhase.x,
-		m_vecSecondaryAnglePhase.y,
-		m_vecSecondaryAnglePhase.z);
 }
 
 float CUtilRotator::DistToOrigin(void)
@@ -1769,16 +1741,16 @@ float CUtilRotator::DistToOrigin(void)
 class CUtilRotateNoOrigin : public CBaseEntity
 {
 public:
-	void Spawn(void);
-	void KeyValue(KeyValueData *pkvd);
-	void GetKeyValueCustom(char &szTheValue, char szTargetKeyName[64]);
-	void SetKeyValueCustom(char szTargetKeyName[64], char szTheValue[64]);
+	void				Spawn(void);
+	void				KeyValue(KeyValueData *pkvd);
+	void				GetKeyValueCustom(char& szTheValue, char szTargetKeyName[64]);
+	void				SetKeyValueCustom(char szTargetKeyName[64], char szTheValue[64]);
 	
-	void Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value);
-	void Debug_DrawLine(Vector a, Vector b);
+	void				Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
+	void				Debug_DrawLine(Vector a, Vector b);
 
 private:
-	Vector m_vecNewAngles = Vector(0,0,0);
+	Vector				m_vecNewAngles = g_vecZero;
 };
 
 LINK_ENTITY_TO_CLASS(util_rot_noorg, CUtilRotateNoOrigin);
@@ -1797,7 +1769,7 @@ void CUtilRotateNoOrigin::KeyValue(KeyValueData *pkvd)
 	else	/*if no remaining KVs*/		{ KeyvaluesFromBase(CBaseEntity); }
 }
 
-void CUtilRotateNoOrigin::GetKeyValueCustom(char &szTheValue, char szTargetKeyName[64])
+void CUtilRotateNoOrigin::GetKeyValueCustom(char& szTheValue, char szTargetKeyName[64])
 {
 	if ( FStrEq( szTargetKeyName, "newPitch" ) )
 		sprintf( &szTheValue, "%f", m_vecNewAngles.x );
@@ -1821,7 +1793,7 @@ void CUtilRotateNoOrigin::SetKeyValueCustom(char szTargetKeyName[64], char szThe
 		ALERT( at_error, "\nCould not find keyvalue %s for entity %s %s", szTargetKeyName, STRING( pev->classname ), STRING( pev->targetname ) );
 }
 
-void CUtilRotateNoOrigin::Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value)
+void CUtilRotateNoOrigin::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value)
 {
 	CBaseEntity *pTarget = UTIL_FindEntityByTargetname(NULL, STRING(pev->target));
 
@@ -1883,18 +1855,18 @@ void CUtilRotateNoOrigin::Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE
 class CUtilMoveWith : public CBaseEntity
 {
 public:
-	void			Spawn( void );
-	void			Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
-	void			Think( void );
+	void				Spawn( void );
+	void				Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value );
+	void				Think( void );
 
-	void			KeyValue( KeyValueData *pkvd );
+	void				KeyValue( KeyValueData* pkvd );
 
 private:
-	string_t		m_iszTarget, m_iszParent;
-	CBaseEntity*	m_pTarget;
-	CBaseEntity*	m_pParent;
+	string_t			m_iszTarget, m_iszParent;
+	CBaseEntity*		m_pTarget;
+	CBaseEntity*		m_pParent;
 
-	bool			m_fMoveActive;
+	bool				m_fMoveActive;
 };
 
 LINK_ENTITY_TO_CLASS( util_movewith, CUtilMoveWith );
@@ -1909,7 +1881,7 @@ void CUtilMoveWith::Spawn()
 	pev->nextthink = gpGlobals->time + 1.5;
 }
 
-void CUtilMoveWith::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value )
+void CUtilMoveWith::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
 {
 	m_pTarget = UTIL_FindEntityByTargetname( NULL, STRING( m_iszTarget ) );
 	m_pParent = UTIL_FindEntityByTargetname( NULL, STRING( m_iszParent ) );
@@ -1928,7 +1900,7 @@ void CUtilMoveWith::Think()
 	pev->nextthink = gpGlobals->time + 0.001;
 }
 
-void CUtilMoveWith::KeyValue( KeyValueData *pkvd )
+void CUtilMoveWith::KeyValue( KeyValueData* pkvd )
 {
 	if ( KeyvalueToken( m_iszTarget ) )
 	{
