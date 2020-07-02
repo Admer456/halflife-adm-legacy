@@ -20,9 +20,9 @@
 #include "effects.h"
 #include "Weapons/Weapons.h"
 #include "decals.h"
-#include "func_break.h"
+#include "Func/CBreakable.h"
 #include "shake.h"
-#include "doors.h"
+#include "Func/CBaseDoor.h"
 
 #define	SF_GIBSHOOTER_REPEATABLE	1 // allows a gibshooter to be refired
 

@@ -24,7 +24,7 @@
 #include "Util.h"
 #include "Base/CBase.h"
 #include "Base/SaveRestore.h"
-#include "doors.h"
+#include "Func/CBaseDoor.h"
 
 #if !defined ( _WIN32 )
 #include <string.h> // memset())))

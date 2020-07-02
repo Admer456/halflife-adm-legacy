@@ -22,7 +22,7 @@
 #include	"AI/Monsters.h"
 #include	"nodes.h"
 #include	"Base/Animation.h"
-#include	"doors.h"
+#include	"Func/CBaseDoor.h"
 
 #if !defined ( _WIN32 )
 #include <sys/stat.h>

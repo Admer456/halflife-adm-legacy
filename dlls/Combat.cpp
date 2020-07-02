@@ -28,7 +28,7 @@
 #include "decals.h"
 #include "Base/Animation.h"
 #include "Weapons/Weapons.h"
-#include "func_break.h"
+#include "Func/CBreakable.h"
 
 extern DLL_GLOBAL Vector		g_vecAttackDir;
 extern DLL_GLOBAL int			g_iSkillLevel;

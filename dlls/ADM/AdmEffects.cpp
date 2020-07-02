@@ -30,9 +30,9 @@
 #include "effects.h"
 #include "Weapons/Weapons.h"
 #include "decals.h"
-#include "func_break.h"
+#include "Func/CBreakable.h"
 #include "shake.h"
-//#include "doors.h"
+//#include "CBaseDoor.h"
 #include "AdmEffects.h"
 
 // ========================================================================================================= //

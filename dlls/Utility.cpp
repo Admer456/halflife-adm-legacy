@@ -1860,6 +1860,14 @@ void UTIL_StripToken( const char *pKey, char *pDest )
 	pDest[i] = 0;
 }
 
+//
+// BModelOrigin - calculates origin of a bmodel from absmin/size because all bmodel origins are 0 0 0
+//
+Vector VecBModelOrigin( entvars_t* pevBModel )
+{
+	return pevBModel->absmin + (pevBModel->size * 0.5);
+}
+
 
 // --------------------------------------------------------------
 //

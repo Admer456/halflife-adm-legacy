@@ -27,6 +27,7 @@
 #include "Base/SaveRestore.h"
 #include "trains.h"			// trigger_camera has train functionality
 #include "Game/GameRules.h"
+#include "Trigger/CBaseTrigger.h"
 
 #define	SF_TRIGGER_PUSH_START_OFF	2//spawnflag that makes trigger_push spawn turned OFF
 #define SF_TRIGGER_HURT_TARGETONCE	1// Only fire hurt target once
@@ -39,65 +40,6 @@ extern DLL_GLOBAL BOOL		g_fGameOver;
 
 extern void SetMovedir(entvars_t* pev);
 extern Vector VecBModelOrigin( entvars_t* pevBModel );
-
-class CFrictionModifier : public CBaseEntity
-{
-public:
-	void		Spawn( void );
-	void		KeyValue( KeyValueData *pkvd );
-	void EXPORT	ChangeFriction( CBaseEntity *pOther );
-	virtual int		Save( CSave &save );
-	virtual int		Restore( CRestore &restore );
-
-	virtual int	ObjectCaps( void ) { return CBaseEntity :: ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
-
-	static	TYPEDESCRIPTION m_SaveData[];
-
-	float		m_frictionFraction;		// Sorry, couldn't resist this name :)
-};
-
-LINK_ENTITY_TO_CLASS( func_friction, CFrictionModifier );
-
-// Global Savedata for changelevel friction modifier
-TYPEDESCRIPTION	CFrictionModifier::m_SaveData[] = 
-{
-	DEFINE_FIELD( CFrictionModifier, m_frictionFraction, FIELD_FLOAT ),
-};
-
-IMPLEMENT_SAVERESTORE(CFrictionModifier,CBaseEntity);
-
-
-// Modify an entity's friction
-void CFrictionModifier :: Spawn( void )
-{
-	pev->solid = SOLID_TRIGGER;
-	SET_MODEL(ENT(pev), STRING(pev->model));    // set size and link into world
-	pev->movetype = MOVETYPE_NONE;
-	SetTouch( &CFrictionModifier::ChangeFriction );
-}
-
-
-// Sets toucher's friction to m_frictionFraction (1.0 = normal friction)
-void CFrictionModifier :: ChangeFriction( CBaseEntity *pOther )
-{
-	if ( pOther->pev->movetype != MOVETYPE_BOUNCEMISSILE && pOther->pev->movetype != MOVETYPE_BOUNCE )
-		pOther->pev->friction = m_frictionFraction;
-}
-
-
-
-// Sets toucher's friction to m_frictionFraction (1.0 = normal friction)
-void CFrictionModifier :: KeyValue( KeyValueData *pkvd )
-{
-	if (FStrEq(pkvd->szKeyName, "modifier"))
-	{
-		m_frictionFraction = atof(pkvd->szValue) / 100.0;
-		pkvd->fHandled = TRUE;
-	}
-	else
-		CBaseEntity::KeyValue( pkvd );
-}
-
 
 // This trigger will fire when the level spawns (or respawns if not fire once)
 // It will check a global state before firing.  It supports delay and killtargets
@@ -509,22 +451,6 @@ void CRenderFxManager :: Use ( CBaseEntity *pActivator, CBaseEntity *pCaller, US
 	}
 }
 
-class CBaseTrigger : public CBaseToggle
-{
-public:
-	void EXPORT TeleportTouch ( CBaseEntity *pOther );
-	void KeyValue( KeyValueData *pkvd );
-	void EXPORT MultiTouch( CBaseEntity *pOther );
-	void EXPORT HurtTouch ( CBaseEntity *pOther );
-	void EXPORT CDAudioTouch ( CBaseEntity *pOther );
-	void ActivateMultiTrigger( CBaseEntity *pActivator );
-	void EXPORT MultiWaitOver( void );
-	void EXPORT CounterUse( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
-	void EXPORT ToggleUse ( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
-	void InitTrigger( void );
-
-	virtual int	ObjectCaps( void ) { return CBaseToggle :: ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
-};
 
 LINK_ENTITY_TO_CLASS( trigger, CBaseTrigger );
 
@@ -1707,47 +1633,6 @@ void NextLevel( void )
 		pChange->SetThink( &CChangeLevel::ExecuteChangeLevel );
 		pChange->pev->nextthink = gpGlobals->time + 0.1;
 	}
-}
-
-// ============================== LADDER =======================================
-
-class CLadder : public CBaseTrigger
-{
-public:
-	void KeyValue( KeyValueData *pkvd );
-	void Spawn( void );
-	void Precache( void );
-};
-
-LINK_ENTITY_TO_CLASS( func_ladder, CLadder );
-
-void CLadder :: KeyValue( KeyValueData *pkvd )
-{
-	CBaseTrigger::KeyValue( pkvd );
-}
-
-//=========================================================
-// func_ladder - makes an area vertically negotiable
-//=========================================================
-void CLadder :: Precache( void )
-{
-	// Do all of this in here because we need to 'convert' old saved games
-	pev->solid = SOLID_NOT;
-	pev->skin = CONTENTS_LADDER;
-	if ( CVAR_GET_FLOAT("showtriggers") == 0 )
-	{
-		pev->rendermode = kRenderTransTexture;
-		pev->renderamt = 0;
-	}
-	pev->effects &= ~EF_NODRAW;
-}
-
-void CLadder :: Spawn( void )
-{
-	Precache();
-
-	SET_MODEL(ENT(pev), STRING(pev->model));    // set size and link into world
-	pev->movetype = MOVETYPE_PUSH;
 }
 
 // ========================== A TRIGGER THAT PUSHES YOU ===============================

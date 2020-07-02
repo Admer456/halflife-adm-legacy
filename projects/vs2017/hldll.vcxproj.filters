@@ -45,6 +45,30 @@
     <Filter Include="Source Files\Common">
       <UniqueIdentifier>{d9b0bb75-7f25-443b-8899-6b1a9e1dd63c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Audio">
+      <UniqueIdentifier>{540f6acf-fa51-44f0-9e07-5b9fad1e193d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Env">
+      <UniqueIdentifier>{d0f7d9ce-b729-4409-861c-5ebd38578632}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Func">
+      <UniqueIdentifier>{15a5ae2a-4d8a-49f4-9689-1be7b38d08bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Info">
+      <UniqueIdentifier>{f5f586e9-7112-4794-a69f-d90fde9822d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Light">
+      <UniqueIdentifier>{4c47aac0-5106-4994-bf70-869c5689b97c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Misc">
+      <UniqueIdentifier>{d497b6eb-3091-469e-af5e-a4a79ece561e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Player">
+      <UniqueIdentifier>{c188937d-4c1c-4cb6-903a-c68edbd73bd9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Trigger">
+      <UniqueIdentifier>{bf25760c-77f1-4ce5-8bda-4ace03c47d60}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\game_shared\voice_gamemgr.cpp">
@@ -299,31 +323,16 @@
     <ClCompile Include="..\..\dlls\AI\Monsters\HeadCrab.cpp">
       <Filter>Source Files\AI\Monsters</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\dlls\Breakable.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\dlls\BrushModels.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\dlls\Combat.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Cycler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\dlls\Doors.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\dlls\Effects.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\EnvExplosion.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\dlls\FuncMortarField.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\dlls\FuncTank.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Globals.cpp">
@@ -394,6 +403,102 @@
     </ClCompile>
     <ClCompile Include="..\..\dlls\ADM\Shared\AdmSound.cpp">
       <Filter>Source Files\ADM\Shared</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\Func\CBreakable.cpp">
+      <Filter>Source Files\Func</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\Func\CFuncConveyor.cpp">
+      <Filter>Source Files\Func</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\Func\CFuncIllusionary.cpp">
+      <Filter>Source Files\Func</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\Func\CFuncMonsterClip.cpp">
+      <Filter>Source Files\Func</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\Func\CFuncRotating.cpp">
+      <Filter>Source Files\Func</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\Func\CFuncWall.cpp">
+      <Filter>Source Files\Func</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\Func\CFuncWallToggle.cpp">
+      <Filter>Source Files\Func</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\Func\CPendulum.cpp">
+      <Filter>Source Files\Func</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\Func\CPushable.cpp">
+      <Filter>Source Files\Func</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\Func\CBaseDoor.cpp">
+      <Filter>Source Files\Func</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\Func\CMomentaryDoor.cpp">
+      <Filter>Source Files\Func</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\Func\CRotDoor.cpp">
+      <Filter>Source Files\Func</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\Func\CFuncMortarField.cpp">
+      <Filter>Source Files\Func</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\Func\CMortar.cpp">
+      <Filter>Source Files\Func</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\Func\CFuncTank.cpp">
+      <Filter>Source Files\Func</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\Func\CFuncTankControls.cpp">
+      <Filter>Source Files\Func</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\Func\CFuncTankGun.cpp">
+      <Filter>Source Files\Func</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\Func\CFuncTankLaser.cpp">
+      <Filter>Source Files\Func</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\Func\CFuncTankMortar.cpp">
+      <Filter>Source Files\Func</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\Func\CFuncTankRocket.cpp">
+      <Filter>Source Files\Func</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\Func\CBaseButton.cpp">
+      <Filter>Source Files\Func</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\Func\CFrictionModifier.cpp">
+      <Filter>Source Files\Func</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\Func\CFuncLadder.cpp">
+      <Filter>Source Files\Func</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\Func\CFuncPlat.cpp">
+      <Filter>Source Files\Func</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\Func\CFuncPlatRot.cpp">
+      <Filter>Source Files\Func</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\Func\CFuncTrackAuto.cpp">
+      <Filter>Source Files\Func</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\Func\CFuncTrackChange.cpp">
+      <Filter>Source Files\Func</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\Func\CFuncTrackTrain.cpp">
+      <Filter>Source Files\Func</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\Func\CFuncTrain.cpp">
+      <Filter>Source Files\Func</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\Func\CFuncTrainControls.cpp">
+      <Filter>Source Files\Func</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\Func\CGunTarget.cpp">
+      <Filter>Source Files\Func</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\Func\CRotButton.cpp">
+      <Filter>Source Files\Func</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -517,16 +622,10 @@
     <ClInclude Include="..\..\dlls\Decals.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\dlls\Doors.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\dlls\Effects.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\Explode.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\dlls\Func_Break.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\Nodes.h">
@@ -564,6 +663,105 @@
     </ClInclude>
     <ClInclude Include="..\..\game_shared\adm\VersionInfo.h">
       <Filter>Source Files\Game_Shared</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dlls\Func\CBreakable.h">
+      <Filter>Source Files\Func</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dlls\Func\CFuncConveyor.h">
+      <Filter>Source Files\Func</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dlls\Func\CFuncIllusionary.h">
+      <Filter>Source Files\Func</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dlls\Func\CFuncMonsterClip.h">
+      <Filter>Source Files\Func</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dlls\Func\CFuncRotating.h">
+      <Filter>Source Files\Func</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dlls\Func\CFuncWall.h">
+      <Filter>Source Files\Func</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dlls\Func\CFuncWallToggle.h">
+      <Filter>Source Files\Func</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dlls\Func\CPendulum.h">
+      <Filter>Source Files\Func</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dlls\Func\CPushable.h">
+      <Filter>Source Files\Func</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dlls\Func\CBaseDoor.h">
+      <Filter>Source Files\Func</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dlls\Func\CMomentaryDoor.h">
+      <Filter>Source Files\Func</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dlls\Func\CRotDoor.h">
+      <Filter>Source Files\Func</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dlls\Func\CMortar.h">
+      <Filter>Source Files\Func</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dlls\Func\CFuncMortarField.h">
+      <Filter>Source Files\Func</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dlls\Func\CFuncTank.h">
+      <Filter>Source Files\Func</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dlls\Func\CFuncTankControls.h">
+      <Filter>Source Files\Func</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dlls\Func\CFuncTankGun.h">
+      <Filter>Source Files\Func</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dlls\Func\CFuncTankLaser.h">
+      <Filter>Source Files\Func</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dlls\Func\CFuncTankMortar.h">
+      <Filter>Source Files\Func</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dlls\Func\CFuncTankRocket.h">
+      <Filter>Source Files\Func</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dlls\Func\CBaseButton.h">
+      <Filter>Source Files\Func</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dlls\Func\CFrictionModifier.h">
+      <Filter>Source Files\Func</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dlls\Func\CFuncLadder.h">
+      <Filter>Source Files\Func</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dlls\Func\CFuncPlat.h">
+      <Filter>Source Files\Func</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dlls\Func\CFuncPlatRot.h">
+      <Filter>Source Files\Func</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dlls\Func\CFuncTrackAuto.h">
+      <Filter>Source Files\Func</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dlls\Func\CFuncTrackChange.h">
+      <Filter>Source Files\Func</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dlls\Func\CFuncTrackTrain.h">
+      <Filter>Source Files\Func</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dlls\Func\CFuncTrain.h">
+      <Filter>Source Files\Func</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dlls\Func\CFuncTrainControls.h">
+      <Filter>Source Files\Func</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dlls\Func\CGunTarget.h">
+      <Filter>Source Files\Func</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dlls\Func\CRotButton.h">
+      <Filter>Source Files\Func</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dlls\Trigger\CBaseTrigger.h">
+      <Filter>Source Files\Trigger</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
