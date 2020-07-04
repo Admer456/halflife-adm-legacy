@@ -747,20 +747,19 @@ void CBaseCar::VehicleThink()
 	pev->oldorigin = pev->origin;
 
 	ListenToCommands();		// check which keys are being held by players, in each seat
+//	ShootTraces();			// trace collision, distance from ground etc.
+//	HandleTraces();			// calculate that traced stuff
+//	AlignToGround();		// align the vehicle to the ground
+	SeatPositionLocking();	// "attach" the seats to the vehicle, keep them in sync
+	SeatPlayerLocking();	// "attach" the players to the seats
+	VehicleMovement();		// calculate vehicle movement
 
 	v_Engine.Update();		// update other components, synchronise their local variables
 	v_Wheels[0].Update( flVelocity, 0 );
 	v_Wheels[1].Update( flVelocity, 1 );
 	v_Wheels[2].Update( flVelocity, 2 );
 	v_Wheels[3].Update( flVelocity, 3 );
-
-//	ShootTraces();			// trace collision, distance from ground etc.
-//	HandleTraces();			// calculate that traced stuff
-	AlignToGround();		// align the vehicle to the ground
-	VehicleMovement();		// calculate vehicle movement
-	SeatPositionLocking();	// "attach" the seats to the vehicle, keep them in sync
-	SeatPlayerLocking();	// "attach" the players to the seats
-
+	
 	for ( int i = 0; i < m_iSeats; i++ )
 	{
 		if ( v_Seats[i].commands & BIT( VehDismount ) )
@@ -789,7 +788,7 @@ void CBaseCar::VehicleThink()
 	
 	vecang.y += (v_Wheels[0].steerAngle + v_Wheels[1].steerAngle) / 60;
 
-	pev->nextthink = gpGlobals->time + 0.016;
+	pev->nextthink = gpGlobals->time + 0.001;
 }
 
 void CBaseCar::AlignToGround()
@@ -861,7 +860,7 @@ public:
 	void Think()
 	{
 		SUB_DoNothing();
-		pev->nextthink = gpGlobals->time + 0.016;
+		pev->nextthink = gpGlobals->time + 0.001;
 	}
 
 private:

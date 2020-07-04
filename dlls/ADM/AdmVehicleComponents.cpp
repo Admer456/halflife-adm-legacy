@@ -133,24 +133,24 @@ void VehicleEngine::Accelerate()
 		CurrentGear++;
 	}
 
-	if ( !FBitCheck( flags, EngineGasHeld ) )
-		FBitToggle( flags, EngineGasHeld );
+	if ( !FBitCheck( flags, BIT(EngineGasHeld) ) )
+		FBitToggle( flags, BIT(EngineGasHeld) );
 }
 
 void VehicleEngine::Brake()
 {
 	BrakePedal = (BrakePedal * 0.6) + (1.0 * 0.4);
 
-	if ( !FBitCheck( flags, EngineBrakeHeld ) )
-		FBitToggle( flags, EngineBrakeHeld );
+	if ( !FBitCheck( flags, BIT(EngineBrakeHeld) ) )
+		FBitToggle( flags, BIT(EngineBrakeHeld) );
 }
 
 void VehicleEngine::Handbrake()
 {
 	HandbrakeLever = (HandbrakeLever * 0.9) + (1.0 * 0.1);
 
-	if ( !FBitCheck( flags, EngineHandbrakeHeld ) )
-		FBitToggle( flags, EngineHandbrakeHeld );
+	if ( !FBitCheck( flags, BIT(EngineHandbrakeHeld) ) )
+		FBitToggle( flags, BIT(EngineHandbrakeHeld) );
  }
 
 void VehicleEngine::Init( CBaseVehicle* pParent, VehicleDrive Drive_XWD, float maxHealth, int horsepower, float efficiency, bool invincible, float minrpm, float maxrpm )
@@ -185,11 +185,11 @@ void VehicleEngine::Update()
 	if (SlowDown < 0.2)
 		SlowDown = 0.2;
 
-	if ( !FBitCheck( flags, EngineGasHeld ) )
+	if ( !FBitCheck( flags, BIT(EngineGasHeld) ) )
 		Pedal /= 1.05;
-	if ( !FBitCheck( flags, EngineBrakeHeld ) )
+	if ( !FBitCheck( flags, BIT(EngineBrakeHeld) ) )
 		BrakePedal /= 1.05;
-	if ( !FBitCheck( flags, EngineHandbrakeHeld ) )
+	if ( !FBitCheck( flags, BIT(EngineHandbrakeHeld) ) )
 		HandbrakeLever /= 1.05;
 
 	UTIL_LimitBetween( SlowDown,		0.2, 1.0 );
@@ -200,11 +200,11 @@ void VehicleEngine::Update()
 	rpm += Pedal * (Efficiency * SlowDown * HorsePower * (GearRatios[CurrentGear+1])) * 0.065;
 
 	// Gotta accelerate faster on lower rpms
-	if ( rpm < (maxRpm / 2.0f) && FBitCheck( flags, EngineGasHeld ) )
+	if ( rpm < (maxRpm / 2.0f) && FBitCheck( flags, BIT(EngineGasHeld) ) )
 		rpm *= 1.3f;
 
 	// Driving state
-	if ( !FBitCheck( flags, EngineRunning ) )
+	if ( !FBitCheck( flags, BIT(EngineRunning) ) )
 		Driving = DrivingOff;
 
 	else if ( rpm < ((minRpm + maxRpm) / 2) )
@@ -220,7 +220,7 @@ void VehicleEngine::Update()
 	{
 		if ( rpm > maxRpm && CurrentGear )
 		{
-			if ( FBitCheck( flags, EngineGasHeld ) )
+			if ( FBitCheck( flags, BIT(EngineGasHeld) ) )
 			{
 				if ( CurrentGear < Gears - 1 )
 				{
@@ -238,7 +238,7 @@ void VehicleEngine::Update()
 		{
 			if ( CurrentGear > 1 )
 			{
-				if ( !FBitCheck( flags, EngineGasHeld ) )
+				if ( !FBitCheck( flags, BIT(EngineGasHeld) ) )
 				{
 					CurrentGear--;
 
@@ -248,7 +248,7 @@ void VehicleEngine::Update()
 					}
 				}
 			}
-			else if ( !FBitCheck( flags, EngineGasHeld ) )
+			else if ( !FBitCheck( flags, BIT(EngineGasHeld) ) )
 			{
 				CurrentGear--;
 			}
@@ -256,16 +256,16 @@ void VehicleEngine::Update()
 	}
 	else
 	{
-		if ( rpm > -1.0f && FBitCheck( flags, EngineGasHeld ) )
+		if ( rpm > -1.0f && FBitCheck( flags, BIT(EngineGasHeld) ) )
 		{
 			CurrentGear++;
 		}
 	}
 
-	if ( !FBitCheck( flags, EngineGasHeld ) )
+	if ( !FBitCheck( flags, BIT(EngineGasHeld) ) )
 		rpm /= 1.02;
 
-	if ( FBitCheck( flags, EngineBrakeHeld ) )
+	if ( FBitCheck( flags, BIT(EngineBrakeHeld) ) )
 		rpm *= (0.3 * sqrt( 1 - BrakePedal )) + 0.7;
 
 	torque = CalcTorque();
@@ -274,12 +274,14 @@ void VehicleEngine::Update()
 	WheelTorque = torque * 5.0f;
 	TrackTorque = TrackTorque * 0.995 + WheelTorque * 0.005;
 
-	FBitClear( flags, EngineClutchHeld );
-	FBitClear( flags, EngineGasHeld );
-	FBitClear( flags, EngineBrakeHeld );
-	FBitClear( flags, EngineHandbrakeHeld );
+	ALERT( at_console, "Gear: %i\n", CurrentGear );
 
-	if ( FBitCheck( flags, EngineGasHeld ) && WheelTorque < TrackTorque && CurrentGear != -1 )
+	FBitClear( flags, BIT(EngineClutchHeld) );
+	FBitClear( flags, BIT(EngineGasHeld) );
+	FBitClear( flags, BIT(EngineBrakeHeld) );
+	FBitClear( flags, BIT(EngineHandbrakeHeld) );
+
+	if ( FBitCheck( flags, BIT(EngineGasHeld) ) && WheelTorque < TrackTorque && CurrentGear != -1 )
 	{
 		Output += TrackTorque * 0.005;
 		TrackTorque *= 1.005;
@@ -513,9 +515,9 @@ void VehicleWheel::Init(RubberType rubbertype, CBaseVehicle* pParent, string_t i
 {
 	type = rubbertype;
 	parent = pParent;
-	flags = flags;
-	width = width;
-	radius = radius;
+	this->flags = flags;
+	this->width = width;
+	this->radius = radius;
 
 	force = g_vecZero;
 	tractionForce = g_vecZero;
@@ -563,7 +565,7 @@ void VehicleWheel::Update( float flSpeed, int arrindex )
 
 	angle += flSpeed / 60;
 
-	if (FBitCheck(flags, Wheel_Steerable))
+	if (FBitCheck(flags, BIT(Wheel_Steerable)))
 		steerAngle /= ((flSpeed / 6) * width / 2000) + 1;
 
 	if (m_pWheel != nullptr)
@@ -578,7 +580,7 @@ void VehicleWheel::Update( float flSpeed, int arrindex )
 
 	AttachToPos( arrindex );
 
-	if (FBitCheck(flags, Wheel_Handbrake))
+	if (FBitCheck(flags, BIT(Wheel_Handbrake)))
 		traction /= 1 + ((parent->GetEngine().HandbrakeLever * 0.6) * (flSpeed * 0.01));
 
 	traction = (traction * 0.97) + (originalTraction * 0.03); // Climb back slowly to original value
@@ -591,8 +593,20 @@ void VehicleWheel::Update( float flSpeed, int arrindex )
 	force *= (traction / originalTraction) * (traction / originalTraction);
 	force /= 2;
 
+	constexpr float forceEpsilon = 0.001f;
+
 	float flFraction = DotProduct(force, vecDeltaMove);
-	float flDiffAngle = flFraction / (force.Length() * vecDeltaMove.Length());
+	float forceTimesDeltaMove = (force.Length() * vecDeltaMove.Length());
+
+	if ( fabs( forceTimesDeltaMove ) < forceEpsilon )
+	{
+		if ( forceTimesDeltaMove < forceEpsilon )
+			forceTimesDeltaMove = forceEpsilon;
+		else if ( forceTimesDeltaMove < -forceEpsilon )
+			forceTimesDeltaMove = -forceEpsilon;
+	}
+	
+	float flDiffAngle = flFraction / forceTimesDeltaMove;
 	flDiffAngle = std::acos(flDiffAngle);
 	
 	tractionForce = (0 + cos(flDiffAngle)) * force.Length() * vecDeltaMove * traction * 3.5;
@@ -600,6 +614,8 @@ void VehicleWheel::Update( float flSpeed, int arrindex )
 	angles = parent->pev->angles;
 	angles = angles + steerangles;
 	groundangles = AlignToGround(origin, angles, 256, parent->edict());
+
+	ALERT( at_console, "Wheel force: %3.2f\n", force.Length() );
 }
 
 // Function will be deprecated soon, we should attach to bones by name, not by ID
