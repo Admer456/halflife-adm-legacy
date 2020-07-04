@@ -28,7 +28,8 @@
 #include "Game/Client.h"
 #include "decals.h"
 #include "skill.h"
-#include "effects.h"
+#include "Env/CMessage.h"
+
 #include "player.h"
 #include "Weapons/Weapons.h"
 #include "Game/GameRules.h"

@@ -19,7 +19,7 @@
 #include "Weapons/Weapons.h"
 #include "nodes.h"
 #include "player.h"
-#include "effects.h"
+#include "Env/CBeam.h"
 #include "Game/GameRules.h"
 
 #define	TRIPMINE_PRIMARY_VOLUME		450

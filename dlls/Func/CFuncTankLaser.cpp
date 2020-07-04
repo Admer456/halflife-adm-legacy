@@ -1,11 +1,13 @@
 #include "Base/ExtDLL.h"
 #include "Util.h"
 #include "Base/CBase.h"
-#include "effects.h"
-#include "Weapons/Weapons.h"
-#include "explode.h"
 
+#include "Env/CSprite.h"
+#include "Env/CBeam.h"
+#include "Env/CLaser.h"
+#include "Weapons/Weapons.h"
 #include "player.h"
+
 #include "CFuncTank.h"
 #include "CFuncTankLaser.h"
 
@@ -32,7 +34,6 @@ void CFuncTankLaser::Activate( void )
 	}
 }
 
-
 void CFuncTankLaser::KeyValue( KeyValueData *pkvd )
 {
 	if ( FStrEq( pkvd->szKeyName, "laserentity" ) )
@@ -43,7 +44,6 @@ void CFuncTankLaser::KeyValue( KeyValueData *pkvd )
 	else
 		CFuncTank::KeyValue( pkvd );
 }
-
 
 CLaser *CFuncTankLaser::GetLaser( void )
 {
@@ -68,7 +68,6 @@ CLaser *CFuncTankLaser::GetLaser( void )
 	return m_pLaser;
 }
 
-
 void CFuncTankLaser::Think( void )
 {
 	if ( m_pLaser && (gpGlobals->time > m_laserTime) )
@@ -76,7 +75,6 @@ void CFuncTankLaser::Think( void )
 
 	CFuncTank::Think();
 }
-
 
 void CFuncTankLaser::Fire( const Vector &barrelEnd, const Vector &forward, entvars_t *pevAttacker )
 {

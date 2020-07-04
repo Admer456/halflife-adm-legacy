@@ -25,11 +25,12 @@
 #include	"AI/Schedule.h"
 #include	"customentity.h"
 #include	"Weapons/Weapons.h"
-#include	"effects.h"
 #include	"soundent.h"
 #include	"decals.h"
-#include	"explode.h"
 #include	"Func/CBreakable.h"
+#include	"Env/CBeam.h"
+#include	"Env/CSprite.h"
+#include	"Env/CEnvExplosion.h"
 
 //=========================================================
 // Gargantua Monster
@@ -60,7 +61,6 @@ const float GARG_ATTACKDIST = 80.0;
 #define STOMP_SPRITE_COUNT			10
 
 int gStompSprite = 0, gGargGibModel = 0;
-void SpawnExplosion( Vector center, float randomRange, float time, int magnitude );
 
 class CSmoker;
 
@@ -1235,48 +1235,6 @@ void CGargantua::RunTask( Task_t *pTask )
 	}
 }
 
-
-class CSmoker : public CBaseEntity
-{
-public:
-	void Spawn( void );
-	void Think( void );
-};
-
-LINK_ENTITY_TO_CLASS( env_smoker, CSmoker );
-
-void CSmoker::Spawn( void )
-{
-	pev->movetype = MOVETYPE_NONE;
-	pev->nextthink = gpGlobals->time;
-	pev->solid = SOLID_NOT;
-	UTIL_SetSize(pev, g_vecZero, g_vecZero );
-	pev->effects |= EF_NODRAW;
-	pev->angles = g_vecZero;
-}
-
-
-void CSmoker::Think( void )
-{
-	// lots of smoke
-	MESSAGE_BEGIN( MSG_PVS, SVC_TEMPENTITY, pev->origin );
-		WRITE_BYTE( TE_SMOKE );
-		WRITE_COORD( pev->origin.x + RANDOM_FLOAT( -pev->dmg, pev->dmg ));
-		WRITE_COORD( pev->origin.y + RANDOM_FLOAT( -pev->dmg, pev->dmg ));
-		WRITE_COORD( pev->origin.z);
-		WRITE_SHORT( g_sModelIndexSmoke );
-		WRITE_BYTE( RANDOM_LONG(pev->scale, pev->scale * 1.1) );
-		WRITE_BYTE( RANDOM_LONG(8,14)  ); // framerate
-	MESSAGE_END();
-
-	pev->health--;
-	if ( pev->health > 0 )
-		pev->nextthink = gpGlobals->time + RANDOM_FLOAT(0.1, 0.2);
-	else
-		UTIL_Remove( this );
-}
-
-
 void CSpiral::Spawn( void )
 {
 	pev->movetype = MOVETYPE_NONE;
@@ -1286,7 +1244,6 @@ void CSpiral::Spawn( void )
 	pev->effects |= EF_NODRAW;
 	pev->angles = g_vecZero;
 }
-
 
 CSpiral *CSpiral::Create( const Vector &origin, float height, float radius, float duration )
 {
@@ -1340,29 +1297,5 @@ void CSpiral::Think( void )
 	if ( pev->health >= pev->speed )
 		UTIL_Remove( this );
 }
-
-
-// HACKHACK Cut and pasted from explode.cpp
-void SpawnExplosion( Vector center, float randomRange, float time, int magnitude )
-{
-	KeyValueData	kvd;
-	char			buf[128];
-
-	center.x += RANDOM_FLOAT( -randomRange, randomRange );
-	center.y += RANDOM_FLOAT( -randomRange, randomRange );
-
-	CBaseEntity *pExplosion = CBaseEntity::Create( "env_explosion", center, g_vecZero, NULL );
-	sprintf( buf, "%3d", magnitude );
-	kvd.szKeyName = "iMagnitude";
-	kvd.szValue = buf;
-	pExplosion->KeyValue( &kvd );
-	pExplosion->pev->spawnflags |= SF_ENVEXPLOSION_NODAMAGE;
-
-	pExplosion->Spawn();
-	pExplosion->SetThink( &CBaseEntity::SUB_CallUseToggle );
-	pExplosion->pev->nextthink = gpGlobals->time + time;
-}
-
-
 
 #endif

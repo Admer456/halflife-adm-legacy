@@ -38,6 +38,9 @@
 
 extern DLL_GLOBAL BOOL		g_fGameOver;
 
+// Lightning target, just alias landmark
+LINK_ENTITY_TO_CLASS( info_target, CPointEntity );
+
 extern void SetMovedir(entvars_t* pev);
 extern Vector VecBModelOrigin( entvars_t* pevBModel );
 

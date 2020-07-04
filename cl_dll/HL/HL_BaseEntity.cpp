@@ -29,6 +29,8 @@ This file contains "stubs" of class member implementations so that we can predic
 #include	"nodes.h"
 #include	"soundent.h"
 #include	"skill.h"
+#include	"Env/CSprite.h"
+#include	"Env/CBeam.h"
 
 // Globals used by game logic
 const Vector g_vecZero = Vector( 0, 0, 0 );

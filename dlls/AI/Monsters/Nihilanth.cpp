@@ -20,7 +20,7 @@
 #include "AI/Monsters.h"
 #include "Weapons/Weapons.h"
 #include "nodes.h"
-#include "effects.h"
+#include "Env/CSprite.h"
 
 #define N_SCALE		15
 #define N_SPHERES	20

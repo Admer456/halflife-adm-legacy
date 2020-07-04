@@ -21,7 +21,8 @@
 #include "AI/Monsters.h"
 #include "Weapons/Weapons.h"
 #include "nodes.h"
-#include "effects.h"
+#include "Env/CSprite.h"
+#include "Env/CBeam.h"
 #include "customentity.h"
 #include "Game/GameRules.h"
 

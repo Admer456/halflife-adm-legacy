@@ -19,7 +19,7 @@
 #include "Weapons/Weapons.h"
 #include "nodes.h"
 #include "soundent.h"
-#include "effects.h"
+#include "Env/CBeam.h"
 #include "customentity.h"
 #include "ADM/AdmEffects.h"
 

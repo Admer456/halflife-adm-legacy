@@ -15,7 +15,7 @@
 #ifndef WEAPONS_H
 #define WEAPONS_H
 
-#include "effects.h"
+
 #include <cassert>
 
 class CBasePlayer;
@@ -888,6 +888,9 @@ private:
 	unsigned short m_usGaussFire;
 	unsigned short m_usGaussSpin;
 };
+
+class CBeam;
+class CSprite;
 
 class CEgon : public CBasePlayerWeapon
 {

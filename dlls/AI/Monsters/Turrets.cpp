@@ -29,7 +29,7 @@
 #include "Base/CBase.h"
 #include "AI/Monsters.h"
 #include "Weapons/Weapons.h"
-#include "effects.h"
+#include "Env/CSprite.h"
 
 extern Vector VecBModelOrigin( entvars_t* pevBModel );
 

@@ -20,7 +20,8 @@
 #include "AI/Monsters.h"
 #include "Weapons/Weapons.h"
 #include "nodes.h"
-#include "effects.h"
+#include "Env/CBeam.h"
+
 #include "ADM/AdmEffects.h"
 
 extern DLL_GLOBAL int		g_iSkillLevel;

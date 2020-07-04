@@ -26,7 +26,6 @@
 #include "CBreakable.h"
 #include "CPushable.h"
 #include "decals.h"
-#include "explode.h"
 
 extern DLL_GLOBAL Vector		g_vecAttackDir;
 

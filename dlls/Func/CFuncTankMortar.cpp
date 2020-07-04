@@ -1,16 +1,15 @@
 #include "Base/ExtDLL.h"
 #include "Util.h"
 #include "Base/CBase.h"
-#include "effects.h"
+
 #include "Weapons/Weapons.h"
-#include "explode.h"
+#include "Env/CEnvExplosion.h"
 
 #include "player.h"
 #include "CFuncTank.h"
 #include "CFuncTankMortar.h"
 
 LINK_ENTITY_TO_CLASS( func_tankmortar, CFuncTankMortar );
-
 
 void CFuncTankMortar::KeyValue( KeyValueData *pkvd )
 {
@@ -22,7 +21,6 @@ void CFuncTankMortar::KeyValue( KeyValueData *pkvd )
 	else
 		CFuncTank::KeyValue( pkvd );
 }
-
 
 void CFuncTankMortar::Fire( const Vector &barrelEnd, const Vector &forward, entvars_t *pevAttacker )
 {

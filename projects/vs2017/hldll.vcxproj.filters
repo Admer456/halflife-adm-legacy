@@ -332,12 +332,6 @@
     <ClCompile Include="..\..\dlls\Cycler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\dlls\Effects.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\dlls\EnvExplosion.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\dlls\Globals.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -521,6 +515,72 @@
     <ClCompile Include="..\..\dlls\ADM\Func\CFuncNovis.cpp">
       <Filter>Source Files\ADM\Func</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\dlls\Audio\CAmbientGeneric.cpp">
+      <Filter>Source Files\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\Env\CEnvSound.cpp">
+      <Filter>Source Files\Env</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\Audio\CSpeaker.cpp">
+      <Filter>Source Files\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\Env\CBeam.cpp">
+      <Filter>Source Files\Env</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\Env\CBlood.cpp">
+      <Filter>Source Files\Env</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\Env\CBubbling.cpp">
+      <Filter>Source Files\Env</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\Env\CEnvBeverage.cpp">
+      <Filter>Source Files\Env</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\Env\CEnvFunnel.cpp">
+      <Filter>Source Files\Env</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\Env\CEnvShooter.cpp">
+      <Filter>Source Files\Env</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\Env\CFade.cpp">
+      <Filter>Source Files\Env</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\Env\CGibShooter.cpp">
+      <Filter>Source Files\Env</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\Env\CGlow.cpp">
+      <Filter>Source Files\Env</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\Env\CLaser.cpp">
+      <Filter>Source Files\Env</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\Env\CLightning.cpp">
+      <Filter>Source Files\Env</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\Env\CMessage.cpp">
+      <Filter>Source Files\Env</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\Env\CShake.cpp">
+      <Filter>Source Files\Env</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\Env\CSmoker.cpp">
+      <Filter>Source Files\Env</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\Env\CSprite.cpp">
+      <Filter>Source Files\Env</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\Env\CTestEffect.cpp">
+      <Filter>Source Files\Env</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\Items\CItemSoda.cpp">
+      <Filter>Source Files\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\Env\CEnvExplosion.cpp">
+      <Filter>Source Files\Env</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\Env\CShower.cpp">
+      <Filter>Source Files\Env</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\engine\eiface.h">
@@ -641,12 +701,6 @@
       <Filter>Source Files\Items</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\Decals.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\dlls\Effects.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\dlls\Explode.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\Nodes.h">
@@ -804,6 +858,75 @@
     </ClInclude>
     <ClInclude Include="..\..\dlls\ADM\Func\CFuncNovis.h">
       <Filter>Source Files\ADM\Func</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dlls\Audio\CAmbientGeneric.h">
+      <Filter>Source Files\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dlls\Env\CEnvSound.h">
+      <Filter>Source Files\Env</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dlls\Audio\CSpeaker.h">
+      <Filter>Source Files\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dlls\Env\CBeam.h">
+      <Filter>Source Files\Env</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dlls\Env\CBlood.h">
+      <Filter>Source Files\Env</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dlls\Env\CBubbling.h">
+      <Filter>Source Files\Env</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dlls\Env\CEnvBeverage.h">
+      <Filter>Source Files\Env</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dlls\Env\CEnvFunnel.h">
+      <Filter>Source Files\Env</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dlls\Env\CEnvShooter.h">
+      <Filter>Source Files\Env</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dlls\Env\CFade.h">
+      <Filter>Source Files\Env</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dlls\Env\CGibShooter.h">
+      <Filter>Source Files\Env</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dlls\Env\CGlow.h">
+      <Filter>Source Files\Env</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dlls\Env\CLaser.h">
+      <Filter>Source Files\Env</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dlls\Env\CLightning.h">
+      <Filter>Source Files\Env</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dlls\Env\CMessage.h">
+      <Filter>Source Files\Env</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dlls\Env\CShake.h">
+      <Filter>Source Files\Env</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dlls\Env\CSmoker.h">
+      <Filter>Source Files\Env</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dlls\Env\CSprite.h">
+      <Filter>Source Files\Env</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dlls\Env\CTestEffect.h">
+      <Filter>Source Files\Env</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dlls\Env\CFadeDefines.h">
+      <Filter>Source Files\Env</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dlls\Items\CItemSoda.h">
+      <Filter>Source Files\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dlls\Env\CEnvExplosion.h">
+      <Filter>Source Files\Env</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dlls\Env\CShower.h">
+      <Filter>Source Files\Env</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

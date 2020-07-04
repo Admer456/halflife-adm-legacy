@@ -16,7 +16,7 @@
 #include "Util.h"
 #include "Base/CBase.h"
 #include "Base/Animation.h"
-#include "Effects.h"
+#include "Env/CSprite.h"
 
 
 #define XEN_PLANT_GLOW_SPRITE		"sprites/flare3.spr"

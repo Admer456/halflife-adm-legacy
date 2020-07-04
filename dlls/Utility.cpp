@@ -30,7 +30,7 @@
 #include "player.h"
 #include "Weapons/Weapons.h"
 #include "Game/GameRules.h"
-
+#include "Env/CFadeDefines.h"
 #include <vector>
 #include "adm/shared/AdmSoundList.h"
 #include "../engine/studio.h"

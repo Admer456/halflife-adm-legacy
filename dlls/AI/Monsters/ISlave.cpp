@@ -25,6 +25,7 @@
 #include	"effects.h"
 #include	"Weapons/Weapons.h"
 #include	"soundent.h"
+#include	"Env/CBeam.h"
 
 extern DLL_GLOBAL int		g_iSkillLevel;
 
