@@ -521,14 +521,7 @@ public:
 	string_t			m_iszWheels[32];
 
 private:
-	// TO-DO: Move these to a VehiclePhysicsParams struct
-	Vector				vecDesiredAng; // the angles we want to move to
-	Vector				vecPushedAng; // if you hit a wall, this is where this variable comes into play, as it can potentially rotate you a bit
-	Vector				vecCurrentAng; // the angle we are currently facing
-
-	Vector				vecLocalForward;
-	Vector				vecLocalRight;
-	Vector				vecLocalUp;
+	VehiclePhysicsParams physParms;
 };
 
 void CBaseCar::Spawn()
@@ -600,34 +593,18 @@ void CBaseCar::VehicleBaseInit()
 	pev->max_health = v_Engine.MaxHealth;
 	pev->health = pev->max_health;
 
+	physParms.frontAxle.Init( &v_Wheels[0], &v_Wheels[1], &physParms, 48.0f );
+	physParms.rearAxle.Init( &v_Wheels[2], &v_Wheels[3], &physParms, -48.0f );
+	physParms.Init( this );
+
 	v_Body.origin = pev->origin;
 	UTIL_SetSizeAuto( pev );
 }
 
 void CBaseCar::VehicleMovement()
 {
-	static Vector vecResultForce = g_vecZero;
-	Vector vecForwardForce = g_vecZero;
-	Vector vecDragForce = g_vecZero;
-	Vector vecWeight = g_vecZero;
-	Vector vecTraction = g_vecZero;
-	Vector vecAngularVel = g_vecZero;
-
-	Vector vecMoveDelta = pev->origin - pev->oldorigin;
-	float flVelocity = vecMoveDelta.Length();
-	float flTraction = v_Wheels[0].traction + v_Wheels[1].traction + v_Wheels[2].traction + v_Wheels[3].traction;
-	flTraction /= 4;
-	float flTractionFraction = flTraction / v_Wheels[0].originalTraction;
-
-	static Vector vecDir;
-	static Vector vecWheelSteer = g_vecZero;
-	static Vector vecDeltaDir = g_vecZero;
-	static Vector vecOldAngles;
-	static Vector vecActualAngles = g_vecZero;
-	static Vector vecWheelAngles = g_vecZero;
-
-	vecDir = pev->angles;
-	vecOldAngles = vecActualAngles;
+	static Vector oldVelocity = pev->velocity;
+	float speed = oldVelocity.Length();
 
 	for ( int i = 0; i < m_iSeats; i++ )
 	{
@@ -663,15 +640,15 @@ void CBaseCar::VehicleMovement()
 		if ( v_Seats[i].commands & BIT( VehLeft )
 			&& (v_Seats[i].type == Driver || v_Seats[i].type == DriverGunner) )
 		{
-			v_Wheels[0].SteerLeft( flVelocity );
-			v_Wheels[1].SteerLeft( flVelocity );
+			v_Wheels[0].SteerLeft( speed );
+			v_Wheels[1].SteerLeft( speed );
 		}
 
 		if ( v_Seats[i].commands & BIT( VehRight )
 			&& (v_Seats[i].type == Driver || v_Seats[i].type == DriverGunner) )
 		{
-			v_Wheels[0].SteerRight( flVelocity );
-			v_Wheels[1].SteerRight( flVelocity );
+			v_Wheels[0].SteerRight( speed );
+			v_Wheels[1].SteerRight( speed );
 		}
 
 		if ( v_Seats[i].commands & BIT( VehJump )
@@ -681,66 +658,22 @@ void CBaseCar::VehicleMovement()
 		}
 	}
 
-	// STEERING ANGLES
-	vecWheelSteer = (v_Wheels[0].steerangles + v_Wheels[1].steerangles) / 4;
+	// Get physics values from our local vehicle phys params
+	pev->angles = physParms.finalAngles;
+	pev->angles.z = pev->angles.z*0.95 + (speed * (v_Wheels[0].steerAngle / 30.f))*0.05;
+	pev->velocity = physParms.finalVelocity;
+	pev->velocity.z -= 300.0f;
+	
+	physParms.frontAxle.Update();
+	physParms.rearAxle.Update();
+	physParms.Update();
 
-	if ( v_Engine.torque > 0 )
-		vecDir = vecDir + vecWheelSteer;
-	else if ( v_Engine.torque < 0 )
-		vecDir = vecDir - vecWheelSteer;
-
-	pev->angles = vecDir;
-
-//	vecDeltaDir = vecDir - vecOldAngles;
-//	vecDeltaDir = vecDeltaDir * flTraction;
-//	vecDir = vecDir + (vecDeltaDir * flTraction);
-//	pev->angles = pev->angles + vecAngularVel;
-
-//	vecActualAngles = (vecOldAngles * (1 - flTractionFraction)) + (vecDir * flTractionFraction);
-
-	pev->angles = v_Wheels[0].angles;
-	pev->angles = pev->angles + v_Wheels[1].angles;
-	pev->angles = pev->angles + v_Wheels[2].angles;
-	pev->angles = pev->angles + v_Wheels[3].angles;
-	pev->angles = pev->angles / 4;
-
-	vecForwardForce = vecForwardForce + v_Wheels[0].force;
-	vecForwardForce = vecForwardForce + v_Wheels[1].force;
-	vecForwardForce = vecForwardForce + v_Wheels[2].force;
-	vecForwardForce = vecForwardForce + v_Wheels[3].force;
-	vecForwardForce = vecForwardForce / 4;
-
-	vecTraction = v_Wheels[0].tractionForce;
-	vecTraction = vecTraction + v_Wheels[1].tractionForce;
-	vecTraction = vecTraction + v_Wheels[2].tractionForce;
-	vecTraction = vecTraction + v_Wheels[3].tractionForce;
-	vecTraction = vecTraction / 4;
-
-	vecForwardForce /= 1 + (v_Engine.BrakePedal * 0.1);
-	vecDragForce = -0.12 * vecResultForce * flVelocity;
-
-	vecResultForce = vecResultForce + vecForwardForce + vecDragForce;
-	vecWeight.z = -v_Body.mass * 9.81 / 30;
-
-	pev->velocity = pev->velocity + ((vecResultForce + vecTraction + vecWeight) / (v_Body.mass));
-	vecResultForce = vecResultForce / 1.02;
-	m_vecFinalForce = vecResultForce;
-
-	pev->oldorigin = pev->origin;
-
-/*	ALERT(at_console, "\n%s = %f\t%s = %f\t%s = %f\t%s = %f",
-		"PEV", pev->angles.y,
-		"vWA", vecWheelAngles.y,
-		"vW.A", v_Wheels[0].angles.y,
-		"W4T", v_Wheels[3].traction / v_Wheels[3].originalTraction); */
+	oldVelocity = pev->velocity;
 }
 
 void CBaseCar::VehicleThink()
 {
-	UTIL_MakeVectorsPrivate(pev->angles, vecLocalForward, vecLocalRight, vecLocalUp);
-
 	float flVelocity = pev->velocity.Length();
-	static Vector vecang = g_vecZero;
 	static int cnt = 5; 
 
 	v_Body.origin = pev->origin;
@@ -750,15 +683,16 @@ void CBaseCar::VehicleThink()
 //	ShootTraces();			// trace collision, distance from ground etc.
 //	HandleTraces();			// calculate that traced stuff
 //	AlignToGround();		// align the vehicle to the ground
-	SeatPositionLocking();	// "attach" the seats to the vehicle, keep them in sync
-	SeatPlayerLocking();	// "attach" the players to the seats
-	VehicleMovement();		// calculate vehicle movement
 
 	v_Engine.Update();		// update other components, synchronise their local variables
 	v_Wheels[0].Update( flVelocity, 0 );
 	v_Wheels[1].Update( flVelocity, 1 );
 	v_Wheels[2].Update( flVelocity, 2 );
 	v_Wheels[3].Update( flVelocity, 3 );
+	
+	VehicleMovement();		// calculate vehicle movement
+	SeatPositionLocking();	// "attach" the seats to the vehicle, keep them in sync
+	SeatPlayerLocking();	// "attach" the players to the seats
 	
 	for ( int i = 0; i < m_iSeats; i++ )
 	{
@@ -785,8 +719,6 @@ void CBaseCar::VehicleThink()
 			v_Wheels[i].m_pWheel = UTIL_FindEntityByTargetname( NULL, (char*)STRING( m_iszWheels[i] ) );
 		}
 	}
-	
-	vecang.y += (v_Wheels[0].steerAngle + v_Wheels[1].steerAngle) / 60;
 
 	pev->nextthink = gpGlobals->time + 0.001;
 }
@@ -890,11 +822,11 @@ public:
 
 		v_Engine.SetTorqueCurve
 		(
-			{ 40.0f,  000.0f  },
-			{ 90.0f,  100.0f  },
-			{ 170.0f, 1000.0f },
-			{ 190.0f, 3200.0f },
-			{ 250.0f, 5000.0f }
+			{ 40.0f,     0.0f },
+			{ 120.0f,  100.0f },
+			{ 240.0f, 1000.0f },
+			{ 290.0f, 3200.0f },
+			{ 360.0f, 5000.0f }
 		);
 
 		v_Engine.Init( this, Drive_AWD, 500, 70, 0.9 );

@@ -306,6 +306,55 @@ enum VehicleCommands
 	VehSwitchSeats
 };
 
+struct LocalVectors
+{
+	Vector forward, right, up;
+};
+
+struct VehiclePhysicsParams;
+
+// Represents some physical properties
+// of an end of a car, e.g. front part of the car
+// For now, it supports axles with 2 wheels only
+struct AxlePhysicsParams
+{
+	Vector direction;	// Direction of the axle, calculated by positions of the 2 wheels
+	Vector position;	// Position of the axle relative to the world
+	Vector force;		// Calculated force from the 2 wheels
+	float traction;		// Traction from wheels; 1.0 = grippy, 0.0 = slippery
+
+	float offset;		// Local offset from the car's centre (only along the front axis for now)
+	Vector momentum;	// Almost like an external force caused by the car going on its own, e.g. downhill 
+
+	VehicleWheel* leftWheel;
+	VehicleWheel* rightWheel;
+	VehiclePhysicsParams* baseParams;
+
+	void Init( VehicleWheel* left, VehicleWheel* right, VehiclePhysicsParams* params, float offset );
+	void Update();
+};
+
+// Represents total physical properties of a car
+// Meant to be handled in VehicleMovement()
+struct VehiclePhysicsParams
+{
+	// Final vectors
+	Vector finalVelocity;	// Where the car will ultimately go to
+	Vector finalAngles;		// The final direction of the car
+	Vector momentum;		// Momentum (last frame's velocity) from the car 
+
+	AxlePhysicsParams frontAxle;
+	AxlePhysicsParams rearAxle;
+
+	CBaseVehicle* parent;
+
+	LocalVectors lv;
+
+	void Init( CBaseVehicle* parent );
+	void Update();
+};
+
+
 // Densities - kg / m^3
 constexpr int Density_BirchWood = 670;
 constexpr int Density_HiChromIron = 7400;

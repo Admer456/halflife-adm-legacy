@@ -197,7 +197,7 @@ void VehicleEngine::Update()
 	UTIL_LimitBetween( BrakePedal,		0.0, 1.0 );
 	UTIL_LimitBetween( HandbrakeLever,	0.0, 1.0 );
 
-	rpm += Pedal * (Efficiency * SlowDown * HorsePower * (GearRatios[CurrentGear+1])) * 0.065;
+	rpm += Pedal * (Efficiency * SlowDown * HorsePower * (GearRatios[CurrentGear+1])) * 0.016;
 
 	// Gotta accelerate faster on lower rpms
 	if ( rpm < (maxRpm / 2.0f) && FBitCheck( flags, BIT(EngineGasHeld) ) )
@@ -557,16 +557,16 @@ void VehicleWheel::Update( float flSpeed, int arrindex )
 	static float angle = 0;
 	static Vector oldpos = g_vecZero;
 
-	Vector vecDeltaMove = origin - oldpos;
+	Vector vecDeltaMove = parent->pev->velocity;
 	oldpos = origin;
 
 	Vector vecForward, vecRight, vecUp;
 	UTIL_MakeVectorsPrivate(angles, vecForward, vecRight, vecUp);
 
-	angle += flSpeed / 60;
+	angle += (flSpeed / 60);
 
 	if (FBitCheck(flags, BIT(Wheel_Steerable)))
-		steerAngle /= ((flSpeed / 6) * width / 2000) + 1;
+		steerAngle /= ((flSpeed / 12) * width / 4000) + 1;
 
 	if (m_pWheel != nullptr)
 	{
@@ -578,24 +578,48 @@ void VehicleWheel::Update( float flSpeed, int arrindex )
 		SetController(pmodel, m_pWheel->pev, 1, angle);
 	}
 
-	AttachToPos( arrindex );
-
-	if (FBitCheck(flags, BIT(Wheel_Handbrake)))
-		traction /= 1 + ((parent->GetEngine().HandbrakeLever * 0.6) * (flSpeed * 0.01));
-
-	traction = (traction * 0.97) + (originalTraction * 0.03); // Climb back slowly to original value
-
-	traction = V_max( traction, 0.04 ); // minimum value for the traction is 0.04, else weird shit happens while steering
-
 	steerangles.y = steerAngle;
 
-	force = (parent->GetEngine().Output + 0.0001) * vecForward / radius;
-	force *= (traction / originalTraction) * (traction / originalTraction);
-	force /= 2;
+	angles = parent->pev->angles;
+	angles = angles + steerangles;
+	groundangles = AlignToGround( origin, angles, 256, parent->edict() );
 
-	constexpr float forceEpsilon = 0.001f;
+	AttachToPos( arrindex );
 
-	float flFraction = DotProduct(force, vecDeltaMove);
+	// Calculate the force according to these rules:
+	// Bigger engine output = more force
+	// More radius = less force
+	// More traction = more force squared
+	force = (parent->GetEngine().Output) * vecForward / radius;
+	//force *= (traction / originalTraction) * (traction / originalTraction);
+	//force /= 2;
+
+//	ALERT( at_console, "force %f\n", force.Length() );
+
+	// Decrease traction a lot if we pulled the handbrake
+	if ( FBitCheck( flags, BIT( Wheel_Handbrake ) ) )
+	{
+		float handbrake = parent->GetEngine().HandbrakeLever;
+		traction /= 1.2f;
+		force = force + (force.Length() * -vecForward * handbrake * (traction / originalTraction));
+	}
+
+	// Decrease traction while braking
+	if ( flags & BIT( Wheel_Brake ) )
+	{
+		float brake = parent->GetEngine().BrakePedal;
+		force = force + (force.Length() * -vecForward * brake * (traction / originalTraction));
+	}
+
+	// Climb back slowly to original value
+	traction = (traction * 0.97) + (originalTraction * 0.03);
+
+	// Minimum value for the traction is 0.04, else weird shit happens while steering
+	traction = V_max( traction, 0.04 );
+
+	// Limit the absolute value of forceTimesDeltaMove to 0.00001 
+	constexpr float forceEpsilon = 0.00001f;
+
 	float forceTimesDeltaMove = (force.Length() * vecDeltaMove.Length());
 
 	if ( fabs( forceTimesDeltaMove ) < forceEpsilon )
@@ -606,16 +630,27 @@ void VehicleWheel::Update( float flSpeed, int arrindex )
 			forceTimesDeltaMove = -forceEpsilon;
 	}
 	
+	// Calculate the cosine of the angle between the force (our desired velocity) and our current velocity
+	float flFraction = DotProduct(force, vecDeltaMove);
 	float flDiffAngle = flFraction / forceTimesDeltaMove;
-	flDiffAngle = std::acos(flDiffAngle);
-	
-	tractionForce = (0 + cos(flDiffAngle)) * force.Length() * vecDeltaMove * traction * 3.5;
+	//flDiffAngle *= flDiffAngle;
+	//flDiffAngle = 1.0f;
 
-	angles = parent->pev->angles;
-	angles = angles + steerangles;
-	groundangles = AlignToGround(origin, angles, 256, parent->edict());
+	if ( vecDeltaMove.Length2D() < 0.001f )
+		flDiffAngle = 1.0f;
 
-	ALERT( at_console, "Wheel force: %3.2f\n", force.Length() );
+	// Calculate a traction factor
+	float tractionFactor = traction / originalTraction;
+	tractionFactor *= flDiffAngle;
+
+	// If the angle between the wheel force and current velocity is 90°
+	// then there will hardly be any fraction
+	// If the angle is 0°, we have 100% traction
+	tractionForce = force * tractionFactor * 2.0f;
+
+	// Clamp the traction force if it's low enough
+	if ( tractionForce.Length2D() < 0.1f )
+		tractionForce = g_vecZero;
 }
 
 // Function will be deprecated soon, we should attach to bones by name, not by ID
@@ -688,3 +723,96 @@ Vector AlignToGround( Vector origin, Vector dirangles, float radius, edict_t *pe
 
 	return vecFinalAngles;
 }
+
+void AxlePhysicsParams::Init( VehicleWheel* left, VehicleWheel* right, VehiclePhysicsParams* params, float offset )
+{
+	direction = g_vecZero;
+	position = g_vecZero;
+	force = g_vecZero;
+
+	this->offset = offset;
+	momentum = g_vecZero;
+
+	leftWheel = left;
+	rightWheel = right;
+	baseParams = params;
+}
+
+void AxlePhysicsParams::Update()
+{
+	Vector forward;
+	UTIL_MakeVectorsPrivate( baseParams->parent->pev->angles, forward, nullptr, nullptr );
+
+	// Degradation of momentum due to air drag and traction
+	momentum = momentum / 1.01f;
+
+	// Physically, the traction force is what actually pushes the car, but we got another force for some reason
+	// Remember, traction is the opposite of slipping!!!
+	//force = leftWheel->force + rightWheel->force;
+	force = leftWheel->tractionForce + rightWheel->tractionForce;
+
+	// Multiply force and momentum by 0.016f otherwise we'll skyrocket
+	position = baseParams->parent->pev->origin + (offset * forward) + (force + momentum);
+
+	// Update momentum for next frame
+	momentum = force;
+
+	// Debugging...
+	//ALERT( at_console, "Pos: %f %f %f\n", force.x, force.y, force.z );
+}
+
+void VehiclePhysicsParams::Init( CBaseVehicle* parent )
+{
+	finalVelocity = g_vecZero;
+	finalAngles = g_vecZero;
+	momentum = g_vecZero;
+
+	// frontAxle and rearAxle will be set by the parent vehicle!!!
+	this->parent = parent;
+
+	lv.forward = g_vecZero;
+	lv.right = g_vecZero;
+	lv.up = g_vecZero;
+}
+
+void VehiclePhysicsParams::Update()
+{
+	Vector calculatedPosition = g_vecZero;
+
+	// Get momentum from car
+	momentum = parent->pev->velocity / 1.05f;
+
+	// We average the calculated position between two axles according to offset lengths
+	// We treat offsets as absolute values, otherwise there will be trouble
+	float totalLength = fabs(frontAxle.offset) + fabs(rearAxle.offset);
+	float frontLength = fabs(frontAxle.offset) / totalLength;
+	float backLength = fabs(rearAxle.offset) / totalLength;
+	
+	// Front axle * back length and rear axle * front length
+	// NOT front axle * front length etc.
+	// If frontLength was 0.7 (which clearly means the front axle is FARTHER)
+	// then front axle * front length would imply that the front axle is closer
+	// and that would be a lie
+	calculatedPosition = (frontAxle.position * backLength) + (rearAxle.position * frontLength);
+
+	// Now that we have the calculated position, let's calculate the velocity needed to reach it
+	finalVelocity = (calculatedPosition - parent->pev->origin); // might wanna divide by 0.016 later or something
+
+	// Calculate final angles from resulting axle positions
+	// Step 1: treat rearAxle.position as origin, and frontAxle.position relative to that
+	Vector axleTransformed = frontAxle.position - rearAxle.position;
+
+	// Step 2: Use atan2() on the YX coordinates of the resulting vector
+	finalAngles.y = atan2( axleTransformed.y, axleTransformed.x ) * (180.f/M_PI);
+	finalAngles.x = 0;
+	finalAngles.z = 0;
+}
+
+
+
+
+
+
+
+
+
