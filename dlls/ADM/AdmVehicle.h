@@ -174,20 +174,23 @@ enum WheelTypeFlags
 struct VehicleWheel
 {
 	Vector				origin;
+	Vector				oldOrigin;
 	Vector				angles; 
 	Vector				steerangles;
 	Vector				groundangles;
-	Vector				force;
+//	Vector				force;
 	Vector				tractionForce;
 
 	bool				onGround;
 	float				traction;
 	float				originalTraction;
+	float				tractionFactorBlend;
 	
 	float				radius;
 	float				wear; // One could also say damage
 	float				width;
 	
+	float				rollAngularVelocity;
 	float				rollAngle;
 	float				steerAngle;
 	

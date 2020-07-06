@@ -593,8 +593,8 @@ void CBaseCar::VehicleBaseInit()
 	pev->max_health = v_Engine.MaxHealth;
 	pev->health = pev->max_health;
 
-	physParms.frontAxle.Init( &v_Wheels[0], &v_Wheels[1], &physParms, 48.0f );
-	physParms.rearAxle.Init( &v_Wheels[2], &v_Wheels[3], &physParms, -48.0f );
+	physParms.frontAxle.Init( &v_Wheels[0], &v_Wheels[1], &physParms, 52.0f );
+	physParms.rearAxle.Init( &v_Wheels[2], &v_Wheels[3], &physParms, -52.0f );
 	physParms.Init( this );
 
 	v_Body.origin = pev->origin;
@@ -660,10 +660,22 @@ void CBaseCar::VehicleMovement()
 
 	// Get physics values from our local vehicle phys params
 	pev->angles = physParms.finalAngles;
-	pev->angles.z = pev->angles.z*0.95 + (speed * (v_Wheels[0].steerAngle / 30.f))*0.05;
 	pev->velocity = physParms.finalVelocity;
 	pev->velocity.z -= 300.0f;
+
+	Vector right;
+	UTIL_MakeVectorsPrivate( pev->angles, nullptr, right, nullptr );
+	float sideDot = DotProduct(right, pev->velocity);
+	pev->angles.z = pev->angles.z*0.95 + (sideDot/1.5f)*0.05;
 	
+	if ( v_Seats[0].pSessilis )
+	{
+		CBasePlayer* player = v_Seats[0].pSessilis;
+		player->pev->fixangle = 1;
+		player->pev->v_angle.y = pev->angles.y;
+		player->pev->v_angle.z = pev->angles.z / 3.0f;
+	}
+
 	physParms.frontAxle.Update();
 	physParms.rearAxle.Update();
 	physParms.Update();
@@ -829,14 +841,14 @@ public:
 			{ 360.0f, 5000.0f }
 		);
 
-		v_Engine.Init( this, Drive_AWD, 500, 70, 0.9 );
+		v_Engine.Init( this, Drive_AWD, 500, 120, 0.9 );
 		
 		v_Type = VehicleCar;
 
 		PRECACHE_MODEL( (char*)STRING( v_Wheels[0].m_iszModel ) ); // DIRTY friggin hanck
 
-		v_Wheels[0].Init( Stock, this, m_iszWheels[0], ( BIT( Wheel_Steerable ) | BIT( Wheel_Front ) ) );
-		v_Wheels[1].Init( Stock, this, m_iszWheels[1], ( BIT( Wheel_Steerable ) | BIT( Wheel_Front ) ) );
+		v_Wheels[0].Init( Stock, this, m_iszWheels[0], ( BIT( Wheel_Steerable ) | BIT( Wheel_Front ) | BIT( Wheel_Brake ) ) );
+		v_Wheels[1].Init( Stock, this, m_iszWheels[1], ( BIT( Wheel_Steerable ) | BIT( Wheel_Front ) | BIT( Wheel_Brake ) ) );
 		v_Wheels[2].Init( Stock, this, m_iszWheels[2], ( BIT( Wheel_Handbrake ) | BIT( Wheel_Back ) ) );
 		v_Wheels[3].Init( Stock, this, m_iszWheels[3], ( BIT( Wheel_Handbrake ) | BIT( Wheel_Back ) ) );
 	}
