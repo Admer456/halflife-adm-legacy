@@ -26,6 +26,7 @@
 #include	"AI/Schedule.h"
 #include	"Weapons/Weapons.h"
 #include	"AI/SquadMonster.h"
+#include	"Env/CSprite.h"
 
 //=========================================================
 // Monster's Anim Events Go Here
