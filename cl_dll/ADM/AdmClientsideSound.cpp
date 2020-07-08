@@ -31,7 +31,7 @@
 
 #include <string>
 
-#include "adm/DelayLoad.h"
+#include "../shared/ADM/DelayLoad.h"
 
 // ---------------------------------
 // FMOD clientside extension methods

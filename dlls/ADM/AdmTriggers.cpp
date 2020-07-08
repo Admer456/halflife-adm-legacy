@@ -32,7 +32,7 @@
 #include "Base/SaveRestore.h"
 #include "Game/GameRules.h"
 #include "skill.h"
-#include "adm/shared/AdmTime.h"
+#include "../shared/ADM/AdmTime.h"
 
 #include <cmath>
 #include <string>

@@ -174,10 +174,6 @@
     <ClCompile Include="..\..\cl_dll\VGUI\vgui_teammenu.cpp" />
     <ClCompile Include="..\..\common\parsemsg.cpp" />
     <ClCompile Include="..\..\dlls\adm\AdmRenderer.cpp" />
-    <ClCompile Include="..\..\dlls\adm\shared\AdmControl.cpp" />
-    <ClCompile Include="..\..\dlls\ADM\Shared\AdmSound.cpp" />
-    <ClCompile Include="..\..\dlls\adm\shared\AdmSoundList.cpp" />
-    <ClCompile Include="..\..\dlls\ADM\shared\AdmTime.cpp" />
     <ClCompile Include="..\..\dlls\Weapons\Crossbow.cpp" />
     <ClCompile Include="..\..\dlls\Weapons\Crowbar.cpp" />
     <ClCompile Include="..\..\dlls\Weapons\Egon.cpp" />
@@ -198,7 +194,6 @@
     <ClCompile Include="..\..\external\imgui\imgui.cpp" />
     <ClCompile Include="..\..\external\imgui\imgui_draw.cpp" />
     <ClCompile Include="..\..\external\imgui\imgui_widgets.cpp" />
-    <ClCompile Include="..\..\game_shared\adm\DelayLoad.cpp" />
     <ClCompile Include="..\..\game_shared\vgui_checkbutton2.cpp" />
     <ClCompile Include="..\..\game_shared\vgui_grid.cpp" />
     <ClCompile Include="..\..\game_shared\vgui_helpers.cpp" />
@@ -211,6 +206,11 @@
     <ClCompile Include="..\..\pm_shared\pm_math.cpp" />
     <ClCompile Include="..\..\pm_shared\pm_shared.cpp" />
     <ClCompile Include="..\..\public\interface.cpp" />
+    <ClCompile Include="..\..\shared\ADM\AdmControl.cpp" />
+    <ClCompile Include="..\..\shared\ADM\AdmSound.cpp" />
+    <ClCompile Include="..\..\shared\ADM\AdmSoundList.cpp" />
+    <ClCompile Include="..\..\shared\ADM\AdmTime.cpp" />
+    <ClCompile Include="..\..\shared\ADM\DelayLoad.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\cl_dll\Bench.h" />
@@ -257,11 +257,6 @@
     <ClInclude Include="..\..\common\parsemsg.h" />
     <ClInclude Include="..\..\common\Platform.h" />
     <ClInclude Include="..\..\dlls\ADM\AdmRenderer.h" />
-    <ClInclude Include="..\..\dlls\ADM\shared\AdmControl.h" />
-    <ClInclude Include="..\..\dlls\ADM\Shared\AdmSound.h" />
-    <ClInclude Include="..\..\dlls\ADM\shared\AdmSoundList.h" />
-    <ClInclude Include="..\..\dlls\ADM\shared\AdmTime.h" />
-    <ClInclude Include="..\..\game_shared\adm\DelayLoad.h" />
     <ClInclude Include="..\..\game_shared\vgui_scrollbar2.h" />
     <ClInclude Include="..\..\game_shared\vgui_slider2.h" />
     <ClInclude Include="..\..\game_shared\voice_banmgr.h" />
@@ -272,6 +267,12 @@
     <ClInclude Include="..\..\pm_shared\pm_materials.h" />
     <ClInclude Include="..\..\pm_shared\pm_movevars.h" />
     <ClInclude Include="..\..\pm_shared\pm_shared.h" />
+    <ClInclude Include="..\..\shared\ADM\AdmControl.h" />
+    <ClInclude Include="..\..\shared\ADM\AdmSound.h" />
+    <ClInclude Include="..\..\shared\ADM\AdmSoundList.h" />
+    <ClInclude Include="..\..\shared\ADM\AdmTime.h" />
+    <ClInclude Include="..\..\shared\ADM\DelayLoad.h" />
+    <ClInclude Include="..\..\shared\ADM\VersionInfo.h" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="..\..\lib\public\game_controls.lib" />

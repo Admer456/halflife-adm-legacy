@@ -24,7 +24,7 @@
 #include "particleman.h"
 extern IParticleMan *g_pParticleMan;
 
-#include "ADM/Shared/AdmSound.h"
+//#include "../shared/ADM/AdmSound.h"
 
 #define MAX_CLIENTS 32
 

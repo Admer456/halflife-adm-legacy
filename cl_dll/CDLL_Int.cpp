@@ -38,7 +38,7 @@
 #include "Rendering/tri.h"
 #include "VGUI/vgui_TeamFortressViewport.h"
 #include "../public/interface.h"
-#include "ADM/Shared/AdmSound.h"
+#include "../shared/ADM/AdmSound.h"
 
 cl_enginefunc_t gEngfuncs;
 CHud gHUD;

@@ -1,937 +1,940 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
+    <Filter Include="Sources">
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="Resource Files">
+    <Filter Include="Sources\ADM">
+      <UniqueIdentifier>{e0abc6bc-0f7a-4d3a-badb-672bf36abbb7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\ADM\Func">
+      <UniqueIdentifier>{020dc8e7-4428-4ab1-b808-0708506662cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\AI">
+      <UniqueIdentifier>{c3d2fc78-8d63-414b-bf71-1e83a7db7592}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\AI\Monsters">
+      <UniqueIdentifier>{b087d619-fdc3-4ecd-97bc-ff16ac5394d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Base">
+      <UniqueIdentifier>{1d24ed3c-da57-4a5b-a7ed-a073b58a5d5e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Game">
+      <UniqueIdentifier>{bdf29b00-3a49-4381-bb1a-aac10390d634}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Items">
+      <UniqueIdentifier>{2c82afbd-b877-4e34-aa1f-8bdbe1ffd470}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Weapons">
+      <UniqueIdentifier>{000b311c-d555-467e-b6cb-5e669fb8c45e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Engine">
+      <UniqueIdentifier>{b85e935a-5cc8-482d-b85f-6cdaa3452ccb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Game_Shared">
+      <UniqueIdentifier>{9cd951c6-53c4-4c79-826f-13ac1af8a8b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\PM_Shared">
+      <UniqueIdentifier>{7f184267-1d16-4bbc-9212-a804fcd04e6a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Common">
+      <UniqueIdentifier>{d9b0bb75-7f25-443b-8899-6b1a9e1dd63c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Audio">
+      <UniqueIdentifier>{540f6acf-fa51-44f0-9e07-5b9fad1e193d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Env">
+      <UniqueIdentifier>{d0f7d9ce-b729-4409-861c-5ebd38578632}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Func">
+      <UniqueIdentifier>{15a5ae2a-4d8a-49f4-9689-1be7b38d08bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Info">
+      <UniqueIdentifier>{f5f586e9-7112-4794-a69f-d90fde9822d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Light">
+      <UniqueIdentifier>{4c47aac0-5106-4994-bf70-869c5689b97c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Misc">
+      <UniqueIdentifier>{d497b6eb-3091-469e-af5e-a4a79ece561e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Player">
+      <UniqueIdentifier>{c188937d-4c1c-4cb6-903a-c68edbd73bd9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Trigger">
+      <UniqueIdentifier>{bf25760c-77f1-4ce5-8bda-4ace03c47d60}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Path">
+      <UniqueIdentifier>{a8df70ed-4602-4d22-a482-851594920642}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FGDs">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Source Files\ADM">
-      <UniqueIdentifier>{e0abc6bc-0f7a-4d3a-badb-672bf36abbb7}</UniqueIdentifier>
+    <Filter Include="Shared">
+      <UniqueIdentifier>{73779adb-60a8-4b7d-b755-5ebcbd45d762}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\ADM\Shared">
-      <UniqueIdentifier>{be3c1453-aff0-462e-89bb-b99e09ab72f2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\AI">
-      <UniqueIdentifier>{c3d2fc78-8d63-414b-bf71-1e83a7db7592}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\AI\Monsters">
-      <UniqueIdentifier>{b087d619-fdc3-4ecd-97bc-ff16ac5394d0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Base">
-      <UniqueIdentifier>{1d24ed3c-da57-4a5b-a7ed-a073b58a5d5e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Game">
-      <UniqueIdentifier>{bdf29b00-3a49-4381-bb1a-aac10390d634}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Items">
-      <UniqueIdentifier>{2c82afbd-b877-4e34-aa1f-8bdbe1ffd470}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Weapons">
-      <UniqueIdentifier>{000b311c-d555-467e-b6cb-5e669fb8c45e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Engine">
-      <UniqueIdentifier>{b85e935a-5cc8-482d-b85f-6cdaa3452ccb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Game_Shared">
-      <UniqueIdentifier>{9cd951c6-53c4-4c79-826f-13ac1af8a8b6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\PM_Shared">
-      <UniqueIdentifier>{7f184267-1d16-4bbc-9212-a804fcd04e6a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Common">
-      <UniqueIdentifier>{d9b0bb75-7f25-443b-8899-6b1a9e1dd63c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Audio">
-      <UniqueIdentifier>{540f6acf-fa51-44f0-9e07-5b9fad1e193d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Env">
-      <UniqueIdentifier>{d0f7d9ce-b729-4409-861c-5ebd38578632}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Func">
-      <UniqueIdentifier>{15a5ae2a-4d8a-49f4-9689-1be7b38d08bb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Info">
-      <UniqueIdentifier>{f5f586e9-7112-4794-a69f-d90fde9822d2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Light">
-      <UniqueIdentifier>{4c47aac0-5106-4994-bf70-869c5689b97c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Misc">
-      <UniqueIdentifier>{d497b6eb-3091-469e-af5e-a4a79ece561e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Player">
-      <UniqueIdentifier>{c188937d-4c1c-4cb6-903a-c68edbd73bd9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Trigger">
-      <UniqueIdentifier>{bf25760c-77f1-4ce5-8bda-4ace03c47d60}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Path">
-      <UniqueIdentifier>{a8df70ed-4602-4d22-a482-851594920642}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\ADM\Func">
-      <UniqueIdentifier>{020dc8e7-4428-4ab1-b808-0708506662cb}</UniqueIdentifier>
+    <Filter Include="Shared\ADM">
+      <UniqueIdentifier>{5fea5a55-5a3c-429f-a9fd-ec25ebbf9ed4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\game_shared\voice_gamemgr.cpp">
-      <Filter>Source Files\Game_Shared</Filter>
+      <Filter>Sources\Game_Shared</Filter>
     </ClCompile>
     <ClCompile Include="..\..\pm_shared\pm_debug.cpp">
-      <Filter>Source Files\PM_Shared</Filter>
+      <Filter>Sources\PM_Shared</Filter>
     </ClCompile>
     <ClCompile Include="..\..\pm_shared\pm_math.cpp">
-      <Filter>Source Files\PM_Shared</Filter>
+      <Filter>Sources\PM_Shared</Filter>
     </ClCompile>
     <ClCompile Include="..\..\pm_shared\pm_shared.cpp">
-      <Filter>Source Files\PM_Shared</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\game_shared\adm\DelayLoad.cpp">
-      <Filter>Source Files\ADM\Shared</Filter>
+      <Filter>Sources\PM_Shared</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\adm\AdmAudioEntities.cpp">
-      <Filter>Source Files\ADM</Filter>
+      <Filter>Sources\ADM</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\adm\AdmEffects.cpp">
-      <Filter>Source Files\ADM</Filter>
+      <Filter>Sources\ADM</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\adm\AdmGetSetKV.cpp">
-      <Filter>Source Files\ADM</Filter>
+      <Filter>Sources\ADM</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\adm\AdmPhysics.cpp">
-      <Filter>Source Files\ADM</Filter>
+      <Filter>Sources\ADM</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\adm\AdmStory.cpp">
-      <Filter>Source Files\ADM</Filter>
+      <Filter>Sources\ADM</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\adm\AdmTriggers.cpp">
-      <Filter>Source Files\ADM</Filter>
+      <Filter>Sources\ADM</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\adm\AdmVehicle.cpp">
-      <Filter>Source Files\ADM</Filter>
+      <Filter>Sources\ADM</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\adm\AdmVehicleComponents.cpp">
-      <Filter>Source Files\ADM</Filter>
+      <Filter>Sources\ADM</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Weapons\SqueakGrenade.cpp">
-      <Filter>Source Files\Weapons</Filter>
+      <Filter>Sources\Weapons</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Weapons\TripmineGrenade.cpp">
-      <Filter>Source Files\Weapons</Filter>
+      <Filter>Sources\Weapons</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Weapons\Weapons.cpp">
-      <Filter>Source Files\Weapons</Filter>
+      <Filter>Sources\Weapons</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Weapons\Crossbow.cpp">
-      <Filter>Source Files\Weapons</Filter>
+      <Filter>Sources\Weapons</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Weapons\Crowbar.cpp">
-      <Filter>Source Files\Weapons</Filter>
+      <Filter>Sources\Weapons</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Weapons\Egon.cpp">
-      <Filter>Source Files\Weapons</Filter>
+      <Filter>Sources\Weapons</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Weapons\Gauss.cpp">
-      <Filter>Source Files\Weapons</Filter>
+      <Filter>Sources\Weapons</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Weapons\Glock.cpp">
-      <Filter>Source Files\Weapons</Filter>
+      <Filter>Sources\Weapons</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Weapons\HandGrenade.cpp">
-      <Filter>Source Files\Weapons</Filter>
+      <Filter>Sources\Weapons</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Weapons\Hgun.cpp">
-      <Filter>Source Files\Weapons</Filter>
+      <Filter>Sources\Weapons</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Weapons\MP5.cpp">
-      <Filter>Source Files\Weapons</Filter>
+      <Filter>Sources\Weapons</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Weapons\Python.cpp">
-      <Filter>Source Files\Weapons</Filter>
+      <Filter>Sources\Weapons</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Weapons\RPG.cpp">
-      <Filter>Source Files\Weapons</Filter>
+      <Filter>Sources\Weapons</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Weapons\SatchelCharge.cpp">
-      <Filter>Source Files\Weapons</Filter>
+      <Filter>Sources\Weapons</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Weapons\Shotgun.cpp">
-      <Filter>Source Files\Weapons</Filter>
+      <Filter>Sources\Weapons</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\AI\DefaultAI.cpp">
-      <Filter>Source Files\AI</Filter>
+      <Filter>Sources\AI</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\AI\GenericMonster.cpp">
-      <Filter>Source Files\AI</Filter>
+      <Filter>Sources\AI</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\AI\LegacyCine.cpp">
-      <Filter>Source Files\AI</Filter>
+      <Filter>Sources\AI</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\AI\Monsters.cpp">
-      <Filter>Source Files\AI</Filter>
+      <Filter>Sources\AI</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\AI\MonsterState.cpp">
-      <Filter>Source Files\AI</Filter>
+      <Filter>Sources\AI</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\AI\Schedule.cpp">
-      <Filter>Source Files\AI</Filter>
+      <Filter>Sources\AI</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\AI\SquadMonster.cpp">
-      <Filter>Source Files\AI</Filter>
+      <Filter>Sources\AI</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\AI\TalkMonster.cpp">
-      <Filter>Source Files\AI</Filter>
+      <Filter>Sources\AI</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\AI\AIUtil.cpp">
-      <Filter>Source Files\AI</Filter>
+      <Filter>Sources\AI</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\AI\CineMonster.cpp">
-      <Filter>Source Files\AI</Filter>
+      <Filter>Sources\AI</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\AI\Monsters\Apache.cpp">
-      <Filter>Source Files\AI\Monsters</Filter>
+      <Filter>Sources\AI\Monsters</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\AI\Monsters\Barnacle.cpp">
-      <Filter>Source Files\AI\Monsters</Filter>
+      <Filter>Sources\AI\Monsters</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\AI\Monsters\Barney.cpp">
-      <Filter>Source Files\AI\Monsters</Filter>
+      <Filter>Sources\AI\Monsters</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\AI\Monsters\BigMomma.cpp">
-      <Filter>Source Files\AI\Monsters</Filter>
+      <Filter>Sources\AI\Monsters</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\AI\Monsters\Bloater.cpp">
-      <Filter>Source Files\AI\Monsters</Filter>
+      <Filter>Sources\AI\Monsters</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\AI\Monsters\Bullsquid.cpp">
-      <Filter>Source Files\AI\Monsters</Filter>
+      <Filter>Sources\AI\Monsters</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\AI\Monsters\Controller.cpp">
-      <Filter>Source Files\AI\Monsters</Filter>
+      <Filter>Sources\AI\Monsters</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\AI\Monsters\FlockingFlyer.cpp">
-      <Filter>Source Files\AI\Monsters</Filter>
+      <Filter>Sources\AI\Monsters</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\AI\Monsters\Gargantua.cpp">
-      <Filter>Source Files\AI\Monsters</Filter>
+      <Filter>Sources\AI\Monsters</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\AI\Monsters\GMan.cpp">
-      <Filter>Source Files\AI\Monsters</Filter>
+      <Filter>Sources\AI\Monsters</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\AI\Monsters\Hassassin.cpp">
-      <Filter>Source Files\AI\Monsters</Filter>
+      <Filter>Sources\AI\Monsters</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\AI\Monsters\HGrunt.cpp">
-      <Filter>Source Files\AI\Monsters</Filter>
+      <Filter>Sources\AI\Monsters</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\AI\Monsters\Houndeye.cpp">
-      <Filter>Source Files\AI\Monsters</Filter>
+      <Filter>Sources\AI\Monsters</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\AI\Monsters\Ichthyosaur.cpp">
-      <Filter>Source Files\AI\Monsters</Filter>
+      <Filter>Sources\AI\Monsters</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\AI\Monsters\ISlave.cpp">
-      <Filter>Source Files\AI\Monsters</Filter>
+      <Filter>Sources\AI\Monsters</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\AI\Monsters\Leech.cpp">
-      <Filter>Source Files\AI\Monsters</Filter>
+      <Filter>Sources\AI\Monsters</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\AI\Monsters\Nihilanth.cpp">
-      <Filter>Source Files\AI\Monsters</Filter>
+      <Filter>Sources\AI\Monsters</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\AI\Monsters\Osprey.cpp">
-      <Filter>Source Files\AI\Monsters</Filter>
+      <Filter>Sources\AI\Monsters</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\AI\Monsters\Rat.cpp">
-      <Filter>Source Files\AI\Monsters</Filter>
+      <Filter>Sources\AI\Monsters</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\AI\Monsters\Roach.cpp">
-      <Filter>Source Files\AI\Monsters</Filter>
+      <Filter>Sources\AI\Monsters</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\AI\Monsters\Scientist.cpp">
-      <Filter>Source Files\AI\Monsters</Filter>
+      <Filter>Sources\AI\Monsters</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\AI\Monsters\Tentacle.cpp">
-      <Filter>Source Files\AI\Monsters</Filter>
+      <Filter>Sources\AI\Monsters</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\AI\Monsters\Turrets.cpp">
-      <Filter>Source Files\AI\Monsters</Filter>
+      <Filter>Sources\AI\Monsters</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\AI\Monsters\Zombie.cpp">
-      <Filter>Source Files\AI\Monsters</Filter>
+      <Filter>Sources\AI\Monsters</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\AI\Monsters\AGrunt.cpp">
-      <Filter>Source Files\AI\Monsters</Filter>
+      <Filter>Sources\AI\Monsters</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Items\Items.cpp">
-      <Filter>Source Files\Items</Filter>
+      <Filter>Sources\Items</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Items\Recharge.cpp">
-      <Filter>Source Files\Items</Filter>
+      <Filter>Sources\Items</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Items\Airtank.cpp">
-      <Filter>Source Files\Items</Filter>
+      <Filter>Sources\Items</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Items\HealthKit.cpp">
-      <Filter>Source Files\Items</Filter>
+      <Filter>Sources\Items</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Game\GamerulesMultiplay.cpp">
-      <Filter>Source Files\Game</Filter>
+      <Filter>Sources\Game</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Game\GamerulesSingleplay.cpp">
-      <Filter>Source Files\Game</Filter>
+      <Filter>Sources\Game</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Game\GamerulesTeamplay.cpp">
-      <Filter>Source Files\Game</Filter>
+      <Filter>Sources\Game</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Game\Client.cpp">
-      <Filter>Source Files\Game</Filter>
+      <Filter>Sources\Game</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Game\Game.cpp">
-      <Filter>Source Files\Game</Filter>
+      <Filter>Sources\Game</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Game\GameEntities.cpp">
-      <Filter>Source Files\Game</Filter>
+      <Filter>Sources\Game</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Game\GameRules.cpp">
-      <Filter>Source Files\Game</Filter>
+      <Filter>Sources\Game</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Base\Animation.cpp">
-      <Filter>Source Files\Base</Filter>
+      <Filter>Sources\Base</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Base\BaseButton.cpp">
-      <Filter>Source Files\Base</Filter>
+      <Filter>Sources\Base</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Base\BaseEntity.cpp">
-      <Filter>Source Files\Base</Filter>
+      <Filter>Sources\Base</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Base\Animating.cpp">
-      <Filter>Source Files\Base</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\dlls\adm\shared\AdmTime.cpp">
-      <Filter>Source Files\ADM\Shared</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\dlls\adm\shared\AdmSoundList.cpp">
-      <Filter>Source Files\ADM\Shared</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\dlls\adm\shared\AdmControl.cpp">
-      <Filter>Source Files\ADM\Shared</Filter>
+      <Filter>Sources\Base</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\AI\FlyingMonster.cpp">
-      <Filter>Source Files\AI</Filter>
+      <Filter>Sources\AI</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\AI\Monsters\HeadCrab.cpp">
-      <Filter>Source Files\AI\Monsters</Filter>
+      <Filter>Sources\AI\Monsters</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Combat.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Sources</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Cycler.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Sources</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Globals.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Sources</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Graph.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Sources</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Grenade.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Sources</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\HExport.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Sources</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Lights.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Sources</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\MonsterMaker.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Sources</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Observer.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Sources</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Plane.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Sources</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Player.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Sources</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Skill.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Sources</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Sound.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Sources</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\SoundEnt.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Sources</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Spectator.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Sources</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Subs.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Sources</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Triggers.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Sources</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Utility.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Sources</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\World.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Sources</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\XenPlants.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Sources</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\AI\Monsters\Hornet.cpp">
-      <Filter>Source Files\AI\Monsters</Filter>
+      <Filter>Sources\AI\Monsters</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Weapons\WeaponsShared.cpp">
-      <Filter>Source Files\Weapons</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\dlls\ADM\Shared\AdmSound.cpp">
-      <Filter>Source Files\ADM\Shared</Filter>
+      <Filter>Sources\Weapons</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Func\CBreakable.cpp">
-      <Filter>Source Files\Func</Filter>
+      <Filter>Sources\Func</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Func\CFuncConveyor.cpp">
-      <Filter>Source Files\Func</Filter>
+      <Filter>Sources\Func</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Func\CFuncIllusionary.cpp">
-      <Filter>Source Files\Func</Filter>
+      <Filter>Sources\Func</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Func\CFuncMonsterClip.cpp">
-      <Filter>Source Files\Func</Filter>
+      <Filter>Sources\Func</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Func\CFuncRotating.cpp">
-      <Filter>Source Files\Func</Filter>
+      <Filter>Sources\Func</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Func\CFuncWall.cpp">
-      <Filter>Source Files\Func</Filter>
+      <Filter>Sources\Func</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Func\CFuncWallToggle.cpp">
-      <Filter>Source Files\Func</Filter>
+      <Filter>Sources\Func</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Func\CPendulum.cpp">
-      <Filter>Source Files\Func</Filter>
+      <Filter>Sources\Func</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Func\CPushable.cpp">
-      <Filter>Source Files\Func</Filter>
+      <Filter>Sources\Func</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Func\CBaseDoor.cpp">
-      <Filter>Source Files\Func</Filter>
+      <Filter>Sources\Func</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Func\CMomentaryDoor.cpp">
-      <Filter>Source Files\Func</Filter>
+      <Filter>Sources\Func</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Func\CRotDoor.cpp">
-      <Filter>Source Files\Func</Filter>
+      <Filter>Sources\Func</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Func\CFuncMortarField.cpp">
-      <Filter>Source Files\Func</Filter>
+      <Filter>Sources\Func</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Func\CMortar.cpp">
-      <Filter>Source Files\Func</Filter>
+      <Filter>Sources\Func</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Func\CFuncTank.cpp">
-      <Filter>Source Files\Func</Filter>
+      <Filter>Sources\Func</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Func\CFuncTankControls.cpp">
-      <Filter>Source Files\Func</Filter>
+      <Filter>Sources\Func</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Func\CFuncTankGun.cpp">
-      <Filter>Source Files\Func</Filter>
+      <Filter>Sources\Func</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Func\CFuncTankLaser.cpp">
-      <Filter>Source Files\Func</Filter>
+      <Filter>Sources\Func</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Func\CFuncTankMortar.cpp">
-      <Filter>Source Files\Func</Filter>
+      <Filter>Sources\Func</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Func\CFuncTankRocket.cpp">
-      <Filter>Source Files\Func</Filter>
+      <Filter>Sources\Func</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Func\CBaseButton.cpp">
-      <Filter>Source Files\Func</Filter>
+      <Filter>Sources\Func</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Func\CFrictionModifier.cpp">
-      <Filter>Source Files\Func</Filter>
+      <Filter>Sources\Func</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Func\CFuncLadder.cpp">
-      <Filter>Source Files\Func</Filter>
+      <Filter>Sources\Func</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Func\CFuncPlat.cpp">
-      <Filter>Source Files\Func</Filter>
+      <Filter>Sources\Func</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Func\CFuncPlatRot.cpp">
-      <Filter>Source Files\Func</Filter>
+      <Filter>Sources\Func</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Func\CFuncTrackAuto.cpp">
-      <Filter>Source Files\Func</Filter>
+      <Filter>Sources\Func</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Func\CFuncTrackChange.cpp">
-      <Filter>Source Files\Func</Filter>
+      <Filter>Sources\Func</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Func\CFuncTrackTrain.cpp">
-      <Filter>Source Files\Func</Filter>
+      <Filter>Sources\Func</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Func\CFuncTrain.cpp">
-      <Filter>Source Files\Func</Filter>
+      <Filter>Sources\Func</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Func\CFuncTrainControls.cpp">
-      <Filter>Source Files\Func</Filter>
+      <Filter>Sources\Func</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Func\CGunTarget.cpp">
-      <Filter>Source Files\Func</Filter>
+      <Filter>Sources\Func</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Func\CRotButton.cpp">
-      <Filter>Source Files\Func</Filter>
+      <Filter>Sources\Func</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Func\CBasePlatTrain.cpp">
-      <Filter>Source Files\Func</Filter>
+      <Filter>Sources\Func</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Path\CPathTrack.cpp">
-      <Filter>Source Files\Path</Filter>
+      <Filter>Sources\Path</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Path\CPathCorner.cpp">
-      <Filter>Source Files\Path</Filter>
+      <Filter>Sources\Path</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Func\CRecharge.cpp">
-      <Filter>Source Files\Func</Filter>
+      <Filter>Sources\Func</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Func\CWallHealth.cpp">
-      <Filter>Source Files\Func</Filter>
+      <Filter>Sources\Func</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\ADM\Func\CFuncLag.cpp">
-      <Filter>Source Files\ADM\Func</Filter>
+      <Filter>Sources\ADM\Func</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\ADM\Func\CFuncLoadbar.cpp">
-      <Filter>Source Files\ADM\Func</Filter>
+      <Filter>Sources\ADM\Func</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\ADM\Func\CFuncNovis.cpp">
-      <Filter>Source Files\ADM\Func</Filter>
+      <Filter>Sources\ADM\Func</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Audio\CAmbientGeneric.cpp">
-      <Filter>Source Files\Audio</Filter>
+      <Filter>Sources\Audio</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Env\CEnvSound.cpp">
-      <Filter>Source Files\Env</Filter>
+      <Filter>Sources\Env</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Audio\CSpeaker.cpp">
-      <Filter>Source Files\Audio</Filter>
+      <Filter>Sources\Audio</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Env\CBeam.cpp">
-      <Filter>Source Files\Env</Filter>
+      <Filter>Sources\Env</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Env\CBlood.cpp">
-      <Filter>Source Files\Env</Filter>
+      <Filter>Sources\Env</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Env\CBubbling.cpp">
-      <Filter>Source Files\Env</Filter>
+      <Filter>Sources\Env</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Env\CEnvBeverage.cpp">
-      <Filter>Source Files\Env</Filter>
+      <Filter>Sources\Env</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Env\CEnvFunnel.cpp">
-      <Filter>Source Files\Env</Filter>
+      <Filter>Sources\Env</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Env\CEnvShooter.cpp">
-      <Filter>Source Files\Env</Filter>
+      <Filter>Sources\Env</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Env\CFade.cpp">
-      <Filter>Source Files\Env</Filter>
+      <Filter>Sources\Env</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Env\CGibShooter.cpp">
-      <Filter>Source Files\Env</Filter>
+      <Filter>Sources\Env</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Env\CGlow.cpp">
-      <Filter>Source Files\Env</Filter>
+      <Filter>Sources\Env</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Env\CLaser.cpp">
-      <Filter>Source Files\Env</Filter>
+      <Filter>Sources\Env</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Env\CLightning.cpp">
-      <Filter>Source Files\Env</Filter>
+      <Filter>Sources\Env</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Env\CMessage.cpp">
-      <Filter>Source Files\Env</Filter>
+      <Filter>Sources\Env</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Env\CShake.cpp">
-      <Filter>Source Files\Env</Filter>
+      <Filter>Sources\Env</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Env\CSmoker.cpp">
-      <Filter>Source Files\Env</Filter>
+      <Filter>Sources\Env</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Env\CSprite.cpp">
-      <Filter>Source Files\Env</Filter>
+      <Filter>Sources\Env</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Env\CTestEffect.cpp">
-      <Filter>Source Files\Env</Filter>
+      <Filter>Sources\Env</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Items\CItemSoda.cpp">
-      <Filter>Source Files\Items</Filter>
+      <Filter>Sources\Items</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Env\CEnvExplosion.cpp">
-      <Filter>Source Files\Env</Filter>
+      <Filter>Sources\Env</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Env\CShower.cpp">
-      <Filter>Source Files\Env</Filter>
+      <Filter>Sources\Env</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\shared\ADM\AdmControl.cpp">
+      <Filter>Shared\ADM</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\shared\ADM\AdmSound.cpp">
+      <Filter>Shared\ADM</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\shared\ADM\AdmSoundList.cpp">
+      <Filter>Shared\ADM</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\shared\ADM\AdmTime.cpp">
+      <Filter>Shared\ADM</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\shared\ADM\DelayLoad.cpp">
+      <Filter>Shared\ADM</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\engine\eiface.h">
-      <Filter>Source Files\Engine</Filter>
+      <Filter>Sources\Engine</Filter>
     </ClInclude>
     <ClInclude Include="..\..\common\Platform.h">
-      <Filter>Source Files\Common</Filter>
+      <Filter>Sources\Common</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\adm\AdmVehicle.h">
-      <Filter>Source Files\ADM</Filter>
+      <Filter>Sources\ADM</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\adm\AdmPhysics.h">
-      <Filter>Source Files\ADM</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\dlls\adm\shared\AdmControl.h">
-      <Filter>Source Files\ADM\Shared</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\dlls\adm\shared\AdmSoundList.h">
-      <Filter>Source Files\ADM\Shared</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\dlls\adm\shared\AdmTime.h">
-      <Filter>Source Files\ADM\Shared</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\game_shared\adm\DelayLoad.h">
-      <Filter>Source Files\ADM\Shared</Filter>
+      <Filter>Sources\ADM</Filter>
     </ClInclude>
     <ClInclude Include="..\..\pm_shared\pm_debug.h">
-      <Filter>Source Files\PM_Shared</Filter>
+      <Filter>Sources\PM_Shared</Filter>
     </ClInclude>
     <ClInclude Include="..\..\pm_shared\pm_defs.h">
-      <Filter>Source Files\PM_Shared</Filter>
+      <Filter>Sources\PM_Shared</Filter>
     </ClInclude>
     <ClInclude Include="..\..\pm_shared\pm_info.h">
-      <Filter>Source Files\PM_Shared</Filter>
+      <Filter>Sources\PM_Shared</Filter>
     </ClInclude>
     <ClInclude Include="..\..\pm_shared\pm_materials.h">
-      <Filter>Source Files\PM_Shared</Filter>
+      <Filter>Sources\PM_Shared</Filter>
     </ClInclude>
     <ClInclude Include="..\..\pm_shared\pm_movevars.h">
-      <Filter>Source Files\PM_Shared</Filter>
+      <Filter>Sources\PM_Shared</Filter>
     </ClInclude>
     <ClInclude Include="..\..\pm_shared\pm_shared.h">
-      <Filter>Source Files\PM_Shared</Filter>
+      <Filter>Sources\PM_Shared</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\AI\Activity.h">
-      <Filter>Source Files\AI</Filter>
+      <Filter>Sources\AI</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\AI\ActivityMap.h">
-      <Filter>Source Files\AI</Filter>
+      <Filter>Sources\AI</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\AI\BaseMonster.h">
-      <Filter>Source Files\AI</Filter>
+      <Filter>Sources\AI</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\AI\DefaultAI.h">
-      <Filter>Source Files\AI</Filter>
+      <Filter>Sources\AI</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\AI\FlyingMonster.h">
-      <Filter>Source Files\AI</Filter>
+      <Filter>Sources\AI</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\AI\MonsterEvent.h">
-      <Filter>Source Files\AI</Filter>
+      <Filter>Sources\AI</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\AI\Monsters.h">
-      <Filter>Source Files\AI</Filter>
+      <Filter>Sources\AI</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\AI\Schedule.h">
-      <Filter>Source Files\AI</Filter>
+      <Filter>Sources\AI</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\AI\Scripted.h">
-      <Filter>Source Files\AI</Filter>
+      <Filter>Sources\AI</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\AI\ScriptEvent.h">
-      <Filter>Source Files\AI</Filter>
+      <Filter>Sources\AI</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\AI\SquadMonster.h">
-      <Filter>Source Files\AI</Filter>
+      <Filter>Sources\AI</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\AI\TalkMonster.h">
-      <Filter>Source Files\AI</Filter>
+      <Filter>Sources\AI</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\AI\Hornet.h">
-      <Filter>Source Files\AI\Monsters</Filter>
+      <Filter>Sources\AI\Monsters</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\Base\Animation.h">
-      <Filter>Source Files\Base</Filter>
+      <Filter>Sources\Base</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\Base\CBase.h">
-      <Filter>Source Files\Base</Filter>
+      <Filter>Sources\Base</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\Base\CDLL_DLL.h">
-      <Filter>Source Files\Base</Filter>
+      <Filter>Sources\Base</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\Base\EngineCallback.h">
-      <Filter>Source Files\Base</Filter>
+      <Filter>Sources\Base</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\Base\ExtDLL.h">
-      <Filter>Source Files\Base</Filter>
+      <Filter>Sources\Base</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\Base\SaveRestore.h">
-      <Filter>Source Files\Base</Filter>
+      <Filter>Sources\Base</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\Weapons\Weapons.h">
-      <Filter>Source Files\Weapons</Filter>
+      <Filter>Sources\Weapons</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\Game\GamerulesTeamplay.h">
-      <Filter>Source Files\Game</Filter>
+      <Filter>Sources\Game</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\Game\GameRules.h">
-      <Filter>Source Files\Game</Filter>
+      <Filter>Sources\Game</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\Game\Client.h">
-      <Filter>Source Files\Game</Filter>
+      <Filter>Sources\Game</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\Game\Game.h">
-      <Filter>Source Files\Game</Filter>
+      <Filter>Sources\Game</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\Items\Items.h">
-      <Filter>Source Files\Items</Filter>
+      <Filter>Sources\Items</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\Decals.h">
-      <Filter>Source Files</Filter>
+      <Filter>Sources</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\Nodes.h">
-      <Filter>Source Files</Filter>
+      <Filter>Sources</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\Plane.h">
-      <Filter>Source Files</Filter>
+      <Filter>Sources</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\Player.h">
-      <Filter>Source Files</Filter>
+      <Filter>Sources</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\Skill.h">
-      <Filter>Source Files</Filter>
+      <Filter>Sources</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\SoundEnt.h">
-      <Filter>Source Files</Filter>
+      <Filter>Sources</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\Spectator.h">
-      <Filter>Source Files</Filter>
+      <Filter>Sources</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\Util.h">
-      <Filter>Source Files</Filter>
+      <Filter>Sources</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\Vector.h">
-      <Filter>Source Files</Filter>
+      <Filter>Sources</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\ADM\AdmEffects.h">
-      <Filter>Source Files\ADM</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\dlls\ADM\Shared\AdmSound.h">
-      <Filter>Source Files\ADM\Shared</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\game_shared\adm\VersionInfo.h">
-      <Filter>Source Files\Game_Shared</Filter>
+      <Filter>Sources\ADM</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\Func\CBreakable.h">
-      <Filter>Source Files\Func</Filter>
+      <Filter>Sources\Func</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\Func\CFuncConveyor.h">
-      <Filter>Source Files\Func</Filter>
+      <Filter>Sources\Func</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\Func\CFuncIllusionary.h">
-      <Filter>Source Files\Func</Filter>
+      <Filter>Sources\Func</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\Func\CFuncMonsterClip.h">
-      <Filter>Source Files\Func</Filter>
+      <Filter>Sources\Func</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\Func\CFuncRotating.h">
-      <Filter>Source Files\Func</Filter>
+      <Filter>Sources\Func</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\Func\CFuncWall.h">
-      <Filter>Source Files\Func</Filter>
+      <Filter>Sources\Func</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\Func\CFuncWallToggle.h">
-      <Filter>Source Files\Func</Filter>
+      <Filter>Sources\Func</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\Func\CPendulum.h">
-      <Filter>Source Files\Func</Filter>
+      <Filter>Sources\Func</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\Func\CPushable.h">
-      <Filter>Source Files\Func</Filter>
+      <Filter>Sources\Func</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\Func\CBaseDoor.h">
-      <Filter>Source Files\Func</Filter>
+      <Filter>Sources\Func</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\Func\CMomentaryDoor.h">
-      <Filter>Source Files\Func</Filter>
+      <Filter>Sources\Func</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\Func\CRotDoor.h">
-      <Filter>Source Files\Func</Filter>
+      <Filter>Sources\Func</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\Func\CMortar.h">
-      <Filter>Source Files\Func</Filter>
+      <Filter>Sources\Func</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\Func\CFuncMortarField.h">
-      <Filter>Source Files\Func</Filter>
+      <Filter>Sources\Func</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\Func\CFuncTank.h">
-      <Filter>Source Files\Func</Filter>
+      <Filter>Sources\Func</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\Func\CFuncTankControls.h">
-      <Filter>Source Files\Func</Filter>
+      <Filter>Sources\Func</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\Func\CFuncTankGun.h">
-      <Filter>Source Files\Func</Filter>
+      <Filter>Sources\Func</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\Func\CFuncTankLaser.h">
-      <Filter>Source Files\Func</Filter>
+      <Filter>Sources\Func</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\Func\CFuncTankMortar.h">
-      <Filter>Source Files\Func</Filter>
+      <Filter>Sources\Func</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\Func\CFuncTankRocket.h">
-      <Filter>Source Files\Func</Filter>
+      <Filter>Sources\Func</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\Func\CBaseButton.h">
-      <Filter>Source Files\Func</Filter>
+      <Filter>Sources\Func</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\Func\CFrictionModifier.h">
-      <Filter>Source Files\Func</Filter>
+      <Filter>Sources\Func</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\Func\CFuncLadder.h">
-      <Filter>Source Files\Func</Filter>
+      <Filter>Sources\Func</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\Func\CFuncPlat.h">
-      <Filter>Source Files\Func</Filter>
+      <Filter>Sources\Func</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\Func\CFuncPlatRot.h">
-      <Filter>Source Files\Func</Filter>
+      <Filter>Sources\Func</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\Func\CFuncTrackAuto.h">
-      <Filter>Source Files\Func</Filter>
+      <Filter>Sources\Func</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\Func\CFuncTrackChange.h">
-      <Filter>Source Files\Func</Filter>
+      <Filter>Sources\Func</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\Func\CFuncTrackTrain.h">
-      <Filter>Source Files\Func</Filter>
+      <Filter>Sources\Func</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\Func\CFuncTrain.h">
-      <Filter>Source Files\Func</Filter>
+      <Filter>Sources\Func</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\Func\CFuncTrainControls.h">
-      <Filter>Source Files\Func</Filter>
+      <Filter>Sources\Func</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\Func\CGunTarget.h">
-      <Filter>Source Files\Func</Filter>
+      <Filter>Sources\Func</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\Func\CRotButton.h">
-      <Filter>Source Files\Func</Filter>
+      <Filter>Sources\Func</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\Trigger\CBaseTrigger.h">
-      <Filter>Source Files\Trigger</Filter>
+      <Filter>Sources\Trigger</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\Func\CBasePlatTrain.h">
-      <Filter>Source Files\Func</Filter>
+      <Filter>Sources\Func</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\Path\CPathTrack.h">
-      <Filter>Source Files\Path</Filter>
+      <Filter>Sources\Path</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\Path\CPathCorner.h">
-      <Filter>Source Files\Path</Filter>
+      <Filter>Sources\Path</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\Func\CRecharge.h">
-      <Filter>Source Files\Func</Filter>
+      <Filter>Sources\Func</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\Func\CWallHealth.h">
-      <Filter>Source Files\Func</Filter>
+      <Filter>Sources\Func</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\ADM\Func\CFuncLag.h">
-      <Filter>Source Files\ADM\Func</Filter>
+      <Filter>Sources\ADM\Func</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\ADM\Func\CFuncLoadbar.h">
-      <Filter>Source Files\ADM\Func</Filter>
+      <Filter>Sources\ADM\Func</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\ADM\Func\CFuncNovis.h">
-      <Filter>Source Files\ADM\Func</Filter>
+      <Filter>Sources\ADM\Func</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\Audio\CAmbientGeneric.h">
-      <Filter>Source Files\Audio</Filter>
+      <Filter>Sources\Audio</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\Env\CEnvSound.h">
-      <Filter>Source Files\Env</Filter>
+      <Filter>Sources\Env</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\Audio\CSpeaker.h">
-      <Filter>Source Files\Audio</Filter>
+      <Filter>Sources\Audio</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\Env\CBeam.h">
-      <Filter>Source Files\Env</Filter>
+      <Filter>Sources\Env</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\Env\CBlood.h">
-      <Filter>Source Files\Env</Filter>
+      <Filter>Sources\Env</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\Env\CBubbling.h">
-      <Filter>Source Files\Env</Filter>
+      <Filter>Sources\Env</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\Env\CEnvBeverage.h">
-      <Filter>Source Files\Env</Filter>
+      <Filter>Sources\Env</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\Env\CEnvFunnel.h">
-      <Filter>Source Files\Env</Filter>
+      <Filter>Sources\Env</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\Env\CEnvShooter.h">
-      <Filter>Source Files\Env</Filter>
+      <Filter>Sources\Env</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\Env\CFade.h">
-      <Filter>Source Files\Env</Filter>
+      <Filter>Sources\Env</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\Env\CGibShooter.h">
-      <Filter>Source Files\Env</Filter>
+      <Filter>Sources\Env</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\Env\CGlow.h">
-      <Filter>Source Files\Env</Filter>
+      <Filter>Sources\Env</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\Env\CLaser.h">
-      <Filter>Source Files\Env</Filter>
+      <Filter>Sources\Env</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\Env\CLightning.h">
-      <Filter>Source Files\Env</Filter>
+      <Filter>Sources\Env</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\Env\CMessage.h">
-      <Filter>Source Files\Env</Filter>
+      <Filter>Sources\Env</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\Env\CShake.h">
-      <Filter>Source Files\Env</Filter>
+      <Filter>Sources\Env</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\Env\CSmoker.h">
-      <Filter>Source Files\Env</Filter>
+      <Filter>Sources\Env</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\Env\CSprite.h">
-      <Filter>Source Files\Env</Filter>
+      <Filter>Sources\Env</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\Env\CTestEffect.h">
-      <Filter>Source Files\Env</Filter>
+      <Filter>Sources\Env</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\Env\CFadeDefines.h">
-      <Filter>Source Files\Env</Filter>
+      <Filter>Sources\Env</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\Items\CItemSoda.h">
-      <Filter>Source Files\Items</Filter>
+      <Filter>Sources\Items</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\Env\CEnvExplosion.h">
-      <Filter>Source Files\Env</Filter>
+      <Filter>Sources\Env</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\Env\CShower.h">
-      <Filter>Source Files\Env</Filter>
+      <Filter>Sources\Env</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\shared\ADM\AdmControl.h">
+      <Filter>Shared\ADM</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\shared\ADM\AdmSound.h">
+      <Filter>Shared\ADM</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\shared\ADM\AdmSoundList.h">
+      <Filter>Shared\ADM</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\shared\ADM\AdmTime.h">
+      <Filter>Shared\ADM</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\shared\ADM\DelayLoad.h">
+      <Filter>Shared\ADM</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\shared\ADM\VersionInfo.h">
+      <Filter>Shared\ADM</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Versions\adm.fgd">
-      <Filter>Resource Files</Filter>
+      <Filter>FGDs</Filter>
     </None>
   </ItemGroup>
 </Project>

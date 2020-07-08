@@ -1,545 +1,550 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
+    <Filter Include="Sources">
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
-    <Filter Include="Source Files\ADM">
+    <Filter Include="Sources\ADM">
       <UniqueIdentifier>{6313916b-bee6-4055-94b0-4a9307ddbe70}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\ADM\Shared">
+    <Filter Include="Sources\ADM\Shared">
       <UniqueIdentifier>{815bd85b-4d6c-4f2f-88be-196147ea6b21}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Events">
+    <Filter Include="Sources\Events">
       <UniqueIdentifier>{1c805fa6-c2f0-4267-ba7f-e51534ca4873}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\HUD">
+    <Filter Include="Sources\HUD">
       <UniqueIdentifier>{4fd260c7-a5bb-4d28-9270-52f27aea421e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Input">
+    <Filter Include="Sources\Input">
       <UniqueIdentifier>{7ce94b6e-606d-43d0-9acc-385507292207}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Rendering">
+    <Filter Include="Sources\Rendering">
       <UniqueIdentifier>{8fc4f206-571e-4e17-941e-fb1b44bf3de8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\VGUI">
+    <Filter Include="Sources\VGUI">
       <UniqueIdentifier>{a73c4e2e-231b-4f60-9a75-0358d455ccb0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Weapons">
+    <Filter Include="Sources\Weapons">
       <UniqueIdentifier>{a46a0ff1-e7ad-43c4-afb8-6c93e71803a1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\PM_Shared">
+    <Filter Include="Sources\PM_Shared">
       <UniqueIdentifier>{7d8ce8c9-fed8-42ee-9ba0-73d0fee6006a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Public">
+    <Filter Include="Sources\Public">
       <UniqueIdentifier>{c053705f-05f3-4d16-ab13-80bfa84cbe75}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Game">
+    <Filter Include="Sources\Game">
       <UniqueIdentifier>{bd9d5958-4e67-4bff-bbd8-6ba6dfcdb720}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Game_Shared">
+    <Filter Include="Sources\Game_Shared">
       <UniqueIdentifier>{83318ea3-5019-4d8a-a9f9-4922cdb1c9bb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Common">
+    <Filter Include="Sources\Common">
       <UniqueIdentifier>{6887a889-19a5-42f7-8af9-2af4b64cbf2b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\External">
+    <Filter Include="Sources\External">
       <UniqueIdentifier>{239b810d-31d6-4d9e-8d4f-da8afa7174f0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\External\imgui">
+    <Filter Include="Sources\External\imgui">
       <UniqueIdentifier>{84a0abbd-5b1c-474b-aae8-bc885255bc39}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\External\imgui\examples">
+    <Filter Include="Sources\External\imgui\examples">
       <UniqueIdentifier>{907ed3b0-c843-422a-96ba-86a663d95b41}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shared">
+      <UniqueIdentifier>{2f7ab7bb-0f34-486e-bb81-ad94478b12ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shared\ADM">
+      <UniqueIdentifier>{51b166a6-5e72-4649-b998-4e9790ef8ad9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\cl_dll\hl\hl_weapons.cpp">
-      <Filter>Source Files\Game</Filter>
+      <Filter>Sources\Game</Filter>
     </ClCompile>
     <ClCompile Include="..\..\cl_dll\hl\hl_baseentity.cpp">
-      <Filter>Source Files\Game</Filter>
+      <Filter>Sources\Game</Filter>
     </ClCompile>
     <ClCompile Include="..\..\cl_dll\hl\hl_events.cpp">
-      <Filter>Source Files\Game</Filter>
+      <Filter>Sources\Game</Filter>
     </ClCompile>
     <ClCompile Include="..\..\cl_dll\hl\hl_objects.cpp">
-      <Filter>Source Files\Game</Filter>
+      <Filter>Sources\Game</Filter>
     </ClCompile>
     <ClCompile Include="..\..\common\parsemsg.cpp">
-      <Filter>Source Files\Common</Filter>
+      <Filter>Sources\Common</Filter>
     </ClCompile>
     <ClCompile Include="..\..\game_shared\vgui_checkbutton2.cpp">
-      <Filter>Source Files\Game_Shared</Filter>
+      <Filter>Sources\Game_Shared</Filter>
     </ClCompile>
     <ClCompile Include="..\..\game_shared\vgui_grid.cpp">
-      <Filter>Source Files\Game_Shared</Filter>
+      <Filter>Sources\Game_Shared</Filter>
     </ClCompile>
     <ClCompile Include="..\..\game_shared\vgui_helpers.cpp">
-      <Filter>Source Files\Game_Shared</Filter>
+      <Filter>Sources\Game_Shared</Filter>
     </ClCompile>
     <ClCompile Include="..\..\game_shared\vgui_loadtga.cpp">
-      <Filter>Source Files\Game_Shared</Filter>
+      <Filter>Sources\Game_Shared</Filter>
     </ClCompile>
     <ClCompile Include="..\..\game_shared\vgui_listbox.cpp">
-      <Filter>Source Files\Game_Shared</Filter>
+      <Filter>Sources\Game_Shared</Filter>
     </ClCompile>
     <ClCompile Include="..\..\game_shared\voice_banmgr.cpp">
-      <Filter>Source Files\Game_Shared</Filter>
+      <Filter>Sources\Game_Shared</Filter>
     </ClCompile>
     <ClCompile Include="..\..\game_shared\vgui_scrollbar2.cpp">
-      <Filter>Source Files\Game_Shared</Filter>
+      <Filter>Sources\Game_Shared</Filter>
     </ClCompile>
     <ClCompile Include="..\..\game_shared\vgui_slider2.cpp">
-      <Filter>Source Files\Game_Shared</Filter>
+      <Filter>Sources\Game_Shared</Filter>
     </ClCompile>
     <ClCompile Include="..\..\public\interface.cpp">
-      <Filter>Source Files\Public</Filter>
+      <Filter>Sources\Public</Filter>
     </ClCompile>
     <ClCompile Include="..\..\pm_shared\pm_debug.cpp">
-      <Filter>Source Files\PM_Shared</Filter>
+      <Filter>Sources\PM_Shared</Filter>
     </ClCompile>
     <ClCompile Include="..\..\pm_shared\pm_math.cpp">
-      <Filter>Source Files\PM_Shared</Filter>
+      <Filter>Sources\PM_Shared</Filter>
     </ClCompile>
     <ClCompile Include="..\..\pm_shared\pm_shared.cpp">
-      <Filter>Source Files\PM_Shared</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\game_shared\adm\DelayLoad.cpp">
-      <Filter>Source Files\ADM\Shared</Filter>
+      <Filter>Sources\PM_Shared</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\adm\AdmRenderer.cpp">
-      <Filter>Source Files\ADM</Filter>
+      <Filter>Sources\ADM</Filter>
     </ClCompile>
     <ClCompile Include="..\..\cl_dll\adm\AdmClientsideExtensions.cpp">
-      <Filter>Source Files\ADM</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\dlls\adm\shared\AdmSoundList.cpp">
-      <Filter>Source Files\ADM\Shared</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\dlls\adm\shared\AdmControl.cpp">
-      <Filter>Source Files\ADM\Shared</Filter>
+      <Filter>Sources\ADM</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Weapons\Glock.cpp">
-      <Filter>Source Files\Weapons</Filter>
+      <Filter>Sources\Weapons</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Weapons\HandGrenade.cpp">
-      <Filter>Source Files\Weapons</Filter>
+      <Filter>Sources\Weapons</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Weapons\Hgun.cpp">
-      <Filter>Source Files\Weapons</Filter>
+      <Filter>Sources\Weapons</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Weapons\MP5.cpp">
-      <Filter>Source Files\Weapons</Filter>
+      <Filter>Sources\Weapons</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Weapons\Python.cpp">
-      <Filter>Source Files\Weapons</Filter>
+      <Filter>Sources\Weapons</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Weapons\RPG.cpp">
-      <Filter>Source Files\Weapons</Filter>
+      <Filter>Sources\Weapons</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Weapons\SatchelCharge.cpp">
-      <Filter>Source Files\Weapons</Filter>
+      <Filter>Sources\Weapons</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Weapons\Shotgun.cpp">
-      <Filter>Source Files\Weapons</Filter>
+      <Filter>Sources\Weapons</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Weapons\TripmineGrenade.cpp">
-      <Filter>Source Files\Weapons</Filter>
+      <Filter>Sources\Weapons</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Weapons\Crossbow.cpp">
-      <Filter>Source Files\Weapons</Filter>
+      <Filter>Sources\Weapons</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Weapons\Crowbar.cpp">
-      <Filter>Source Files\Weapons</Filter>
+      <Filter>Sources\Weapons</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Weapons\Egon.cpp">
-      <Filter>Source Files\Weapons</Filter>
+      <Filter>Sources\Weapons</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Weapons\Gauss.cpp">
-      <Filter>Source Files\Weapons</Filter>
+      <Filter>Sources\Weapons</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Weapons\SqueakGrenade.cpp">
-      <Filter>Source Files\Weapons</Filter>
+      <Filter>Sources\Weapons</Filter>
     </ClCompile>
     <ClCompile Include="..\..\cl_dll\VGUI\vgui_CustomObjects.cpp">
-      <Filter>Source Files\VGUI</Filter>
+      <Filter>Sources\VGUI</Filter>
     </ClCompile>
     <ClCompile Include="..\..\cl_dll\VGUI\vgui_int.cpp">
-      <Filter>Source Files\VGUI</Filter>
+      <Filter>Sources\VGUI</Filter>
     </ClCompile>
     <ClCompile Include="..\..\cl_dll\VGUI\vgui_MOTDWindow.cpp">
-      <Filter>Source Files\VGUI</Filter>
+      <Filter>Sources\VGUI</Filter>
     </ClCompile>
     <ClCompile Include="..\..\cl_dll\VGUI\vgui_SchemeManager.cpp">
-      <Filter>Source Files\VGUI</Filter>
+      <Filter>Sources\VGUI</Filter>
     </ClCompile>
     <ClCompile Include="..\..\cl_dll\VGUI\vgui_ScorePanel.cpp">
-      <Filter>Source Files\VGUI</Filter>
+      <Filter>Sources\VGUI</Filter>
     </ClCompile>
     <ClCompile Include="..\..\cl_dll\VGUI\vgui_ServerBrowser.cpp">
-      <Filter>Source Files\VGUI</Filter>
+      <Filter>Sources\VGUI</Filter>
     </ClCompile>
     <ClCompile Include="..\..\cl_dll\VGUI\vgui_SpectatorPanel.cpp">
-      <Filter>Source Files\VGUI</Filter>
+      <Filter>Sources\VGUI</Filter>
     </ClCompile>
     <ClCompile Include="..\..\cl_dll\VGUI\vgui_TeamFortressViewport.cpp">
-      <Filter>Source Files\VGUI</Filter>
+      <Filter>Sources\VGUI</Filter>
     </ClCompile>
     <ClCompile Include="..\..\cl_dll\VGUI\vgui_teammenu.cpp">
-      <Filter>Source Files\VGUI</Filter>
+      <Filter>Sources\VGUI</Filter>
     </ClCompile>
     <ClCompile Include="..\..\cl_dll\VGUI\vgui_ClassMenu.cpp">
-      <Filter>Source Files\VGUI</Filter>
+      <Filter>Sources\VGUI</Filter>
     </ClCompile>
     <ClCompile Include="..\..\cl_dll\VGUI\vgui_ConsolePanel.cpp">
-      <Filter>Source Files\VGUI</Filter>
+      <Filter>Sources\VGUI</Filter>
     </ClCompile>
     <ClCompile Include="..\..\cl_dll\VGUI\vgui_ControlConfigPanel.cpp">
-      <Filter>Source Files\VGUI</Filter>
+      <Filter>Sources\VGUI</Filter>
     </ClCompile>
     <ClCompile Include="..\..\cl_dll\HUD\Overview.cpp">
-      <Filter>Source Files\HUD</Filter>
+      <Filter>Sources\HUD</Filter>
     </ClCompile>
     <ClCompile Include="..\..\cl_dll\HUD\SayText.cpp">
-      <Filter>Source Files\HUD</Filter>
+      <Filter>Sources\HUD</Filter>
     </ClCompile>
     <ClCompile Include="..\..\cl_dll\HUD\StatusBar.cpp">
-      <Filter>Source Files\HUD</Filter>
+      <Filter>Sources\HUD</Filter>
     </ClCompile>
     <ClCompile Include="..\..\cl_dll\HUD\StatusIcons.cpp">
-      <Filter>Source Files\HUD</Filter>
+      <Filter>Sources\HUD</Filter>
     </ClCompile>
     <ClCompile Include="..\..\cl_dll\HUD\TextMessage.cpp">
-      <Filter>Source Files\HUD</Filter>
+      <Filter>Sources\HUD</Filter>
     </ClCompile>
     <ClCompile Include="..\..\cl_dll\HUD\VoiceStatus.cpp">
-      <Filter>Source Files\HUD</Filter>
+      <Filter>Sources\HUD</Filter>
     </ClCompile>
     <ClCompile Include="..\..\cl_dll\HUD\Ammo.cpp">
-      <Filter>Source Files\HUD</Filter>
+      <Filter>Sources\HUD</Filter>
     </ClCompile>
     <ClCompile Include="..\..\cl_dll\HUD\AmmoHistory.cpp">
-      <Filter>Source Files\HUD</Filter>
+      <Filter>Sources\HUD</Filter>
     </ClCompile>
     <ClCompile Include="..\..\cl_dll\HUD\AmmoSecondary.cpp">
-      <Filter>Source Files\HUD</Filter>
+      <Filter>Sources\HUD</Filter>
     </ClCompile>
     <ClCompile Include="..\..\cl_dll\HUD\Battery.cpp">
-      <Filter>Source Files\HUD</Filter>
+      <Filter>Sources\HUD</Filter>
     </ClCompile>
     <ClCompile Include="..\..\cl_dll\HUD\Death.cpp">
-      <Filter>Source Files\HUD</Filter>
+      <Filter>Sources\HUD</Filter>
     </ClCompile>
     <ClCompile Include="..\..\cl_dll\HUD\Flashlight.cpp">
-      <Filter>Source Files\HUD</Filter>
+      <Filter>Sources\HUD</Filter>
     </ClCompile>
     <ClCompile Include="..\..\cl_dll\HUD\Geiger.cpp">
-      <Filter>Source Files\HUD</Filter>
+      <Filter>Sources\HUD</Filter>
     </ClCompile>
     <ClCompile Include="..\..\cl_dll\HUD\Health.cpp">
-      <Filter>Source Files\HUD</Filter>
+      <Filter>Sources\HUD</Filter>
     </ClCompile>
     <ClCompile Include="..\..\cl_dll\HUD\HUD.cpp">
-      <Filter>Source Files\HUD</Filter>
+      <Filter>Sources\HUD</Filter>
     </ClCompile>
     <ClCompile Include="..\..\cl_dll\HUD\HUD_Bench.cpp">
-      <Filter>Source Files\HUD</Filter>
+      <Filter>Sources\HUD</Filter>
     </ClCompile>
     <ClCompile Include="..\..\cl_dll\HUD\HUD_BenchTrace.cpp">
-      <Filter>Source Files\HUD</Filter>
+      <Filter>Sources\HUD</Filter>
     </ClCompile>
     <ClCompile Include="..\..\cl_dll\HUD\HUD_Msg.cpp">
-      <Filter>Source Files\HUD</Filter>
+      <Filter>Sources\HUD</Filter>
     </ClCompile>
     <ClCompile Include="..\..\cl_dll\HUD\HUD_Redraw.cpp">
-      <Filter>Source Files\HUD</Filter>
+      <Filter>Sources\HUD</Filter>
     </ClCompile>
     <ClCompile Include="..\..\cl_dll\HUD\HUD_Servers.cpp">
-      <Filter>Source Files\HUD</Filter>
+      <Filter>Sources\HUD</Filter>
     </ClCompile>
     <ClCompile Include="..\..\cl_dll\HUD\HUD_Spectator.cpp">
-      <Filter>Source Files\HUD</Filter>
+      <Filter>Sources\HUD</Filter>
     </ClCompile>
     <ClCompile Include="..\..\cl_dll\HUD\HUD_Update.cpp">
-      <Filter>Source Files\HUD</Filter>
+      <Filter>Sources\HUD</Filter>
     </ClCompile>
     <ClCompile Include="..\..\cl_dll\HUD\Menu.cpp">
-      <Filter>Source Files\HUD</Filter>
+      <Filter>Sources\HUD</Filter>
     </ClCompile>
     <ClCompile Include="..\..\cl_dll\HUD\Message.cpp">
-      <Filter>Source Files\HUD</Filter>
+      <Filter>Sources\HUD</Filter>
     </ClCompile>
     <ClCompile Include="..\..\cl_dll\Events\EV_HLDM.cpp">
-      <Filter>Source Files\Events</Filter>
+      <Filter>Sources\Events</Filter>
     </ClCompile>
     <ClCompile Include="..\..\cl_dll\Events\Events.cpp">
-      <Filter>Source Files\Events</Filter>
+      <Filter>Sources\Events</Filter>
     </ClCompile>
     <ClCompile Include="..\..\cl_dll\Events\EV_Common.cpp">
-      <Filter>Source Files\Events</Filter>
+      <Filter>Sources\Events</Filter>
     </ClCompile>
     <ClCompile Include="..\..\cl_dll\Rendering\StudioModelRenderer.cpp">
-      <Filter>Source Files\Rendering</Filter>
+      <Filter>Sources\Rendering</Filter>
     </ClCompile>
     <ClCompile Include="..\..\cl_dll\Rendering\StudioUtil.cpp">
-      <Filter>Source Files\Rendering</Filter>
+      <Filter>Sources\Rendering</Filter>
     </ClCompile>
     <ClCompile Include="..\..\cl_dll\Rendering\Tri.cpp">
-      <Filter>Source Files\Rendering</Filter>
+      <Filter>Sources\Rendering</Filter>
     </ClCompile>
     <ClCompile Include="..\..\cl_dll\Rendering\View.cpp">
-      <Filter>Source Files\Rendering</Filter>
+      <Filter>Sources\Rendering</Filter>
     </ClCompile>
     <ClCompile Include="..\..\cl_dll\Rendering\GameStudioModelRenderer.cpp">
-      <Filter>Source Files\Rendering</Filter>
+      <Filter>Sources\Rendering</Filter>
     </ClCompile>
     <ClCompile Include="..\..\cl_dll\HUD\Train.cpp">
-      <Filter>Source Files\HUD</Filter>
+      <Filter>Sources\HUD</Filter>
     </ClCompile>
     <ClCompile Include="..\..\cl_dll\Input\Input.cpp">
-      <Filter>Source Files\Input</Filter>
+      <Filter>Sources\Input</Filter>
     </ClCompile>
     <ClCompile Include="..\..\cl_dll\Input\InputW32.cpp">
-      <Filter>Source Files\Input</Filter>
+      <Filter>Sources\Input</Filter>
     </ClCompile>
     <ClCompile Include="..\..\cl_dll\Input\IN_Camera.cpp">
-      <Filter>Source Files\Input</Filter>
+      <Filter>Sources\Input</Filter>
     </ClCompile>
     <ClCompile Include="..\..\cl_dll\CDLL_Int.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Sources</Filter>
     </ClCompile>
     <ClCompile Include="..\..\cl_dll\COM_Weapons.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Sources</Filter>
     </ClCompile>
     <ClCompile Include="..\..\cl_dll\Demo.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Sources</Filter>
     </ClCompile>
     <ClCompile Include="..\..\cl_dll\Entity.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Sources</Filter>
     </ClCompile>
     <ClCompile Include="..\..\cl_dll\Interpolation.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Sources</Filter>
     </ClCompile>
     <ClCompile Include="..\..\cl_dll\Util.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\dlls\ADM\shared\AdmTime.cpp">
-      <Filter>Source Files\ADM\Shared</Filter>
+      <Filter>Sources</Filter>
     </ClCompile>
     <ClCompile Include="..\..\cl_dll\ADM\AdmClientsideSound.cpp">
-      <Filter>Source Files\ADM</Filter>
+      <Filter>Sources\ADM</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\Weapons\WeaponsShared.cpp">
-      <Filter>Source Files\Weapons</Filter>
+      <Filter>Sources\Weapons</Filter>
     </ClCompile>
     <ClCompile Include="..\..\cl_dll\ADM\AdmClientsidePunch.cpp">
-      <Filter>Source Files\ADM</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\dlls\ADM\Shared\AdmSound.cpp">
-      <Filter>Source Files\ADM\Shared</Filter>
+      <Filter>Sources\ADM</Filter>
     </ClCompile>
     <ClCompile Include="..\..\cl_dll\ADM\AdmClientsideImgui.cpp">
-      <Filter>Source Files\ADM</Filter>
+      <Filter>Sources\ADM</Filter>
     </ClCompile>
     <ClCompile Include="..\..\external\imgui\imgui.cpp">
-      <Filter>Source Files\External\imgui</Filter>
+      <Filter>Sources\External\imgui</Filter>
     </ClCompile>
     <ClCompile Include="..\..\external\imgui\imgui_draw.cpp">
-      <Filter>Source Files\External\imgui</Filter>
+      <Filter>Sources\External\imgui</Filter>
     </ClCompile>
     <ClCompile Include="..\..\external\imgui\imgui_widgets.cpp">
-      <Filter>Source Files\External\imgui</Filter>
+      <Filter>Sources\External\imgui</Filter>
     </ClCompile>
     <ClCompile Include="..\..\external\imgui\examples\imgui_impl_sdl.cpp">
-      <Filter>Source Files\External\imgui\examples</Filter>
+      <Filter>Sources\External\imgui\examples</Filter>
     </ClCompile>
     <ClCompile Include="..\..\external\imgui\examples\imgui_impl_opengl2.cpp">
-      <Filter>Source Files\External\imgui\examples</Filter>
+      <Filter>Sources\External\imgui\examples</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\shared\ADM\AdmControl.cpp">
+      <Filter>Shared\ADM</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\shared\ADM\AdmSound.cpp">
+      <Filter>Shared\ADM</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\shared\ADM\AdmSoundList.cpp">
+      <Filter>Shared\ADM</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\shared\ADM\AdmTime.cpp">
+      <Filter>Shared\ADM</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\shared\ADM\DelayLoad.cpp">
+      <Filter>Shared\ADM</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\pm_shared\pm_debug.h">
-      <Filter>Source Files\PM_Shared</Filter>
+      <Filter>Sources\PM_Shared</Filter>
     </ClInclude>
     <ClInclude Include="..\..\pm_shared\pm_defs.h">
-      <Filter>Source Files\PM_Shared</Filter>
+      <Filter>Sources\PM_Shared</Filter>
     </ClInclude>
     <ClInclude Include="..\..\pm_shared\pm_info.h">
-      <Filter>Source Files\PM_Shared</Filter>
+      <Filter>Sources\PM_Shared</Filter>
     </ClInclude>
     <ClInclude Include="..\..\pm_shared\pm_materials.h">
-      <Filter>Source Files\PM_Shared</Filter>
+      <Filter>Sources\PM_Shared</Filter>
     </ClInclude>
     <ClInclude Include="..\..\pm_shared\pm_movevars.h">
-      <Filter>Source Files\PM_Shared</Filter>
+      <Filter>Sources\PM_Shared</Filter>
     </ClInclude>
     <ClInclude Include="..\..\pm_shared\pm_shared.h">
-      <Filter>Source Files\PM_Shared</Filter>
+      <Filter>Sources\PM_Shared</Filter>
     </ClInclude>
     <ClInclude Include="..\..\game_shared\vgui_scrollbar2.h">
-      <Filter>Source Files\Game_Shared</Filter>
+      <Filter>Sources\Game_Shared</Filter>
     </ClInclude>
     <ClInclude Include="..\..\game_shared\vgui_slider2.h">
-      <Filter>Source Files\Game_Shared</Filter>
+      <Filter>Sources\Game_Shared</Filter>
     </ClInclude>
     <ClInclude Include="..\..\game_shared\voice_banmgr.h">
-      <Filter>Source Files\Game_Shared</Filter>
+      <Filter>Sources\Game_Shared</Filter>
     </ClInclude>
     <ClInclude Include="..\..\game_shared\voice_status.h">
-      <Filter>Source Files\Game_Shared</Filter>
+      <Filter>Sources\Game_Shared</Filter>
     </ClInclude>
     <ClInclude Include="..\..\common\parsemsg.h">
-      <Filter>Source Files\Common</Filter>
+      <Filter>Sources\Common</Filter>
     </ClInclude>
     <ClInclude Include="..\..\common\Platform.h">
-      <Filter>Source Files\Common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\game_shared\adm\DelayLoad.h">
-      <Filter>Source Files\ADM\Shared</Filter>
+      <Filter>Sources\Common</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\ADM\AdmRenderer.h">
-      <Filter>Source Files\ADM</Filter>
+      <Filter>Sources\ADM</Filter>
     </ClInclude>
     <ClInclude Include="..\..\cl_dll\VGUI\vgui_int.h">
-      <Filter>Source Files\VGUI</Filter>
+      <Filter>Sources\VGUI</Filter>
     </ClInclude>
     <ClInclude Include="..\..\cl_dll\VGUI\vgui_SchemeManager.h">
-      <Filter>Source Files\VGUI</Filter>
+      <Filter>Sources\VGUI</Filter>
     </ClInclude>
     <ClInclude Include="..\..\cl_dll\VGUI\vgui_ScorePanel.h">
-      <Filter>Source Files\VGUI</Filter>
+      <Filter>Sources\VGUI</Filter>
     </ClInclude>
     <ClInclude Include="..\..\cl_dll\VGUI\vgui_ServerBrowser.h">
-      <Filter>Source Files\VGUI</Filter>
+      <Filter>Sources\VGUI</Filter>
     </ClInclude>
     <ClInclude Include="..\..\cl_dll\VGUI\vgui_SpectatorPanel.h">
-      <Filter>Source Files\VGUI</Filter>
+      <Filter>Sources\VGUI</Filter>
     </ClInclude>
     <ClInclude Include="..\..\cl_dll\VGUI\vgui_TeamFortressViewport.h">
-      <Filter>Source Files\VGUI</Filter>
+      <Filter>Sources\VGUI</Filter>
     </ClInclude>
     <ClInclude Include="..\..\cl_dll\VGUI\vgui_ConsolePanel.h">
-      <Filter>Source Files\VGUI</Filter>
+      <Filter>Sources\VGUI</Filter>
     </ClInclude>
     <ClInclude Include="..\..\cl_dll\VGUI\vgui_ControlConfigPanel.h">
-      <Filter>Source Files\VGUI</Filter>
+      <Filter>Sources\VGUI</Filter>
     </ClInclude>
     <ClInclude Include="..\..\cl_dll\HUD\Overview.h">
-      <Filter>Source Files\HUD</Filter>
+      <Filter>Sources\HUD</Filter>
     </ClInclude>
     <ClInclude Include="..\..\cl_dll\HUD\VoiceStatus.h">
-      <Filter>Source Files\HUD</Filter>
+      <Filter>Sources\HUD</Filter>
     </ClInclude>
     <ClInclude Include="..\..\cl_dll\HUD\Ammo.h">
-      <Filter>Source Files\HUD</Filter>
+      <Filter>Sources\HUD</Filter>
     </ClInclude>
     <ClInclude Include="..\..\cl_dll\HUD\AmmoHistory.h">
-      <Filter>Source Files\HUD</Filter>
+      <Filter>Sources\HUD</Filter>
     </ClInclude>
     <ClInclude Include="..\..\cl_dll\HUD\Health.h">
-      <Filter>Source Files\HUD</Filter>
+      <Filter>Sources\HUD</Filter>
     </ClInclude>
     <ClInclude Include="..\..\cl_dll\HUD\HUD.h">
-      <Filter>Source Files\HUD</Filter>
+      <Filter>Sources\HUD</Filter>
     </ClInclude>
     <ClInclude Include="..\..\cl_dll\HUD\HUD_BenchTrace.h">
-      <Filter>Source Files\HUD</Filter>
+      <Filter>Sources\HUD</Filter>
     </ClInclude>
     <ClInclude Include="..\..\cl_dll\HUD\HUD_IFace.h">
-      <Filter>Source Files\HUD</Filter>
+      <Filter>Sources\HUD</Filter>
     </ClInclude>
     <ClInclude Include="..\..\cl_dll\HUD\HUD_Servers.h">
-      <Filter>Source Files\HUD</Filter>
+      <Filter>Sources\HUD</Filter>
     </ClInclude>
     <ClInclude Include="..\..\cl_dll\HUD\HUD_Servers_PRiv.h">
-      <Filter>Source Files\HUD</Filter>
+      <Filter>Sources\HUD</Filter>
     </ClInclude>
     <ClInclude Include="..\..\cl_dll\HUD\HUD_Spectator.h">
-      <Filter>Source Files\HUD</Filter>
+      <Filter>Sources\HUD</Filter>
     </ClInclude>
     <ClInclude Include="..\..\cl_dll\Events\EV_HLDM.h">
-      <Filter>Source Files\Events</Filter>
+      <Filter>Sources\Events</Filter>
     </ClInclude>
     <ClInclude Include="..\..\cl_dll\Events\EventScripts.h">
-      <Filter>Source Files\Events</Filter>
+      <Filter>Sources\Events</Filter>
     </ClInclude>
     <ClInclude Include="..\..\cl_dll\Rendering\StudioModelRenderer.h">
-      <Filter>Source Files\Rendering</Filter>
+      <Filter>Sources\Rendering</Filter>
     </ClInclude>
     <ClInclude Include="..\..\cl_dll\Rendering\StudioUtil.h">
-      <Filter>Source Files\Rendering</Filter>
+      <Filter>Sources\Rendering</Filter>
     </ClInclude>
     <ClInclude Include="..\..\cl_dll\Rendering\Tri.h">
-      <Filter>Source Files\Rendering</Filter>
+      <Filter>Sources\Rendering</Filter>
     </ClInclude>
     <ClInclude Include="..\..\cl_dll\Rendering\View.h">
-      <Filter>Source Files\Rendering</Filter>
+      <Filter>Sources\Rendering</Filter>
     </ClInclude>
     <ClInclude Include="..\..\cl_dll\Rendering\GameStudioModelRenderer.h">
-      <Filter>Source Files\Rendering</Filter>
+      <Filter>Sources\Rendering</Filter>
     </ClInclude>
     <ClInclude Include="..\..\cl_dll\Input\IN_Defs.h">
-      <Filter>Source Files\Input</Filter>
+      <Filter>Sources\Input</Filter>
     </ClInclude>
     <ClInclude Include="..\..\cl_dll\Input\KButton.h">
-      <Filter>Source Files\Input</Filter>
+      <Filter>Sources\Input</Filter>
     </ClInclude>
     <ClInclude Include="..\..\cl_dll\Input\Camera.h">
-      <Filter>Source Files\Input</Filter>
+      <Filter>Sources\Input</Filter>
     </ClInclude>
     <ClInclude Include="..\..\cl_dll\Bench.h">
-      <Filter>Source Files</Filter>
+      <Filter>Sources</Filter>
     </ClInclude>
     <ClInclude Include="..\..\cl_dll\CL_DLL.h">
-      <Filter>Source Files</Filter>
+      <Filter>Sources</Filter>
     </ClInclude>
     <ClInclude Include="..\..\cl_dll\CL_Util.h">
-      <Filter>Source Files</Filter>
+      <Filter>Sources</Filter>
     </ClInclude>
     <ClInclude Include="..\..\cl_dll\COM_Weapons.h">
-      <Filter>Source Files</Filter>
+      <Filter>Sources</Filter>
     </ClInclude>
     <ClInclude Include="..\..\cl_dll\Demo.h">
-      <Filter>Source Files</Filter>
+      <Filter>Sources</Filter>
     </ClInclude>
     <ClInclude Include="..\..\cl_dll\Exports.h">
-      <Filter>Source Files</Filter>
+      <Filter>Sources</Filter>
     </ClInclude>
     <ClInclude Include="..\..\cl_dll\GlobalConsts.h">
-      <Filter>Source Files</Filter>
+      <Filter>Sources</Filter>
     </ClInclude>
     <ClInclude Include="..\..\cl_dll\Interpolation.h">
-      <Filter>Source Files</Filter>
+      <Filter>Sources</Filter>
     </ClInclude>
     <ClInclude Include="..\..\cl_dll\PlayerInfo.h">
-      <Filter>Source Files</Filter>
+      <Filter>Sources</Filter>
     </ClInclude>
     <ClInclude Include="..\..\cl_dll\TFDefs.h">
-      <Filter>Source Files</Filter>
+      <Filter>Sources</Filter>
     </ClInclude>
     <ClInclude Include="..\..\cl_dll\UtilVector.h">
-      <Filter>Source Files</Filter>
+      <Filter>Sources</Filter>
     </ClInclude>
     <ClInclude Include="..\..\cl_dll\WRect.h">
-      <Filter>Source Files</Filter>
+      <Filter>Sources</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\dlls\ADM\shared\AdmTime.h">
-      <Filter>Source Files\ADM\Shared</Filter>
+    <ClInclude Include="..\..\shared\ADM\AdmControl.h">
+      <Filter>Shared\ADM</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\dlls\ADM\shared\AdmControl.h">
-      <Filter>Source Files\ADM\Shared</Filter>
+    <ClInclude Include="..\..\shared\ADM\AdmSound.h">
+      <Filter>Shared\ADM</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\dlls\ADM\shared\AdmSoundList.h">
-      <Filter>Source Files\ADM\Shared</Filter>
+    <ClInclude Include="..\..\shared\ADM\AdmSoundList.h">
+      <Filter>Shared\ADM</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\dlls\ADM\Shared\AdmSound.h">
-      <Filter>Source Files\ADM\Shared</Filter>
+    <ClInclude Include="..\..\shared\ADM\AdmTime.h">
+      <Filter>Shared\ADM</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\shared\ADM\DelayLoad.h">
+      <Filter>Shared\ADM</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\shared\ADM\VersionInfo.h">
+      <Filter>Shared\ADM</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

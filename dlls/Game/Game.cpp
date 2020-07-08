@@ -16,7 +16,7 @@
 #include "eiface.h"
 #include "Util.h"
 #include "Game/Game.h"
-#include "../game_shared/adm/VersionInfo.h"
+#include "../shared/ADM/VersionInfo.h"
 
 cvar_t	displaysoundlist = {"displaysoundlist","0"};
 

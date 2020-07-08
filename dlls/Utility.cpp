@@ -32,7 +32,7 @@
 #include "Game/GameRules.h"
 #include "Env/CFadeDefines.h"
 #include <vector>
-#include "adm/shared/AdmSoundList.h"
+#include "../shared/ADM/AdmSoundList.h"
 #include "../engine/studio.h"
 
 float UTIL_WeaponTimeBase( void )

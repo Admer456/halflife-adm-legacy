@@ -120,10 +120,6 @@
     <ClCompile Include="..\..\dlls\ADM\Func\CFuncLag.cpp" />
     <ClCompile Include="..\..\dlls\ADM\Func\CFuncLoadbar.cpp" />
     <ClCompile Include="..\..\dlls\ADM\Func\CFuncNovis.cpp" />
-    <ClCompile Include="..\..\dlls\adm\shared\AdmControl.cpp" />
-    <ClCompile Include="..\..\dlls\ADM\Shared\AdmSound.cpp" />
-    <ClCompile Include="..\..\dlls\adm\shared\AdmSoundList.cpp" />
-    <ClCompile Include="..\..\dlls\adm\shared\AdmTime.cpp" />
     <ClCompile Include="..\..\dlls\AI\AIUtil.cpp" />
     <ClCompile Include="..\..\dlls\AI\CineMonster.cpp" />
     <ClCompile Include="..\..\dlls\AI\DefaultAI.cpp" />
@@ -272,11 +268,15 @@
     <ClCompile Include="..\..\dlls\Weapons\WeaponsShared.cpp" />
     <ClCompile Include="..\..\dlls\World.cpp" />
     <ClCompile Include="..\..\dlls\XenPlants.cpp" />
-    <ClCompile Include="..\..\game_shared\adm\DelayLoad.cpp" />
     <ClCompile Include="..\..\game_shared\voice_gamemgr.cpp" />
     <ClCompile Include="..\..\pm_shared\pm_debug.cpp" />
     <ClCompile Include="..\..\pm_shared\pm_math.cpp" />
     <ClCompile Include="..\..\pm_shared\pm_shared.cpp" />
+    <ClCompile Include="..\..\shared\ADM\AdmControl.cpp" />
+    <ClCompile Include="..\..\shared\ADM\AdmSound.cpp" />
+    <ClCompile Include="..\..\shared\ADM\AdmSoundList.cpp" />
+    <ClCompile Include="..\..\shared\ADM\AdmTime.cpp" />
+    <ClCompile Include="..\..\shared\ADM\DelayLoad.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\common\Platform.h" />
@@ -284,14 +284,10 @@
     <ClInclude Include="..\..\dlls\ADM\Func\CFuncLag.h" />
     <ClInclude Include="..\..\dlls\ADM\Func\CFuncLoadbar.h" />
     <ClInclude Include="..\..\dlls\ADM\Func\CFuncNovis.h" />
-    <ClInclude Include="..\..\dlls\ADM\Shared\AdmSound.h" />
     <ClInclude Include="..\..\dlls\AI\Activity.h" />
     <ClInclude Include="..\..\dlls\AI\ActivityMap.h" />
     <ClInclude Include="..\..\dlls\ADM\AdmPhysics.h" />
     <ClInclude Include="..\..\dlls\ADM\AdmVehicle.h" />
-    <ClInclude Include="..\..\dlls\ADM\Shared\AdmControl.h" />
-    <ClInclude Include="..\..\dlls\ADM\Shared\AdmTime.h" />
-    <ClInclude Include="..\..\dlls\ADM\Shared\AdmSoundList.h" />
     <ClInclude Include="..\..\dlls\Audio\CAmbientGeneric.h" />
     <ClInclude Include="..\..\dlls\Audio\CSpeaker.h" />
     <ClInclude Include="..\..\dlls\Base\Animation.h" />
@@ -386,14 +382,18 @@
     <ClInclude Include="..\..\dlls\Vector.h" />
     <ClInclude Include="..\..\dlls\Weapons\Weapons.h" />
     <ClInclude Include="..\..\engine\EIFace.h" />
-    <ClInclude Include="..\..\game_shared\adm\DelayLoad.h" />
-    <ClInclude Include="..\..\game_shared\adm\VersionInfo.h" />
     <ClInclude Include="..\..\pm_shared\pm_debug.h" />
     <ClInclude Include="..\..\pm_shared\pm_defs.h" />
     <ClInclude Include="..\..\pm_shared\pm_info.h" />
     <ClInclude Include="..\..\pm_shared\pm_materials.h" />
     <ClInclude Include="..\..\pm_shared\pm_movevars.h" />
     <ClInclude Include="..\..\pm_shared\pm_shared.h" />
+    <ClInclude Include="..\..\shared\ADM\AdmControl.h" />
+    <ClInclude Include="..\..\shared\ADM\AdmSound.h" />
+    <ClInclude Include="..\..\shared\ADM\AdmSoundList.h" />
+    <ClInclude Include="..\..\shared\ADM\AdmTime.h" />
+    <ClInclude Include="..\..\shared\ADM\DelayLoad.h" />
+    <ClInclude Include="..\..\shared\ADM\VersionInfo.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Versions\adm.fgd" />

@@ -23,9 +23,6 @@ extern "C"
 #include "Exports.h"
 
 #include "VGUI/vgui_TeamFortressViewport.h"
-#include "adm/shared/AdmControl.h"
-
-//AdmControlAPI ControlAPI;
 
 extern int g_iAlive;
 
