@@ -8,9 +8,6 @@
     <Filter Include="Sources\ADM">
       <UniqueIdentifier>{6313916b-bee6-4055-94b0-4a9307ddbe70}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Sources\ADM\Shared">
-      <UniqueIdentifier>{815bd85b-4d6c-4f2f-88be-196147ea6b21}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Sources\Events">
       <UniqueIdentifier>{1c805fa6-c2f0-4267-ba7f-e51534ca4873}</UniqueIdentifier>
     </Filter>
@@ -58,6 +55,12 @@
     </Filter>
     <Filter Include="Shared\ADM">
       <UniqueIdentifier>{51b166a6-5e72-4649-b998-4e9790ef8ad9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\ADM\Physics">
+      <UniqueIdentifier>{3e07d26a-70fd-437a-9687-9c5fe13cf0ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shared\ADM\Physics">
+      <UniqueIdentifier>{5f5a6baa-98fe-4141-95e8-d927023742ba}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -364,6 +367,27 @@
     <ClCompile Include="..\..\shared\ADM\DelayLoad.cpp">
       <Filter>Shared\ADM</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\cl_dll\ADM\Physics\BulletDebug_TriAPI.cpp">
+      <Filter>Sources\ADM\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\shared\ADM\Physics\PhysBody.cpp">
+      <Filter>Shared\ADM\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\shared\ADM\Physics\PhysBody_Box.cpp">
+      <Filter>Shared\ADM\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\shared\ADM\Physics\PhysBody_MeshConcave.cpp">
+      <Filter>Shared\ADM\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\shared\ADM\Physics\PhysBody_MeshConvex.cpp">
+      <Filter>Shared\ADM\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\shared\ADM\Physics\PhysBody_Plane.cpp">
+      <Filter>Shared\ADM\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\shared\ADM\Physics\PhysicsWorld.cpp">
+      <Filter>Shared\ADM\Physics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\pm_shared\pm_debug.h">
@@ -545,6 +569,33 @@
     </ClInclude>
     <ClInclude Include="..\..\shared\ADM\VersionInfo.h">
       <Filter>Shared\ADM</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cl_dll\ADM\Physics\BulletDebug_TriAPI.h">
+      <Filter>Sources\ADM\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\shared\ADM\Physics\IPhysBody.h">
+      <Filter>Shared\ADM\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\shared\ADM\Physics\PhysBody.h">
+      <Filter>Shared\ADM\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\shared\ADM\Physics\PhysBody_Box.h">
+      <Filter>Shared\ADM\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\shared\ADM\Physics\PhysBody_MeshConcave.h">
+      <Filter>Shared\ADM\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\shared\ADM\Physics\PhysBody_MeshConvex.h">
+      <Filter>Shared\ADM\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\shared\ADM\Physics\PhysBody_Plane.h">
+      <Filter>Shared\ADM\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\shared\ADM\Physics\PhysicsWorld.h">
+      <Filter>Shared\ADM\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\shared\ADM\Physics\BulletPhysics.h">
+      <Filter>Shared\ADM\Physics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

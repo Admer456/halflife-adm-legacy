@@ -114,6 +114,7 @@
     <ClCompile Include="..\..\cl_dll\ADM\AdmClientsideImgui.cpp" />
     <ClCompile Include="..\..\cl_dll\ADM\AdmClientsidePunch.cpp" />
     <ClCompile Include="..\..\cl_dll\ADM\AdmClientsideSound.cpp" />
+    <ClCompile Include="..\..\cl_dll\ADM\Physics\BulletDebug_TriAPI.cpp" />
     <ClCompile Include="..\..\cl_dll\CDLL_Int.cpp" />
     <ClCompile Include="..\..\cl_dll\COM_Weapons.cpp" />
     <ClCompile Include="..\..\cl_dll\Demo.cpp" />
@@ -211,8 +212,15 @@
     <ClCompile Include="..\..\shared\ADM\AdmSoundList.cpp" />
     <ClCompile Include="..\..\shared\ADM\AdmTime.cpp" />
     <ClCompile Include="..\..\shared\ADM\DelayLoad.cpp" />
+    <ClCompile Include="..\..\shared\ADM\Physics\PhysBody.cpp" />
+    <ClCompile Include="..\..\shared\ADM\Physics\PhysBody_Box.cpp" />
+    <ClCompile Include="..\..\shared\ADM\Physics\PhysBody_MeshConcave.cpp" />
+    <ClCompile Include="..\..\shared\ADM\Physics\PhysBody_MeshConvex.cpp" />
+    <ClCompile Include="..\..\shared\ADM\Physics\PhysBody_Plane.cpp" />
+    <ClCompile Include="..\..\shared\ADM\Physics\PhysicsWorld.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\cl_dll\ADM\Physics\BulletDebug_TriAPI.h" />
     <ClInclude Include="..\..\cl_dll\Bench.h" />
     <ClInclude Include="..\..\cl_dll\CL_DLL.h" />
     <ClInclude Include="..\..\cl_dll\CL_Util.h" />
@@ -272,6 +280,14 @@
     <ClInclude Include="..\..\shared\ADM\AdmSoundList.h" />
     <ClInclude Include="..\..\shared\ADM\AdmTime.h" />
     <ClInclude Include="..\..\shared\ADM\DelayLoad.h" />
+    <ClInclude Include="..\..\shared\ADM\Physics\BulletPhysics.h" />
+    <ClInclude Include="..\..\shared\ADM\Physics\IPhysBody.h" />
+    <ClInclude Include="..\..\shared\ADM\Physics\PhysBody.h" />
+    <ClInclude Include="..\..\shared\ADM\Physics\PhysBody_Box.h" />
+    <ClInclude Include="..\..\shared\ADM\Physics\PhysBody_MeshConcave.h" />
+    <ClInclude Include="..\..\shared\ADM\Physics\PhysBody_MeshConvex.h" />
+    <ClInclude Include="..\..\shared\ADM\Physics\PhysBody_Plane.h" />
+    <ClInclude Include="..\..\shared\ADM\Physics\PhysicsWorld.h" />
     <ClInclude Include="..\..\shared\ADM\VersionInfo.h" />
   </ItemGroup>
   <ItemGroup>
