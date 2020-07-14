@@ -637,6 +637,23 @@
 //		TRIGGER_ ENTITIIES
 // ========================================================================================================= //
 
+@BaseClass = Physical
+[
+	physMass(string) : "Mass"
+	physExtents(string) : "Body extents"
+	physOriginOffset(string) : "Origin offset"
+	physAngleOffset(string) : "Angles offset"
+]
+
+@SolidClass base(Physical) = phys_box : "Physical box brush"
+[
+
+]
+
+// ========================================================================================================= //
+//		TRIGGER_ ENTITIIES
+// ========================================================================================================= //
+
 @PointClass base(Targetname, Target) = trigger_date : "Date-dependent trigger"
 [
 	year(choices) : "Year" : 0 =
