@@ -9,8 +9,8 @@ struct PhysParameters
 {
 	char*						meshPath{nullptr};	// in case we use a mesh
 
-	Vector						offsetOrigin{Vector(0,0,0)};
-	Vector						offsetAngles{Vector(0,0,0)};
+	Vector						offsetOrigin;
+	Vector						offsetAngles;
 
 	float						scale{1.0f};
 	Vector						dimensions;

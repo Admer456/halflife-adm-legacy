@@ -40,7 +40,7 @@ struct PhysCore
 
 //class BulletDebugDrawer;
 class IPhysBody;
-class CPhysBody_ConcaveMesh;
+//class CPhysBody_ConcaveMesh;
 
 /*
 ========================================================

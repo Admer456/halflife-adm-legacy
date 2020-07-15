@@ -1,3 +1,7 @@
+#include "Base/ExtDLL.h"
+#include "Util.h"
+#include "Base/CBase.h"
+
 #include "IPhysBody.h"
 #include "PhysBody.h"
 #include "PhysBody_MeshConcave.h"

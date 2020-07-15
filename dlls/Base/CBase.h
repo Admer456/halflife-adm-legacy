@@ -52,8 +52,6 @@ CBaseEntity
 
 #include "Platform.h"
 
-#include "adm/AdmPhysics.h"
-
 // C functions for external declarations that call the appropriate C++ methods
 
 #define EXPORT DLLEXPORT
@@ -782,25 +780,3 @@ typedef struct _SelAmmo
 	BYTE	Ammo2Type;
 	BYTE	Ammo2;
 } SelAmmo;
-
-
-// this moved here from world.cpp, to allow classes to be derived from it
-//=======================
-// CWorld
-//
-// This spawns first when each level begins.
-//=======================
-class CWorld : public CBaseEntity
-{
-public:
-	void Spawn( void );
-	void Precache( void );
-	void KeyValue( KeyValueData *pkvd );
-	void GetKeyValueCustom(char &szTheValue, char szTargetKeyName[64]);
-	void SetKeyValueCustom(char szTargetKeyName[64], char szTheValue[64]);
-
-//	CAdmPhysicsBase AdmPhysEngine;
-
-private:
-	BOOL m_fHasPhysics;
-};

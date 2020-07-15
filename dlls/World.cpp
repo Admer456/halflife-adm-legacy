@@ -35,6 +35,15 @@
 #include "Game/GameRules.h"
 #include "Game/GameRulesTeamplay.h"
 
+#include "../shared/ADM/Physics/IPhysBody.h"
+#include "../shared/ADM/Physics/PhysBody.h"
+#include "../shared/ADM/Physics/PhysBody_MeshConcave.h"
+#include "../shared/ADM/Physics/PhysicsWorld.h"
+
+#include "ADM/Physics/PhysManager.h"
+
+#include "Misc/World.h"
+
 extern CGraph WorldGraph;
 extern CSoundEnt *pSoundEnt;
 
@@ -470,8 +479,6 @@ LINK_ENTITY_TO_CLASS( worldspawn, CWorld );
 extern DLL_GLOBAL BOOL		g_fGameOver;
 float g_flWeaponCheat; 
 
-CPhysicsWorld g_Physics;
-
 void CWorld :: Spawn( void )
 {
 	g_fGameOver = FALSE;
@@ -481,10 +488,11 @@ void CWorld :: Spawn( void )
 	if (m_fHasPhysics)
 	{
 		ALERT(at_console, "\nWorld has physics.\nInitialising physics engine...\n");
+		
+		SetThink( &CWorld::PhysicsSpawnThink );
 
-		g_Physics.Init();
-		g_iszWorldModel = pev->model;
-		g_Physics.CreateWorldCollision(STRING(pev->model)); // To-do: fix crashing
+		pev->nextthink = gpGlobals->time + 0.5f;
+
 	}
 	else
 	{
@@ -779,6 +787,41 @@ void CWorld :: KeyValue( KeyValueData *pkvd )
 	}
 	else
 		CBaseEntity::KeyValue( pkvd );
+}
+
+void CWorld::PhysicsSpawnThink()
+{
+	g_Physics.Init();
+
+	std::string modelPath;
+	char* pathToBSP;
+	char modDirectory[32];
+
+	pathToBSP = (char*)STRING( pev->model );
+	g_engfuncs.pfnGetGameDir( modDirectory );
+
+	modelPath = modDirectory;	// adm
+	modelPath += "/";			// adm/
+	modelPath += pathToBSP;		// adm/maps/map.bsp
+	modelPath.erase( modelPath.end()-4, modelPath.end() ); // adm/maps/map
+	modelPath += "_phys.obj";	// adm/maps/map_phys.obj
+
+	physParams.meshPath = (char*)modelPath.c_str();
+	physParams.mass = 0.f;
+	physParams.scale = 1.f;
+	physParams.offsetOrigin = g_vecZero;
+	physParams.offsetAngles = g_vecZero;
+
+	physWorld.Init( this, physParams );
+
+	// The physics manager will run the simulation
+	// Takes up 1 edict, yeah, but still, it's just 1 edict :p
+	physManager = GetClassPtr( (CPhysManager*)NULL );
+	physManager->Spawn();
+
+	pev->nextthink = gpGlobals->time + 0.5f;
+
+	SetThink( NULL );
 }
 
 /*

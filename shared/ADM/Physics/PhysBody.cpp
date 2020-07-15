@@ -4,6 +4,7 @@
 
 #include "IPhysBody.h"
 #include "PhysBody.h"
+#include "PhysicsWorld.h"
 
 using namespace PhysUtils;
 
@@ -23,6 +24,11 @@ void CPhysBody::Init( CBaseEntity* parent, const PhysParameters& params )
 	InitShape( params );
 
 	rigidBody = ConstructRigidBody( mass, motionState, shape );
+
+	if ( rigidBody )
+	{
+		g_Physics.RegisterPhysBody( *this );
+	}
 }
 
 void CPhysBody::ResetTransform()
@@ -49,5 +55,21 @@ void CPhysBody::SetOrigin( const Vector& origin )
 void CPhysBody::SetAngles( const Vector& angles )
 {
 	btQuaternion btAngles( angles.y, angles.x, angles.z );
-	transform.setRotation( btAngles );
+	transform.setRotation( btAngles * (M_PI/180.f) );
+}
+
+Vector CPhysBody::GetOrigin()
+{
+	btVector3 btOrigin = transform.getOrigin();
+
+	return Vector( btOrigin.x(), btOrigin.z(), btOrigin.y() );
+}
+
+Vector CPhysBody::GetAngles()
+{
+	Vector angles;
+
+	transform.getRotation().getEulerZYX( angles.y, angles.x, angles.z );
+
+	return angles * (180.f/M_PI);
 }

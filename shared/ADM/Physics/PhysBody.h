@@ -40,6 +40,9 @@ public:
 	virtual void				SetOrigin( const Vector& origin );
 	virtual void				SetAngles( const Vector& angles );
 
+	virtual Vector				GetOrigin();
+	virtual Vector				GetAngles();
+
 public:
 	// Utility to construct rigid bodies
 	static btRigidBody*			ConstructRigidBody( btScalar& mass, btMotionState* motionState, btCollisionShape* shape )
