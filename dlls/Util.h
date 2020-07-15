@@ -227,9 +227,9 @@ inline BOOL FClassnameIs(entvars_t* pev, const char* szClassname)
 #define KeyvalueToVector(vector)		\
 {										\
 	sscanf(pkvd->szValue, "%f %f %f",	\
-			vector.x,					\
-			vector.y,					\
-			vector.z);					\
+			&vector.x,					\
+			&vector.y,					\
+			&vector.z);					\
 }
 
 // Goes ahead to check other keyvalues from a given base class
