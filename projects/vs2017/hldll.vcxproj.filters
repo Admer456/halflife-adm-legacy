@@ -87,6 +87,9 @@
     <Filter Include="Sources\ADM\Util">
       <UniqueIdentifier>{085cc89e-788c-4d4a-acca-7946213f438e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\ADM\Physics">
+      <UniqueIdentifier>{b0e6210b-7e10-4a0c-b4fe-f2323e2242fa}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\game_shared\voice_gamemgr.cpp">
@@ -108,9 +111,6 @@
       <Filter>Sources\ADM</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\adm\AdmGetSetKV.cpp">
-      <Filter>Sources\ADM</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\dlls\adm\AdmPhysics.cpp">
       <Filter>Sources\ADM</Filter>
     </ClCompile>
     <ClCompile Include="..\..\dlls\adm\AdmStory.cpp">
@@ -614,6 +614,12 @@
     <ClCompile Include="..\..\shared\ADM\Physics\PhysBody_Box.cpp">
       <Filter>Shared\ADM\Physics</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\dlls\ADM\Physics\PhysManager.cpp">
+      <Filter>Sources\ADM\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\ADM\Physics\PhysBox.cpp">
+      <Filter>Sources\ADM\Physics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\engine\eiface.h">
@@ -623,9 +629,6 @@
       <Filter>Sources\Common</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\adm\AdmVehicle.h">
-      <Filter>Sources\ADM</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\dlls\adm\AdmPhysics.h">
       <Filter>Sources\ADM</Filter>
     </ClInclude>
     <ClInclude Include="..\..\pm_shared\pm_debug.h">
@@ -987,6 +990,15 @@
     </ClInclude>
     <ClInclude Include="..\..\shared\ADM\Physics\BulletPhysics.h">
       <Filter>Shared\ADM\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dlls\ADM\Physics\PhysManager.h">
+      <Filter>Sources\ADM\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dlls\ADM\Physics\PhysBox.h">
+      <Filter>Sources\ADM\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dlls\Misc\World.h">
+      <Filter>Sources\Misc</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

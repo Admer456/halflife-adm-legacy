@@ -69,7 +69,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>..\..\utils\vgui\lib\win32_vc6\vgui.lib;wsock32.lib;Delayimp.lib;opengl32.lib;..\..\lib\public\sdl2.lib;..\..\external\FMOD\lib\fmod_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>..\..\utils\vgui\lib\win32_vc6\vgui.lib;wsock32.lib;Delayimp.lib;opengl32.lib;..\..\lib\public\sdl2.lib;..\..\external\bullet\lib\Debug\BulletDynamics_Debug.lib;..\..\external\bullet\lib\Debug\BulletCollision_Debug.lib;..\..\external\bullet\lib\Debug\LinearMath_Debug.lib;..\..\external\bullet\lib\Debug\ConvexDecomposition_Debug.lib;..\..\external\FMOD\lib\fmod_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <BaseAddress>
       </BaseAddress>
       <DelayLoadDLLs>fmod.dll</DelayLoadDLLs>
