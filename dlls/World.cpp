@@ -491,7 +491,7 @@ void CWorld :: Spawn( void )
 		
 		SetThink( &CWorld::PhysicsSpawnThink );
 
-		pev->nextthink = gpGlobals->time + 0.5f;
+		pev->nextthink = gpGlobals->time + 0.1f;
 
 	}
 	else
@@ -808,7 +808,7 @@ void CWorld::PhysicsSpawnThink()
 
 	physParams.meshPath = (char*)modelPath.c_str();
 	physParams.mass = 0.f;
-	physParams.scale = 1.f;
+	physParams.scale = PhysUtils::utom( 1.0f );
 	physParams.offsetOrigin = g_vecZero;
 	physParams.offsetAngles = g_vecZero;
 
@@ -818,6 +818,8 @@ void CWorld::PhysicsSpawnThink()
 	// Takes up 1 edict, yeah, but still, it's just 1 edict :p
 	physManager = GetClassPtr( (CPhysManager*)NULL );
 	physManager->Spawn();
+
+	//ALERT( at_console, "Created physManager\n" );
 
 	pev->nextthink = gpGlobals->time + 0.5f;
 

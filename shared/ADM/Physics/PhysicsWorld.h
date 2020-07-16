@@ -67,6 +67,7 @@ public:
 	void						AddRigidBody( btRigidBody* body ) { core.world->addRigidBody( body ); }
 	void						RemoveRigidBody( btRigidBody* body ) { core.world->removeRigidBody( body ); }
 	
+	bool						IsLoaded() { return core.world != nullptr; }
 	void						StepSimulation( float deltaTime, int steps ) { core.world->stepSimulation( deltaTime, steps ); }
 
 	// Just a quick reminder, Bullet uses a right-handed 3D coordinate system

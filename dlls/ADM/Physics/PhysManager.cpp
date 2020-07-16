@@ -14,11 +14,15 @@ void CPhysManager::Spawn()
 
 //	pev->flags |= FL_ALWAYSTHINK;
 
+	SetThink( &CPhysManager::PhysManagerThink );
+
 	pev->nextthink = gpGlobals->time + 1.5f;
 }
 
-void CPhysManager::Think()
+void CPhysManager::PhysManagerThink()
 {
 	g_Physics.StepSimulation( 1.f / 64.f, 16 );
-	pev->nextthink = gpGlobals->time + 1.f / 60.f;
+	pev->nextthink = gpGlobals->time + 1.f / 64.f;
+
+	//ALERT( at_console, "CPhysManager::Think() time %3.2f\n", pev->nextthink );
 }

@@ -60,7 +60,9 @@ void CPhysBody::SetAngles( const Vector& angles )
 
 Vector CPhysBody::GetOrigin()
 {
-	btVector3 btOrigin = transform.getOrigin();
+	btVector3 btOrigin;
+	//btOrigin = transform.getOrigin();
+	btOrigin = rigidBody->getWorldTransform().getOrigin();
 
 	return Vector( btOrigin.x(), btOrigin.z(), btOrigin.y() );
 }
@@ -69,7 +71,10 @@ Vector CPhysBody::GetAngles()
 {
 	Vector angles;
 
-	transform.getRotation().getEulerZYX( angles.y, angles.x, angles.z );
+	rigidBody->getWorldTransform().getRotation().getEulerZYX( angles.x, angles.y, angles.z );
+
+	angles.x *= -1;
+	angles.z *= -1;
 
 	return angles * (180.f/M_PI);
 }
