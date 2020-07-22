@@ -24,8 +24,6 @@
 #include "Util.h"
 #include "Base/cbase.h"
 
-
-
 class CLight : public CPointEntity
 {
 public:
@@ -37,6 +35,8 @@ public:
 	virtual int		Restore( CRestore &restore );
 	
 	static	TYPEDESCRIPTION m_SaveData[];
+
+	int				GetStyle() { return m_iStyle; }
 
 private:
 	int		m_iStyle;
@@ -51,7 +51,6 @@ TYPEDESCRIPTION	CLight::m_SaveData[] =
 };
 
 IMPLEMENT_SAVERESTORE( CLight, CPointEntity );
-
 
 //
 // Cache user-entity-field values until spawn is called.
@@ -93,7 +92,7 @@ void CLight :: Spawn( void )
 		REMOVE_ENTITY(ENT(pev));
 		return;
 	}
-	
+
 	if (m_iStyle >= 32)
 	{
 //		CHANGE_METHOD(ENT(pev), em_use, light_use);
@@ -135,6 +134,74 @@ void CLight :: Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useT
 //
 LINK_ENTITY_TO_CLASS( light_spot, CLight );
 
+class CLightFading : public CLight
+{
+public:
+	void		Spawn() override;
+	void		Use( CBaseEntity* activator, CBaseEntity* caller, USE_TYPE useType, float value ) override;
+	void		Think() override;
+
+	enum LightModes
+	{
+		Light_Off,
+		Light_On
+	};
+
+private:
+	int			lightMode;
+	char		lightIntensity[2];
+};
+
+LINK_ENTITY_TO_CLASS( light_fading, CLightFading );
+
+void CLightFading::Spawn()
+{
+	CLight::Spawn();
+
+	if ( pev->spawnflags & SF_LIGHT_START_OFF )
+	{
+		lightMode = Light_Off;
+		lightIntensity[0] = 'a';
+	}
+
+	else
+	{
+		lightMode = Light_On;
+		lightIntensity[0] = 'z';
+	}
+
+	lightIntensity[1] = '\0';
+
+	LIGHT_STYLE( GetStyle(), lightIntensity );
+
+	pev->nextthink = -1;
+}
+
+void CLightFading::Use( CBaseEntity * activator, CBaseEntity * caller, USE_TYPE useType, float value )
+{
+	lightMode = !lightMode;
+
+	pev->nextthink = gpGlobals->time + 0.001;
+}
+
+void CLightFading::Think()
+{
+	int time = gpGlobals->time * 100;
+	bool canSwitchLights = time % 10 == 0;
+
+	if ( lightMode == Light_On && lightIntensity[0] < 'z' )
+	{
+		lightIntensity[0]++;
+	}
+	else if ( lightMode == Light_Off && lightIntensity[0] > 'a' )
+	{
+		lightIntensity[0]--;
+	}
+
+	LIGHT_STYLE( GetStyle(), lightIntensity );
+
+	pev->nextthink = gpGlobals->time + 0.025f;
+}
 
 class CEnvLight : public CLight
 {
