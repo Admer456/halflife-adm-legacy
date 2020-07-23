@@ -138,8 +138,13 @@ class CLightFading : public CLight
 {
 public:
 	void		Spawn() override;
+	void		KeyValue( KeyValueData* pkvd ) override;
 	void		Use( CBaseEntity* activator, CBaseEntity* caller, USE_TYPE useType, float value ) override;
 	void		Think() override;
+
+	int			Save( CSave& save ) override;
+	int			Restore( CRestore& restore ) override;
+	static	TYPEDESCRIPTION m_SaveData[];
 
 	enum LightModes
 	{
@@ -150,9 +155,18 @@ public:
 private:
 	int			lightMode;
 	char		lightIntensity[2];
+	float		lightUpdateTime{0.1f}; // lightmaps refresh at 10 Hz by default
 };
 
 LINK_ENTITY_TO_CLASS( light_fading, CLightFading );
+
+TYPEDESCRIPTION CLightFading::m_SaveData[] =
+{
+	DEFINE_FIELD( CLightFading, lightMode, FIELD_FLOAT ),
+	DEFINE_FIELD( CLightFading, lightUpdateTime, FIELD_FLOAT )
+};
+
+IMPLEMENT_SAVERESTORE( CLightFading, CLight );
 
 void CLightFading::Spawn()
 {
@@ -175,6 +189,20 @@ void CLightFading::Spawn()
 	LIGHT_STYLE( GetStyle(), lightIntensity );
 
 	pev->nextthink = -1;
+}
+
+void CLightFading::KeyValue( KeyValueData* pkvd )
+{
+	if ( FStrEq( pkvd->szKeyName, "lightFrequency" ) )
+	{
+		lightUpdateTime = 1.0f / (atof( pkvd->szValue ));
+		pkvd->fHandled = TRUE;
+	}
+
+	else
+	{
+		CLight::KeyValue( pkvd );
+	}
 }
 
 void CLightFading::Use( CBaseEntity * activator, CBaseEntity * caller, USE_TYPE useType, float value )
@@ -200,7 +228,7 @@ void CLightFading::Think()
 
 	LIGHT_STYLE( GetStyle(), lightIntensity );
 
-	pev->nextthink = gpGlobals->time + 0.025f;
+	pev->nextthink = gpGlobals->time + lightUpdateTime;
 }
 
 class CEnvLight : public CLight

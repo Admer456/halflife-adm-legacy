@@ -634,7 +634,23 @@
 ]
 
 // ========================================================================================================= //
-//		TRIGGER_ ENTITIIES
+//		LIGHT_ ENTITIIES
+// ========================================================================================================= //
+
+@PointClass base( Targetname, ZHLT_point ) = light_fading : "Fading light"
+[
+	_light(color255) : "Brightness" : "255 255 128 200" : "First three integer numbers are the color (RGB). The fourth number is the brightness."
+	lightFrequency(string) : "Transition speed" : "10" : "How many 'letters' per second the light will change"
+	pattern(string) : "Intensity range (DO NOT TOUCH)" : "abcdefghijklmnopqrstuvwxyz" : "This alphabet here will force HLRAD to generate all light intensities for this light, as all 26 values are required for the light to truly fade - else we get fullbright areas."
+
+	spawnflags(Flags) = 
+	[ 
+		1: "Initially dark" : 0 : "If this is enabled, the entity will need to be triggered to work." 
+	]
+]
+
+// ========================================================================================================= //
+//		PHYS_ ENTITIIES
 // ========================================================================================================= //
 
 @BaseClass = Physical
