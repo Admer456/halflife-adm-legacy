@@ -108,18 +108,32 @@ void SoundSystem::SetupChannelGroups()
 */
 void SoundSystem::Update( bool paused, bool windowMinimised )
 {
+	static float volume = 1.0f;
+
 	system->update();
 
-	master->SetPaused( paused );
 
-	if ( windowMinimised )
+	if ( windowMinimised || paused )
 	{
-		master->SetVolume( 0.0f );
+		volume = volume * 0.87f;
 	}
 	else if ( !paused )
 	{
-		master->SetVolume( 1.0f );
+		volume = volume * 0.95f + 0.05f;
 	}
+
+	if ( paused && volume < 0.05f )
+	{
+		master->SetPaused( true );
+	}
+	else if ( !paused && volume > 0.05f )
+	{
+		master->SetPaused( false );
+	}
+
+	gEngfuncs.Con_Printf( "Volume: %3.2f\n", volume );
+
+	master->SetVolume( volume );
 }
 
 /*

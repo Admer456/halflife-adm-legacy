@@ -9,6 +9,8 @@
 #include "Sound/Channel.h"
 #include "SDL2/SDL.h"
 
+#include "ADM/System/SDLWrapper.h"
+
 using namespace AdmSound;
 
 void FMODTest()
@@ -31,7 +33,10 @@ void CClientFMOD::InitExtension()
 
 void CClientFMOD::Think()
 {
-	g_SoundSystem->Update();
+	bool isMinimised = System::IsWindowMinimised() || !System::IsWindowInFocus();
+	bool isPaused = System::GetPausedMode();
+
+	g_SoundSystem->Update( isPaused, isMinimised );
 }
 
 

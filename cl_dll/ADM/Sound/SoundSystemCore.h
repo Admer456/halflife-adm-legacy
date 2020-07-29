@@ -91,7 +91,6 @@ namespace AdmSound
 
 	private:
 		FMOD::System*	system = nullptr;
-		FMOD::Channel*	masterChannel = nullptr;
 		void*			extraDriverData = nullptr;
 
 		std::vector<BaseSound> sounds;
