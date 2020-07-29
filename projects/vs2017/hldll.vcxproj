@@ -63,7 +63,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;_DEBUG;_WINDOWS;QUIVER;VOXEL;QUAKE2;VALVE_DLL;CLIENT_WEAPONS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
-      <AdditionalIncludeDirectories>..\..\dlls;..\..\engine;..\..\common;..\..\pm_shared;..\..\game_shared;..\..\public;..\..\external\FMOD\inc;..\..\external\bullet;..\..\external;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\dlls;..\..\engine;..\..\common;..\..\pm_shared;..\..\game_shared;..\..\public;..\..\external\fmod\core\inc;..\..\external\fmod\studio\inc;..\..\external\bullet;..\..\external;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <AdditionalOptions>/Zc:threadSafeInit- %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
@@ -72,7 +72,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ModuleDefinitionFile>$(ProjectDir)..\..\dlls\hl.def</ModuleDefinitionFile>
       <AdditionalLibraryDirectories>..\..\dlls\bullet\lib\Debug;..\..\FMOD\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>..\..\external\bullet\lib\Debug\BulletDynamics_Debug.lib;..\..\external\bullet\lib\Debug\BulletCollision_Debug.lib;..\..\external\bullet\lib\Debug\LinearMath_Debug.lib;..\..\external\bullet\lib\Debug\ConvexDecomposition_Debug.lib;..\..\external\FMOD\lib\fmod_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>..\..\external\bullet\lib\Debug\BulletDynamics_Debug.lib;..\..\external\bullet\lib\Debug\BulletCollision_Debug.lib;..\..\external\bullet\lib\Debug\LinearMath_Debug.lib;..\..\external\bullet\lib\Debug\ConvexDecomposition_Debug.lib;..\..\external\fmod\core\lib\x86\fmod_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <DelayLoadDLLs>..\..\external\FMOD\lib\fmod.dll</DelayLoadDLLs>
     </Link>
     <PostBuildEvent>
