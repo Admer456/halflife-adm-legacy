@@ -21,6 +21,9 @@
 #include "hltv.h"
 #include "Exports.h"
 
+#include "SDL2/SDL.h"
+#include "ADM/System/SDLWrapper.h"
+
 // Since ADM should not affect HL gameplay,
 // I've decided to disable this feature as it makes a significant change in aiming,
 // as well as bringing back the old view bobbing.
@@ -2283,6 +2286,8 @@ void DLLEXPORT V_CalcRefdef( struct ref_params_s *pparams )
 	{
 		V_CalcNormalRefdef ( pparams );
 	}
+
+	System::SetPausedMode( pparams->paused );
 
 /*
 // Example of how to overlay the whole screen with red at 50 % alpha
