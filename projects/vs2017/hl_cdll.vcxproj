@@ -62,14 +62,14 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;_DEBUG;_WINDOWS;CLIENT_DLL;CLIENT_WEAPONS;HL_DLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <AdditionalIncludeDirectories>..\..\dlls;..\..\cl_dll;..\..\public;..\..\common;..\..\pm_shared;..\..\engine;..\..\utils\vgui\include;..\..\game_shared;..\..\external;..\..\external\FMOD\inc;..\..\external\bullet;..\..\external\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\dlls;..\..\cl_dll;..\..\public;..\..\common;..\..\pm_shared;..\..\engine;..\..\utils\vgui\include;..\..\game_shared;..\..\external;..\..\external\fmod\studio\inc;..\..\external\fmod\core\inc;..\..\external\bullet;..\..\external\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <AdditionalOptions>/Zc:threadSafeInit- %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>..\..\utils\vgui\lib\win32_vc6\vgui.lib;wsock32.lib;Delayimp.lib;opengl32.lib;..\..\lib\public\sdl2.lib;..\..\external\bullet\lib\Debug\BulletDynamics_Debug.lib;..\..\external\bullet\lib\Debug\BulletCollision_Debug.lib;..\..\external\bullet\lib\Debug\LinearMath_Debug.lib;..\..\external\bullet\lib\Debug\ConvexDecomposition_Debug.lib;..\..\external\FMOD\lib\fmod_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>..\..\utils\vgui\lib\win32_vc6\vgui.lib;wsock32.lib;Delayimp.lib;opengl32.lib;..\..\lib\public\sdl2.lib;..\..\external\bullet\lib\Debug\BulletDynamics_Debug.lib;..\..\external\bullet\lib\Debug\BulletCollision_Debug.lib;..\..\external\bullet\lib\Debug\LinearMath_Debug.lib;..\..\external\bullet\lib\Debug\ConvexDecomposition_Debug.lib;..\..\external\fmod\core\lib\x86\fmod_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <BaseAddress>
       </BaseAddress>
       <DelayLoadDLLs>fmod.dll</DelayLoadDLLs>
@@ -113,8 +113,11 @@
     <ClCompile Include="..\..\cl_dll\adm\AdmClientsideExtensions.cpp" />
     <ClCompile Include="..\..\cl_dll\ADM\AdmClientsideImgui.cpp" />
     <ClCompile Include="..\..\cl_dll\ADM\AdmClientsidePunch.cpp" />
-    <ClCompile Include="..\..\cl_dll\ADM\AdmClientsideSound.cpp" />
+    <ClCompile Include="..\..\cl_dll\ADM\ClientsideComponent_SoundSystem.cpp" />
     <ClCompile Include="..\..\cl_dll\ADM\Physics\BulletDebug_TriAPI.cpp" />
+    <ClCompile Include="..\..\cl_dll\ADM\Sound\BaseSound.cpp" />
+    <ClCompile Include="..\..\cl_dll\ADM\Sound\Channel.cpp" />
+    <ClCompile Include="..\..\cl_dll\ADM\Sound\SoundSystemCore.cpp" />
     <ClCompile Include="..\..\cl_dll\CDLL_Int.cpp" />
     <ClCompile Include="..\..\cl_dll\COM_Weapons.cpp" />
     <ClCompile Include="..\..\cl_dll\Demo.cpp" />
@@ -221,6 +224,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\cl_dll\ADM\Physics\BulletDebug_TriAPI.h" />
+    <ClInclude Include="..\..\cl_dll\ADM\Sound\BaseSound.h" />
+    <ClInclude Include="..\..\cl_dll\ADM\Sound\Channel.h" />
+    <ClInclude Include="..\..\cl_dll\ADM\Sound\SoundSystemCore.h" />
     <ClInclude Include="..\..\cl_dll\Bench.h" />
     <ClInclude Include="..\..\cl_dll\CL_DLL.h" />
     <ClInclude Include="..\..\cl_dll\CL_Util.h" />

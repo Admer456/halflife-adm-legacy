@@ -53,9 +53,9 @@
 // Reading sound waves, if possible
 
 #include "AdmSound.h"
-#include "../FMOD/inc/fmod.hpp"
-#include "../FMOD/inc/fmod_common.h"
-#include "../FMOD/inc/fmod_errors.h"
+#include "fmod.hpp"
+#include "fmod_common.h"
+#include "fmod_errors.h"
 
 #include <string>
 
@@ -90,15 +90,6 @@ void FMOD_ERRCHECK(FMOD_RESULT result)
 	else
 		gEngfuncs.Con_Printf("Client FMOD: All OK at this step\n");
 #endif
-}
-
-int GetCurrentDir(char *szBuffer, int length)
-{
-	int bytes = GetModuleFileName(NULL, szBuffer, length);
-	if (bytes == 0)
-		return -1;
-	else
-		return bytes;
 }
 
 unsigned short int SoundTable::AddString( std::string string )

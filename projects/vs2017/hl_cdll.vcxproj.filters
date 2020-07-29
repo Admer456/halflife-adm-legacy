@@ -62,6 +62,9 @@
     <Filter Include="Shared\ADM\Physics">
       <UniqueIdentifier>{5f5a6baa-98fe-4141-95e8-d927023742ba}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\ADM\Sound">
+      <UniqueIdentifier>{42c1d61f-3db6-45b1-8ccc-88f4ba0147aa}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\cl_dll\hl\hl_weapons.cpp">
@@ -325,9 +328,6 @@
     <ClCompile Include="..\..\cl_dll\Util.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\cl_dll\ADM\AdmClientsideSound.cpp">
-      <Filter>Sources\ADM</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\dlls\Weapons\WeaponsShared.cpp">
       <Filter>Sources\Weapons</Filter>
     </ClCompile>
@@ -387,6 +387,18 @@
     </ClCompile>
     <ClCompile Include="..\..\shared\ADM\Physics\PhysicsWorld.cpp">
       <Filter>Shared\ADM\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cl_dll\ADM\Sound\SoundSystemCore.cpp">
+      <Filter>Sources\ADM\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cl_dll\ADM\Sound\BaseSound.cpp">
+      <Filter>Sources\ADM\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cl_dll\ADM\Sound\Channel.cpp">
+      <Filter>Sources\ADM\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cl_dll\ADM\ClientsideComponent_SoundSystem.cpp">
+      <Filter>Sources\ADM</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -596,6 +608,15 @@
     </ClInclude>
     <ClInclude Include="..\..\shared\ADM\Physics\BulletPhysics.h">
       <Filter>Shared\ADM\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cl_dll\ADM\Sound\SoundSystemCore.h">
+      <Filter>Sources\ADM\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cl_dll\ADM\Sound\BaseSound.h">
+      <Filter>Sources\ADM\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cl_dll\ADM\Sound\Channel.h">
+      <Filter>Sources\ADM\Sound</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -575,36 +575,8 @@ enum MusicState
 class CClientFMOD : public CBaseClientExtension
 {
 public:
-	void InitExtension( void );
-	void Think( void );
-
-	void LoadSound( char *szSoundPath );
-	void PlaySound( char *szSoundPath );
-
-	// To-do: implement
-	/*
-	void LoadMusic( char *szSongName );
-	void StartMusic();
-	void SwitchMusicState( int state );
-
-	void UpdateSoundStatus( void ); // checks per frame for any changes in sound direction, or events etc.
-	bool LoadExtendedEntList( char* eefName ); // loads .eef file and reads custom data e.g. soundscapes, ambients etc.
-	*/
-
-	// User messages - FSS stands for "FMOD sound system"
-
-	int MsgFunc_FSSSound( const char* pszName, int iSize, void *pbuf );
-	int MsgFunc_FSSMusic( const char* pszName, int iSize, void *pbuf );
-	int MsgFunc_StrTable( const char* pszName, int iSize, void *pbuf );
-
-	FMODSoundSystem m_soundSystem;
-
-	// local little string table // Obsolete - sound table is already built elsewhere
-	std::vector<int> m_rgIndices;
-	std::vector<std::string> m_rgStrings;
-
-	void AddToStringTable( int index, std::string string );
-	std::string GetStringFromTable( int index );
+	void			InitExtension( void );
+	void			Think( void );
 };
 
 class CClientPunch : public CBaseClientExtension
