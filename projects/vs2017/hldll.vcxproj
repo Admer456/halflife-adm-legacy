@@ -43,7 +43,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>..\..\Versions\Latest$(Configuration)\dlls\</OutDir>
+    <OutDir>..\..\bin\$(Configuration)\dlls\</OutDir>
     <IntDir>$(Configuration)\$(ProjectName)\int\</IntDir>
     <TargetName>hl</TargetName>
     <IncludePath>..\..\dlls\bullet;$(IncludePath)</IncludePath>
@@ -51,7 +51,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>..\..\Versions\Latest$(Configuration)\dlls\</OutDir>
+    <OutDir>..\..\bin\$(Configuration)\dlls\</OutDir>
     <IntDir>$(Configuration)\$(ProjectName)\int\</IntDir>
     <TargetName>hl</TargetName>
   </PropertyGroup>
@@ -415,7 +415,7 @@
     <ClInclude Include="..\..\shared\ADM\VersionInfo.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\Versions\adm.fgd" />
+    <None Include="..\..\fgd\adm.fgd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

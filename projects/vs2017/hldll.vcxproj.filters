@@ -1002,7 +1002,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\Versions\adm.fgd">
+    <None Include="..\..\fgd\adm.fgd">
       <Filter>FGDs</Filter>
     </None>
   </ItemGroup>
