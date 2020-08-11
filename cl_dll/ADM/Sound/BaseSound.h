@@ -24,8 +24,38 @@ namespace AdmSound
 		}
 
 		FMOD::Sound*	GetFMODSound() const { return sound; }
-		const char*		GetPath() { return path; }
 		unsigned short	GetID() { return ID; }
+
+		const char*		GetPath()
+		{
+			return path;
+		}
+
+		char*			GetFullPath() 
+		{ 
+			char fullPath[_MAX_PATH];
+			const char* modName = gEngfuncs.pfnGetGameDirectory();
+
+			sprintf( fullPath, "%s/%s", modName, path );
+
+			return fullPath;
+		}
+
+		float			GetSoundDuration() // in seconds
+		{
+			unsigned int durationMilliseconds;
+			sound->getLength( &durationMilliseconds, FMOD_TIMEUNIT_MS );
+
+			return durationMilliseconds / 1000.0f;
+		}
+
+		unsigned int	GetSoundDurationMs() // in milliseconds
+		{
+			unsigned int durationMilliseconds;
+			sound->getLength( &durationMilliseconds, FMOD_TIMEUNIT_MS );
+
+			return durationMilliseconds;
+		}
 
 	public:
 		operator FMOD::Sound*() const

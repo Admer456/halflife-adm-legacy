@@ -1,6 +1,7 @@
 #include "SoundSystemCore.h"
 #include "BaseSound.h"
 #include "Channel.h"
+#include "SoundSource.h"
 
 #include "WRect.h"
 #include "CL_DLL.h"
@@ -23,11 +24,18 @@ using namespace AdmSound;
 */
 void SoundSystem::Init()
 {
+#ifdef WIN32
 	DelayLoad_LoadGameLib( "fmod.dll", "cl_dlls" );
+#endif
 
+	// Start the FMOD sound system
 	ErrorCheck( FMOD::System_Create( &system ) );
-	ErrorCheck( system->init( Channel_Max, FMOD_INIT_NORMAL, extraDriverData ) );
+	ErrorCheck( system->init( 128, FMOD_INIT_NORMAL, extraDriverData ) );
 
+	// Set up the 3D listener settings
+	ErrorCheck( system->set3DSettings( DopplerScale, DistanceFactor, RolloffScale ) );
+
+	// Enforce that this is a singleton
 	if ( g_SoundSystem == nullptr )
 	{
 		g_SoundSystem = this;
@@ -66,31 +74,29 @@ void SoundSystem::SetupChannelGroups()
 
 	master = &channelGroups[ChannelGroup_Master];
 
-	// Play a dummy sound in every channel to create that channel
-	LoadSound( BaseSound( "adm/sound/null.wav" ) );
-	for ( int i = Channel_Default; i < Channel_Max; i++ )
-	{
-		PlaySound( "adm/sound/null.wav", static_cast<ChannelType>(i) );
-	}
+	//// Play a dummy sound in every channel to create that channel
+	//LoadSound( BaseSound( "adm/sound/null.wav" ) );
+	//for ( int i = Channel_Default; i < Channel_Max; i++ )
+	//{
+	//	PlaySound( "adm/sound/null.wav", static_cast<ChannelType>(i) );
+	//}
 
 	// Set the channels to their respective groups
 	for ( int i = Channel_Default; i < Channel_Max; i++ )
 	{
-		FMOD::Channel* channel = channels[i].GetFMODChannel();
-
 		if ( i >= Channel_Default && i < Channel_Music )
 		{
-			channel->setChannelGroup( channelGroups[ChannelGroup_GameSounds] );
+			channelGroups[ChannelGroup_GameSounds].AddGroup( &channels[i] );
 		}
 
 		else if ( i >= Channel_Music && i < Channel_Dialogue )
 		{
-			channel->setChannelGroup( channelGroups[ChannelGroup_Music] );
+			channelGroups[ChannelGroup_Music].AddGroup( &channels[i] );
 		}
 
 		else if ( i >= Channel_Dialogue && i < Channel_Max )
 		{
-			channel->setChannelGroup( channelGroups[ChannelGroup_Dialogue] );
+			channelGroups[ChannelGroup_Dialogue].AddGroup( &channels[i] );
 		}
 	}
 
@@ -99,6 +105,20 @@ void SoundSystem::SetupChannelGroups()
 	master->AddGroup( &channelGroups[ChannelGroup_Music] );
 	master->AddGroup( &channelGroups[ChannelGroup_Dialogue] );
 }
+
+FMOD_VECTOR VectorToFMODVector( const Vector& vec )
+{
+	FMOD_VECTOR FMODVector;
+	FMODVector.x = vec.x;
+	FMODVector.y = vec.y;
+	FMODVector.z = vec.z;
+
+	return FMODVector;
+}
+
+extern vec3_t v_origin;
+extern vec3_t v_angles;
+extern float v_frametime;
 
 /*
 =======================================================
@@ -109,9 +129,43 @@ void SoundSystem::SetupChannelGroups()
 void SoundSystem::Update( bool paused, bool windowMinimised )
 {
 	static float volume = 1.0f;
+	static FMOD_VECTOR FMODPlayerPosition;
+	static FMOD_VECTOR FMODPlayerVelocity;
+	static FMOD_VECTOR FMODPlayerForward;
+	static FMOD_VECTOR FMODPlayerUp;
+
+	// Some player data
+	Vector oldPlayerPosition = v_origin;
+	Vector &playerPosition = v_origin;
+	Vector playerVelocity = (oldPlayerPosition - playerPosition) / v_frametime;
+	Vector playerAngles;
+	Vector playerForward;
+	Vector playerUp;
+
+	// Save the old position so we can calculate velocity
+	oldPlayerPosition = playerPosition;
+
+	// Get the forward and up vector
+	gEngfuncs.pfnAngleVectors( playerAngles, playerForward, nullptr, playerUp );
+
+	// Converting these Vectors into FMOD vectors
+	FMODPlayerPosition = VectorToFMODVector( playerPosition );
+	FMODPlayerVelocity = VectorToFMODVector( playerVelocity );
+	FMODPlayerForward = VectorToFMODVector( playerForward );
+	FMODPlayerUp = VectorToFMODVector( playerUp );
 
 	system->update();
 
+	for ( ISoundSource*& soundSource : soundSources )
+	{
+		if ( soundSource == nullptr )
+			return;
+
+		soundSource->Update();
+	}
+
+	// Update the player's "ears"
+	system->set3DListenerAttributes( 0, &FMODPlayerPosition, &FMODPlayerVelocity, &FMODPlayerForward, &FMODPlayerUp );
 
 	if ( windowMinimised || paused )
 	{
@@ -131,9 +185,12 @@ void SoundSystem::Update( bool paused, bool windowMinimised )
 		master->SetPaused( false );
 	}
 
-	gEngfuncs.Con_Printf( "Volume: %3.2f\n", volume );
-
 	master->SetVolume( volume );
+}
+
+float SoundSystem::GetTime()
+{
+	return gEngfuncs.GetClientTime();
 }
 
 /*
@@ -142,10 +199,58 @@ void SoundSystem::Update( bool paused, bool windowMinimised )
 	Creates an FMOD sound object, loads sample from disk
 =======================================================
 */
-void SoundSystem::LoadSound( BaseSound& sound )
+void SoundSystem::LoadSound( BaseSound& sound, int flags )
 {
-	system->createSound( sound.GetPath(), FMOD_DEFAULT, nullptr, sound );
+	// Use GetFullPath, as it returns the path relative to the .exe file
+	system->createSound( sound.GetFullPath(), flags, nullptr, sound );
 	sounds.push_back( sound ); 
+}
+
+/*
+=======================================================
+	SoundSystem::GetSound
+	Retrieves a sound from the sound list, by name
+=======================================================
+*/
+BaseSound* SoundSystem::GetSound( const char* soundPath )
+{
+	// For beginner programmers who don't know:
+	// The & after auto is a reference
+	// If I didn't put it, it'd copy the values of each sound
+	// and it'd be a temporary variable, so not good for returning stuff
+	for ( auto &sound : sounds )
+	{
+		if ( sound.GetPath() == nullptr )
+			continue;
+
+		if ( !strcmp( soundPath, sound.GetPath() ) )
+		{
+			return &sound;
+		}
+	}
+
+	// If we don't find a sound, well, let's generate one
+	LoadSound( BaseSound( soundPath ) );
+	return GetSound( soundPath );
+}
+
+/*
+=======================================================
+	SoundSystem::GetSound
+	Retrieves a sound from the sound list, by ID
+=======================================================
+*/
+BaseSound* SoundSystem::GetSound( unsigned short soundID )
+{
+	for ( auto &sound : sounds )
+	{
+		if ( soundID == sound.GetID() )
+		{
+			return &sound;
+		}
+	}
+
+	return nullptr;
 }
 
 /*
@@ -155,7 +260,7 @@ void SoundSystem::LoadSound( BaseSound& sound )
 	like UI, weapon events etc.
 =======================================================
 */
-void AdmSound::SoundSystem::PlaySound( const char* soundPath, ChannelType channel )
+void SoundSystem::PlaySound( const char* soundPath, ChannelType channel )
 {
 	for ( auto sound : sounds )
 	{
@@ -177,7 +282,7 @@ void AdmSound::SoundSystem::PlaySound( const char* soundPath, ChannelType channe
 	and is less expensive than playing by name
 =======================================================
 */
-void AdmSound::SoundSystem::PlaySound( unsigned short soundID, ChannelType channel )
+void SoundSystem::PlaySound( unsigned short soundID, ChannelType channel )
 {
 	for ( auto sound : sounds )
 	{
@@ -204,7 +309,8 @@ void SoundSystem::PlaySound( BaseSound& sound, ChannelType channel )
 		LoadSound( sound );
 	}
 
-	system->playSound( FMODSound, nullptr, false, channels[channel] );
+	// Play into the default channel
+	system->playSound( FMODSound, nullptr, false, &defaultChannel );
 }
 
 /*

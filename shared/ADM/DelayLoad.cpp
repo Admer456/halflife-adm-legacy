@@ -69,6 +69,11 @@ FARPROC WINAPI DelayHook(
 ExternC PfnDliHook __pfnDliNotifyHook2 = DelayHook;
 
 ExternC PfnDliHook   __pfnDliFailureHook2 = nullptr;
+#else
+int DelayLoad_LoadGameLib( const char* DLL, const char* localPath )
+{
+	return 0;
+}
 #endif
 
 #ifdef WIN32

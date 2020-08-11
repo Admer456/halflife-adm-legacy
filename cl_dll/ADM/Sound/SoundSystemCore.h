@@ -14,6 +14,7 @@ namespace AdmSound
 	class BaseSound;
 	class Channel;
 	class ChannelGroup;
+	class ISoundSource;
 
 	// Pairs that will be later used to load the sound files
 	class SoundIDPair
@@ -46,6 +47,8 @@ namespace AdmSound
 		ChannelGroup_Dialogue
 	};
 
+	// These are actually also channel groups
+	// BUT they're 
 	enum ChannelType
 	{
 		// ChannelGroup_GameSounds
@@ -66,6 +69,13 @@ namespace AdmSound
 		Channel_Max
 	};
 
+	// The distance factor basically expresses how many units there are in a metre
+	// In this case, there is about 39.97 GoldSRC units in a metre
+	constexpr float DistanceFactor = 39.970078740157480314f;
+
+	constexpr float DopplerScale = 1.0f;
+	constexpr float RolloffScale = 1.0f;
+
 	class SoundSystem
 	{
 	public:
@@ -75,12 +85,18 @@ namespace AdmSound
 		void			SetupChannelGroups();
 
 		void			Update( bool paused = false, bool windowMinimised = false );
+		float			GetTime();
 
-		void			LoadSound( BaseSound& sound );
+		void			LoadSound( BaseSound& sound, int flags = FMOD_DEFAULT );
+
+		BaseSound*		GetSound( const char* soundPath );
+		BaseSound*		GetSound( unsigned short soundID );
 
 		void			PlaySound( const char* soundPath, ChannelType channel );
 		void			PlaySound( unsigned short soundID, ChannelType channel );
 		void			PlaySound( BaseSound& sound, ChannelType channel );
+
+		void			RegisterSound( ISoundSource* soundSource );
 
 		void			PrintNumChannels();
 
@@ -88,6 +104,8 @@ namespace AdmSound
 
 		const char*		PathFromID( unsigned short ID );
 		unsigned short	IDFromPath( const char* path );
+
+		constexpr static int MaxSoundChannels = 128;
 
 	private:
 		FMOD::System*	system = nullptr;
@@ -104,15 +122,19 @@ namespace AdmSound
 			Voice: NPC dialogue
 		*/
 		ChannelGroup*	master = nullptr;
-		ChannelGroup	channelGroups[4];
-		Channel			channels[Channel_Max];
+		ChannelGroup	channelGroups[4]; // Main channel group categories
+
+		ChannelGroup	channels[Channel_Max]; // Channel groups themselves
+		FMOD::Channel*	defaultChannel = nullptr; // Do not play in this channel, reserved for some testing stuff
+
+		ISoundSource*	soundSources[MaxSoundChannels]; // These are the things from which we'll actually play the sound from
 
 		//HMODULE			fmodLibrary;
 	};
 
 	extern SoundSystem* g_SoundSystem;
 
-	static_assert( Channel_Max <= 64, "There can be no more than 64 FMOD channels" );
+	static_assert( Channel_Max <= 32, "There can be no more than 32 channels" );
 
 	void ErrorCheck( FMOD_RESULT result );
 }

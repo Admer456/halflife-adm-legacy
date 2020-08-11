@@ -577,6 +577,36 @@ class CClientFMOD : public CBaseClientExtension
 public:
 	void			InitExtension( void );
 	void			Think( void );
+
+	// Since the messages aren't allowed to have long names (longer than 11 chars),
+	// I must shorten them a TON. Forgive me.
+
+	// SndP2Str -> Sound system Play Sound in 2D by String
+	// - Channel (byte)
+	// - Filename (string)
+	int				MsgFunc_SndP2Str( const char* pszName, int iSize, void* pbuf );
+	
+	// SndP3Str -> Sound system Play Sound in 3D by String
+	// - Position (vector)
+	// - Channel (byte)
+	// - Filename (string)
+	int				MsgFunc_SndP3Str( const char* pszName, int iSize, void* pbuf );
+	
+	// SndP2Num -> Sound system Play Sound in 2D by ID (number)
+	// - Channel (byte)
+	// - ID (short)
+	int				MsgFunc_SndP2Num( const char* pszName, int iSize, void* pbuf );
+	
+	// SndP3Num -> Sound system Play Sound in 3D by ID (number)
+	// - Position (vector)
+	// - Channel (byte)
+	// - ID (short)
+	int				MsgFunc_SndP3Num( const char* pszName, int iSize, void* pbuf );
+	
+	// SndCStr -> Cache Sound String
+	// - Filename (string)
+	// - ID (short)
+	int				MsgFunc_SndCStr( const char* pszName, int iSize, void* pbuf );
 };
 
 class CClientPunch : public CBaseClientExtension

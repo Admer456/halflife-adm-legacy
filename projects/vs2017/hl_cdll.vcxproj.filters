@@ -409,6 +409,9 @@
     <ClCompile Include="..\..\cl_dll\ADM\Sound\SoundSource.cpp">
       <Filter>Sources\ADM\Sound</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\cl_dll\ADM\Sound\SoundSourceSpatial.cpp">
+      <Filter>Sources\ADM\Sound</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\pm_shared\pm_debug.h">
@@ -631,6 +634,9 @@
       <Filter>Sources\ADM\System</Filter>
     </ClInclude>
     <ClInclude Include="..\..\cl_dll\ADM\Sound\SoundSource.h">
+      <Filter>Sources\ADM\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cl_dll\ADM\Sound\SoundSourceSpatial.h">
       <Filter>Sources\ADM\Sound</Filter>
     </ClInclude>
   </ItemGroup>

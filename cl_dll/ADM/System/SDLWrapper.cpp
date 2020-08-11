@@ -53,11 +53,9 @@ namespace System
 
 	bool localPaused = true;
 
-	// Since there's no easy way to read whether the
+	// Since there's no other easy way to read whether the
 	// game is paused (in the main menu) or not,
-	// this function gets called from several IN_ functions
-	// in InputW32.cpp
-	// Might not work on Linux, which worries me
+	// this function gets called from view.cpp
 	void SetPausedMode( bool paused )
 	{
 		localPaused = paused;

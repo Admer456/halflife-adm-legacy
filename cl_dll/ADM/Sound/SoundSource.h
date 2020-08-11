@@ -24,25 +24,35 @@ namespace AdmSound
 		ISoundSource() = default;
 		~ISoundSource() = default;
 
-		void			Play( bool fromStart = false );
+		virtual void	Play( bool fromStart = false ) = 0;
+		virtual void	Update() = 0;
+		virtual void	Pause( bool stop = false ) = 0;
+		virtual bool	IsPlaying() = 0;
+	
+		virtual int		GetSoundFlags() = 0;
+		virtual void	SetSoundFlags( const int& flags ) = 0;
 	};
 
-	class SoundSource
+	class SoundSource : public ISoundSource
 	{
 	public:
 		SoundSource( const char* soundPath );
 		virtual	~SoundSource() = default;
 
-		void			Play( bool fromStart = false );
-		void			Update();
-		void			Pause( bool stop = false );
+		virtual void	Play( bool fromStart = false ) override;
+		virtual void	Update() override;
+		virtual void	Pause( bool stop = false ) override;
+		bool			IsPlaying() override;
 
-		unsigned short	entityOwner{ -1 }; // -1 means no owner
+		int				GetSoundFlags() override;
+		void			SetSoundFlags( const int& flags ) override;
+
+		unsigned short	entityOwner{ 1 << 15 }; // Meant to be used for entity tracking; 1 << 15 means no owner
 
 	protected:
 		FMOD::System*	system{ nullptr };
-		BaseSound*		sound{ nullptr };
 		FMOD::Channel*	channel{ nullptr };
+		BaseSound*		sound{ nullptr };
 		SoundState		state;
 
 		float			soundDuration{ -1.0f };

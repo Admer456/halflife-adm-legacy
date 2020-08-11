@@ -118,6 +118,7 @@
     <ClCompile Include="..\..\cl_dll\ADM\Sound\BaseSound.cpp" />
     <ClCompile Include="..\..\cl_dll\ADM\Sound\Channel.cpp" />
     <ClCompile Include="..\..\cl_dll\ADM\Sound\SoundSource.cpp" />
+    <ClCompile Include="..\..\cl_dll\ADM\Sound\SoundSourceSpatial.cpp" />
     <ClCompile Include="..\..\cl_dll\ADM\Sound\SoundSystemCore.cpp" />
     <ClCompile Include="..\..\cl_dll\ADM\System\SDLWrapper.cpp" />
     <ClCompile Include="..\..\cl_dll\CDLL_Int.cpp" />
@@ -229,6 +230,7 @@
     <ClInclude Include="..\..\cl_dll\ADM\Sound\BaseSound.h" />
     <ClInclude Include="..\..\cl_dll\ADM\Sound\Channel.h" />
     <ClInclude Include="..\..\cl_dll\ADM\Sound\SoundSource.h" />
+    <ClInclude Include="..\..\cl_dll\ADM\Sound\SoundSourceSpatial.h" />
     <ClInclude Include="..\..\cl_dll\ADM\Sound\SoundSystemCore.h" />
     <ClInclude Include="..\..\cl_dll\ADM\System\SDLWrapper.h" />
     <ClInclude Include="..\..\cl_dll\Bench.h" />
