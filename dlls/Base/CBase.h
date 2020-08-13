@@ -52,6 +52,16 @@ CBaseEntity
 
 #include "Platform.h"
 
+// In progdefs.h, there's a struct called entvars_t
+// In essence, it's the engine's entity struct. If you change anything in it, such as
+// adding a new variable or whatever, then you will suffer great consequences.
+// The engine will see one thing, the game will see another, there will be a discrepancy in the memory.
+// This will prevent the game DLL from compiling if anything like that happens, though it still cannot
+// guarantee this (e.g. one variable increases by 2 bytes, another decreases); but it should prevent
+// beginners from trying to do anything stupid with entvars_t.
+constexpr size_t entVarsSize = sizeof( entvars_t );
+static_assert( entVarsSize == 676U, "You must NOT change ANYTHING in entvars_t, else the game breaks" );
+
 // C functions for external declarations that call the appropriate C++ methods
 
 #define EXPORT DLLEXPORT
