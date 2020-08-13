@@ -17,12 +17,14 @@
 #include "cl_entity.h"
 #include "triangleapi.h"
 #include "Exports.h"
+#include "com_model.h"
 
 #include "particleman.h"
 #include "tri.h"
 extern IParticleMan *g_pParticleMan;
 
 #include "ADM/AdmRenderer.h"
+#include "ADM/Components/SimpleSky.h"
 
 /*
 =================
@@ -53,12 +55,16 @@ void DLLEXPORT HUD_DrawTransparentTriangles( void )
 {
 //	RecClDrawTransparentTriangles();
 
+	triangleapi_t* triAPI = gEngfuncs.pTriAPI;
+
 #if defined( _TFC )
 	RunEventList();
 #endif
 
 	//gHUD.m_clImgui.TestDrawImgui();
 	//gHUD.m_clImgui.DisplayImgui();
+
+	g_Sky.Render( triAPI );
 
 	if ( g_pParticleMan )
 		 g_pParticleMan->Update();

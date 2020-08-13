@@ -194,6 +194,14 @@ int gmsgStatusValue = 0;
 int gmsgFSSSound = 0; // FMOD, regular sounds (send a long)
 int gmsgFSSMusic = 0; // FMOD, music files (send a string and a float for volume)
 
+int gmsgSky2D = 0; // "SimpleSky"
+// BYTE (sky flags)
+// SHORT * 10 (rotation speed)
+// SHORT * 10 (wobble frequency)
+// SHORT (wobble scale)
+// BYTE (sky distance)
+// STRING (sky name e.g. "dusk")
+
 void LinkUserMessages( void )
 {
 	// Already taken care of?
@@ -232,15 +240,16 @@ void LinkUserMessages( void )
 	gmsgHideWeapon = REG_USER_MSG( "HideWeapon", 1 );
 	gmsgSetFOV = REG_USER_MSG( "SetFOV", 1 );
 	gmsgShowMenu = REG_USER_MSG( "ShowMenu", -1 );
-	gmsgShake = REG_USER_MSG("ScreenShake", sizeof(ScreenShake));
-	gmsgFade = REG_USER_MSG("ScreenFade", sizeof(ScreenFade));
-	gmsgAmmoX = REG_USER_MSG("AmmoX", 2);
+	gmsgShake = REG_USER_MSG( "ScreenShake", sizeof(ScreenShake) );
+	gmsgFade = REG_USER_MSG( "ScreenFade", sizeof(ScreenFade) );
+	gmsgAmmoX = REG_USER_MSG( "AmmoX", 2);
 	gmsgTeamNames = REG_USER_MSG( "TeamNames", -1 );
 
-	gmsgStatusText = REG_USER_MSG("StatusText", -1);
-	gmsgStatusValue = REG_USER_MSG("StatusValue", 3); 
+	gmsgStatusText = REG_USER_MSG( "StatusText", -1 );
+	gmsgStatusValue = REG_USER_MSG( "StatusValue", 3 ); 
 
-	gmsgFSSMusic = REG_USER_MSG("FSSMusic", -1);
+	gmsgFSSMusic = REG_USER_MSG( "FSSMusic", -1 );
+	gmsgSky2D = REG_USER_MSG( "SSky", -1 );
 
 }
 

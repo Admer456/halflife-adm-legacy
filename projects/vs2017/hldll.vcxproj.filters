@@ -90,6 +90,9 @@
     <Filter Include="Sources\ADM\Physics">
       <UniqueIdentifier>{b0e6210b-7e10-4a0c-b4fe-f2323e2242fa}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\ADM\Env">
+      <UniqueIdentifier>{b6147aab-3b0f-46ae-a2ec-35044da66591}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\game_shared\voice_gamemgr.cpp">
@@ -620,6 +623,9 @@
     <ClCompile Include="..\..\dlls\ADM\Physics\PhysBox.cpp">
       <Filter>Sources\ADM\Physics</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\dlls\ADM\Env\EnvSky2D.cpp">
+      <Filter>Sources\ADM\Env</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\engine\eiface.h">
@@ -999,6 +1005,9 @@
     </ClInclude>
     <ClInclude Include="..\..\dlls\Misc\World.h">
       <Filter>Sources\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dlls\ADM\Env\EnvSky2D.h">
+      <Filter>Sources\ADM\Env</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

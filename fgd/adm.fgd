@@ -1,11 +1,13 @@
 //
-// Half-Life game definition file (.fgd) 
-// for Jackhammer 1.0 and above
+// Advanced Development Mod entity definition file (.fgd) 
+// for Jackhammer 1.1.1064 and above
 //
 // updated by Chris Bokitch
 // autolycus@valvesoftware.com
 // http://www.valve-erc.com/
 // modified by XaeroX / support@hlfx.ru
+//
+// Additionally modified by Admer456 
 //
 
 //
@@ -21,6 +23,7 @@
 	WaveHeight(string) : "Default Wave Height" : : "Set the default wave height here (can be overridden by the properties in func_water)."
 	MaxRange(string) : "Max viewable distance" : "4096" : "Maximum distance the player can see."
 	chaptertitle(string) : "Chapter Title Message" : "" : "Text displayed when entering the level."
+	
 	startdark(choices) : "Level Fade In" : 0 : "If Yes, then the level will start black and fade into normal light." =
 	[	
 		0 : "No"
@@ -561,26 +564,41 @@
 //		ENV_ ENTITIIES
 // ========================================================================================================= //
 
-@PointClass base(Targetname) size(-4 -4 -4, 4 4 4) = env_sky : "Skybox-changing entity"
+@PointClass base(Targetname) size(-4 -4 -4, 4 4 4) iconsprite("sprites/admdev/env_sky2d.spr") = env_sky2d : "Skybox-changing entity - trigger it to change and/or update the sky - sky names are relative to gfx/env/ with no extension, e.g. dusk"
 [
-	skyname(string) : "Name of the sky"
-	skysize(choices) : "Sky resolution" : 8 =
+	skyName(string) : "Sky name" : "desert"
+
+	// Rotation speed in degrees/second
+	rotationSpeed(string) : "Rotation speed" : "5"
+	
+	// Measured in Hz, how many times it'll wobble per second
+	wobbleFrequency(string) : "Wobble frequency" : "10"
+	
+	// Measured in GoldSRC units
+	wobbleScale(string) : "Wobble size" : "512"
+	
+	// Distance from either the world origin or the player's eyes
+	skyDistance(choices) : "Distance" : 5 =
 	[
-		1: "128 or less"
-		2: "256"
-		3: "512 (not supported yet)"
-		4: "1024 (not supported yet)"
+		 7: "256 - no lower"
+		 8: "512"
+		 9: "1024"
+		10: "2048"
+		12: "4096"
+		13: "8192"
+		14: "16 384"
+		15: "32 768"
+		16: "65 536"
+		17: "131 072"
+		18: "262 144 - no higher"
 	]
-	skyradius(choices) : "Distance from the map centre" : 6 =
+
+	spawnflags(flags) =
 	[
-		1: "512"
-		2: "1024"
-		3: "2048"
-		4: "4096"
-		5: "8192"
-		6: "16 384"
-		7: "32 768"
-		8: "65 536"
+		1: "Follow player view" : 1 // Attach the sky to the player's view, instead of being relative to the world origin
+		2: "Squeeze" : 0 // Top and bottom parts of the sky will squeeze in an alternating fashion
+		4: "Rotate" : 0 // The sky will rotate on the Z axis
+		8: "Wobble" : 0 // The sky's corners will randomly wiggle
 	]
 ]
 

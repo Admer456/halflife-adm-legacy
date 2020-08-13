@@ -116,6 +116,7 @@
     <ClCompile Include="..\..\dlls\adm\AdmVehicle.cpp" />
     <ClCompile Include="..\..\dlls\adm\AdmVehicleComponents.cpp" />
     <ClCompile Include="..\..\dlls\adm\AdmStory.cpp" />
+    <ClCompile Include="..\..\dlls\ADM\Env\EnvSky2D.cpp" />
     <ClCompile Include="..\..\dlls\ADM\Func\CFuncLag.cpp" />
     <ClCompile Include="..\..\dlls\ADM\Func\CFuncLoadbar.cpp" />
     <ClCompile Include="..\..\dlls\ADM\Func\CFuncNovis.cpp" />
@@ -289,6 +290,7 @@
   <ItemGroup>
     <ClInclude Include="..\..\common\Platform.h" />
     <ClInclude Include="..\..\dlls\ADM\AdmEffects.h" />
+    <ClInclude Include="..\..\dlls\ADM\Env\EnvSky2D.h" />
     <ClInclude Include="..\..\dlls\ADM\Func\CFuncLag.h" />
     <ClInclude Include="..\..\dlls\ADM\Func\CFuncLoadbar.h" />
     <ClInclude Include="..\..\dlls\ADM\Func\CFuncNovis.h" />

@@ -17,10 +17,16 @@
 #include "cl_util.h"
 #include "parsemsg.h"
 #include "pm_shared.h"
+#include "triangleapi.h"
+#include "com_model.h"
+#include "Components/SimpleSky.h"
+
+SimpleSky g_Sky;
 
 int CBaseClientExtension::Init( void )
 {
 	gHUD.AddHudElem( this );
+
 	m_iFlags |= HUD_ACTIVE; // always active
 
 	InitExtension();
@@ -40,6 +46,7 @@ void CHud::InitExtensions( void )
 	m_clFMOD.Init();
 	m_clPunch.Init();
 	m_clImgui.Init();
+	g_Sky.Init();
 }
 
 void CHud::VidInitExtensions( void )
