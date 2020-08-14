@@ -4,45 +4,29 @@ Advanced Development Mod
 ADM is a Half-Life mod base that aims to bring quality-of-life features while maintaining compatibility with the Half-Life singleplayer campaign. It is what powers the mod Utopia at Stake. ([ModDB page](https://www.moddb.com/mods/admerthegame)) 
 You can track exact progress, suggest features, ask questions about features etc. on the [Trello board](https://trello.com/b/mbpXU4ff).
 
-Current version: v0.04 February. 
+Current target version: 0.1.0  
+Check out what this means [on the wiki](https://github.com/Admer456/halflife-ADM/wiki)!  
 
 ## **Features:**
 
-- High-quality sound with [FMOD](https://www.fmod.com/studio), without fmod.dll being in the HL root directory*
+- Support for maps bigger than 8192 units (up to 65k units out of the box, tweakable up to 262144)
+- High-quality sound with [FMOD](https://www.fmod.com/studio)*
 - Physics with [Bullet](https://github.com/bulletphysics/bullet3) physics engine*
 - Time-based entities
 - Flexible vehicle system, with support for many vehicle types and configurations
 - Parametric view bobbing, swaying and HUD colours
 
-\*Only partially implemented. FMOD for music, physics only work with specifically sized cubes and map geometry is yet to be loaded for collisions.
+\*Only partially implemented. FMOD works with music and 3D sounds using special entities; the physics system only supports boxes and map collision at the moment, ando only works in singleplayer.
 
 ## **Tools:**
 
 - Bobulator - a GUI tool for making view bob configurations, with a realtime preview (in development)
 - EELman - the EEL editor (EEL stands for Extended Entity Lists) (planned)
-- VHLT-ADM - fork of VHLT v34 that allows for entity boundaries more than 8192 units, and more in the future
+- [VHLT-ADM](https://github.com/Admer456/VHLT-ADM) - fork of VHLT v34 that allows for entity boundaries more than 8192 units, and more in the future
 
+## **Downloads:**
 
-## **Plans:**
-
-- __v0.1__
-  - Vehicle system: seats, cars, boats and a helicopter, all destroyable
-  - Sound system: music playback, a couple of audio entities, and a soundcache implementation
-  - Physics: brush-based physicalised objects, with map collision and player collision
-  - Entities: PostActivate() and some other additional entity methods
-
-- __v0.2__
-  - Vehicle system: airplanes, space ships, submarines, bikes
-  - Sound system: sound-emitting functions on the clientside to call FMOD instead of MSS
-  - SDK: attempt to documentate certain things, and clean up some other things
-  - Utilities: additions to the Vector class, and classes for quaternions and matrices
-
-- __v0.3__
-  - AI: extend abilities of certain NPCs, new AI base class
-  - Computer system: basic terminal with a small set of commands
-  - Entities: Extended Entity Lists, which will allow for entity I/O, clientside entity spawning, and more
-  - Sound system: most serverside sound emits to call FMOD instead of MSS
-  - Rendering: gait sequences for monsters
+*None at the moment! Please wait until the 20th of August.*  
 
 Half Life 1 SDK LICENSE
 ======================
