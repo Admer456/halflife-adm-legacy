@@ -250,7 +250,7 @@ void SimpleSky::WobbleSkyCube( const float& cycle )
 {
 	float radius = (wobbleScale / skyDistance);
 
-	for ( int i = 0; i < 7; i++ )
+	for ( int i = 0; i < 8; i++ )
 	{
 		float& x = skyCubeVertices[i].x;
 		float& y = skyCubeVertices[i].y;
@@ -266,7 +266,7 @@ void SimpleSky::SqueezeSkyCube( const float& cycle )
 {
 	float radius = wobbleScale / skyDistance;
 
-	for ( int i = 0; i < 7; i++ )
+	for ( int i = 0; i < 8; i++ )
 	{
 		if ( i < 4 )
 		{
