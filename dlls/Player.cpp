@@ -46,6 +46,7 @@ extern DLL_GLOBAL	BOOL	g_fDrawLines;
 int gEvilImpulse101;
 extern DLL_GLOBAL int		g_iSkillLevel, gDisplayTitle;
 
+extern void ServerPlayerJoin( CBasePlayer* player );
 
 BOOL gInitHUD = TRUE;
 
@@ -194,6 +195,19 @@ int gmsgStatusValue = 0;
 int gmsgFSSSound = 0; // FMOD, regular sounds (send a long)
 int gmsgFSSMusic = 0; // FMOD, music files (send a string and a float for volume)
 
+int gmsgSound2DViaString = 0;
+// BYTE - channelNumber
+// STRING - sound path relative to the mod folder e.g. sound/test.wav
+// BYTE - volume
+// BYTE - flags
+// SHORT - entity index of the sound source / owner
+
+int gmsgSound3DViaString = 0;
+
+int gmsgSoundManipulate = 0;
+// BYTE - manipulation type
+// SHORT - entity index of the sound source / owner
+
 int gmsgSky2D = 0; // "SimpleSky"
 // BYTE (sky flags)
 // SHORT * 10 (rotation speed)
@@ -247,6 +261,10 @@ void LinkUserMessages( void )
 
 	gmsgStatusText = REG_USER_MSG( "StatusText", -1 );
 	gmsgStatusValue = REG_USER_MSG( "StatusValue", 3 ); 
+
+	gmsgSound2DViaString = REG_USER_MSG( "SndP2Str", -1 );
+	gmsgSound3DViaString = REG_USER_MSG( "SndP3Str", -1 );
+	gmsgSoundManipulate  = REG_USER_MSG( "SndManip", 3 );
 
 	gmsgFSSMusic = REG_USER_MSG( "FSSMusic", -1 );
 	gmsgSky2D = REG_USER_MSG( "SSky", -1 );
@@ -4039,6 +4057,8 @@ void CBasePlayer :: UpdateClientData( void )
 			{
 				FireTargets( "game_playerjoin", this, this, USE_TOGGLE, 0 );
 			}
+
+			ServerPlayerJoin( this );
 		}
 
 		FireTargets( "game_playerspawn", this, this, USE_TOGGLE, 0 );

@@ -190,19 +190,13 @@ public:
 	virtual void	SetKeyValueBase		(char szTargetKeyName[64], char szTheValue[64]) { SetKeyValueCustom(szTargetKeyName, szTheValue); }
 	virtual void	SetKeyValueCustom	(char szTargetKeyName[64], char szTheValue[64]) { ALERT(at_error, "No matching KV %s in %s \n", szTargetKeyName, STRING(pev->targetname)); }
 
-	// Fricking hell, FindEntityByBlahBlahBlah works only for CBaseEntities, dangit
-	// These will NOT be able to get set. NO way. Only the player can set their own.
-/*	bool m_KeyButton[3] =
-	{
-		false, false, false
-	}; */
-	// Never mind, turns out I can cast it to CBasePlayer. How silly I am. :3
-
 	virtual int		Save( CSave &save );
 	virtual int		Restore( CRestore &restore );
 	virtual int		ObjectCaps( void ) { return FCAP_ACROSS_TRANSITION; }
 	virtual void	Activate( void ) {}
 	
+	virtual void	OnPlayerJoin( CBasePlayer* player ) {}
+
 	// Setup the object->object collision box (pev->mins / pev->maxs is the object->world collision box)
 	virtual void	SetObjectCollisionBox( void );
 

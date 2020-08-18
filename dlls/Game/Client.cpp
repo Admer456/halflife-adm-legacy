@@ -842,6 +842,34 @@ void ServerActivate( edict_t *pEdictList, int edictCount, int clientMax )
 	LinkUserMessages();
 }
 
+/*
+================================
+	ServerPlayerJoin
+
+	Gets called after a player 
+	joins the server, in order to
+	receive some important user messages
+================================
+*/
+void ServerPlayerJoin( CBasePlayer* player )
+{
+	ALERT( at_console, "ServerPlayerJoin called\n" );
+
+	CBaseEntity* ent;
+
+	for ( int i = 1; i < gpGlobals->maxEntities; i++ )
+	{
+		edict_t* entityDict = g_engfuncs.pfnPEntityOfEntIndex( i );
+		if ( !entityDict )
+			continue;
+
+		ent = static_cast<CBaseEntity*>( entityDict->pvPrivateData );
+		if ( !ent )
+			continue;
+
+		ent->OnPlayerJoin( player );
+	}
+}
 
 /*
 ================
