@@ -489,6 +489,14 @@ CBaseEntity * EHANDLE :: operator -> ()
 	return (CBaseEntity *)GET_PRIVATE( Get( ) ); 
 }
 
+void CBaseEntity::SetNetworkPlowMode( ForceNetworkPlowTypes mode )
+{
+	// This is a super megahack
+	// We are basically packing a 3-bit integer into some unused space in pev->flags
+	// There are a handful of other spots inside entvars_t that would make
+	// good candidates for this kinda stuff
+	pev->flags |= mode << 17;
+}
 
 // give health
 int CBaseEntity :: TakeHealth( float flHealth, int bitsDamageType )

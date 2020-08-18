@@ -1234,39 +1234,58 @@ int AddToFullPack( struct entity_state_s *state, int e, edict_t *ent, edict_t *h
 {
 	int					i;
 
-	// don't send if flagged for NODRAW and it's not the host getting the message
-	if ( ( ent->v.effects & EF_NODRAW ) &&
-		 ( ent != host ) )
-		return 0;
+	// The operations here basically mean "start seeking after the 17th bit and take the first 3 bits"
+	// So this will "collect" bits 1 << 17, 1 << 18 and 1 << 19, and extract a 3-bit integer out of it
+	unsigned int specialNetworkType = (ent->v.flags >> 17) & 7U;
 
-	// Ignore ents without valid / visible models
-	if ( !ent->v.modelindex || !STRING( ent->v.model ) )
-		return 0;
-
-	// Don't send spectators to other players
-	if ( ( ent->v.flags & FL_SPECTATOR ) && ( ent != host ) )
+	// Added a new flag so we can force transmitting entities over the net
+	// Be careful, might lead to "too many visible entities in packet list"
+	// albeit that is not yet confirmed -Admer
+	if ( specialNetworkType == ForcePlow_DontForce )
 	{
-		return 0;
-	}
+		// don't send if flagged for NODRAW and it's not the host getting the message
+		if ( (ent->v.effects & EF_NODRAW) &&
+			(ent != host) )
+			return 0;
 
-	// Ignore if not the host and not touching a PVS/PAS leaf
-	// If pSet is NULL, then the test will always succeed and the entity will be added to the update
-	if ( ent != host )
-	{
-		if ( !ENGINE_CHECK_VISIBILITY( (const struct edict_s *)ent, pSet ) )
+		// Ignore ents without valid / visible models
+		if ( !ent->v.modelindex || !STRING( ent->v.model ) )
+			return 0;
+
+		// Don't send spectators to other players
+		if ( (ent->v.flags & FL_SPECTATOR) && (ent != host) )
 		{
 			return 0;
 		}
 	}
-
-
-	// Don't send entity to local client if the client says it's predicting the entity itself.
-	if ( ent->v.flags & FL_SKIPLOCALHOST )
+	else
 	{
-		if ( ( hostflags & 1 ) && ( ent->v.owner == host ) )
-			return 0;
+		ALERT( at_console, "This is a special entity! %i\n", ent->serialnumber );
 	}
-	
+
+	if ( specialNetworkType != ForcePlow_ExcludePrediction )
+	{
+		// Don't send entity to local client if the client says it's predicting the entity itself.
+		if ( ent->v.flags & FL_SKIPLOCALHOST )
+		{
+			if ( (hostflags & 1) && (ent->v.owner == host) )
+				return 0;
+		}
+	}
+
+	if ( specialNetworkType != ForcePlow_ExcludePotentialSets )
+	{
+		// Ignore if not the host and not touching a PVS/PAS leaf
+		// If pSet is NULL, then the test will always succeed and the entity will be added to the update
+		if ( ent != host )
+		{
+			if ( !ENGINE_CHECK_VISIBILITY( (const struct edict_s *)ent, pSet ) )
+			{
+				return 0;
+			}
+		}
+	}
+
 	if ( host->v.groupinfo )
 	{
 		UTIL_SetGroupTrace( host->v.groupinfo, GROUP_OP_AND );

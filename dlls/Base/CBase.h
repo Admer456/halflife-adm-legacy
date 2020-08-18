@@ -42,6 +42,26 @@ CBaseEntity
 // TODO: This will ignore transition volumes (trigger_transition), but not the PVS!!!
 #define		FCAP_FORCE_TRANSITION		0x00000080		// ALWAYS goes across transitions
 
+// Special network flags for entities that absolutely have to
+// be transferred to the client(s)
+enum ForceNetworkPlowTypes : uint8_t
+{
+	// Entity won't be transmitted if:
+	// - it has no model
+	// - has EF_NODRAW
+	// - is a spectator
+	ForcePlow_DontForce = 0U,
+
+	// Entity will always be transmitted over the network, useful for camera viewpoints etc.
+	ForcePlow_Everything,			
+
+	// Entity won't be transmitted if not in PAS & PVS
+	ForcePlow_ExcludePotentialSets, 
+
+	// Entity won't be transmitted if it's getting predicted (FL_SKIPLOCALHOST)
+	ForcePlow_ExcludePrediction,
+};
+
 #include "archtypes.h"     // DAL
 #include "Base/SaveRestore.h"
 #include "AI/Schedule.h"
@@ -195,7 +215,13 @@ public:
 	virtual int		ObjectCaps( void ) { return FCAP_ACROSS_TRANSITION; }
 	virtual void	Activate( void ) {}
 	
+	// Called every time a player joins, useful for sending user messages
+	// to initialise some entity-specific things such as sending a string table or whatever
 	virtual void	OnPlayerJoin( CBasePlayer* player ) {}
+
+	// Sets the network "plow" mode, which (if greater than DontForce) will
+	// force the entity to transmit itself to the client anyway.
+	virtual void	SetNetworkPlowMode( ForceNetworkPlowTypes mode );
 
 	// Setup the object->object collision box (pev->mins / pev->maxs is the object->world collision box)
 	virtual void	SetObjectCollisionBox( void );

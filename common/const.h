@@ -39,7 +39,8 @@
 #define FL_GRAPHED				(1<<16) // worldgraph has this ent listed as something that blocks a connection
 
 // UNDONE: Do we need these?
-#define FL_IMMUNE_WATER			(1<<17)
+// Admer: You probably don't, BUT I SURE DO 
+#define FL_IMMUNE_WATER			(1<<17) // These 3 flags will be used for special networking stuff -Admer
 #define	FL_IMMUNE_SLIME			(1<<18)
 #define FL_IMMUNE_LAVA			(1<<19)
 
@@ -53,7 +54,6 @@
 #define FL_CUSTOMENTITY			(1<<29)	// This is a custom entity
 #define FL_KILLME				(1<<30)	// This entity is marked for death -- This allows the engine to kill ents at the appropriate time
 #define FL_DORMANT				(1<<31)	// Entity is dormant, no updates to client
-
 
 // Goes into globalvars_t.trace_flags
 #define FTRACE_SIMPLEBOX		(1<<0)	// Traceline with a simple box

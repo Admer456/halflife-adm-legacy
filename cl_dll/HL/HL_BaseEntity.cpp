@@ -62,6 +62,7 @@ void CBaseEntity :: GetKeyValue(char &szTheValue, char szTargetKey[64]) { }
 //void CBaseEntity :: GetKeyValueBase(char &szTheValue, char szTargetKey[64]) { }
 void CBaseEntity :: SetKeyValue(char szTargetKeyName[64], char szTheValue[64]) { }
 //void CBaseEntity :: SetKeyValueBase(char szTargetKeyName[64], char szTheValue[64]) { }
+void CBaseEntity::SetNetworkPlowMode( ForceNetworkPlowTypes type ) { }
 
 // CBaseDelay Stubs
 void CBaseDelay :: KeyValue( struct KeyValueData_s * ) { }
