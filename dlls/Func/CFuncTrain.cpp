@@ -5,6 +5,8 @@
 #include "CFuncTrain.h"
 #include "Path/CPathCorner.h"
 
+#define SF_TRAIN_ONOFF 16
+
 LINK_ENTITY_TO_CLASS( func_train, CFuncTrain );
 TYPEDESCRIPTION	CFuncTrain::m_SaveData[] =
 {
@@ -27,7 +29,6 @@ void CFuncTrain::KeyValue( KeyValueData *pkvd )
 }
 
 void CFuncTrain::Blocked( CBaseEntity *pOther )
-
 {
 	if ( gpGlobals->time < m_flActivateFinished )
 		return;
@@ -39,22 +40,54 @@ void CFuncTrain::Blocked( CBaseEntity *pOther )
 
 void CFuncTrain::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value )
 {
-	if ( pev->spawnflags & SF_TRAIN_WAIT_RETRIGGER )
+	if ( pev->spawnflags & SF_TRAIN_ONOFF )
 	{
-		// Move toward my target
-		pev->spawnflags &= ~SF_TRAIN_WAIT_RETRIGGER;
-		Next();
+		isMoving = pev->velocity != g_vecZero;
+
+		// Force off
+		if ( useType == USE_OFF && isMoving )
+		{
+			pev->spawnflags |= SF_TRAIN_WAIT_RETRIGGER;
+			// Pop back to last target if it's available
+			if ( pev->enemy )
+				pev->target = pev->enemy->v.targetname;
+			pev->nextthink = 0;
+			pev->velocity = g_vecZero;
+			if ( pev->noiseStopMoving )
+				EMIT_SOUND( ENT( pev ), CHAN_VOICE, (char*)STRING( pev->noiseStopMoving ), m_volume, ATTN_NORM );
+			if ( pev->noiseMovement )
+				STOP_SOUND( ENT( pev ), CHAN_STATIC, STRING( pev->noiseMovement ) );
+		}
+
+		// Force on
+		else if ( useType == USE_ON && !isMoving )
+		{
+			// Move toward my target
+			pev->spawnflags &= ~SF_TRAIN_WAIT_RETRIGGER;
+			Next();
+		}
 	}
+
+	// Toggle - vanilla HL behaviour
 	else
 	{
-		pev->spawnflags |= SF_TRAIN_WAIT_RETRIGGER;
-		// Pop back to last target if it's available
-		if ( pev->enemy )
-			pev->target = pev->enemy->v.targetname;
-		pev->nextthink = 0;
-		pev->velocity = g_vecZero;
-		if ( pev->noiseStopMoving )
-			EMIT_SOUND( ENT( pev ), CHAN_VOICE, (char*)STRING( pev->noiseStopMoving ), m_volume, ATTN_NORM );
+		if ( pev->spawnflags & SF_TRAIN_WAIT_RETRIGGER )
+		{
+			// Move toward my target
+			pev->spawnflags &= ~SF_TRAIN_WAIT_RETRIGGER;
+			Next();
+		}
+		else
+		{
+			pev->spawnflags |= SF_TRAIN_WAIT_RETRIGGER;
+			// Pop back to last target if it's available
+			if ( pev->enemy )
+				pev->target = pev->enemy->v.targetname;
+			pev->nextthink = 0;
+			pev->velocity = g_vecZero;
+			if ( pev->noiseStopMoving )
+				EMIT_SOUND( ENT( pev ), CHAN_VOICE, (char*)STRING( pev->noiseStopMoving ), m_volume, ATTN_NORM );
+		}
 	}
 }
 

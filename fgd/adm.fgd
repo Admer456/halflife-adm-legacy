@@ -521,44 +521,48 @@
 // Entities
 //
 
-// =================						   |----------------|							================ //
+// ==================						   |----------------|							================ //
 //					|						   |				|							|				 //
-//					|==========================| AdmSrc entities|===========================|				 //
+//					|==========================|  ADM entities  |===========================|				 //
 //					|						   | 				|							|				 //
-// =================						   |----------------|							================ //
+// ==================						   |----------------|							================ //
 
 // ========================================================================================================= //
 //		AUDIO_ ENTITIIES
 // ========================================================================================================= //
 
-@PointClass base(Targetname) size(-4 -4 -4, 4 4 4) color(128 128 255) = audio_music : "Audio - music"
+@BaseClass base(Targetname) = FMODAudio_SoundGeneric
 [
-	m_iszSong(string) : "Song name"
+	soundName(sound) : "Sound path"
+	volume(string) : "Volume (0 to 1)" : "0.9"
+	channelNumber(choices) : "Channel" : "Default" =
+	[
+		0: "Default"
+		1: "Weapons"
+		2: "Ambience"
+		3: "NPC sounds"
+		4: "Debris"
+		5: "UI"
+		7: "Dialogue"
+	]
 
-//	m_flVolume(string) : "Volume (0-100)" : "100"
-//	spawnflags(flags) = 
-//	[
-//		1: "Dynamic music" : 0
-//		2: "One player only" : 0
-//		4: "Toggled and looped" : 0
-//	]
+	spawnflags(flags) = 
+	[
+		1: "Start silent" : 0	// The sound won't play at map start
+		2: "Force looped" : 0	// The sound will loop - regardless of cue points
+		4: "Toggled" : 0		// The sound is toggled
+	]
 ]
 
-//@PointClass base(Targetname) size(-4 -4 -4, 4 4 4) color(128 128 255) = audio_generic : "Audio - generic sound"
-//[
-//	m_iszSound(string) : "Sound name"
-//	m_flVolume(integer) : "Volume (0-100)" : 80
-//	m_iRadius(integer) : "Sound radius" : 128
-//	m_iType(choices) : "Sound type" : 0 =
-//	[
-//		1: "2D not looped"
-//		2: "2D looped"
-//		3: "3D not looped"
-//		4: "3D looped"
-//	]
-//	m_iLoudness(integer) : "Loudness" : 50
-//	m_iPitch(integer) : "Pitch" : 100
-//]
+@PointClass base(FMODAudio_SoundGeneric) size(-4 -4 -4, 4 4 4) color(128 128 255) = audio_sound2d : "2D sound"
+[
+
+]
+
+@PointClass base(FMODAudio_SoundGeneric) size(-4 -4 -4, 4 4 4) color(128 128 255) = audio_sound3d : "3D sound in space"
+[
+
+]
 
 // ========================================================================================================= //
 //		ENV_ ENTITIIES
@@ -1883,7 +1887,10 @@
 	volume(string) : "Sound Volume 0.0 - 1.0" : "0.85"
 	spawnflags(flags) =
 	[
-		8 : "Not solid" : 0
+		1: "Wait for retrigger" : 0
+		4: "Start on" : 0
+		8: "Not solid" : 0
+		16: "Explicit on/off" : 0
 	]
 	_minlight(string) : "Minimum light level"
 ]

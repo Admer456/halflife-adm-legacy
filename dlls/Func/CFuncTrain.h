@@ -24,4 +24,5 @@ public:
 	entvars_t	*m_pevCurrentTarget;
 	int			m_sounds;
 	BOOL		m_activated;
+	bool		isMoving{ false };
 };
