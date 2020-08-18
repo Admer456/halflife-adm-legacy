@@ -39,6 +39,7 @@ public:
 	void					InitExtension() override;
 	
 	void					Think() override;
+	void					Reset() override;
 
 	void					Render( triangleapi_t* r ); // Called in HUD_DrawTransparentTriangles
 	void					RenderSide( triangleapi_t* r, const int& face );

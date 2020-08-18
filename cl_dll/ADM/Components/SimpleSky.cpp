@@ -7,6 +7,7 @@
 #include "SimpleSky.h"
 
 extern float v_frametime;
+extern vec3_t v_origin;
 
 enum SkyPoints
 {
@@ -121,6 +122,15 @@ void SimpleSky::Think()
 	UpdateSkyCube();
 }
 
+void SimpleSky::Reset()
+{
+	currentRotationAngle = 0;
+	needsUpdate = false;
+	skyName[0] = '\0';
+	skyFlags = SkyFlag_None;
+	skyTextures[0] = nullptr;
+}
+
 void SimpleSky::Render( triangleapi_t* r )
 {
 	if ( skyTextures[0] == nullptr )
@@ -157,10 +167,23 @@ void SimpleSky::RenderRegularSide( triangleapi_t* r, const int& face )
 
 	r->Begin( TRI_QUADS );
 
-	for ( int i = 0; i < 4; i++ )
+	if ( skyFlags & SkyFlag_FollowsPlayerView )
 	{
-		r->TexCoord2f( uvCoords[i][0], uvCoords[i][1] );
-		r->Vertex3fv( skyCubeVertices[indices[i]] * radius );
+		for ( int i = 0; i < 4; i++ )
+		{
+			r->TexCoord2f( uvCoords[i][0], uvCoords[i][1] );
+			r->Vertex3fv( (skyCubeVertices[indices[i]] * radius) + v_origin );
+		}
+
+		gEngfuncs.Con_Printf( "v_origin %f %f %f\n", v_origin.x, v_origin.y, v_origin.z );
+	}
+	else
+	{
+		for ( int i = 0; i < 4; i++ )
+		{
+			r->TexCoord2f( uvCoords[i][0], uvCoords[i][1] );
+			r->Vertex3fv( skyCubeVertices[indices[i]] * radius );
+		}
 	}
 
 	r->End();
@@ -169,9 +192,9 @@ void SimpleSky::RenderRegularSide( triangleapi_t* r, const int& face )
 void SimpleSky::RenderRotatedSide( triangleapi_t* r, const int& face )
 {
 	int* indices = skyCubeFaces[face];
+	bool isRelativeToView = skyFlags & SkyFlag_FollowsPlayerView;
 
 	r->SpriteTexture( skyTextures[face], 0 );
-
 	r->Begin( TRI_QUADS );
 
 	for ( int i = 0; i < 4; i++ )
@@ -188,6 +211,10 @@ void SimpleSky::RenderRotatedSide( triangleapi_t* r, const int& face )
 		float z = (pitch > 0) ? radius : -radius; // It's usually cos(pitch), but we're only rotating the yaw
 		z /= sqrt( 2.0f );
 		z *= 0.70710678118f;
+
+		x += isRelativeToView * v_origin.x;
+		y += isRelativeToView * v_origin.y;
+		z += isRelativeToView * v_origin.z;
 
 		r->TexCoord2f( uvCoords[i][0], uvCoords[i][1] );
 		r->Vertex3f( x, y, z );
