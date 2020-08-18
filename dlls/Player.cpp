@@ -203,6 +203,14 @@ int gmsgSound2DViaString = 0;
 // SHORT - entity index of the sound source / owner
 
 int gmsgSound3DViaString = 0;
+// BYTE - channelNumber
+// STRING - sound path relative to the mod folder e.g. sound/test.wav
+// BYTE - volume
+// BYTE - flags
+// SHORT - entity index of the sound source / owner
+// LONG - coordinate X
+// LONG - coordinate Y
+// LONG - coordinate Z
 
 int gmsgSoundManipulate = 0;
 // BYTE - manipulation type

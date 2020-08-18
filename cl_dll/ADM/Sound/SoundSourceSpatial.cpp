@@ -9,8 +9,8 @@
 
 namespace AdmSound
 {
-	SoundSourceSpatial::SoundSourceSpatial( const char* soundPath, const Vector& soundPosition, const Vector& soundVelocity )
-		: SoundSource( soundPath )
+	SoundSourceSpatial::SoundSourceSpatial( const char* soundPath, uint16_t soundFlags, const Vector& soundPosition, const Vector& soundVelocity )
+		: SoundSource( soundPath, soundFlags )
 	{
 		// Initialise 3D sound properties
 		SetPosition( soundPosition );

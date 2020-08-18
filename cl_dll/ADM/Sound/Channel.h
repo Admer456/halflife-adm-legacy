@@ -3,6 +3,7 @@
 namespace AdmSound
 {
 	class ChannelGroup;
+	class ISoundSource;
 	
 	class Channel
 	{
@@ -41,35 +42,12 @@ namespace AdmSound
 		ChannelGroup() = default;
 		~ChannelGroup() = default;
 	
-		void AddChannel( Channel* channel )
-		{
-			auto FMODChannel = channel->GetFMODChannel();
-			FMODChannel->setChannelGroup( group );
-		}
-
-		void AddGroup( ChannelGroup* channelGroup )
-		{
-			group->addGroup( channelGroup->GetFMODGroup() );
-		}
-
-		void SetPaused( bool paused )
-		{
-			group->setPaused( paused );
-		}
-
-		void SetVolume( float volume )
-		{
-			group->setVolume( volume );
-		}
-
-		int GetNumChannels()
-		{
-			int number = 0;
-			
-			group->getNumChannels( &number );
-			
-			return number;
-		}
+		void AddChannel( Channel* channel );
+		void AddSoundSource( ISoundSource* soundSource );
+		void AddGroup( ChannelGroup* channelGroup );
+		void SetPaused( bool paused );
+		void SetVolume( float volume );
+		int GetNumChannels();
 
 		FMOD::ChannelGroup* GetFMODGroup() { return group; }
 

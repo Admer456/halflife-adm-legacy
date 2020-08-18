@@ -6,6 +6,8 @@
 #include "AudioShared.h"
 #include "AudioSound2D.h"
 
+LINK_ENTITY_TO_CLASS( audio_sound2d, AudioSound2D );
+
 void AudioSound2D::Spawn()
 {
 	ALERT( at_console, "AudioSound2D::Spawn\n" );
@@ -13,16 +15,17 @@ void AudioSound2D::Spawn()
 
 void AudioSound2D::OnPlayerJoin( CBasePlayer* player )
 {
-	ALERT( at_console, "AudioSound2d::OnPlayerJoin\n" );
+	ALERT( at_console, "AudioSound2D::OnPlayerJoin\n" );
 
 	CBaseEntity::OnPlayerJoin( player );
 
 	MESSAGE_BEGIN( MSG_ONE, gmsgSound2DViaString, pev->origin, player->pev );
 	
 	WRITE_BYTE( channelNumber );
-	WRITE_BYTE( volume * 255 );
-	WRITE_SHORT( entindex() );
 	WRITE_STRING( STRING( soundName ) );
+	WRITE_BYTE( volume * 255 );
+	WRITE_BYTE( pev->spawnflags );
+	WRITE_SHORT( entindex() );
 	
 	MESSAGE_END();
 }

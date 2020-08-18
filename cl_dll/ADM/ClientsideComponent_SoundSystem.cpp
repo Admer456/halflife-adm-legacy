@@ -10,7 +10,7 @@
 #include "SDL2/SDL.h"
 
 #include "Sound/SoundSource.h"
-#include "Sound/SoundSystemCore.h"
+#include "Sound/SoundSourceSpatial.h"
 
 #include "ADM/System/SDLWrapper.h"
 
@@ -20,6 +20,13 @@ void FMODTest()
 {
 	g_SoundSystem->PlaySound( "adm/sound/fmodtest.mp3", Channel_Music );
 }
+
+DECLARE_MESSAGE( m_clFMOD, SndP2Str );
+DECLARE_MESSAGE( m_clFMOD, SndP3Str );
+DECLARE_MESSAGE( m_clFMOD, SndP2Num );
+DECLARE_MESSAGE( m_clFMOD, SndP3Num );
+DECLARE_MESSAGE( m_clFMOD, SndCStr );
+DECLARE_MESSAGE( m_clFMOD, SndManip );
 
 /*
 =======================================================
@@ -38,6 +45,13 @@ void CClientFMOD::InitExtension()
 	soundSystem->LoadSound( BaseSound( "adm/sound/fmodtest.mp3" ) );
 
 	gEngfuncs.pfnAddCommand( "sound_fmod_test", &FMODTest );
+
+	HOOK_MESSAGE( SndP2Str );
+	HOOK_MESSAGE( SndP3Str );
+	HOOK_MESSAGE( SndP2Num );
+	HOOK_MESSAGE( SndP3Num );
+	HOOK_MESSAGE( SndCStr );
+	HOOK_MESSAGE( SndManip );
 }
 
 /*
@@ -78,7 +92,7 @@ int CClientFMOD::MsgFunc_SndP2Str( const char* pszName, int iSize, void* pbuf )
 
 	UTIL_GetGameDir( gameDir, 32 );
 
-	sprintf( fullRelativePath, "%s/%s", gameDir, fileName );
+	sprintf( fullRelativePath, "%s/sound/%s", gameDir, fileName );
 
 	// Allocate a new sound source - will be automatically
 	// added to the global sound system and tracked by it
@@ -90,19 +104,38 @@ int CClientFMOD::MsgFunc_SndP2Str( const char* pszName, int iSize, void* pbuf )
 
 int CClientFMOD::MsgFunc_SndP3Str( const char* pszName, int iSize, void* pbuf )
 {
+	char fullRelativePath[260];
+	char gameDir[32];
+
+	ChannelType channelNumber;
+	char* fileName = nullptr;
+	float volume;
+	uint32_t flags;
+	uint16_t entityIndex;
+	Vector position;
+	Vector velocity( 0, 0, 0 );
+
+	SoundSourceSpatial* soundSource = nullptr;
+
 	BEGIN_READ( pbuf, iSize );
 
-	Vector position;
+	channelNumber = static_cast<ChannelType>(READ_BYTE());
+	fileName = READ_STRING();
+	volume = READ_BYTE() / 255.f;
+	flags = READ_BYTE();
+	entityIndex = READ_SHORT();
+	position.x = READ_LONG();
+	position.y = READ_LONG();
+	position.z = READ_LONG();
 
-	position.x = READ_COORD();
-	position.y = READ_COORD();
-	position.z = READ_COORD();
+	UTIL_GetGameDir( gameDir, 32 );
 
-	ChannelType channelNumber = static_cast<ChannelType>( READ_BYTE() );
+	sprintf( fullRelativePath, "%s/sound/%s", gameDir, fileName );
 
-	char* fileName = READ_STRING();
-
-	g_SoundSystem->PlaySound( fileName, channelNumber );
+	// Allocate a new sound source - will be automatically
+	// added to the global sound system and tracked by it
+	soundSource = new SoundSourceSpatial( fileName, flags, position, velocity );
+	soundSource->entityOwner = entityIndex;
 
 	return 1;
 }

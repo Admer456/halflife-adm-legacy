@@ -41,7 +41,7 @@ SoundSource::SoundSource( const char* soundPath, unsigned int soundFlags, unsign
 	// Set it to an appropriate channel group
 	if ( channelType )
 	{
-
+		g_SoundSystem->AddSoundSourceToChannelGroup( this, channelType );
 	}
 }
 
@@ -54,6 +54,7 @@ void SoundSource::Play( bool fromStart )
 	if ( fromStart )
 	{
 		channel->setPosition( 0, FMOD_TIMEUNIT_MS );
+		system->playSound( *sound, nullptr, false, &channel );
 	}
 
 	// Get the time when we started playin' this

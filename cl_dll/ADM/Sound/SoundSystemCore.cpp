@@ -219,6 +219,21 @@ void SoundSystem::RegisterSound( ISoundSource* soundSource )
 
 /*
 =======================================================
+	SoundSystem::AddSoundSourceToChannelGroup
+	Assigns the channel of a sound source to a certain channel group
+	e.g. some debris sound source will go into the Debris channel group
+
+	This is typically called by sound source constructors,
+	there is no need to call it by yourself
+=======================================================
+*/
+void SoundSystem::AddSoundSourceToChannelGroup( ISoundSource* soundSource, uint16_t channelType )
+{
+	channels[channelType].AddSoundSource( soundSource );
+}
+
+/*
+=======================================================
 	SoundSystem::SendSoundEvent
 	Finds a sound source that came from a certain 
 	entity, and sends an event to it

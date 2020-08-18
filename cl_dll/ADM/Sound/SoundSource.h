@@ -29,6 +29,8 @@ namespace AdmSound
 
 		virtual int		GetOwnerIndex() = 0;
 		virtual void	ProcessEvent( uint16_t eventType ) = 0;
+
+		virtual FMOD::Channel* GetChannel() = 0;
 	};
 
 	class SoundSource : public ISoundSource
@@ -48,6 +50,8 @@ namespace AdmSound
 		int				GetOwnerIndex() override { return entityOwner; }
 		void			ProcessEvent( uint16_t eventType ) override;
 		
+		FMOD::Channel*	GetChannel() override { return channel; }
+
 		bool			GetLooped();
 		void			SetLooped( bool loop );
 

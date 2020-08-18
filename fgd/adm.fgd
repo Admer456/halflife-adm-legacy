@@ -561,7 +561,9 @@
 
 @PointClass base(FMODAudio_SoundGeneric) size(-4 -4 -4, 4 4 4) color(128 128 255) = audio_sound3d : "3D sound in space"
 [
-
+	// Entirely optional, but if specified, it'll play the sound
+	// at that very location instead of emitting it from this entity's origin
+	customSoundLocation(string) : "Custom sound location"
 ]
 
 // ========================================================================================================= //

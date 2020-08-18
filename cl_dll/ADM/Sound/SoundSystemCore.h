@@ -91,8 +91,13 @@ namespace AdmSound
 		// Retrieves local client time in seconds
 		float			GetTime();
 
-		// Utility functions 
+		// Utility functions
+		// Registers a sound in the sound system, so it can keep track of it
 		void			RegisterSound( ISoundSource* soundSource );
+
+		// Assigns the channel of a sound source to a certain channel group
+		// e.g. some debris sound source will go into the Debris channel group
+		void			AddSoundSourceToChannelGroup( ISoundSource* soundSource, uint16_t channelType );
 
 		// Sends a sound event eventType to a specific sound owned by entIndex
 		void			SendSoundEvent( uint16_t entIndex, uint16_t eventType );
