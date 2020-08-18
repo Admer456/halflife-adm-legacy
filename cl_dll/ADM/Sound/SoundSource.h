@@ -11,12 +11,7 @@
 */
 namespace AdmSound
 {
-	enum class SoundState
-	{
-		Stopped,
-		Paused,
-		Playing
-	};
+	#include "ADM/Audio/AudioShared.h"
 
 	class ISoundSource
 	{
@@ -31,12 +26,15 @@ namespace AdmSound
 	
 		virtual int		GetSoundFlags() = 0;
 		virtual void	SetSoundFlags( const int& flags ) = 0;
+
+		virtual int		GetOwnerIndex() = 0;
+		virtual void	ProcessEvent( uint16_t eventType ) = 0;
 	};
 
 	class SoundSource : public ISoundSource
 	{
 	public:
-		SoundSource( const char* soundPath );
+		SoundSource( const char* soundPath, unsigned int soundFlags = 0, unsigned int channelType = 0 );
 		virtual	~SoundSource() = default;
 
 		virtual void	Play( bool fromStart = false ) override;
@@ -47,6 +45,12 @@ namespace AdmSound
 		int				GetSoundFlags() override;
 		void			SetSoundFlags( const int& flags ) override;
 
+		int				GetOwnerIndex() override { return entityOwner; }
+		void			ProcessEvent( uint16_t eventType ) override;
+		
+		bool			GetLooped();
+		void			SetLooped( bool loop );
+
 		unsigned short	entityOwner{ 1 << 15 }; // Meant to be used for entity tracking; 1 << 15 means no owner
 
 	protected:
@@ -55,6 +59,7 @@ namespace AdmSound
 		BaseSound*		sound{ nullptr };
 		SoundState		state;
 
+		unsigned int	flags{ 0 };
 		float			soundDuration{ -1.0f };
 		float			startedPlaying{ -1.0f };
 	};

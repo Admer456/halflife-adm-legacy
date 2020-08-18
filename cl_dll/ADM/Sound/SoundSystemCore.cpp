@@ -188,9 +188,55 @@ void SoundSystem::Update( bool paused, bool windowMinimised )
 	master->SetVolume( volume );
 }
 
+/*
+=======================================================
+	SoundSystem::GetTime
+	Retrieves the current time
+=======================================================
+*/
 float SoundSystem::GetTime()
 {
 	return gEngfuncs.GetClientTime();
+}
+
+/*
+=======================================================
+	SoundSystem::RegisterSound
+	Adds a sound source to the sound source array
+	so they can be updated continuously
+=======================================================
+*/
+void SoundSystem::RegisterSound( ISoundSource* soundSource )
+{
+	for ( auto& source : soundSources )
+	{
+		if ( source == nullptr )
+		{
+			source = soundSource;
+		}
+	}
+}
+
+/*
+=======================================================
+	SoundSystem::SendSoundEvent
+	Finds a sound source that came from a certain 
+	entity, and sends an event to it
+=======================================================
+*/
+void SoundSystem::SendSoundEvent( uint16_t entIndex, uint16_t eventType )
+{
+	for ( auto& source : soundSources )
+	{
+		if ( source == nullptr )
+			continue;
+
+		if ( source->GetOwnerIndex() == entIndex )
+		{
+			source->ProcessEvent( eventType );
+			break;
+		}
+	}
 }
 
 /*

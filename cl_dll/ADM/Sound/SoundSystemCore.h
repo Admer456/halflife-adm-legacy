@@ -82,37 +82,58 @@ namespace AdmSound
 		void			Init();
 		void			Shutdown();
 
+		// Initialises all channel groups
 		void			SetupChannelGroups();
 
+		// Updates all the active sounds and deletes garbage (inactive sounds with no owners)
 		void			Update( bool paused = false, bool windowMinimised = false );
+
+		// Retrieves local client time in seconds
 		float			GetTime();
 
+		// Utility functions 
+		void			RegisterSound( ISoundSource* soundSource );
+
+		// Sends a sound event eventType to a specific sound owned by entIndex
+		void			SendSoundEvent( uint16_t entIndex, uint16_t eventType );
+	
+		// Loads the sound from the HDD
 		void			LoadSound( BaseSound& sound, int flags = FMOD_DEFAULT );
 
+		// Utility functions to get individual sounds
 		BaseSound*		GetSound( const char* soundPath );
 		BaseSound*		GetSound( unsigned short soundID );
 
+		// Low-level functions that will play a sound in the default channel
+		// Do not use
 		void			PlaySound( const char* soundPath, ChannelType channel );
 		void			PlaySound( unsigned short soundID, ChannelType channel );
 		void			PlaySound( BaseSound& sound, ChannelType channel );
 
-		void			RegisterSound( ISoundSource* soundSource );
-
+		// Prints the current number of channels
 		void			PrintNumChannels();
 
 		FMOD::System*	GetFMODSystem() { return system; }
 
+		// Get sound path from a sound ID - generally used for getting sound paths from IDs that the server has sent
 		const char*		PathFromID( unsigned short ID );
+
+		// Get an ID for the given sound path
 		unsigned short	IDFromPath( const char* path );
 
+		// The maximum number of channels = maximum number of sounds playing at once
 		constexpr static int MaxSoundChannels = 128;
 
 	private:
+		// Core system stuff
 		FMOD::System*	system = nullptr;
 		void*			extraDriverData = nullptr;
 
+		// Sound handles - they contain paths an IDs for sounds, not used in other places other than this class
 		std::vector<BaseSound> sounds;
 
+		// Path and ID pairs - when the server builds a list of sound strings and IDs, it sends them
+		// to the clients. Then, the server will use those IDs as handles for each sound path
 		std::vector<SoundIDPair> soundIDPairs;
 
 		/*
@@ -122,12 +143,20 @@ namespace AdmSound
 			Voice: NPC dialogue
 		*/
 		ChannelGroup*	master = nullptr;
-		ChannelGroup	channelGroups[4]; // Main channel group categories
 
-		ChannelGroup	channels[Channel_Max]; // Channel groups themselves
-		FMOD::Channel*	defaultChannel = nullptr; // Do not play in this channel, reserved for some testing stuff
+		// Main channel group categories
+		ChannelGroup	channelGroups[4];
 
-		ISoundSource*	soundSources[MaxSoundChannels]; // These are the things from which we'll actually play the sound from
+		// Channel groups themselves
+		ChannelGroup	channels[Channel_Max]; 
+
+		// Do not play in this channel, reserved for some testing stuff
+		FMOD::Channel*	defaultChannel = nullptr;
+
+		// These are the things from which we'll actually play the sound from
+		// BaseSound != SoundSource (!!!)
+		// A sound source does not even refer to a BaseSound, it uses an FMOD sound instead
+		ISoundSource*	soundSources[MaxSoundChannels*2]; 
 
 		//HMODULE			fmodLibrary;
 	};

@@ -31,31 +31,9 @@ namespace AdmSound
 			return path;
 		}
 
-		char*			GetFullPath() 
-		{ 
-			char fullPath[_MAX_PATH];
-			const char* modName = gEngfuncs.pfnGetGameDirectory();
-
-			sprintf( fullPath, "%s/%s", modName, path );
-
-			return fullPath;
-		}
-
-		float			GetSoundDuration() // in seconds
-		{
-			unsigned int durationMilliseconds;
-			sound->getLength( &durationMilliseconds, FMOD_TIMEUNIT_MS );
-
-			return durationMilliseconds / 1000.0f;
-		}
-
-		unsigned int	GetSoundDurationMs() // in milliseconds
-		{
-			unsigned int durationMilliseconds;
-			sound->getLength( &durationMilliseconds, FMOD_TIMEUNIT_MS );
-
-			return durationMilliseconds;
-		}
+		char*			GetFullPath();
+		float			GetSoundDuration(); // in seconds
+		unsigned int	GetSoundDurationMs(); // in milliseconds
 
 	public:
 		operator FMOD::Sound*() const
@@ -71,6 +49,7 @@ namespace AdmSound
 	protected:
 		FMOD::Sound*	sound = nullptr;	// Done by SoundSystem::LoadSound
 		const char*		path = nullptr;
+		char			fullPath[_MAX_PATH];
 		unsigned short	ID;
 	};
 }

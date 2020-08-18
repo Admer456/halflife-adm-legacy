@@ -3,9 +3,12 @@
 #include "Channel.h"
 #include "SoundSource.h"
 
+#include "WRect.h"
+#include "CL_DLL.h"
+
 using namespace AdmSound;
 
-SoundSource::SoundSource( const char* soundPath )
+SoundSource::SoundSource( const char* soundPath, unsigned int soundFlags, unsigned int channelType )
 {
 	// Retrieve the sound we're looking for 
 	sound = g_SoundSystem->GetSound( soundPath );
@@ -13,6 +16,7 @@ SoundSource::SoundSource( const char* soundPath )
 
 	// The sound is stopped at first
 	state = SoundState::Stopped;
+	flags = soundFlags;
 
 	soundDuration = sound->GetSoundDuration();
 
@@ -21,6 +25,24 @@ SoundSource::SoundSource( const char* soundPath )
 
 	// Add the sound into the array
 	g_SoundSystem->RegisterSound( this );
+
+	// If it does not start silent, play it straight away
+	if ( !(soundFlags & SoundSource_StartSilent) )
+	{
+		Play( true );
+	}
+
+	// If force-looped, then make it looped regardless of cue points
+	if ( soundFlags & SoundSource_ForceLooped )
+	{
+		SetLooped( true );
+	}
+
+	// Set it to an appropriate channel group
+	if ( channelType )
+	{
+
+	}
 }
 
 void SoundSource::Play( bool fromStart )
@@ -76,9 +98,52 @@ bool SoundSource::IsPlaying()
 	return isPlaying;
 }
 
+bool SoundSource::GetLooped()
+{
+	FMOD_MODE mode = 0;
+	channel->getMode( &mode );
+	
+	bool isNotLooped = mode & FMOD_LOOP_OFF;
+	return !isNotLooped;
+}
+
+void SoundSource::SetLooped( bool loop )
+{
+	channel->setMode( loop ? FMOD_LOOP_NORMAL : FMOD_LOOP_OFF );
+}
+
 int SoundSource::GetSoundFlags()
 {
-	return 0;
+	return flags;
+}
+
+void SoundSource::ProcessEvent( uint16_t eventType )
+{
+	switch ( eventType )
+	{
+	case Sound_Play:
+		Play( true );
+		break;
+
+	case Sound_Pause:
+		Pause();
+		break;
+
+	case Sound_Unpause:
+		Play( false );
+		break;
+
+	case Sound_Stop:
+		Pause( true );
+		break;
+
+	case Sound_FadeVolume:
+	case Sound_ChangeVolume:
+	case Sound_ChangeRadius:
+	case Sound_ChangePosition:
+		gEngfuncs.Con_Printf( "NOTE: This sound event type is not yet implemented!\n" );
+		break;
+	}
 }
 
 void SoundSource::SetSoundFlags( const int& flags )

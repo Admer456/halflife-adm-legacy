@@ -607,6 +607,12 @@ public:
 	// - Filename (string)
 	// - ID (short)
 	int				MsgFunc_SndCStr( const char* pszName, int iSize, void* pbuf );
+
+	// SndManip -> Sound manipulation
+	// - Manipulation mode (byte)
+	// - entity ID (short)
+	int				MsgFunc_SndManip( const char* pszName, int iSize, void* pbuf );
+
 };
 
 class CClientPunch : public CBaseClientExtension

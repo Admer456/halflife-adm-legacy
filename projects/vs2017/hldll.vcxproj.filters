@@ -93,6 +93,9 @@
     <Filter Include="Sources\ADM\Env">
       <UniqueIdentifier>{b6147aab-3b0f-46ae-a2ec-35044da66591}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\ADM\Audio">
+      <UniqueIdentifier>{9d7ef8e8-05e9-4401-8340-c205e72f725e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\game_shared\voice_gamemgr.cpp">
@@ -626,6 +629,15 @@
     <ClCompile Include="..\..\dlls\ADM\Env\EnvSky2D.cpp">
       <Filter>Sources\ADM\Env</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\dlls\ADM\Audio\AudioMusic.cpp">
+      <Filter>Sources\ADM\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\ADM\Audio\AudioSound2D.cpp">
+      <Filter>Sources\ADM\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dlls\ADM\Audio\AudioSound3D.cpp">
+      <Filter>Sources\ADM\Audio</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\engine\eiface.h">
@@ -1008,6 +1020,18 @@
     </ClInclude>
     <ClInclude Include="..\..\dlls\ADM\Env\EnvSky2D.h">
       <Filter>Sources\ADM\Env</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dlls\ADM\Audio\AudioSound2D.h">
+      <Filter>Sources\ADM\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dlls\ADM\Audio\AudioSound3D.h">
+      <Filter>Sources\ADM\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dlls\ADM\Audio\AudioMusic.h">
+      <Filter>Sources\ADM\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dlls\ADM\Audio\AudioShared.h">
+      <Filter>Sources\ADM\Audio</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
