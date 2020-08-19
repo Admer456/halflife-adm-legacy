@@ -1246,11 +1246,15 @@ int AddToFullPack( struct entity_state_s *state, int e, edict_t *ent, edict_t *h
 		// don't send if flagged for NODRAW and it's not the host getting the message
 		if ( (ent->v.effects & EF_NODRAW) &&
 			(ent != host) )
+		{
 			return 0;
+		}
 
 		// Ignore ents without valid / visible models
 		if ( !ent->v.modelindex || !STRING( ent->v.model ) )
+		{
 			return 0;
+		}
 
 		// Don't send spectators to other players
 		if ( (ent->v.flags & FL_SPECTATOR) && (ent != host) )

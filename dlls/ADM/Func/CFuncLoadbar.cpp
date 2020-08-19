@@ -82,7 +82,10 @@ void CFuncLoadbar::Use( CBaseEntity *pActivator, CBaseEntity *pOther, USE_TYPE u
 	m_iCompletion += 5;
 
 	if ( m_iCompletion > 255 )
+	{
 		m_iCompletion -= 5;
+		return;
+	}
 
 	if ( pev->spawnflags & SF_LOADMOVE )
 	{

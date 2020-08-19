@@ -409,8 +409,13 @@
 	spawnflags(flags) =
 	[
 		1 : "Active" : 0
+		2 : "Players" : 0
+		4 : "Humans" : 0
+		8 : "Aliens" : 0
 		16: "Only Direct" : 0
 		32: "Controllable" : 0
+		64: "Without tankcontrols" : 0
+		32768: "Sound on" : 0
 	]
 
 	// Mainly for use with 1009 team settings (game_team_master)
@@ -629,6 +634,65 @@
 ]
 
 // ========================================================================================================= //
+//		FILTER_ ENTITIIES
+// ========================================================================================================= //
+
+@PointClass base(Targetname, Target) = filter_date_ymd : "Date-dependent trigger (year-month-day)"
+[
+	year(choices) : "Year" : 0 =
+	[
+		0: "Any year"
+		1: "(type value here)"
+	]
+
+	month(choices) : "Month" : 0 =
+	[
+		0: "Any month"
+		1: "January"
+		2: "February"
+		3: "March"
+		4: "April"
+		5: "May"
+		6: "June"
+		7: "July"
+		8: "August"
+		9: "September"
+		10: "October"
+		11: "November"
+		12: "December"
+	]
+
+	day(choices) : "Day" : 0 =
+	[
+		0: "Any day"
+		1: "(type value here)"
+	]
+]
+
+@PointClass base(Targetname, Target) = filter_date_hms : "Time-dependent trigger (hour-minute-second)"
+[
+	hour(integer) : "Hour (0-23)"
+	minute(integer) : "Minute (0-59)"
+	second(integer) : "Second (0-60)"
+	_t_1(string) : "Set to -1 for any time!"
+]
+
+@PointClass base(Targetname, Target) = filter_difficulty : "Difficulty-dependent trigger"
+[
+	skill(choices) : "Skill level" : 1 =
+	[
+		1: "Easy"
+		2: "Medium"
+		3: "Hard"
+		4: "NOT Easy"
+		5: "NOT Medium"
+		6: "NOT Hard"
+	]
+
+	killtarget(target_destination) : "Kill target"
+]
+
+// ========================================================================================================= //
 //		FUNC_ ENTITIIES
 // ========================================================================================================= //
 
@@ -694,79 +758,6 @@
 //		TRIGGER_ ENTITIIES
 // ========================================================================================================= //
 
-@PointClass base(Targetname, Target) = trigger_date : "Date-dependent trigger"
-[
-	year(choices) : "Year" : 0 =
-	[
-		0: "Any year"
-		1: "(type value here)"
-	]
-
-	month(choices) : "Month" : 0 =
-	[
-		0: "Any month"
-		1: "January"
-		2: "February"
-		3: "March"
-		4: "April"
-		5: "May"
-		6: "June"
-		7: "July"
-		8: "August"
-		9: "September"
-		10: "October"
-		11: "November"
-		12: "December"
-	]
-
-	day(choices) : "Day" : 0 =
-	[
-		0: "Any day"
-		1: "(type value here)"
-	]
-]
-
-// Even if a value is set, _t_tip1 will get stripped by the compilers
-// VHLT-ADM will remove any keyvalues in this format: _x_,
-// where 'x' can be any character.
-
-// The difference between these characters, e.g. _c_ and _t_,
-// means that _c_ is like a comment, _t_ is like a tip.
-
-// It is up to the devs of a map editor to implement this kind of
-// functionality to utilise tips, comments and whatnot.
-// So, one day, perhaps we'll have a fork of TrenchBroom with full GoldSrc
-// support, as well as support for this type of keyavlues.
-
-// Example usage:
-// iBeeps(integer) : "Number of beeps" : 1
-// _c1_iBeeps(string) : "This keyvalue controls how many times" 
-// _c2_iBeeps(string) : "the entity will emit beep sounds when triggered"
-
-@PointClass base(Targetname, Target) = trigger_date2 : "Time-dependent trigger"
-[
-	hour(integer) : "Hour (0-23)"
-	minute(integer) : "Minute (0-59)"
-	second(integer) : "Second (0-60)"
-	_t_1(string) : "Set to -1 for any time!"
-]
-
-@PointClass base(Targetname, Target) = trigger_difficulty : "Difficulty-dependent trigger"
-[
-	skill(choices) : "Skill level" : 1 =
-	[
-		1: "Easy"
-		2: "Medium"
-		3: "Hard"
-		4: "NOT Easy"
-		5: "NOT Medium"
-		6: "NOT Hard"
-	]
-
-	killtarget(target_destination) : "Kill target"
-
-]
-
 @PointClass base(Targetname, Target) = trigger_timer : "Triggers every X seconds"
 [
 	delay(string) : "Delay Min" : "1"
@@ -778,7 +769,30 @@
 	]
 ]
 
-@PointClass base(Targetname) = trigger_valueop : "Trigger value operator"
+// ========================================================================================================= //
+//		UTIL_ ENTITIIES
+// ========================================================================================================= //
+
+@PointClass base(Targetname) = util_consoleprinter : "Prints to console"
+[
+	m_strMessage(string) : "Message" : ""
+	m_iPrefix(choices) : "Special message property" : 1 =
+	[
+		0: "NOTE:"
+		1: "No prefix (developer 1)"
+		2: "developer 2 only"
+		3: "WARNING:"
+		4: "ERROR:"
+		5: "Logged to server"
+	]
+]
+
+@PointClass base(Targetname) = util_servercommand : "Sends a command to the server"
+[
+	command(string) : "The command"
+]
+
+@PointClass base(Targetname) = util_kv_operator : "Keyvalue operator; can change keyvalues of ents in realtime"
 [
 	TargetEntity(target_destination) : "Targeted entity"
 	TargetKey(string) : "Targeted keyvalue"
@@ -828,24 +842,6 @@
 		32: "Convert in to deg" : 0
 		64: "Convert out to rad" : 0
 		128: "Convert out to deg" : 0
-	]
-]
-
-// ========================================================================================================= //
-//		UTIL_ ENTITIIES
-// ========================================================================================================= //
-
-@PointClass base(Targetname) = util_consoleprinter : "Prints to console"
-[
-	m_strMessage(string) : "Message" : ""
-	m_iPrefix(choices) : "Special message property" : 1 =
-	[
-		0: "NOTE:"
-		1: "No prefix (developer 1)"
-		2: "developer 2 only"
-		3: "WARNING:"
-		4: "ERROR:"
-		5: "Logged to server"
 	]
 ]
 

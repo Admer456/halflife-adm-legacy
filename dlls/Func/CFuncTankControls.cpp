@@ -20,7 +20,7 @@ IMPLEMENT_SAVERESTORE( CFuncTankControls, CBaseEntity );
 
 int	CFuncTankControls::ObjectCaps( void )
 {
-	return (CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION) | FCAP_IMPULSE_USE;
+	return (CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION) | FCAP_IMPULSE_USE | FCAP_INDIRECT_USE;
 }
 
 void CFuncTankControls::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value )

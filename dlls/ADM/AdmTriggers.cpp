@@ -68,7 +68,7 @@ void SUB_KillTargets(string_t target)
 // ========================================================================================================= //
 
 //--------------------------
-//-----trigger_valueop------
+//-----util_kv_operator-----
 //--------------------------
 /*
 	THIS is a bad idea. >:D
@@ -76,7 +76,7 @@ void SUB_KillTargets(string_t target)
 	and performs other operations on them, when triggered
 */
 
-class CTriggerValueOperator : public CBaseDelay // a.k.a. CChangeValue
+class UtilKeyvalueOperator : public CBaseDelay // a.k.a. CChangeValue
 {
 public:
 	void				Spawn(void);
@@ -132,11 +132,11 @@ enum ValueOpMode
 #define SF_VAL_ORAD		64
 #define SF_VAL_ODEG		128
 
-LINK_ENTITY_TO_CLASS(trigger_valueop, CTriggerValueOperator);
+LINK_ENTITY_TO_CLASS( util_kv_operator, UtilKeyvalueOperator );
 
-void CTriggerValueOperator::Spawn(void) {}
+void UtilKeyvalueOperator::Spawn(void) {}
 
-void CTriggerValueOperator::KeyValue(KeyValueData *pkvd)
+void UtilKeyvalueOperator::KeyValue(KeyValueData *pkvd)
 {
 	if (FStrEq(pkvd->szKeyName, "NewValue"))
 	{
@@ -196,7 +196,7 @@ void CTriggerValueOperator::KeyValue(KeyValueData *pkvd)
 		CBaseDelay::KeyValue(pkvd);
 }
 
-void CTriggerValueOperator::GetKeyValueCustom(char &szTheValue, char szTargetKeyName[64])
+void UtilKeyvalueOperator::GetKeyValueCustom(char &szTheValue, char szTargetKeyName[64])
 {
 	if (FStrEq(szTargetKeyName, "NewValue"))
 		sprintf(&szTheValue, "%s", STRING(m_iszNewValue));
@@ -220,7 +220,7 @@ void CTriggerValueOperator::GetKeyValueCustom(char &szTheValue, char szTargetKey
 		sprintf(&szTheValue, "null (no matching KV)");
 }
 
-void CTriggerValueOperator::SetKeyValueCustom(char szTargetKeyName[64], char szTheValue[64])
+void UtilKeyvalueOperator::SetKeyValueCustom(char szTargetKeyName[64], char szTheValue[64])
 {
 	if (FStrEq(szTargetKeyName, "NewValue"))
 		m_iszNewValue = ALLOC_STRING(szTheValue);
@@ -264,7 +264,7 @@ void CTriggerValueOperator::SetKeyValueCustom(char szTargetKeyName[64], char szT
 		ALERT(at_error, "No matching KV %s in %s \n", szTargetKeyName, STRING(pev->targetname));
 }
 
-void CTriggerValueOperator::Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value)
+void UtilKeyvalueOperator::Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value)
 {
 	if (FBitSet(pev->spawnflags, SF_VAL_INT))
 	{
@@ -284,42 +284,44 @@ void CTriggerValueOperator::Use(CBaseEntity *pActivator, CBaseEntity *pCaller, U
 	}
 }
 
-void CTriggerValueOperator::UseInt(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value)    
+void UtilKeyvalueOperator::UseInt( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value )
 {
 	// 1. Find entity and load data
-	CBaseEntity *pTarget = UTIL_FindEntityByTargetname(NULL, STRING(m_iszTargetEntity));
-	
+	CBaseEntity *pTarget = UTIL_FindEntityByTargetname( NULL, STRING( m_iszTargetEntity ) );
+
 	if ( FStrEq( STRING( m_iszTargetEntity ), "world" ) )
 	{
-		pTarget = UTIL_FindEntityByClassname( NULL, "worldspawn" );
+		pTarget = static_cast<CBaseEntity*>(GET_PRIVATE( g_engfuncs.pfnPEntityOfEntOffset( 0 ) ));
 	}
 
 	if ( pTarget == nullptr )
 	{
-		ALERT( at_error, "Target %s doesn't exist (%s %s)", STRING(m_iszTargetEntity), STRING(pev->targetname), STRING(pev->classname) );
+		ALERT( at_error, "Target %s doesn't exist (%s %s)", STRING( m_iszTargetEntity ), STRING( pev->targetname ), STRING( pev->classname ) );
 		return;
 	}
 
 	char szOldValue[64];
-	pTarget->GetKeyValue(*szOldValue, (char*)STRING(m_iszTargetKey));
+	pTarget->GetKeyValue( *szOldValue, (char*)STRING( m_iszTargetKey ) );
 
-	int iOldValue = atoi(szOldValue);
-	int iNewValue = atoi(STRING(m_iszNewValue));
+	//ALERT( at_console, "%s value: %s\n", STRING( m_iszTargetKey ), szOldValue );
+
+	int iOldValue = atoi( szOldValue );
+	int iNewValue = atoi( STRING( m_iszNewValue ) );
 	int iResult;
 	bool fAction = false;
 
 	// 2. Check op mode and do the operations
-	switch (iOperatingMode)
+	switch ( iOperatingMode )
 	{
 	default:
-		ALERT(at_console, "\nInvalid operating mode for %s, using Replace", STRING(pev->targetname));
+		ALERT( at_console, "\nInvalid operating mode for %s, using Replace", STRING( pev->targetname ) );
 
-	case Replace: 
+	case Replace:
 		iResult = iNewValue;
 		fAction = true;
 		break;
 
-	case Add: 
+	case Add:
 		iResult = iNewValue + iOldValue;
 		fAction = true;
 		break;
@@ -343,13 +345,13 @@ void CTriggerValueOperator::UseInt(CBaseEntity *pActivator, CBaseEntity *pCaller
 		iResult = iOldValue % iNewValue;
 		fAction = true;
 		break;
-	
-	case AND: 
+
+	case AND:
 		iResult = iOldValue;
 		fAction = (iOldValue & iNewValue);
 		break;
-	
-	case NAND: 
+
+	case NAND:
 		iResult = iOldValue;
 		fAction = !(iOldValue & iNewValue);
 		break;
@@ -376,23 +378,31 @@ void CTriggerValueOperator::UseInt(CBaseEntity *pActivator, CBaseEntity *pCaller
 	}
 
 	// 3. If there's an action after the operation, fire it
-	if (fAction)
+	if ( fAction && m_iszTargetEntityForFire )
 	{
-		FireTargets(STRING(m_iszTargetEntityForFire), pActivator, pCaller, triggerType, value);
+		FireTargets( STRING( m_iszTargetEntityForFire ), pActivator, pCaller, triggerType, value );
 	}
 
 	// 4. Get result string from the int, and set the keyvalue for the target entity
 	char szResult[64];
-	sprintf(szResult, "%i", iResult);
+	sprintf( szResult, "%i", iResult );
 
-	pTarget->SetKeyValue((char*)STRING(m_iszTargetKey), szResult);
+	if ( iOperatingMode < Greater )
+	{
+		pTarget->SetKeyValue( (char*)STRING( m_iszTargetKey ), szResult );
+	}
 }
 
-void CTriggerValueOperator::UseFloat(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value)  
+void UtilKeyvalueOperator::UseFloat( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value )
 {
 	// 1. Find entity and load data
-	CBaseEntity *pTarget = UTIL_FindEntityByTargetname(NULL, STRING(m_iszTargetEntity));
-	
+	CBaseEntity *pTarget = UTIL_FindEntityByTargetname( NULL, STRING( m_iszTargetEntity ) );
+
+	if ( FStrEq( STRING( m_iszTargetEntity ), "world" ) )
+	{
+		pTarget = static_cast<CBaseEntity*>(GET_PRIVATE( g_engfuncs.pfnPEntityOfEntOffset( 0 ) ));
+	}
+
 	if ( pTarget == nullptr )
 	{
 		ALERT( at_error, "Target %s doesn't exist (%s %s)", STRING( m_iszTargetEntity ), STRING( pev->targetname ), STRING( pev->classname ) );
@@ -400,34 +410,34 @@ void CTriggerValueOperator::UseFloat(CBaseEntity *pActivator, CBaseEntity *pCall
 	}
 
 	char szOldValue[64];
-	pTarget->GetKeyValue(*szOldValue, (char*)STRING(m_iszTargetKey));
+	pTarget->GetKeyValue( *szOldValue, (char*)STRING( m_iszTargetKey ) );
 
-	ALERT(at_console, "\n%s szOldValue: %s",
-		STRING(pev->targetname),
-		szOldValue);
+	ALERT( at_console, "\n%s szOldValue: %s",
+		STRING( pev->targetname ),
+		szOldValue );
 
-	float flOldValue = atof(szOldValue);
-	float flNewValue = atof(STRING(m_iszNewValue));
+	float flOldValue = atof( szOldValue );
+	float flNewValue = atof( STRING( m_iszNewValue ) );
 	float flResult;
 	bool fAction = false;
 
-	if (FBitSet(pev->spawnflags, SF_VAL_RAD))
+	if ( FBitSet( pev->spawnflags, SF_VAL_RAD ) )
 	{
-		UTIL_Deg2Rad(flOldValue);
-		UTIL_Deg2Rad(flNewValue);
+		UTIL_Deg2Rad( flOldValue );
+		UTIL_Deg2Rad( flNewValue );
 	}
-	
-	if (FBitSet(pev->spawnflags, SF_VAL_DEG))
+
+	if ( FBitSet( pev->spawnflags, SF_VAL_DEG ) )
 	{
-		UTIL_Rad2Deg(flOldValue);
-		UTIL_Rad2Deg(flNewValue);
+		UTIL_Rad2Deg( flOldValue );
+		UTIL_Rad2Deg( flNewValue );
 	}
 
 	// 2. Check op mode and do the operations
-	switch (iOperatingMode)
+	switch ( iOperatingMode )
 	{
 	default:
-		ALERT(at_console, "\nInvalid operating mode for %s, using Replace", STRING(pev->targetname));
+		ALERT( at_console, "\nInvalid operating mode for %s, using Replace", STRING( pev->targetname ) );
 
 	case Replace:
 		flResult = flNewValue;
@@ -455,22 +465,22 @@ void CTriggerValueOperator::UseFloat(CBaseEntity *pActivator, CBaseEntity *pCall
 		break;
 
 	case Sin:
-		flResult = sin(flNewValue);
+		flResult = sin( flNewValue );
 		fAction = true;
 		break;
 
 	case Cos:
-		flResult = cos(flNewValue);
+		flResult = cos( flNewValue );
 		fAction = true;
 		break;
 
 	case Tg:
-		flResult = tan(flNewValue);
+		flResult = tan( flNewValue );
 		fAction = true;
 		break;
 
 	case Ctg:
-		flResult = (cos(flNewValue) / sin(flNewValue));
+		flResult = (cos( flNewValue ) / sin( flNewValue ));
 		fAction = true;
 		break;
 
@@ -496,29 +506,37 @@ void CTriggerValueOperator::UseFloat(CBaseEntity *pActivator, CBaseEntity *pCall
 	}
 
 	// 3. If there's an action after the operation, fire it
-	if (fAction)
+	if ( fAction && m_iszTargetEntityForFire )
 	{
-		FireTargets(STRING(m_iszTargetEntityForFire), pActivator, pCaller, triggerType, value);
+		FireTargets( STRING( m_iszTargetEntityForFire ), pActivator, pCaller, triggerType, value );
 	}
 
-	if (FBitSet(pev->spawnflags, SF_VAL_ORAD))
-		UTIL_Deg2Rad(flResult);
+	if ( FBitSet( pev->spawnflags, SF_VAL_ORAD ) )
+		UTIL_Deg2Rad( flResult );
 
-	if (FBitSet(pev->spawnflags, SF_VAL_ODEG))
-		UTIL_Rad2Deg(flResult);
+	if ( FBitSet( pev->spawnflags, SF_VAL_ODEG ) )
+		UTIL_Rad2Deg( flResult );
 
 	// 4. Get result string from the float, and set the keyvalue for the target entity
 	char szResult[64];
-	sprintf(szResult, "%f", flResult);
+	sprintf( szResult, "%f", flResult );
 
-	pTarget->SetKeyValue((char*)STRING(m_iszTargetKey), szResult);
+	if ( iOperatingMode < Greater )
+	{
+		pTarget->SetKeyValue( (char*)STRING( m_iszTargetKey ), szResult );
+	}
 }
 
-void CTriggerValueOperator::UseString(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value) 
+void UtilKeyvalueOperator::UseString( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value )
 {
 	// 1. Find entity and load data
-	CBaseEntity *pTarget = UTIL_FindEntityByTargetname(NULL, STRING(m_iszTargetEntity));
-	
+	CBaseEntity *pTarget = UTIL_FindEntityByTargetname( NULL, STRING( m_iszTargetEntity ) );
+
+	if ( FStrEq( STRING( m_iszTargetEntity ), "world" ) )
+	{
+		pTarget = static_cast<CBaseEntity*>(GET_PRIVATE( g_engfuncs.pfnPEntityOfEntOffset( 0 ) ));
+	}
+
 	if ( pTarget == nullptr )
 	{
 		ALERT( at_error, "Target %s doesn't exist (%s %s)", STRING( m_iszTargetEntity ), STRING( pev->targetname ), STRING( pev->classname ) );
@@ -526,48 +544,53 @@ void CTriggerValueOperator::UseString(CBaseEntity *pActivator, CBaseEntity *pCal
 	}
 
 	char szOldValue[64];
-	pTarget->GetKeyValue(*szOldValue, (char*)STRING(m_iszTargetKey));
+	pTarget->GetKeyValue( *szOldValue, (char*)STRING( m_iszTargetKey ) );
 
 	std::string strOldValue, strNewValue, strResult;
 	bool fAction = false;
 
 	strOldValue = szOldValue;
-	strNewValue = STRING(m_iszNewValue);
+	strNewValue = STRING( m_iszNewValue );
 
 	// 2. Check op mode and do the operations
-	switch (iOperatingMode)
+	switch ( iOperatingMode )
 	{
 	default:
-		ALERT(at_console, "\nInvalid operating mode for %s, using Replace", STRING(pev->targetname));
+		ALERT( at_console, "\nInvalid operating mode for %s, using Replace", STRING( pev->targetname ) );
 
-	case Replace: 
+	case Replace:
 		strResult = strNewValue;
 		fAction = true;
 		break;
 
-	case Add: 
+	case Add:
 		strResult = strOldValue + strNewValue;
 		fAction = true;
 		break;
 	}
 
 	// 3. If there's an action after the operation, fire it
-	if (fAction)
+	if ( fAction && m_iszTargetEntityForFire )
 	{
-		FireTargets(STRING(m_iszTargetEntityForFire), pActivator, pCaller, triggerType, value);
+		FireTargets( STRING( m_iszTargetEntityForFire ), pActivator, pCaller, triggerType, value );
 	}
 
 	// 4. Get result string, and set the keyvalue
 	char szResult[64];
-	sprintf(szResult, "%s", strResult.c_str());
+	sprintf( szResult, "%s", strResult.c_str() );
 
-	pTarget->SetKeyValue((char*)STRING(m_iszTargetKey), szResult);
+	pTarget->SetKeyValue( (char*)STRING( m_iszTargetKey ), szResult );
 }
 
-void CTriggerValueOperator::UseVector(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value)
+void UtilKeyvalueOperator::UseVector( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value )
 {
 	// 1. Find entity and load data
-	CBaseEntity *pTarget = UTIL_FindEntityByTargetname(NULL, STRING(m_iszTargetEntity));
+	CBaseEntity *pTarget = UTIL_FindEntityByTargetname( NULL, STRING( m_iszTargetEntity ) );
+
+	if ( FStrEq( STRING( m_iszTargetEntity ), "world" ) )
+	{
+		pTarget = static_cast<CBaseEntity*>(GET_PRIVATE( g_engfuncs.pfnPEntityOfEntOffset( 0 ) ));
+	}
 
 	if ( pTarget == nullptr )
 	{
@@ -576,48 +599,48 @@ void CTriggerValueOperator::UseVector(CBaseEntity *pActivator, CBaseEntity *pCal
 	}
 
 	char szOldValue[64];
-	pTarget->GetKeyValue(*szOldValue, (char*)STRING(m_iszTargetKey));
+	pTarget->GetKeyValue( *szOldValue, (char*)STRING( m_iszTargetKey ) );
 
 	Vector vecOld, vecNew, vecResult;
 	bool fAction = false;
 
-	sscanf(szOldValue, "%f %f %f",
+	sscanf( szOldValue, "%f %f %f",
 		&vecOld.x,
 		&vecOld.y,
-		&vecOld.z); // sorry for the mess
+		&vecOld.z ); // sorry for the mess
 
-	sscanf(STRING(m_iszNewValue), "%f %f %f",
+	sscanf( STRING( m_iszNewValue ), "%f %f %f",
 		&vecNew.x,
 		&vecNew.y,
-		&vecNew.z);
+		&vecNew.z );
 
-	ALERT(at_console, "\nNew vector: %f %f %f",
+	ALERT( at_aiconsole, "\nNew vector: %f %f %f",
 		vecNew.x,
 		vecNew.y,
-		vecNew.z);
+		vecNew.z );
 
-	if (FBitSet(pev->spawnflags, SF_VAL_RAD))
+	if ( FBitSet( pev->spawnflags, SF_VAL_RAD ) )
 	{
-		UTIL_Deg2Rad(vecOld.x);
-		UTIL_Deg2Rad(vecOld.y);
-		UTIL_Deg2Rad(vecOld.z);
-		UTIL_Deg2Rad(vecNew.x);
-		UTIL_Deg2Rad(vecNew.y);
-		UTIL_Deg2Rad(vecNew.z);
+		UTIL_Deg2Rad( vecOld.x );
+		UTIL_Deg2Rad( vecOld.y );
+		UTIL_Deg2Rad( vecOld.z );
+		UTIL_Deg2Rad( vecNew.x );
+		UTIL_Deg2Rad( vecNew.y );
+		UTIL_Deg2Rad( vecNew.z );
 	}
 
-	if (FBitSet(pev->spawnflags, SF_VAL_DEG))
+	if ( FBitSet( pev->spawnflags, SF_VAL_DEG ) )
 	{
-		UTIL_Rad2Deg(vecOld.x);
-		UTIL_Rad2Deg(vecOld.y);
-		UTIL_Rad2Deg(vecOld.z);
-		UTIL_Rad2Deg(vecNew.x);
-		UTIL_Rad2Deg(vecNew.y);
-		UTIL_Rad2Deg(vecNew.z);
+		UTIL_Rad2Deg( vecOld.x );
+		UTIL_Rad2Deg( vecOld.y );
+		UTIL_Rad2Deg( vecOld.z );
+		UTIL_Rad2Deg( vecNew.x );
+		UTIL_Rad2Deg( vecNew.y );
+		UTIL_Rad2Deg( vecNew.z );
 	}
 
 	// 2. Check op mode and do the operations
-	switch (iOperatingMode)
+	switch ( iOperatingMode )
 	{
 	case Replace:
 		vecResult = vecNew;
@@ -636,7 +659,7 @@ void CTriggerValueOperator::UseVector(CBaseEntity *pActivator, CBaseEntity *pCal
 
 	case Divide:
 		vecResult = vecOld / vecNew.x; // only pitch is taken into account, we can't multiply and divide vectors just like that
-		fAction = true; 
+		fAction = true;
 		break;
 
 	case Multiply:
@@ -666,33 +689,36 @@ void CTriggerValueOperator::UseVector(CBaseEntity *pActivator, CBaseEntity *pCal
 	}
 
 	// 3. If there's an action after the operation, fire it 
-	if (fAction)
+	if ( fAction )
 	{
-		FireTargets(STRING(m_iszTargetEntityForFire), pActivator, pCaller, triggerType, value);
+		FireTargets( STRING( m_iszTargetEntityForFire ), pActivator, pCaller, triggerType, value );
 	}
 
-	if (FBitSet(pev->spawnflags, SF_VAL_ORAD))
+	if ( FBitSet( pev->spawnflags, SF_VAL_ORAD ) )
 	{
-		UTIL_Deg2Rad(vecResult.x);
-		UTIL_Deg2Rad(vecResult.y);
-		UTIL_Deg2Rad(vecResult.z);
+		UTIL_Deg2Rad( vecResult.x );
+		UTIL_Deg2Rad( vecResult.y );
+		UTIL_Deg2Rad( vecResult.z );
 	}
 
-	if (FBitSet(pev->spawnflags, SF_VAL_ODEG))
-	{	
-		UTIL_Rad2Deg(vecResult.x);
-		UTIL_Rad2Deg(vecResult.y);
-		UTIL_Rad2Deg(vecResult.z);
+	if ( FBitSet( pev->spawnflags, SF_VAL_ODEG ) )
+	{
+		UTIL_Rad2Deg( vecResult.x );
+		UTIL_Rad2Deg( vecResult.y );
+		UTIL_Rad2Deg( vecResult.z );
 	}
 
 	// 4. Get result string, and set the keyvalue
 	char szResult[64];
-	sprintf(szResult, "%f %f %f",
+	sprintf( szResult, "%f %f %f",
 		vecResult.x,
 		vecResult.y,
-		vecResult.z);
+		vecResult.z );
 
-	pTarget->SetKeyValue((char*)STRING(m_iszTargetKey), szResult);
+	if ( iOperatingMode < Greater )
+	{
+		pTarget->SetKeyValue( (char*)STRING( m_iszTargetKey ), szResult );
+	}
 }
 
 //-----------------------
@@ -703,7 +729,7 @@ void CTriggerValueOperator::UseVector(CBaseEntity *pActivator, CBaseEntity *pCal
 	E.g. every Christmas, you get some gifts in the map, or whatever.
 */
 
-class CTriggerDate : public CBaseEntity
+class FilterDateYMD : public CBaseEntity
 {
 public:
 	void				Spawn(void);
@@ -720,11 +746,11 @@ private:
 	int					m_iDay;
 };
 
-LINK_ENTITY_TO_CLASS(trigger_date, CTriggerDate);
+LINK_ENTITY_TO_CLASS( filter_date_ymd, FilterDateYMD );
 
-void CTriggerDate::Spawn(void) {} // Nothing uwu
+void FilterDateYMD::Spawn(void) {} // Nothing uwu
 
-void CTriggerDate::KeyValue(KeyValueData *pkvd)
+void FilterDateYMD::KeyValue(KeyValueData *pkvd)
 {
 	if (KeyvalueToken(year))
 	{
@@ -745,7 +771,7 @@ void CTriggerDate::KeyValue(KeyValueData *pkvd)
 		KeyvaluesFromBase(CBaseEntity);
 }
 
-void CTriggerDate::GetKeyValueCustom(char &szTheValue, char szTargetKeyName[64])
+void FilterDateYMD::GetKeyValueCustom(char &szTheValue, char szTargetKeyName[64])
 {
 	if (FStrEq(szTargetKeyName, "year"))
 	{
@@ -768,7 +794,7 @@ void CTriggerDate::GetKeyValueCustom(char &szTheValue, char szTargetKeyName[64])
 	}
 }
 
-void CTriggerDate::SetKeyValueCustom(char szTargetKeyName[64], char szTheValue[64])
+void FilterDateYMD::SetKeyValueCustom(char szTargetKeyName[64], char szTheValue[64])
 {
 	if (FStrEq(szTargetKeyName, "year"))
 		m_iYear = atoi(szTheValue);
@@ -783,7 +809,7 @@ void CTriggerDate::SetKeyValueCustom(char szTargetKeyName[64], char szTheValue[6
 		ALERT(at_error, "No matching keyvlaue %s for %s", szTargetKeyName, STRING(pev->targetname));
 }
 
-void CTriggerDate::Use(CBaseEntity *pActivator, CBaseEntity *pOther, USE_TYPE useType, float value)
+void FilterDateYMD::Use(CBaseEntity *pActivator, CBaseEntity *pOther, USE_TYPE useType, float value)
 {
 	int iYear, iMonth, iDay;
 	getDate(iYear, iMonth, iDay);
@@ -801,7 +827,7 @@ void CTriggerDate::Use(CBaseEntity *pActivator, CBaseEntity *pOther, USE_TYPE us
 	Triggers something if a specific time of day is met.
 	3 AM horrors!!!
 */
-class CTriggerDate2 : public CBaseEntity
+class FilterDateHMS : public CBaseEntity
 {
 public:
 	void				Spawn(void);
@@ -818,11 +844,11 @@ private:
 	int					m_iSecond;
 };
 
-LINK_ENTITY_TO_CLASS(trigger_date2, CTriggerDate2);
+LINK_ENTITY_TO_CLASS( filter_date_hms, FilterDateHMS );
 
-void CTriggerDate2::Spawn(void) {} // Nothing uwu
+void FilterDateHMS::Spawn(void) {} // Nothing uwu
 
-void CTriggerDate2::KeyValue(KeyValueData *pkvd)
+void FilterDateHMS::KeyValue(KeyValueData *pkvd)
 {
 	if (KeyvalueToken(hour))
 	{
@@ -843,7 +869,7 @@ void CTriggerDate2::KeyValue(KeyValueData *pkvd)
 		KeyvaluesFromBase(CBaseEntity);
 }
 
-void CTriggerDate2::GetKeyValueCustom(char &szTheValue, char szTargetKeyName[64])
+void FilterDateHMS::GetKeyValueCustom(char &szTheValue, char szTargetKeyName[64])
 {
 	if (FStrEq(szTargetKeyName, "hour"))
 	{
@@ -866,7 +892,7 @@ void CTriggerDate2::GetKeyValueCustom(char &szTheValue, char szTargetKeyName[64]
 	}
 }
 
-void CTriggerDate2::SetKeyValueCustom(char szTargetKeyName[64], char szTheValue[64])
+void FilterDateHMS::SetKeyValueCustom(char szTargetKeyName[64], char szTheValue[64])
 {
 	if (FStrEq(szTargetKeyName, "hour"))
 		m_iHour = atoi(szTheValue);
@@ -881,7 +907,7 @@ void CTriggerDate2::SetKeyValueCustom(char szTargetKeyName[64], char szTheValue[
 		ALERT(at_error, "No matching keyvalue %s for %s", szTargetKeyName, STRING(pev->targetname));
 }
 
-void CTriggerDate2::Use(CBaseEntity *pActivator, CBaseEntity *pOther, USE_TYPE useType, float value)
+void FilterDateHMS::Use(CBaseEntity *pActivator, CBaseEntity *pOther, USE_TYPE useType, float value)
 {
 	int iHour, iMinute, iSecond;
 	getTime(iHour, iMinute, iSecond);
@@ -901,7 +927,7 @@ void CTriggerDate2::Use(CBaseEntity *pActivator, CBaseEntity *pOther, USE_TYPE u
 	NOT Hard, for example, is the same as having an Easy and Medium linked together
 */
 
-class CTriggerDifficulty : public CBaseEntity
+class FilterDifficulty : public CBaseEntity
 {
 public:
 	void				Spawn(void);
@@ -917,14 +943,14 @@ private:
 	int					m_iszKillTarget;
 };
 
-LINK_ENTITY_TO_CLASS(trigger_difficulty, CTriggerDifficulty);
+LINK_ENTITY_TO_CLASS( filter_difficulty, FilterDifficulty );
 
-void CTriggerDifficulty::Spawn(void)
+void FilterDifficulty::Spawn(void)
 {
 	// Nothing
 }
 
-void CTriggerDifficulty::KeyValue(KeyValueData *pkvd)
+void FilterDifficulty::KeyValue(KeyValueData *pkvd)
 {
 	if (FStrEq(pkvd->szKeyName, "skill"))
 	{
@@ -942,7 +968,7 @@ void CTriggerDifficulty::KeyValue(KeyValueData *pkvd)
 		CBaseEntity::KeyValue(pkvd);
 }
 
-void CTriggerDifficulty::GetKeyValueCustom(char &szTheValue, char szTargetKeyName[64])
+void FilterDifficulty::GetKeyValueCustom(char &szTheValue, char szTargetKeyName[64])
 {
 	if (FStrEq(szTargetKeyName, "skill"))
 	{
@@ -961,7 +987,7 @@ void CTriggerDifficulty::GetKeyValueCustom(char &szTheValue, char szTargetKeyNam
 	}
 }
 
-void CTriggerDifficulty::SetKeyValueCustom(char szTargetKeyName[64], char szTheValue[64])
+void FilterDifficulty::SetKeyValueCustom(char szTargetKeyName[64], char szTheValue[64])
 {
 	if (FStrEq(szTargetKeyName, "skill"))
 	{
@@ -979,7 +1005,7 @@ void CTriggerDifficulty::SetKeyValueCustom(char szTargetKeyName[64], char szTheV
 	}
 }
 
-void CTriggerDifficulty::Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value)
+void FilterDifficulty::Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value)
 {
 	if (m_iSkill < 0 && m_iSkill > 6)
 	{

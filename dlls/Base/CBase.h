@@ -42,6 +42,8 @@ CBaseEntity
 // TODO: This will ignore transition volumes (trigger_transition), but not the PVS!!!
 #define		FCAP_FORCE_TRANSITION		0x00000080		// ALWAYS goes across transitions
 
+#define		FCAP_INDIRECT_USE			0x00000100		// can be used by the player but not via a direct traceline
+
 // Special network flags for entities that absolutely have to
 // be transferred to the client(s)
 enum ForceNetworkPlowTypes : uint8_t

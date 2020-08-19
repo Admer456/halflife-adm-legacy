@@ -280,7 +280,7 @@ public:
 	void	KeyValue( KeyValueData *pkvd );
 	virtual int	ObjectCaps( void ) 
 	{ 
-		int flags = CBaseToggle :: ObjectCaps() & (~FCAP_ACROSS_TRANSITION); 
+		int flags = (CBaseToggle::ObjectCaps() & ~FCAP_ACROSS_TRANSITION) | FCAP_INDIRECT_USE; 
 		if ( pev->spawnflags & SF_MOMENTARY_DOOR )
 			return flags;
 		return flags | FCAP_CONTINUOUS_USE;

@@ -4,6 +4,7 @@
 #define SF_TANK_ALIENS			0x0008
 #define SF_TANK_LINEOFSIGHT		0x0010
 #define SF_TANK_CANCONTROL		0x0020
+#define SF_TANK_DIRECTUSE		0x0040
 #define SF_TANK_SOUNDON			0x8000
 
 static Vector gTankSpread[] =
@@ -49,7 +50,17 @@ public:
 	void	StopRotSound( void );
 
 	// Bmodels don't go across transitions
-	virtual int	ObjectCaps( void ) { return CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
+	virtual int	ObjectCaps( void ) 
+	{
+		int flags = CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION;
+
+		if ( pev->spawnflags & SF_TANK_DIRECTUSE )
+		{
+			flags |= FCAP_IMPULSE_USE;
+		}
+
+		return flags;
+	}
 
 	inline BOOL IsActive( void ) { return (pev->spawnflags & SF_TANK_ACTIVE) ? TRUE : FALSE; }
 	inline void TankActivate( void ) { pev->spawnflags |= SF_TANK_ACTIVE; pev->nextthink = pev->ltime + 0.1; m_fireLast = 0; }

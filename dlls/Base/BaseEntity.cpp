@@ -753,6 +753,7 @@ int	CBaseEntity :: DamageDecal( int bitsDamageType )
 	return DECAL_GUNSHOT1 + RANDOM_LONG(0,4);
 }
 
+// TODO: Replace this with a new keyvalue getting/setting system, target: v0.2.0
 void CBaseEntity::GetKeyValue(char &szTheValue, char szTargetKeyName[64])
 {
 	if (FStrEq(szTargetKeyName, "target"))

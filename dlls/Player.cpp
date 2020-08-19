@@ -1593,18 +1593,20 @@ void CBasePlayer::PlayerUse ( void )
 	UTIL_TraceLine( vecView, vecLookAt, dont_ignore_monsters, dont_ignore_glass, ENT( pev ), &trCheckWall );
 	pObject = CBaseEntity::Instance( trCheckWall.pHit );
 	bool hasHit = trCheckWall.flFraction < 1.0;
-	bool isWorld = pObject->entindex() == 0 && hasHit;
+	bool isWorld = pObject->entindex() == 0;
 
 	// Perform search by radius just in case we're encountering a momentary rotating button
 	// Traceline for some reason doesn't detect that specfiic entity
-	// TODO: Fix func_tank stuff
-	if ( hasHit && isWorld )
-	{
-		float flMaxDot = VIEW_FIELD_ULTRA_NARROW;
-		CBaseEntity *pSearchEnt = nullptr;
+	float flMaxDot = VIEW_FIELD_ULTRA_NARROW;
+	CBaseEntity *pSearchEnt = nullptr;
 
+	if ( isWorld )
+	{
 		while ( pSearchEnt = UTIL_FindEntityInSphere( pSearchEnt, pev->origin, PLAYER_SEARCH_RADIUS ) )
 		{
+			if ( !(pSearchEnt->ObjectCaps() & FCAP_INDIRECT_USE) )
+				continue;
+
 			if ( pSearchEnt->ObjectCaps() & (FCAP_IMPULSE_USE | FCAP_CONTINUOUS_USE | FCAP_ONOFF_USE) )
 			{
 				// !!!PERFORMANCE- should this check be done on a per case basis AFTER we've determined that
@@ -1623,7 +1625,10 @@ void CBasePlayer::PlayerUse ( void )
 					pObject = pSearchEnt;
 					flMaxDot = flDot;
 
+					hasHit = true;
 					isWorld = false;
+
+					ALERT( at_console, "Hit %s indirectly\n", STRING( pObject->pev->classname ) );
 				}
 			}
 		}
@@ -1662,8 +1667,6 @@ void CBasePlayer::PlayerUse ( void )
 			EMIT_SOUND( ENT(pev), CHAN_ITEM, "common/wpn_denyselect.wav", 0.4, ATTN_NORM);
 	}
 }
-
-
 
 void CBasePlayer::Jump()
 {
@@ -1713,8 +1716,6 @@ void CBasePlayer::Jump()
 		pev->velocity = pev->velocity + pev->basevelocity;
 	}
 }
-
-
 
 // This is a glorious hack to find free space when you've crouched into some solid space
 // Our crouching collisions do not work correctly for some reason and this is easier

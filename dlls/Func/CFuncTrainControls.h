@@ -2,7 +2,7 @@
 class CFuncTrainControls : public CBaseEntity
 {
 public:
-	virtual int	ObjectCaps( void ) { return CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
+	virtual int	ObjectCaps( void ) { return (CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION) | FCAP_INDIRECT_USE; }
 	void Spawn( void );
 	void EXPORT Find( void );
 };

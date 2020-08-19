@@ -291,18 +291,38 @@ void CFuncTank::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE use
 		if ( pActivator->Classify() != CLASS_PLAYER )
 			return;
 
-		if ( value == 2 && useType == USE_SET )
+		//if ( pev->spawnflags & SF_TANK_DIRECTUSE )
+		//{
+		//	if ( value == 2 && useType == USE_SET )
+		//	{
+		//		ControllerPostFrame();
+		//	}
+		//	else if ( !m_pController && useType != USE_OFF )
+		//	{
+		//		((CBasePlayer*)pActivator)->m_pTank = this;
+		//		StartControl( (CBasePlayer*)pActivator );
+		//	}
+		//	else
+		//	{
+		//		StopControl();
+		//	}
+		//}
+		//
+		//else
 		{
-			ControllerPostFrame();
-		}
-		else if ( !m_pController && useType != USE_OFF )
-		{
-			((CBasePlayer*)pActivator)->m_pTank = this;
-			StartControl( (CBasePlayer*)pActivator );
-		}
-		else
-		{
-			StopControl();
+			if ( value == 2 && useType == USE_SET )
+			{
+				ControllerPostFrame();
+			}
+			else if ( !m_pController && useType != USE_OFF )
+			{
+				((CBasePlayer*)pActivator)->m_pTank = this;
+				StartControl( (CBasePlayer*)pActivator );
+			}
+			else
+			{
+				StopControl();
+			}
 		}
 	}
 	else
