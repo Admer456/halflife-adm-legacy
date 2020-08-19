@@ -690,19 +690,6 @@ void CWorld :: Precache( void )
 	}
 }
 
-/*
-	skyname - CVAR_GET_STRING sv_skyname
-	sounds - gpGlobals->cdAudioTrack
-	WaveHeight - pev->scale atof (val) * 0.125; CVAR_SET_FLOAT sv_wateramp pev->scale
-	MaxRange pev->speed
-	chaptertitle - pev->netname
-	startdark - int flag = atoi(val); if flag then pev->spawnflags |= SF_WORLD_DARK
-	newunit - if (atoi(val)) then CVAR_SET_FLOAT sv_newunit 1
-	gametitle - if (atoi(val)) then pev->spawnflags |= SF_WORLD_TITLE
-	mapteams - pev->team ALLOC_STRING
-	defaultteam - if (atoi(val)) then pev->spawnflags |= SF_WORLD_FORCETEAM
-*/
-
 //
 // Just to ignore the "wad" field.
 //
@@ -825,19 +812,6 @@ void CWorld::PhysicsSpawnThink()
 
 	SetThink( NULL );
 }
-
-/*
-	skyname - CVAR_GET_STRING sv_skyname
-	sounds - gpGlobals->cdAudioTrack
-	WaveHeight - pev->scale atof (val) * 0.125; CVAR_SET_FLOAT sv_wateramp pev->scale
-	MaxRange pev->speed
-	chaptertitle - pev->netname
-	startdark - int flag = atoi(val); if flag then pev->spawnflags |= SF_WORLD_DARK
-	newunit - if (atoi(val)) then CVAR_SET_FLOAT sv_newunit 1
-	gametitle - if (atoi(val)) then pev->spawnflags |= SF_WORLD_TITLE
-	mapteams - pev->team ALLOC_STRING
-	defaultteam - if (atoi(val)) then pev->spawnflags |= SF_WORLD_FORCETEAM
-*/
 
 void CWorld::GetKeyValueCustom(char &szTheValue, char szTargetKeyName[64]) // VERY GOD DAMN experimental, ESPECIALLY SetKeyValueCustom!
 {

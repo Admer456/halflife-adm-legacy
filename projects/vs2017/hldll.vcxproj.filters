@@ -638,6 +638,9 @@
     <ClCompile Include="..\..\dlls\ADM\Audio\AudioSound3D.cpp">
       <Filter>Sources\ADM\Audio</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\dlls\Game\SaveTitles.cpp">
+      <Filter>Sources\Game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\engine\eiface.h">

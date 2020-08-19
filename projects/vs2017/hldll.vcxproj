@@ -232,6 +232,7 @@
     <ClCompile Include="..\..\dlls\Game\GamerulesMultiplay.cpp" />
     <ClCompile Include="..\..\dlls\Game\GamerulesSingleplay.cpp" />
     <ClCompile Include="..\..\dlls\Game\GamerulesTeamplay.cpp" />
+    <ClCompile Include="..\..\dlls\Game\SaveTitles.cpp" />
     <ClCompile Include="..\..\dlls\Grenade.cpp" />
     <ClCompile Include="..\..\dlls\Globals.cpp" />
     <ClCompile Include="..\..\dlls\Cycler.cpp" />

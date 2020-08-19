@@ -1,4 +1,6 @@
 class CPhysBody_ConcaveMesh;
+struct PhysParameters;
+class CPhysManager;
 
 // this moved here from world.cpp, to allow classes to be derived from it
 //=======================

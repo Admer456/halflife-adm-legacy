@@ -16,14 +16,14 @@
 
 @SolidClass = worldspawn : "This is the world entity. Each map can only contain one, and it's automatically created for you." : "http://twhl.info/wiki.php?id=162"
 [
-	message(string) : "Map Description / Title"
+	message(string) : "Map description / title"
 	skyname(sky) : "Environment map (cl_skyname)" : : "Lets you choose what sky image you want. Values are: 2desert, alien1, alien2, alien3, black, city, cliff, desert, dusk, morning, neb1, neb2, neb6, neb7, night, space, xen8, xen9, xen10. More skies exist in Half-Life modifications, and you can also make your own skies."
 	sounds(integer) : "CD track to play" : 1 : "CD track to play when the level begins."
 	light(integer) : "Default light level"
-	WaveHeight(string) : "Default Wave Height" : : "Set the default wave height here (can be overridden by the properties in func_water)."
+	WaveHeight(string) : "Default wave height" : : "Set the default wave height here (can be overridden by the properties in func_water)."
 	MaxRange(string) : "Max viewable distance" : "4096" : "Maximum distance the player can see."
-	chaptertitle(string) : "Chapter Title Message" : "" : "Text displayed when entering the level."
-	
+	chaptertitle(string) : "Chapter title message" : "" : "Text displayed when entering the level."
+
 	startdark(choices) : "Level Fade In" : 0 : "If Yes, then the level will start black and fade into normal light." =
 	[	
 		0 : "No"

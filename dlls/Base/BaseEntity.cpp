@@ -12,14 +12,14 @@
 *   without written permission from Valve LLC.
 *
 ****/
-#include	"Base/ExtDLL.h"
-#include	"Util.h"
-#include	"Base/CBase.h"
-#include	"Base/SaveRestore.h"
-#include	"Game/Client.h"
-#include	"decals.h"
-#include	"Game/GameRules.h"
-#include	"Game/Game.h"
+#include "Base/ExtDLL.h"
+#include "Util.h"
+#include "Base/CBase.h"
+#include "Base/SaveRestore.h"
+#include "Game/Client.h"
+#include "decals.h"
+#include "Game/GameRules.h"
+#include "Game/Game.h"
 
 void EntvarsKeyvalue( entvars_t *pev, KeyValueData *pkvd );
 
@@ -97,32 +97,31 @@ static DLL_FUNCTIONS gFunctionTable =
 
 static void SetObjectCollisionBox( entvars_t *pev );
 
-extern "C" {
-
+extern "C" 
+{
 	int GetEntityAPI( DLL_FUNCTIONS *pFunctionTable, int interfaceVersion )
-{
-	if ( !pFunctionTable || interfaceVersion != INTERFACE_VERSION )
 	{
-		return FALSE;
+		if ( !pFunctionTable || interfaceVersion != INTERFACE_VERSION )
+		{
+			return FALSE;
+		}
+		
+		memcpy( pFunctionTable, &gFunctionTable, sizeof( DLL_FUNCTIONS ) );
+		return TRUE;
 	}
 	
-	memcpy( pFunctionTable, &gFunctionTable, sizeof( DLL_FUNCTIONS ) );
-	return TRUE;
-}
-
-int GetEntityAPI2( DLL_FUNCTIONS *pFunctionTable, int *interfaceVersion )
-{
-	if ( !pFunctionTable || *interfaceVersion != INTERFACE_VERSION )
+	int GetEntityAPI2( DLL_FUNCTIONS *pFunctionTable, int *interfaceVersion )
 	{
-		// Tell engine what version we had, so it can figure out who is out of date.
-		*interfaceVersion = INTERFACE_VERSION;
-		return FALSE;
+		if ( !pFunctionTable || *interfaceVersion != INTERFACE_VERSION )
+		{
+			// Tell engine what version we had, so it can figure out who is out of date.
+			*interfaceVersion = INTERFACE_VERSION;
+			return FALSE;
+		}
+		
+		memcpy( pFunctionTable, &gFunctionTable, sizeof( DLL_FUNCTIONS ) );
+		return TRUE;
 	}
-	
-	memcpy( pFunctionTable, &gFunctionTable, sizeof( DLL_FUNCTIONS ) );
-	return TRUE;
-}
-
 }
 
 
