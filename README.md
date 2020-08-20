@@ -16,7 +16,7 @@ Check out what this means [on the wiki](https://github.com/Admer456/halflife-ADM
 - Flexible vehicle system, with support for many vehicle types and configurations
 - Parametric view bobbing, swaying and HUD colours
 
-\*Only partially implemented. FMOD works with music and 3D sounds using special entities; the physics system only supports boxes and map collision at the moment, ando only works in singleplayer.
+\*Only partially implemented. FMOD works with music and 3D sounds using special entities; the physics system only supports boxes and map collision at the moment, and only works in singleplayer.
 
 ## **Tools:**
 
@@ -26,7 +26,7 @@ Check out what this means [on the wiki](https://github.com/Admer456/halflife-ADM
 
 ## **Downloads:**
 
-*None at the moment! Please wait until the 20th of August.*  
+*None at the moment! Please wait until the 22nd of August.*  
 
 Half Life 1 SDK LICENSE
 ======================
