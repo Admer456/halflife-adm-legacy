@@ -503,12 +503,12 @@ void VehicleSeat::AttachToPos( int iBoneOffset )
 
 void VehicleWheel::SteerLeft( float flSpeed )
 {
-	steerAngle += (600 / (flSpeed + 100 - (10 * wear))) / width;
+	steerAngle += (400 / (flSpeed + 100 - (10 * wear))) / width;
 }
 
 void VehicleWheel::SteerRight( float flSpeed )
 {
-	steerAngle -= (600 / (flSpeed + 100 + (10 * wear))) / width;
+	steerAngle -= (400 / (flSpeed + 100 + (10 * wear))) / width;
 }
 
 void VehicleWheel::Init(RubberType rubbertype, CBaseVehicle* pParent, string_t iszWheel, int flags, float radius, float width)
@@ -636,13 +636,13 @@ void VehicleWheel::Update( float flSpeed, int arrindex )
 		contactTraction = contactThreshold / fabs(contactDifference);
 		contactTraction = sqrt( contactTraction );
 
-		contactTraction = max( contactTraction, 0.10f );
+		contactTraction = max( contactTraction, 0.20f );
 
-		ALERT( at_console, "TRACTION LOST, SKIDDING\n" );
+		ALERT( at_aiconsole, "TRACTION LOST, SKIDDING\n" );
 	}
 	else
 	{
-		ALERT( at_console, "Traction is stable\n" );
+		ALERT( at_aiconsole, "Traction is stable\n" );
 	}
 
 	//if ( arrindex == 3 )
@@ -673,7 +673,7 @@ void VehicleWheel::Update( float flSpeed, int arrindex )
 		sideSlide /= 10.f;
 	}
 
-	ALERT( at_console, "slide %f\n", sideSlide );
+	ALERT( at_aiconsole, "slide %f\n", sideSlide );
 
 	//ALERT( at_console, "sideContact %3.2f\n", sideContact );
 
@@ -689,7 +689,7 @@ void VehicleWheel::Update( float flSpeed, int arrindex )
 	// If the angle is 0°, we have 100% traction
 	tractionForce = vecForward * rollAngularVelocity * tractionFactorBlend;
 	//tractionForce = tractionForce + vecDeltaMove * (1.0f - tractionFactorBlend) * 0.15f;
-	tractionForce = tractionForce + vecRight * sideSlide * 0.4f /** (1.0f - tractionFactorBlend)*/;
+	tractionForce = tractionForce + vecRight * sideSlide * 0.25f /** (1.0f - tractionFactorBlend)*/;
 
 	if ( tractionForce.Length2D() < 0.1f )
 		tractionForce = g_vecZero;
@@ -698,8 +698,8 @@ void VehicleWheel::Update( float flSpeed, int arrindex )
 	traction = (traction * 0.9) + (originalTraction * 0.1);
 	tractionFactorBlend = tractionFactorBlend*0.92 + tractionFactor*0.08;
 
-	// Minimum value for the traction is 0.04, else weird shit happens while steering
-	traction = V_max( traction, 0.04 );
+	// Minimum value for the traction is 0.07, else weird shit happens while steering
+	traction = V_max( traction, 0.07 );
 
 	// Calculate angle for the axle bone controller
 	if ( fabs( rollAngularVelocity ) > 0.2f )
@@ -831,13 +831,13 @@ void AxlePhysicsParams::Update()
 	UTIL_MakeVectorsPrivate( baseParams->parent->pev->angles, forward, nullptr, nullptr );
 
 	// Degradation of momentum due to air drag and traction
-	momentum = momentum / 1.01f;
+	momentum = momentum / 1.001f;
 
 	traction =  leftWheel->traction  / leftWheel->originalTraction;
 	traction += rightWheel->traction / rightWheel->originalTraction;
 	traction /= 2.0f;
 
-	UTIL_LimitBetween( traction, -1.0, 1.0 );
+	UTIL_LimitBetween( traction, 0.5, 1.0 );
 	traction = fabs( traction );
 
 	// Physically, the traction force is what actually pushes the car
@@ -879,22 +879,23 @@ void VehiclePhysicsParams::Update()
 	float frontLength = fabs(frontAxle.offset) / totalLength;
 	float backLength = fabs(rearAxle.offset) / totalLength;
 
+	//// Commented out! This code is buggy
 	// While averaging the positions, we'll also take traction into account
 	// For example, if the front axle has more traction, then it will have a 
 	// stronger multiplier than the rear axle
-	float totalTraction = frontAxle.traction + rearAxle.traction;
-	float frontTraction = frontAxle.traction / totalTraction;
-	float backTraction = rearAxle.traction / totalTraction;
-
-	float frontMultiplier = (frontLength + backTraction) / 2.0f;
-	float backMultiplier = (backLength + frontTraction) / 2.0f;
+	//float totalTraction = frontAxle.traction + rearAxle.traction;
+	//float frontTraction = frontAxle.traction / totalTraction;
+	//float backTraction = rearAxle.traction / totalTraction;
+	//
+	//float frontMultiplier = (frontLength + backTraction) / 2.0f;
+	//float backMultiplier = (backLength + frontTraction) / 2.0f;
 	
 	// Front axle * back length and rear axle * front length
 	// NOT front axle * front length etc.
 	// If frontLength was 0.7 (which clearly means the front axle is FARTHER)
 	// then front axle * front length would imply that the front axle is closer
 	// and that would be a lie
-	calculatedPosition = (frontAxle.position * backMultiplier) + (rearAxle.position * frontMultiplier);
+	calculatedPosition = (frontAxle.position * backLength) + (rearAxle.position * frontLength);
 	
 	// Now that we have the calculated position, let's calculate the velocity needed to reach it
 	finalVelocity = (calculatedPosition - parent->pev->origin); // might wanna divide by 0.016 later or something
@@ -902,10 +903,18 @@ void VehiclePhysicsParams::Update()
 	// Calculate final angles from resulting axle positions
 	// Step 1: treat rearAxle.position as origin, and frontAxle.position relative to that
 	Vector axleTransformed = frontAxle.position - rearAxle.position;
+	Vector calculatedAngles = UTIL_VecToAngles( finalVelocity );
 
 	// Step 2: Use atan2() on the YX coordinates of the resulting vector
 	finalAngles.y = atan2( axleTransformed.y, axleTransformed.x ) * (180.f/M_PI);
+
+	if ( finalVelocity.Length2D() > 0.1f )
+		finalAngles.x = finalAngles.x*0.2 + calculatedAngles.x*0.8;
+	
 	finalAngles.x = 0;
+
+	//ALERT( at_console, "x %3.2f y %3.2f z %3.2f\n", finalVelocity.x, finalVelocity.y, finalVelocity.z );
+
 	finalAngles.z = 0;
 }
 

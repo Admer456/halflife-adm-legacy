@@ -27,6 +27,9 @@
 #include "AdmVehicle.h"
 #include "Base/Animation.h"
 
+// NOTE: This code is mostly from early 2019 when I was still a noob at designing this stuff.
+// This will get a total rewrite by v0.2.0
+
 // Welcome to the beginning of this monstrosity!
 // Scroll all the way down until line 469 if you wanna take a look at a vehicle class template.
 // CBaseVehicle handles all the work for you, and all you gotta do
@@ -522,6 +525,7 @@ public:
 
 private:
 	VehiclePhysicsParams physParms;
+	Vector				oldPosition{ g_vecZero };
 };
 
 void CBaseCar::Spawn()
@@ -680,7 +684,31 @@ void CBaseCar::VehicleMovement()
 	physParms.rearAxle.Update();
 	physParms.Update();
 
+	oldangles = pev->angles;
+
+	//Vector velocityNoGravity = (oldPosition - pev->origin) * 64.f;
+	//Vector calcAngles = UTIL_VecToAngles( velocityNoGravity ).Normalize();
+
+	//if ( pev->velocity.Length2D() < 3.0 )
+	//{
+	//	pev->angles = oldangles;
+	//}
+	//else if ( fabs( velocityNoGravity.z ) > 0.001 )
+	//{
+	//	calcAngles.x *= 120.f;
+	//
+	//	if ( calcAngles.x > 180.0f )
+	//		calcAngles.x -= 360.0f;
+	//
+	//	pev->angles.x = pev->angles.x*0.95 + calcAngles.x*0.15;
+	//
+	//	ALERT( at_console, "Going up!\n" );
+	//}
+	//
+	//ALERT( at_console, "pitch %f\n", calcAngles.x );
+
 	oldVelocity = pev->velocity;
+	oldPosition = pev->origin;
 }
 
 void CBaseCar::VehicleThink()

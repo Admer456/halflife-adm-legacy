@@ -411,13 +411,16 @@ int DispatchRestore( edict_t *pent, SAVERESTOREDATA *pSaveData, int globalEntity
 
 void DispatchObjectCollsionBox( edict_t *pent )
 {
-	CBaseEntity *pEntity = (CBaseEntity *)GET_PRIVATE(pent);
-	if (pEntity)
+	CBaseEntity *pEntity = static_cast<CBaseEntity*>( GET_PRIVATE( pent ) );
+	
+	if ( pEntity )
 	{
 		pEntity->SetObjectCollisionBox();
 	}
 	else
+	{
 		SetObjectCollisionBox( &pent->v );
+	}
 }
 
 
