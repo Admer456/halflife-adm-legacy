@@ -4,9 +4,14 @@
 class CFuncLoadbar : public CBaseEntity
 {
 public:
-	void Spawn();
-	void KeyValue( KeyValueData *pkvd );
-	void Use( CBaseEntity *pActivator, CBaseEntity *pOther, USE_TYPE useType, float value );
+	void			Spawn();
+	void			KeyValue( KeyValueData *pkvd );
+	void			Use( CBaseEntity *pActivator, CBaseEntity *pOther, USE_TYPE useType, float value );
+
+	virtual int		Save( CSave &save );
+	virtual int		Restore( CRestore &restore );
+
+	static	TYPEDESCRIPTION m_SaveData[];
 
 private:
 	float m_flNudge = 0.5;
@@ -23,11 +28,11 @@ private:
 	int m_iPercentage4;
 	int m_iPercentage5;
 
-	bool m_fPercentage1 = false;
-	bool m_fPercentage2 = false;
-	bool m_fPercentage3 = false;
-	bool m_fPercentage4 = false;
-	bool m_fPercentage5 = false;
+	BOOL m_fPercentage1 = false;
+	BOOL m_fPercentage2 = false;
+	BOOL m_fPercentage3 = false;
+	BOOL m_fPercentage4 = false;
+	BOOL m_fPercentage5 = false;
 
 	int m_iCompletion = 0; // completion goes from 0 to 255
 

@@ -90,6 +90,11 @@ public:
 	void				UseInt		(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value);
 	void				UseFloat	(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value);
 
+	virtual int			Save( CSave &save );
+	virtual int			Restore( CRestore &restore );
+
+	static	TYPEDESCRIPTION m_SaveData[];
+
 private:
 	string_t			m_iszNewValue;
 	string_t			m_iszTargetKey;
@@ -133,6 +138,18 @@ enum ValueOpMode
 #define SF_VAL_ODEG		128
 
 LINK_ENTITY_TO_CLASS( util_kv_operator, UtilKeyvalueOperator );
+
+TYPEDESCRIPTION UtilKeyvalueOperator::m_SaveData[] = 
+{
+	DEFINE_FIELD( UtilKeyvalueOperator, m_iszNewValue, FIELD_STRING ),
+	DEFINE_FIELD( UtilKeyvalueOperator, m_iszTargetKey, FIELD_STRING ),
+	DEFINE_FIELD( UtilKeyvalueOperator, m_iszTargetEntity, FIELD_STRING ),
+	DEFINE_FIELD( UtilKeyvalueOperator, m_iszTargetEntityForFire, FIELD_STRING ),
+	DEFINE_FIELD( UtilKeyvalueOperator, iOperatingMode, FIELD_SHORT ),
+	DEFINE_FIELD( UtilKeyvalueOperator, triggerType, FIELD_INTEGER )
+};
+
+IMPLEMENT_SAVERESTORE( UtilKeyvalueOperator, CBaseDelay );
 
 void UtilKeyvalueOperator::Spawn(void) {}
 
@@ -740,6 +757,11 @@ public:
 
 	void				Use(CBaseEntity *pActivator, CBaseEntity *pOther, USE_TYPE useType, float value);
 
+	virtual int			Save( CSave &save );
+	virtual int			Restore( CRestore &restore );
+
+	static	TYPEDESCRIPTION m_SaveData[];
+
 private:
 	int					m_iYear;
 	int					m_iMonth;
@@ -748,7 +770,19 @@ private:
 
 LINK_ENTITY_TO_CLASS( filter_date_ymd, FilterDateYMD );
 
-void FilterDateYMD::Spawn(void) {} // Nothing uwu
+TYPEDESCRIPTION FilterDateYMD::m_SaveData[] = 
+{
+	DEFINE_FIELD( FilterDateYMD, m_iYear, FIELD_INTEGER ),
+	DEFINE_FIELD( FilterDateYMD, m_iMonth, FIELD_INTEGER ),
+	DEFINE_FIELD( FilterDateYMD, m_iDay, FIELD_INTEGER )
+};
+
+IMPLEMENT_SAVERESTORE( FilterDateYMD, CBaseEntity );
+
+void FilterDateYMD::Spawn( void )
+{
+	// Nothing uwu
+}
 
 void FilterDateYMD::KeyValue(KeyValueData *pkvd)
 {
@@ -838,6 +872,11 @@ public:
 
 	void				Use(CBaseEntity *pActivator, CBaseEntity *pOther, USE_TYPE useType, float value);
 
+	virtual int			Save( CSave &save );
+	virtual int			Restore( CRestore &restore );
+
+	static	TYPEDESCRIPTION m_SaveData[];
+
 private:
 	int					m_iHour;
 	int					m_iMinute;
@@ -845,6 +884,15 @@ private:
 };
 
 LINK_ENTITY_TO_CLASS( filter_date_hms, FilterDateHMS );
+
+TYPEDESCRIPTION FilterDateHMS::m_SaveData[] =
+{
+	DEFINE_FIELD( FilterDateHMS, m_iHour, FIELD_INTEGER ),
+	DEFINE_FIELD( FilterDateHMS, m_iMinute, FIELD_INTEGER ),
+	DEFINE_FIELD( FilterDateHMS, m_iSecond, FIELD_INTEGER )
+};
+
+IMPLEMENT_SAVERESTORE( FilterDateHMS, CBaseEntity );
 
 void FilterDateHMS::Spawn(void) {} // Nothing uwu
 
@@ -938,12 +986,25 @@ public:
 
 	void				Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value);
 
+	virtual int			Save( CSave &save );
+	virtual int			Restore( CRestore &restore );
+
+	static	TYPEDESCRIPTION m_SaveData[];
+
 private:
 	int					m_iSkill;
-	int					m_iszKillTarget;
+	string_t			m_iszKillTarget;
 };
 
 LINK_ENTITY_TO_CLASS( filter_difficulty, FilterDifficulty );
+
+TYPEDESCRIPTION FilterDifficulty::m_SaveData[] = 
+{
+	DEFINE_FIELD( FilterDifficulty, m_iSkill, FIELD_INTEGER ),
+	DEFINE_FIELD( FilterDifficulty, m_iszKillTarget, FIELD_STRING ),
+};
+
+IMPLEMENT_SAVERESTORE( FilterDifficulty, CBaseEntity );
 
 void FilterDifficulty::Spawn(void)
 {
@@ -1058,6 +1119,11 @@ public:
 
 	void EXPORT			TimerThink();
 
+	virtual int			Save( CSave &save );
+	virtual int			Restore( CRestore &restore );
+
+	static	TYPEDESCRIPTION m_SaveData[];
+
 private:
 	CBaseEntity*		m_pActivator;
 	USE_TYPE			m_useType;
@@ -1067,6 +1133,17 @@ private:
 };
 
 LINK_ENTITY_TO_CLASS(trigger_timer, CTriggerTimer);
+
+TYPEDESCRIPTION CTriggerTimer::m_SaveData[] = 
+{
+	DEFINE_FIELD( CTriggerTimer, m_pActivator, FIELD_CLASSPTR ),
+	DEFINE_FIELD( CTriggerTimer, m_useType, FIELD_INTEGER ),
+	DEFINE_FIELD( CTriggerTimer, m_value, FIELD_FLOAT ),
+	DEFINE_FIELD( CTriggerTimer, m_flDelay, FIELD_FLOAT ),
+	DEFINE_FIELD( CTriggerTimer, m_flDelay2, FIELD_FLOAT ),
+};
+
+IMPLEMENT_SAVERESTORE( CTriggerTimer, CBaseEntity );
 
 void CTriggerTimer::Spawn()
 {
@@ -1175,6 +1252,11 @@ public:
 	void				SetKeyValueCustom( char szTargetKeyName[64], char szTheValue[64] );
 	void				Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value );
 
+	virtual int			Save( CSave &save );
+	virtual int			Restore( CRestore &restore );
+
+	static	TYPEDESCRIPTION m_SaveData[];
+
 private:
 	string_t			m_strMessage;
 	int					m_iPrefix;
@@ -1182,6 +1264,14 @@ private:
 };
 
 LINK_ENTITY_TO_CLASS( util_consoleprinter, CUtilConsolePrinter );
+
+TYPEDESCRIPTION CUtilConsolePrinter::m_SaveData[] = 
+{
+	DEFINE_FIELD( CUtilConsolePrinter, m_strMessage, FIELD_STRING ),
+	DEFINE_FIELD( CUtilConsolePrinter, m_iPrefix, FIELD_INTEGER )
+};
+
+IMPLEMENT_SAVERESTORE( CUtilConsolePrinter, CBaseEntity );
 
 void CUtilConsolePrinter::KeyValue( KeyValueData* pkvd )
 {
@@ -1876,7 +1966,7 @@ void CUtilRotateNoOrigin::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE
 }
 
 // Quick and lazy attempt at making a SoHL "movewith"-like thing
-// To-do: rewrite in June
+// To-do: rewrite one day lmao
 class CUtilMoveWith : public CBaseEntity
 {
 public:
@@ -1886,15 +1976,29 @@ public:
 
 	void				KeyValue( KeyValueData* pkvd );
 
+	virtual int			Save( CSave &save );
+	virtual int			Restore( CRestore &restore );
+
+	static	TYPEDESCRIPTION m_SaveData[];
+
 private:
 	string_t			m_iszTarget, m_iszParent;
 	CBaseEntity*		m_pTarget;
 	CBaseEntity*		m_pParent;
 
-	bool				m_fMoveActive;
+	BOOL				m_fMoveActive;
 };
 
 LINK_ENTITY_TO_CLASS( util_movewith, CUtilMoveWith );
+
+TYPEDESCRIPTION CUtilMoveWith::m_SaveData[] =
+{
+	DEFINE_FIELD( CUtilMoveWith, m_iszTarget, FIELD_STRING ),
+	DEFINE_FIELD( CUtilMoveWith, m_iszParent, FIELD_STRING ),
+	DEFINE_FIELD( CUtilMoveWith, m_fMoveActive, FIELD_BOOLEAN )
+};
+
+IMPLEMENT_SAVERESTORE( CUtilMoveWith, CBaseEntity );
 
 void CUtilMoveWith::Spawn()
 {
@@ -1940,10 +2044,3 @@ void CUtilMoveWith::KeyValue( KeyValueData* pkvd )
 		KeyvaluesFromBase( CBaseEntity );
 	}
 }
-
-
-
-
-
-
-

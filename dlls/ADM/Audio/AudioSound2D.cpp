@@ -8,15 +8,22 @@
 
 LINK_ENTITY_TO_CLASS( audio_sound2d, AudioSound2D );
 
+TYPEDESCRIPTION AudioSound2D::m_SaveData[] =
+{
+	DEFINE_FIELD( AudioSound2D, soundName, FIELD_STRING ),
+	DEFINE_FIELD( AudioSound2D, volume, FIELD_FLOAT ),
+	DEFINE_FIELD( AudioSound2D, channelNumber, FIELD_INTEGER )
+};
+
+IMPLEMENT_SAVERESTORE( AudioSound2D, CBaseEntity );
+
 void AudioSound2D::Spawn()
 {
-	ALERT( at_console, "AudioSound2D::Spawn\n" );
+
 }
 
 void AudioSound2D::OnPlayerJoin( CBasePlayer* player )
 {
-	ALERT( at_console, "AudioSound2D::OnPlayerJoin\n" );
-
 	CBaseEntity::OnPlayerJoin( player );
 
 	MESSAGE_BEGIN( MSG_ONE, gmsgSound2DViaString, pev->origin, player->pev );

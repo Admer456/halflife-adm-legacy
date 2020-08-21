@@ -5,6 +5,31 @@
 
 LINK_ENTITY_TO_CLASS( func_loadbar, CFuncLoadbar );
 
+TYPEDESCRIPTION CFuncLoadbar::m_SaveData[] =
+{
+	DEFINE_FIELD( CFuncLoadbar, m_iPercentage1, FIELD_INTEGER ),
+	DEFINE_FIELD( CFuncLoadbar, m_iPercentage2, FIELD_INTEGER ),
+	DEFINE_FIELD( CFuncLoadbar, m_iPercentage3, FIELD_INTEGER ),
+	DEFINE_FIELD( CFuncLoadbar, m_iPercentage4, FIELD_INTEGER ),
+	DEFINE_FIELD( CFuncLoadbar, m_iPercentage5, FIELD_INTEGER ),
+
+	DEFINE_FIELD( CFuncLoadbar, m_fPercentage1, FIELD_BOOLEAN ),
+	DEFINE_FIELD( CFuncLoadbar, m_fPercentage2, FIELD_BOOLEAN ),
+	DEFINE_FIELD( CFuncLoadbar, m_fPercentage3, FIELD_BOOLEAN ),
+	DEFINE_FIELD( CFuncLoadbar, m_fPercentage4, FIELD_BOOLEAN ),
+	DEFINE_FIELD( CFuncLoadbar, m_fPercentage5, FIELD_BOOLEAN ),
+
+	DEFINE_FIELD( CFuncLoadbar, m_iCompletion, FIELD_BOOLEAN ),
+
+	DEFINE_FIELD( CFuncLoadbar, m_iszTarget1, FIELD_STRING ),
+	DEFINE_FIELD( CFuncLoadbar, m_iszTarget2, FIELD_STRING ),
+	DEFINE_FIELD( CFuncLoadbar, m_iszTarget3, FIELD_STRING ),
+	DEFINE_FIELD( CFuncLoadbar, m_iszTarget4, FIELD_STRING ),
+	DEFINE_FIELD( CFuncLoadbar, m_iszTarget5, FIELD_STRING )
+};
+
+IMPLEMENT_SAVERESTORE( CFuncLoadbar, CBaseEntity );
+
 void CFuncLoadbar::Spawn()
 {
 	SET_MODEL( ENT( pev ), STRING( pev->model ) ); // Set brush model
@@ -107,8 +132,6 @@ void CFuncLoadbar::Use( CBaseEntity *pActivator, CBaseEntity *pOther, USE_TYPE u
 
 void CFuncLoadbar::TryPercentage1( CBaseEntity *pActivator, USE_TYPE USETYPE, float value )
 {
-	ALERT( at_console, "\nloadbar TP1, completed %d target at %d", (int)(m_iCompletion * 0.392), m_iPercentage1 );
-
 	if ( (int)(m_iCompletion * 0.392) < m_iPercentage1 )
 	{
 		return;

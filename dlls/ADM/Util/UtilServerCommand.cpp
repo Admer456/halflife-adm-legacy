@@ -5,6 +5,13 @@
 
 LINK_ENTITY_TO_CLASS( util_servercommand, CUtilServerCommand );
 
+TYPEDESCRIPTION CUtilServerCommand::m_SaveData[] =
+{
+	DEFINE_FIELD( CUtilServerCommand, command, FIELD_STRING )
+};
+
+IMPLEMENT_SAVERESTORE( CUtilServerCommand, CBaseEntity );
+
 void CUtilServerCommand::KeyValue( KeyValueData* pkvd )
 {
 	if ( KeyvalueToken( command ) )

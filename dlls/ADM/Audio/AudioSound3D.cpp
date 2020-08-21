@@ -8,15 +8,26 @@
 
 LINK_ENTITY_TO_CLASS( audio_sound3d, AudioSound3D );
 
+TYPEDESCRIPTION AudioSound3D::m_SaveData[] = 
+{
+	DEFINE_FIELD( AudioSound3D, soundName, FIELD_STRING ),
+	DEFINE_FIELD( AudioSound3D, volume, FIELD_FLOAT ),
+	DEFINE_FIELD( AudioSound3D, channelNumber, FIELD_INTEGER ),
+	DEFINE_FIELD( AudioSound3D, customSoundLocation, FIELD_VECTOR )
+};
+
+IMPLEMENT_SAVERESTORE( AudioSound3D, CBaseEntity );
+
 void AudioSound3D::Spawn()
 {
-	ALERT( at_console, "AudioSound3D::Spawn\n" );
+	// Force this entity to be transmitted even tho' it has no model and whatnot
+	// Currently, it isn't useful, but once sound position tracking gets implemented,
+	// then this will prove veeery valuable
 	SetNetworkPlowMode( ForcePlow_Everything );
 }
 
 void AudioSound3D::OnPlayerJoin( CBasePlayer* player )
 {
-	ALERT( at_console, "AudioSound3D::OnPlayerJoin\n" );
 
 	CBaseEntity::OnPlayerJoin( player );
 
