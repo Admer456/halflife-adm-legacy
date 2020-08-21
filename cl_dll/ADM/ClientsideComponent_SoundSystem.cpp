@@ -42,7 +42,7 @@ void CClientFMOD::InitExtension()
 	soundSystem->Init();
 	soundSystem->SetupChannelGroups();
 
-	soundSystem->LoadSound( BaseSound( "adm/sound/fmodtest.mp3" ) );
+	soundSystem->LoadSound( BaseSound( "fmodtest.mp3" ) );
 
 	gEngfuncs.pfnAddCommand( "sound_fmod_test", &FMODTest );
 
@@ -67,6 +67,11 @@ void CClientFMOD::Think()
 	bool isPaused = System::GetPausedMode();
 
 	g_SoundSystem->Update( isPaused, isMinimised );
+}
+
+void CClientFMOD::Reset()
+{
+	g_SoundSystem->Reset();
 }
 
 int CClientFMOD::MsgFunc_SndP2Str( const char* pszName, int iSize, void* pbuf )
@@ -98,6 +103,8 @@ int CClientFMOD::MsgFunc_SndP2Str( const char* pszName, int iSize, void* pbuf )
 	// added to the global sound system and tracked by it
 	soundSource = new SoundSource( fileName, flags );
 	soundSource->entityOwner = entityIndex;
+
+	g_SoundSystem->RegisterSound( soundSource );
 
 	return 1;
 }
@@ -136,6 +143,8 @@ int CClientFMOD::MsgFunc_SndP3Str( const char* pszName, int iSize, void* pbuf )
 	// added to the global sound system and tracked by it
 	soundSource = new SoundSourceSpatial( fileName, flags, position, velocity );
 	soundSource->entityOwner = entityIndex;
+
+	g_SoundSystem->RegisterSound( soundSource );
 
 	return 1;
 }

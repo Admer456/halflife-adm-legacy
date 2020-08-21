@@ -1,11 +1,13 @@
+#include "WRect.h"
+#include "CL_DLL.h"
+#include "../shared/ADM/DelayLoad.h"
+
 #include "SoundSystemCore.h"
 #include "BaseSound.h"
 #include "Channel.h"
 #include "SoundSource.h"
+#include "SoundSourceSpatial.h"
 
-#include "WRect.h"
-#include "CL_DLL.h"
-#include "../shared/ADM/DelayLoad.h"
 
 #include <cassert>
 
@@ -45,6 +47,49 @@ void SoundSystem::Init()
 		gEngfuncs.Con_Printf( "ERROR: Tried to instantiate SoundSystem more than once!" );
 		assert( !"Tried to instantiate SoundSystem more than once" );
 	}
+
+	memset( soundSources, 0, sizeof( ISoundSource* )*MaxSoundChannels*2 );
+}
+
+/*
+=======================================================
+	SoundSystem::Reset
+	Clears all sounds that should be cleared
+	as well as sound sources
+=======================================================
+*/
+void SoundSystem::Reset()
+{
+	if ( !g_SoundSystem )
+		return;
+
+	// TODO: Don't stop actively playing music?
+	// Stop all sounds
+	master->SetPaused( true );
+	
+	for ( auto& source : soundSources )
+	{
+		if ( !source )
+			continue;
+
+		source->Pause( true );
+		source->GetChannel()->setChannelGroup( nullptr );
+
+		// Delete all sound sources
+		delete source;
+		source = nullptr;
+	}
+
+	// Release all sounds
+	for ( auto& sound : sounds )
+	{
+		auto fmodSound = sound.GetFMODSound();
+		sound.GetFMODSound()->release();
+	}
+
+	sounds.clear();
+
+	// But do not shut down the system yet
 }
 
 /*
@@ -106,7 +151,31 @@ void SoundSystem::SetupChannelGroups()
 	master->AddGroup( &channelGroups[ChannelGroup_Dialogue] );
 }
 
-FMOD_VECTOR VectorToFMODVector( const Vector& vec )
+// In FMOD, posiive X is right, positive Y is up and positive Z is forward.
+//
+// In GoldSRC, positive X is forward, positive Y is left, and 
+// positive Z is up. It's easy to convert between these two coordinate systems.
+FMOD_VECTOR AdmSound::VectorToFMODVector( const Vector& vec )
+{
+	FMOD_VECTOR FMODVector;
+	FMODVector.z = vec.x;
+	FMODVector.x = -vec.y;
+	FMODVector.y = vec.z;
+
+	return FMODVector;
+}
+
+Vector FMODVectorToVector( const FMOD_VECTOR& vec )
+{
+	Vector v;
+	v.x = vec.z;
+	v.y = -vec.x;
+	v.z = vec.y;
+
+	return v;
+}
+
+FMOD_VECTOR VectorToFMODVectorDirect( const Vector& vec )
 {
 	FMOD_VECTOR FMODVector;
 	FMODVector.x = vec.x;
@@ -116,8 +185,10 @@ FMOD_VECTOR VectorToFMODVector( const Vector& vec )
 	return FMODVector;
 }
 
+// refugees from view.cpp
 extern vec3_t v_origin;
 extern vec3_t v_angles;
+extern vec3_t v_velocity;
 extern float v_frametime;
 
 /*
@@ -135,15 +206,11 @@ void SoundSystem::Update( bool paused, bool windowMinimised )
 	static FMOD_VECTOR FMODPlayerUp;
 
 	// Some player data
-	Vector oldPlayerPosition = v_origin;
 	Vector &playerPosition = v_origin;
-	Vector playerVelocity = (oldPlayerPosition - playerPosition) / v_frametime;
-	Vector playerAngles;
+	Vector playerVelocity = v_velocity;
+	Vector playerAngles = v_angles;
 	Vector playerForward;
 	Vector playerUp;
-
-	// Save the old position so we can calculate velocity
-	oldPlayerPosition = playerPosition;
 
 	// Get the forward and up vector
 	gEngfuncs.pfnAngleVectors( playerAngles, playerForward, nullptr, playerUp );
@@ -153,19 +220,28 @@ void SoundSystem::Update( bool paused, bool windowMinimised )
 	FMODPlayerVelocity = VectorToFMODVector( playerVelocity );
 	FMODPlayerForward = VectorToFMODVector( playerForward );
 	FMODPlayerUp = VectorToFMODVector( playerUp );
+	
+	// Update the player's "ears"
+	ErrorCheck( system->set3DListenerAttributes( 0, &FMODPlayerPosition, &FMODPlayerVelocity, &FMODPlayerForward, &FMODPlayerUp ) );
 
-	system->update();
+	SoundSourceSpatial* spatialSoundSource = nullptr;
+	Vector spatialPos = Vector( 0, 0, 0 );
 
-	for ( ISoundSource*& soundSource : soundSources )
+	for ( ISoundSource* soundSource : soundSources )
 	{
 		if ( soundSource == nullptr )
-			return;
+			continue;
 
 		soundSource->Update();
+
+		spatialSoundSource = dynamic_cast<SoundSourceSpatial*>( soundSource );
+		if ( spatialSoundSource )
+		{
+			spatialPos = spatialSoundSource->GetPosition();
+		}
 	}
 
-	// Update the player's "ears"
-	system->set3DListenerAttributes( 0, &FMODPlayerPosition, &FMODPlayerVelocity, &FMODPlayerForward, &FMODPlayerUp );
+	system->update();
 
 	if ( windowMinimised || paused )
 	{
@@ -213,6 +289,7 @@ void SoundSystem::RegisterSound( ISoundSource* soundSource )
 		if ( source == nullptr )
 		{
 			source = soundSource;
+			return;
 		}
 	}
 }
@@ -249,7 +326,7 @@ void SoundSystem::SendSoundEvent( uint16_t entIndex, uint16_t eventType )
 		if ( source->GetOwnerIndex() == entIndex )
 		{
 			source->ProcessEvent( eventType );
-			break;
+			return;
 		}
 	}
 }
@@ -265,6 +342,8 @@ void SoundSystem::LoadSound( BaseSound& sound, int flags )
 	// Use GetFullPath, as it returns the path relative to the .exe file
 	system->createSound( sound.GetFullPath(), flags, nullptr, sound );
 	sounds.push_back( sound ); 
+
+	gEngfuncs.Con_Printf( "LoadSound total %i fullpath %s\n", sounds.size(), sound.GetFullPath() );
 }
 
 /*
@@ -273,20 +352,29 @@ void SoundSystem::LoadSound( BaseSound& sound, int flags )
 	Retrieves a sound from the sound list, by name
 =======================================================
 */
-BaseSound* SoundSystem::GetSound( const char* soundPath )
+BaseSound SoundSystem::GetSound( const char* soundPath )
 {
 	// For beginner programmers who don't know:
 	// The & after auto is a reference
 	// If I didn't put it, it'd copy the values of each sound
 	// and it'd be a temporary variable, so not good for returning stuff
+
+	for ( auto &sound : sounds )
+	{
+		gEngfuncs.Con_Printf( "Sound %s    %s\n", sound.GetPath(), sound.GetFullPath() );
+	}
+
 	for ( auto &sound : sounds )
 	{
 		if ( sound.GetPath() == nullptr )
 			continue;
 
+		gEngfuncs.Con_Printf( "Before strcmp %s %s\n", soundPath, sound.GetPath() );
+
 		if ( !strcmp( soundPath, sound.GetPath() ) )
 		{
-			return &sound;
+			gEngfuncs.Con_Printf( "After strcmp %s %s\n", soundPath, sound.GetPath() );
+			return sound;
 		}
 	}
 
@@ -431,6 +519,18 @@ unsigned short SoundSystem::IDFromPath( const char* path )
 	}
 
 	return -1;
+}
+
+#define Print gEngfuncs.Con_Printf
+
+void SoundSystem::PrintDebugInfo()
+{
+	Print( "PrintDebugInfo\n" );
+
+	for ( auto& sound : sounds )
+	{
+		Print( "Sound %x path %s\n", sound.GetFMODSound(), sound.GetPath() );
+	}
 }
 
 /*

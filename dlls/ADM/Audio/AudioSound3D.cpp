@@ -6,6 +6,8 @@
 #include "AudioShared.h"
 #include "AudioSound3D.h"
 
+LINK_ENTITY_TO_CLASS( audio_sound3d, AudioSound3D );
+
 void AudioSound3D::Spawn()
 {
 	ALERT( at_console, "AudioSound3D::Spawn\n" );

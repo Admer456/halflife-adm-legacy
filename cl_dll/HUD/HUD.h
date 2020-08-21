@@ -554,13 +554,13 @@ private:
 class CBaseClientExtension : public CHudBase
 {
 public:
-	int Init( void );
-	virtual void InitExtension( void ) {};
-	virtual int VidInit( void ) { return 1; };
+	int				Init( void );
+	virtual void	InitExtension( void ) {};
+	virtual int		VidInit( void ) { return 1; };
 
-	virtual int Draw( float flTime ) { return 1; };
-	virtual void Think( void ) {};
-	virtual void Reset( void ) {};
+	virtual int		Draw( float flTime ) { return 1; };
+	virtual void	Think( void ) {};
+	virtual void	Reset( void ) {};
 };
 
 enum MusicState
@@ -576,7 +576,8 @@ class CClientFMOD : public CBaseClientExtension
 {
 public:
 	void			InitExtension( void );
-	void			Think( void );
+	void			Think( void ) override;
+	void			Reset() override;
 
 	// Since the messages aren't allowed to have long names (longer than 11 chars),
 	// I must shorten them a TON. Forgive me.

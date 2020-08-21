@@ -1628,7 +1628,7 @@ void CBasePlayer::PlayerUse ( void )
 					hasHit = true;
 					isWorld = false;
 
-					ALERT( at_console, "Hit %s indirectly\n", STRING( pObject->pev->classname ) );
+					//ALERT( at_console, "Hit %s indirectly\n", STRING( pObject->pev->classname ) );
 				}
 			}
 		}
@@ -1637,7 +1637,7 @@ void CBasePlayer::PlayerUse ( void )
 	// Found an object
 	if ( hasHit && !isWorld )
 	{
-		ALERT( at_console, "Hit the object we're looking at! %s\n", STRING( pObject->pev->classname ) );
+		//ALERT( at_console, "Hit the object we're looking at! %s\n", STRING( pObject->pev->classname ) );
 
 		int caps = pObject->ObjectCaps();
 
@@ -1661,7 +1661,7 @@ void CBasePlayer::PlayerUse ( void )
 
 	else
 	{
-		ALERT( at_console, "Did NOT hit the object we're looking at\n" );
+		//ALERT( at_console, "Did NOT hit the object we're looking at\n" );
 
 		if ( m_afButtonPressed & IN_USE )
 			EMIT_SOUND( ENT(pev), CHAN_ITEM, "common/wpn_denyselect.wav", 0.4, ATTN_NORM);

@@ -12,12 +12,22 @@ namespace AdmSound
 		void			SetPosition( const Vector& newPosition );
 		void			SetVelocity( const Vector& newVelocity );
 
+		Vector			GetPosition()
+		{
+			Vector pos;
+			pos.x = position.x;
+			pos.y = position.y;
+			pos.z = position.z;
+
+			return pos;
+		}
+
 	private:
 		FMOD_VECTOR		position;
 		FMOD_VECTOR		velocity;
 
-		float			minDistance;
-		float			maxDistance;
+		float			minDistance{ 0.1f };
+		float			maxDistance{ 512.0f };
 
 		bool			needsUpdate{ false };
 	};

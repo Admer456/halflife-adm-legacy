@@ -16,7 +16,9 @@ namespace AdmSound
 		SetPosition( soundPosition );
 		SetVelocity( soundVelocity );
 
+		sound.GetFMODSound()->setMode( FMOD_3D );
 		channel->setMode( FMOD_3D );
+		channel->set3DSpread( 45.f ); // Set some stereo spread in case we have a non-mono sound sample
 		channel->set3DMinMaxDistance( minDistance, maxDistance );
 	}
 
@@ -24,31 +26,23 @@ namespace AdmSound
 	{
 		SoundSource::Update();
 
-		// Update 3D sound properties only when needed 
-		if ( needsUpdate )
-		{
-			channel->set3DAttributes( &position, &velocity );
-			channel->set3DMinMaxDistance( minDistance, maxDistance );
+		channel->set3DAttributes( &position, &velocity );
+		//channel->set3DMinMaxDistance( minDistance, maxDistance );
 
-			needsUpdate = false;
-		}
+		// This bool will be removed later
+		// Turns out, the position and velocity need to be updated every frame
+		needsUpdate = false;
 	}
 
 	void SoundSourceSpatial::SetPosition( const Vector& newPosition )
 	{
-		position.x = newPosition.x;
-		position.y = newPosition.y;
-		position.z = newPosition.z;
-
+		position = VectorToFMODVector( newPosition );
 		needsUpdate = true;
 	}
 
 	void SoundSourceSpatial::SetVelocity( const Vector& newVelocity )
 	{
-		velocity.x = newVelocity.x;
-		velocity.y = newVelocity.y;
-		velocity.z = newVelocity.z;
-
+		velocity = VectorToFMODVector( newVelocity );
 		needsUpdate = true;
 	}
 }

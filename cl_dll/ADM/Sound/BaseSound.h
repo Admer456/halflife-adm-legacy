@@ -14,12 +14,14 @@ namespace AdmSound
 		BaseSound( unsigned short soundID )
 			: ID( soundID )
 		{
-			path = g_SoundSystem->PathFromID( soundID );
+			GetFullPath();
+			strcpy( path, g_SoundSystem->PathFromID( soundID ) );
 		}
 
 		BaseSound( const char* soundPath )
-			: path( soundPath )//, ID(soundID)
 		{
+			strcpy( path, soundPath );
+			GetFullPath();
 			ID = g_SoundSystem->IDFromPath( soundPath );
 		}
 
@@ -48,7 +50,7 @@ namespace AdmSound
 
 	protected:
 		FMOD::Sound*	sound = nullptr;	// Done by SoundSystem::LoadSound
-		const char*		path = nullptr;
+		char			path[_MAX_PATH];
 		char			fullPath[_MAX_PATH];
 		unsigned short	ID;
 	};

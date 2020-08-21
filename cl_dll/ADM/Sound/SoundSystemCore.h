@@ -80,6 +80,7 @@ namespace AdmSound
 	{
 	public:
 		void			Init();
+		void			Reset();
 		void			Shutdown();
 
 		// Initialises all channel groups
@@ -106,7 +107,7 @@ namespace AdmSound
 		void			LoadSound( BaseSound& sound, int flags = FMOD_DEFAULT );
 
 		// Utility functions to get individual sounds
-		BaseSound*		GetSound( const char* soundPath );
+		BaseSound		GetSound( const char* soundPath );
 		BaseSound*		GetSound( unsigned short soundID );
 
 		// Low-level functions that will play a sound in the default channel
@@ -128,6 +129,8 @@ namespace AdmSound
 
 		// The maximum number of channels = maximum number of sounds playing at once
 		constexpr static int MaxSoundChannels = 128;
+
+		void			PrintDebugInfo();
 
 	private:
 		// Core system stuff
@@ -171,6 +174,9 @@ namespace AdmSound
 	static_assert( Channel_Max <= 32, "There can be no more than 32 channels" );
 
 	void ErrorCheck( FMOD_RESULT result );
+
+	FMOD_VECTOR VectorToFMODVector( const Vector& vec );
+	Vector FMODVectorToVector( const FMOD_VECTOR& vec );
 }
 
 //extern AdmSound::SoundSystem* g_SoundSystem;

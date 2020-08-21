@@ -1,10 +1,10 @@
+#include "WRect.h"
+#include "CL_DLL.h"
+
 #include "SoundSystemCore.h"
 #include "BaseSound.h"
 #include "Channel.h"
 #include "SoundSource.h"
-
-#include "WRect.h"
-#include "CL_DLL.h"
 
 using namespace AdmSound;
 
@@ -14,17 +14,21 @@ SoundSource::SoundSource( const char* soundPath, unsigned int soundFlags, unsign
 	sound = g_SoundSystem->GetSound( soundPath );
 	system = g_SoundSystem->GetFMODSystem();
 
+	g_SoundSystem->PrintDebugInfo();
+
+	gEngfuncs.Con_Printf( "Loaded sound %s ptr %i\n", sound.GetFullPath(), sound.GetFMODSound() );
+
 	// The sound is stopped at first
 	state = SoundState::Stopped;
 	flags = soundFlags;
 
-	soundDuration = sound->GetSoundDuration();
+	soundDuration = sound.GetSoundDuration();
 
 	// Initialise the channel
-	system->playSound( *sound, nullptr, true, &channel );
+	system->playSound( sound, nullptr, true, &channel );
 
-	// Add the sound into the array
-	g_SoundSystem->RegisterSound( this );
+	//// Add the sound into the array
+	//g_SoundSystem->RegisterSound( this );
 
 	// If it does not start silent, play it straight away
 	if ( !(soundFlags & SoundSource_StartSilent) )
@@ -47,6 +51,8 @@ SoundSource::SoundSource( const char* soundPath, unsigned int soundFlags, unsign
 
 void SoundSource::Play( bool fromStart )
 {
+	g_SoundSystem->PrintDebugInfo();
+
 	// Unpause the channel
 	channel->setPaused( false );
 	
@@ -54,8 +60,10 @@ void SoundSource::Play( bool fromStart )
 	if ( fromStart )
 	{
 		channel->setPosition( 0, FMOD_TIMEUNIT_MS );
-		system->playSound( *sound, nullptr, false, &channel );
+		system->playSound( sound, nullptr, false, &channel );
 	}
+
+	gEngfuncs.Con_Printf( "Playing sound %x channel %x\n", sound.GetFMODSound(), channel );
 
 	// Get the time when we started playin' this
 	// The sound system will keep track of it and eventually

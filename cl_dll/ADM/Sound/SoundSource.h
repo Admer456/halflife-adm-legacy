@@ -60,7 +60,7 @@ namespace AdmSound
 	protected:
 		FMOD::System*	system{ nullptr };
 		FMOD::Channel*	channel{ nullptr };
-		BaseSound*		sound{ nullptr };
+		BaseSound		sound;
 		SoundState		state;
 
 		unsigned int	flags{ 0 };

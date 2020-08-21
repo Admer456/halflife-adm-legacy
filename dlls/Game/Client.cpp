@@ -1262,10 +1262,10 @@ int AddToFullPack( struct entity_state_s *state, int e, edict_t *ent, edict_t *h
 			return 0;
 		}
 	}
-	else
-	{
-		ALERT( at_console, "This is a special entity! %i\n", ent->serialnumber );
-	}
+	//else
+	//{
+	//	//ALERT( at_console, "This is a special entity! %i\n", ent->serialnumber );
+	//}
 
 	if ( specialNetworkType != ForcePlow_ExcludePrediction )
 	{

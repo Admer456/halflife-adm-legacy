@@ -1,3 +1,6 @@
+#include "WRect.h"
+#include "CL_DLL.h"
+
 #include "SoundSystemCore.h"
 #include "BaseSound.h"
 #include "Channel.h"
