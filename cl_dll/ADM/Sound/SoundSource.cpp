@@ -14,10 +14,6 @@ SoundSource::SoundSource( const char* soundPath, unsigned int soundFlags, unsign
 	sound = g_SoundSystem->GetSound( soundPath );
 	system = g_SoundSystem->GetFMODSystem();
 
-	g_SoundSystem->PrintDebugInfo();
-
-	gEngfuncs.Con_Printf( "Loaded sound %s ptr %i\n", sound.GetFullPath(), sound.GetFMODSound() );
-
 	// The sound is stopped at first
 	state = SoundState::Stopped;
 	flags = soundFlags;
@@ -51,8 +47,6 @@ SoundSource::SoundSource( const char* soundPath, unsigned int soundFlags, unsign
 
 void SoundSource::Play( bool fromStart )
 {
-	g_SoundSystem->PrintDebugInfo();
-
 	// Unpause the channel
 	channel->setPaused( false );
 	

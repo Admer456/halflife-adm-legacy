@@ -31,11 +31,11 @@ void SoundSystem::Init()
 #endif
 
 	// Start the FMOD sound system
-	ErrorCheck( FMOD::System_Create( &system ) );
-	ErrorCheck( system->init( 128, FMOD_INIT_NORMAL, extraDriverData ) );
+	ErrorCheck( FMOD::System_Create( &system ), "Created the FMOD system" );
+	ErrorCheck( system->init( 128, FMOD_INIT_NORMAL, extraDriverData ), "Initialised the FMOD system" );
 
 	// Set up the 3D listener settings
-	ErrorCheck( system->set3DSettings( DopplerScale, DistanceFactor, RolloffScale ) );
+	ErrorCheck( system->set3DSettings( DopplerScale, DistanceFactor, RolloffScale ), "Listener settings initialised" );
 
 	// Enforce that this is a singleton
 	if ( g_SoundSystem == nullptr )
@@ -100,7 +100,7 @@ void SoundSystem::Reset()
 */
 void SoundSystem::Shutdown()
 {
-	ErrorCheck( system->release() );
+	ErrorCheck( system->release(), "Shutting down..." );
 }
 
 /*
@@ -341,9 +341,7 @@ void SoundSystem::LoadSound( BaseSound& sound, int flags )
 {
 	// Use GetFullPath, as it returns the path relative to the .exe file
 	system->createSound( sound.GetFullPath(), flags, nullptr, sound );
-	sounds.push_back( sound ); 
-
-	gEngfuncs.Con_Printf( "LoadSound total %i fullpath %s\n", sounds.size(), sound.GetFullPath() );
+	sounds.push_back( sound );
 }
 
 /*
@@ -361,19 +359,11 @@ BaseSound SoundSystem::GetSound( const char* soundPath )
 
 	for ( auto &sound : sounds )
 	{
-		gEngfuncs.Con_Printf( "Sound %s    %s\n", sound.GetPath(), sound.GetFullPath() );
-	}
-
-	for ( auto &sound : sounds )
-	{
 		if ( sound.GetPath() == nullptr )
 			continue;
 
-		gEngfuncs.Con_Printf( "Before strcmp %s %s\n", soundPath, sound.GetPath() );
-
 		if ( !strcmp( soundPath, sound.GetPath() ) )
 		{
-			gEngfuncs.Con_Printf( "After strcmp %s %s\n", soundPath, sound.GetPath() );
 			return sound;
 		}
 	}
@@ -540,15 +530,15 @@ void SoundSystem::PrintDebugInfo()
 	Example: ErrorCheck( system->update() );
 =======================================================
 */
-void AdmSound::ErrorCheck( FMOD_RESULT result )
+void AdmSound::ErrorCheck( FMOD_RESULT result, const char* messageIfOkay )
 {
 	if ( result != FMOD_OK )
 	{
-		gEngfuncs.Con_DPrintf( "Client FMOD\n%s\n", FMOD_ErrorString( result ) );
+		gEngfuncs.Con_DPrintf( "## Client FMOD: %s\n", FMOD_ErrorString( result ) );
 	}
 
-	else
+	else if ( messageIfOkay )
 	{
-		gEngfuncs.Con_DPrintf( "Client FMOD: All OK at this step\n" );
+		gEngfuncs.Con_DPrintf( "## Client FMOD: %s\n", messageIfOkay );
 	}
 }

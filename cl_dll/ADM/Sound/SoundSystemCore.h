@@ -173,7 +173,7 @@ namespace AdmSound
 
 	static_assert( Channel_Max <= 32, "There can be no more than 32 channels" );
 
-	void ErrorCheck( FMOD_RESULT result );
+	void ErrorCheck( FMOD_RESULT result, const char* messageIfOkay = nullptr );
 
 	FMOD_VECTOR VectorToFMODVector( const Vector& vec );
 	Vector FMODVectorToVector( const FMOD_VECTOR& vec );
