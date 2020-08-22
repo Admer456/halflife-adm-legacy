@@ -54,6 +54,8 @@
     <OutDir>..\..\bin\$(Configuration)\dlls\</OutDir>
     <IntDir>$(Configuration)\$(ProjectName)\int\</IntDir>
     <TargetName>hl</TargetName>
+    <IncludePath>..\..\dlls\bullet;$(IncludePath)</IncludePath>
+    <LibraryPath>..\..\dlls\bullet;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -72,8 +74,9 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ModuleDefinitionFile>$(ProjectDir)..\..\dlls\hl.def</ModuleDefinitionFile>
       <AdditionalLibraryDirectories>..\..\dlls\bullet\lib\Debug;..\..\FMOD\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>..\..\external\bullet\lib\Debug\BulletDynamics_Debug.lib;..\..\external\bullet\lib\Debug\BulletCollision_Debug.lib;..\..\external\bullet\lib\Debug\LinearMath_Debug.lib;..\..\external\bullet\lib\Debug\ConvexDecomposition_Debug.lib;..\..\external\fmod\core\lib\x86\fmod_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <DelayLoadDLLs>..\..\external\FMOD\lib\fmod.dll</DelayLoadDLLs>
+      <AdditionalDependencies>..\..\external\bullet\lib\Debug\BulletDynamics_Debug.lib;..\..\external\bullet\lib\Debug\BulletCollision_Debug.lib;..\..\external\bullet\lib\Debug\LinearMath_Debug.lib;..\..\external\bullet\lib\Debug\ConvexDecomposition_Debug.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <DelayLoadDLLs>
+      </DelayLoadDLLs>
     </Link>
     <PostBuildEvent>
       <Command>
@@ -90,7 +93,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;NDEBUG;_WINDOWS;QUIVER;VOXEL;QUAKE2;VALVE_DLL;CLIENT_WEAPONS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\..\dlls;..\..\engine;..\..\common;..\..\pm_shared;..\..\game_shared;..\..\public;..\..\external\FMOD\inc;..\..\external\bullet;..\..\external;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\dlls;..\..\engine;..\..\common;..\..\pm_shared;..\..\game_shared;..\..\public;..\..\external\fmod\core\inc;..\..\external\fmod\studio\inc;..\..\external\bullet;..\..\external;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <AdditionalOptions>/Zc:threadSafeInit- %(AdditionalOptions)</AdditionalOptions>
@@ -101,6 +104,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <ModuleDefinitionFile>$(ProjectDir)..\..\dlls\hl.def</ModuleDefinitionFile>
+      <AdditionalDependencies>..\..\external\bullet\lib\Release\BulletDynamics.lib;..\..\external\bullet\lib\Release\BulletCollision.lib;..\..\external\bullet\lib\Release\LinearMath.lib;..\..\external\bullet\lib\Release\ConvexDecomposition.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>
