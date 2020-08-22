@@ -63,7 +63,7 @@ class CApache : public CBaseMonster
 	int  TakeDamage( entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType );
 	void TraceAttack( entvars_t *pevAttacker, float flDamage, Vector vecDir, TraceResult *ptr, int bitsDamageType);
 
-	COspreyDustManager* pDuster;
+	//COspreyDustManager* pDuster;
 
 	int m_iRockets;
 	float m_flForce;
@@ -122,9 +122,9 @@ void CApache :: Spawn( void )
 {
 	Precache( );
 
-	pDuster = COspreyDustManager::CreateManager();
-	pDuster->m_pParent = this;
-	pDuster->Spawn();
+	//pDuster = COspreyDustManager::CreateManager();
+	//pDuster->m_pParent = this;
+	//pDuster->Spawn();
 
 	// motor
 	pev->movetype = MOVETYPE_FLY;
