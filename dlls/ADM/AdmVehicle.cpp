@@ -31,7 +31,7 @@
 // This will get a total rewrite by v0.2.0
 
 // Welcome to the beginning of this monstrosity!
-// Scroll all the way down until line 469 if you wanna take a look at a vehicle class template.
+// Scroll all the way down until line 488 if you wanna take a look at a vehicle class template.
 // CBaseVehicle handles all the work for you, and all you gotta do
 // is to create a new vehicle class, and just define a VehicleInit() function.
 // It's as easy as that. ;)

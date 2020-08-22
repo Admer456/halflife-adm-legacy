@@ -4,6 +4,8 @@
 
 	Story entities and logic.
 
+	22nd August 2020: Dafuq is this?
+	I wrote this a looooooong time ago, doesn't make much sense TBH
 */
 
 #include "Base/ExtDLL.h"

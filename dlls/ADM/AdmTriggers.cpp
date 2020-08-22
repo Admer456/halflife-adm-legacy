@@ -1189,8 +1189,6 @@ void CTriggerTimer::KeyValue(KeyValueData *pkvd)
 
 void EXPORT CTriggerTimer::UseStart(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value)
 {
-	ALERT(at_console, "\nCTriggerTimer::UseStart");
-
 	m_pActivator = pActivator;
 	m_useType = useType;
 	m_value = value;
@@ -1206,8 +1204,6 @@ void EXPORT CTriggerTimer::UseStart(CBaseEntity *pActivator, CBaseEntity *pCalle
 
 void EXPORT CTriggerTimer::UseStop(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value)
 {
-	ALERT(at_console, "\nCTriggerTimer::UseStop");
-
 	m_pActivator = pActivator;
 	m_useType = useType;
 	m_value = value;
@@ -1219,8 +1215,6 @@ void EXPORT CTriggerTimer::UseStop(CBaseEntity *pActivator, CBaseEntity *pCaller
 void EXPORT CTriggerTimer::TimerThink(void)
 {
 	SUB_UseTargets(m_pActivator, m_useType, m_value);
-
-	ALERT(at_console, "\nCTriggerTimer::TimerThink");
 
 	if (m_flDelay2 <= m_flDelay)
 		pev->nextthink = gpGlobals->time + m_flDelay;
