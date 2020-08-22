@@ -575,6 +575,19 @@
 //		ENV_ ENTITIIES
 // ========================================================================================================= //
 
+@PointClass base(Targetname) size(-4 -4 -4, 4 4 4) = env_aura : "White flying sprites"
+[
+
+]
+
+// I programmed this for Valentine's Day in 2020
+// so I thought I might as well leave it here lmao
+// Love y'all <3
+@PointClass base(Targetname) size(-4 -4 -4, 4 4 4) = env_heart : "Red flying heart and sprites"
+[
+
+]
+
 @PointClass base(Targetname) size(-4 -4 -4, 4 4 4) iconsprite("sprites/admdev/env_sky2d.spr") = env_sky2d : "Skybox-changing entity - trigger it to change and/or update the sky - sky names are relative to gfx/env/ with no extension, e.g. dusk"
 [
 	skyName(string) : "Sky name" : "desert"
@@ -785,6 +798,12 @@
 		4: "ERROR:"
 		5: "Logged to server"
 	]
+]
+
+@PointClass base(Targetname) = util_movewith : "Attaches one entity to another entity's origin"
+[
+	m_iszTarget(string) : "Target entity"
+	m_iszParent(string) : "Parent entity"
 ]
 
 @PointClass base(Targetname) = util_servercommand : "Sends a command to the server"
