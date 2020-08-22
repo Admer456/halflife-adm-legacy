@@ -5,6 +5,7 @@ ADM is a Half-Life mod base that aims to bring quality-of-life features while ma
 You can track exact progress, suggest features, ask questions about features etc. on the [Trello board](https://trello.com/b/mbpXU4ff).
 
 Current target version: 0.1.0  
+Current released version: 0.1.0A1  
 Check out what this means [on the wiki](https://github.com/Admer456/halflife-ADM/wiki)!  
 
 ## **Features:**
@@ -26,7 +27,7 @@ Check out what this means [on the wiki](https://github.com/Admer456/halflife-ADM
 
 ## **Downloads:**
 
-*None at the moment! Please wait until the 22nd of August.*  
+Check out [Releases](https://github.com/Admer456/halflife-ADM/releases).   
 
 Half Life 1 SDK LICENSE
 ======================
