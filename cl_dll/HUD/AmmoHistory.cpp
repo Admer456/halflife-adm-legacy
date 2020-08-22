@@ -107,27 +107,16 @@ void HistoryResource :: CheckClearHistory( void )
 //
 int HistoryResource :: DrawAmmoHistory( float flTime )
 {
-	static float ygroup[ MAX_HISTORY ] = { ScreenHeight*0.2 };
-	static float oldTime = 0;
-
 	for ( int i = 0; i < MAX_HISTORY; i++ )
 	{
 		if ( rgAmmoHistory[i].type )
 		{
 			rgAmmoHistory[i].DisplayTime = V_min( rgAmmoHistory[i].DisplayTime, gHUD.m_flTime + HISTORY_DRAW_TIME );
 
-//			if ( rgAmmoHistory[i].DisplayTime <= flTime )
-//			{  // pic drawing time has expired
-//				memset( &rgAmmoHistory[i], 0, sizeof(HIST_ITEM) );
-//				CheckClearHistory();
-//
-//				ygroup[ i ] = 0;
-//			}
-			if ( ygroup[i] > ScreenHeight*0.8 || ygroup[i] < 0 )
-			{
-				memset( &rgAmmoHistory[ i ], 0, sizeof( HIST_ITEM ) );
+			if ( rgAmmoHistory[i].DisplayTime <= flTime )
+			{  // pic drawing time has expired
+				memset( &rgAmmoHistory[i], 0, sizeof( HIST_ITEM ) );
 				CheckClearHistory();
-				ygroup[ i ] = ScreenHeight * 0.2;
 			}
 
 			else if ( rgAmmoHistory[i].type == HISTSLOT_AMMO )
@@ -136,38 +125,13 @@ int HistoryResource :: DrawAmmoHistory( float flTime )
 				HSPRITE *spr = gWR.GetAmmoPicFromWeapon( rgAmmoHistory[i].iId, rcPic );
 
 				int r, g, b;
-				UnpackRGB(r,g,b, RGB_YELLOWISH);
+				UnpackRGB( r, g, b, RGB_YELLOWISH );
+				float scale = (rgAmmoHistory[i].DisplayTime - flTime) * 80;
+				ScaleColors( r, g, b, V_min( scale, 255 ) );
 
 				// Draw the pic
+				int ypos = ScreenHeight - (AMMO_PICKUP_PICK_HEIGHT + (AMMO_PICKUP_GAP * i));
 				int xpos = ScreenWidth - 24;
-				int ypos = ygroup[ i ];
-
-				int delta = (ScreenHeight*0.8) - ypos;
-				float alpha = 255.f;
-
-				if ( delta < 100 )
-					alpha = delta * 2.5;
-				else if ( delta > ScreenHeight*0.8 - 100 )
-					alpha = (ScreenHeight*0.8 - delta) * 2.5;
-
-				ScaleColors( r, g, b, (V_min( alpha, 255 ) * CVAR_GET_FLOAT( "adm_hud_a" )) );
-
-				ygroup[ i ] = ygroup[ i ] * 0.99 + ScreenHeight * 0.01;
-
-				if ( i > 0 )
-				{
-					if ( ygroup[ i - 1 ] - 20 > ygroup[ i ] )
-					{
-						int ydelta = ygroup[ i - 1 ] - ygroup[ i ];
-						if ( ydelta > 30 )
-							ydelta = 0;
-
-						ypos = ygroup[ i ] * 0.3 + (ygroup[ i - 1 ] - 60 - ydelta) * 0.7;
-
-						ygroup[ i ] = ypos;
-					}
-				}
-
 				if ( spr && *spr )    // weapon isn't loaded yet so just don't draw the pic
 				{ // the dll has to make sure it has sent info the weapons you need
 					SPR_Set( *spr, r, g, b );
@@ -186,40 +150,16 @@ int HistoryResource :: DrawAmmoHistory( float flTime )
 					return 1;  // we don't know about the weapon yet, so don't draw anything
 
 				int r, g, b;
-				UnpackRGB(r,g,b, RGB_YELLOWISH);
+				UnpackRGB( r, g, b, RGB_YELLOWISH );
 
 				if ( !gWR.HasAmmo( weap ) )
-					UnpackRGB(r,g,b, RGB_REDISH);	// if the weapon doesn't have ammo, display it as red
+					UnpackRGB( r, g, b, RGB_REDISH );	// if the weapon doesn't have ammo, display it as red
 
+				float scale = (rgAmmoHistory[i].DisplayTime - flTime) * 80;
+				ScaleColors( r, g, b, V_min( scale, 255 ) );
+
+				int ypos = ScreenHeight - (AMMO_PICKUP_PICK_HEIGHT + (AMMO_PICKUP_GAP * i));
 				int xpos = ScreenWidth - (weap->rcInactive.right - weap->rcInactive.left);
-				int ypos = ygroup[ i ];
-
-				int delta = (ScreenHeight*0.8) - ypos;
-				float alpha = 255.f;
-
-				if ( delta < 100 )
-					alpha = delta * 2.5;
-				else if ( delta > ScreenHeight*0.8 - 100 )
-					alpha = (ScreenHeight*0.8 - delta) * 2.5;
-
-				ScaleColors(r, g, b, (V_min( alpha, 255) * CVAR_GET_FLOAT("adm_hud_a")));
-			
-				ygroup[ i ] = ygroup[i] * 0.99 + ScreenHeight * 0.01;
-
-				if ( i > 0 )
-				{
-					if ( ygroup[ i - 1 ] - 20 > ygroup[ i ] )
-					{
-						int ydelta = ygroup[ i - 1 ] - ygroup[ i ];
-						if ( ydelta > 30 )
-							ydelta = 0;
-
-						ypos = ygroup[ i ] * 0.3 + (ygroup[ i - 1 ] - 60 - ydelta) * 0.7;
-
-						ygroup[ i ] = ypos;
-					}
-				}
-
 				SPR_Set( weap->hInactive, r, g, b );
 				SPR_DrawAdditive( 0, xpos, ypos, &weap->rcInactive );
 			}
@@ -233,46 +173,18 @@ int HistoryResource :: DrawAmmoHistory( float flTime )
 
 				wrect_t rect = gHUD.GetSpriteRect( rgAmmoHistory[i].iId );
 
-				UnpackRGB(r,g,b, RGB_YELLOWISH);
+				UnpackRGB( r, g, b, RGB_YELLOWISH );
+				float scale = (rgAmmoHistory[i].DisplayTime - flTime) * 80;
+				ScaleColors( r, g, b, V_min( scale, 255 ) );
 
+				int ypos = ScreenHeight - (AMMO_PICKUP_PICK_HEIGHT + (AMMO_PICKUP_GAP * i));
 				int xpos = ScreenWidth - (rect.right - rect.left) - 10;
-				int ypos = ygroup[ i ];
-
-				int delta = (ScreenHeight*0.8) - ypos;
-				float alpha = 255.f;
-
-				if ( delta < 100 )
-					alpha = delta * 2.5;
-				else if ( delta > ScreenHeight*0.8 - 100 )
-					alpha = (ScreenHeight*0.8 - delta) * 2.5;
-
-				ScaleColors( r, g, b, (V_min( alpha, 255 ) * CVAR_GET_FLOAT( "adm_hud_a" )) );
-
-				ygroup[ i ] = ygroup[ i ] * 0.99 + ScreenHeight * 0.01;
-
-				if ( i > 0 )
-				{
-					if ( ygroup[ i - 1 ] - 20 > ygroup[ i ] )
-					{
-						int ydelta = ygroup[ i - 1 ] - ygroup[ i ];
-						if ( ydelta > 30 )
-							ydelta = 0;
-
-						ypos = ygroup[ i ] * 0.3 + (ygroup[ i - 1 ] - 60 - ydelta) * 0.7;
-
-						ygroup[ i ] = ypos;
-					}
-				}
 
 				SPR_Set( gHUD.GetSprite( rgAmmoHistory[i].iId ), r, g, b );
 				SPR_DrawAdditive( 0, xpos, ypos, &rect );
-
-			//	gEngfuncs.Con_Printf( "\nxpos %d \t\t ypos %d", xpos, ypos );
 			}
 		}
 	}
-
-	oldTime = flTime;
 
 	return 1;
 }
