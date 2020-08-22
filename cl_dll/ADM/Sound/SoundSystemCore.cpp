@@ -165,7 +165,7 @@ FMOD_VECTOR AdmSound::VectorToFMODVector( const Vector& vec )
 	return FMODVector;
 }
 
-Vector FMODVectorToVector( const FMOD_VECTOR& vec )
+Vector AdmSound::FMODVectorToVector( const FMOD_VECTOR& vec )
 {
 	Vector v;
 	v.x = vec.z;

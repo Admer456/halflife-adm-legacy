@@ -73,7 +73,7 @@ namespace AdmSound
 	// In this case, there is about 39.97 GoldSRC units in a metre
 	constexpr float DistanceFactor = 39.970078740157480314f;
 
-	constexpr float DopplerScale = 1.0f;
+	constexpr float DopplerScale = 0.25f;
 	constexpr float RolloffScale = 1.0f;
 
 	class SoundSystem
