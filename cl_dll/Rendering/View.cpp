@@ -1071,13 +1071,22 @@ void V_CalcRefdef_ADM( struct ref_params_s* pparams )
 	if ( flUpMove < 0 )
 		flUpMove *= 0.36;
 
+	// This constant works well lmao
+	static float bobFrequencyModifier = 1.33;
+
+	// If we're not on ground, slow stuff down
+	if ( !pparams->onground )
+		bobFrequencyModifier = bobFrequencyModifier * 0.9 + 0.25*0.1;
+	else
+		bobFrequencyModifier = bobFrequencyModifier * 0.9 + 1.33*0.1;
+
 	// transform the view offset by the model's matrix to get the offset from
 	// model origin for the view
-	V_CalcBob(pparams, 1.60 + (flForwardMove / 4.0),					VB_SIN, bobtimes[0], v_positionbob,		lasttimes[0]);
-	V_CalcBob(pparams, 0.8 + (flForwardMove / 8.0),						VB_SIN, bobtimes[1], v_positionbob_sway,lasttimes[1]);
-	V_CalcBob(pparams, rollBobFrequency  + (flForwardMove / 8.0),		VB_SIN, bobtimes[2], v_rollbob_y,		lasttimes[2]);
-	V_CalcBob(pparams, (rollBobFrequency + (flForwardMove / 8.0))*2,	VB_SIN, bobtimes[3], v_rollbob_p,		lasttimes[3]);
-	V_CalcBob(pparams, rollBobFrequency  + (flForwardMove / 8.0),		VB_SIN, bobtimes[4], v_rollbob_r,		lasttimes[4]);
+	V_CalcBob( pparams, 1.60 * bobFrequencyModifier,				VB_SIN, bobtimes[0], v_positionbob, lasttimes[0] );
+	V_CalcBob( pparams, 0.8 * bobFrequencyModifier,					VB_SIN, bobtimes[1], v_positionbob_sway, lasttimes[1] );
+	V_CalcBob( pparams, rollBobFrequency * bobFrequencyModifier,	VB_SIN, bobtimes[2], v_rollbob_y, lasttimes[2] );
+	V_CalcBob( pparams, rollBobFrequency * 2 * bobFrequencyModifier, VB_SIN, bobtimes[3], v_rollbob_p, lasttimes[3] );
+	V_CalcBob( pparams, rollBobFrequency * 2 * bobFrequencyModifier, VB_SIN, bobtimes[4], v_rollbob_r, lasttimes[4] );
 
 	v_positionbob *= bobPos;
 	v_positionbob_sway *= bobPosSway;
