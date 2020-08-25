@@ -1,4 +1,10 @@
-rem @echo off
-rem echo %~f2
-p4 edit %~f2
-@copy %1 %~f2
+rem https://www.sourcemodding.com/tutorials/goldsrc/projects/where-is-poppy/setting-up-a-goldsrc-mod/#Modify_the_Post_Build_Event
+@echo on
+ 
+set "sourcePath=%~f1"
+set "targetPath=%~f2"
+ 
+echo "SourcePath : %sourcePath%"
+echo "TargetPath : %targetPath%"
+ 
+@copy "%sourcePath%" "%targetPath%"
