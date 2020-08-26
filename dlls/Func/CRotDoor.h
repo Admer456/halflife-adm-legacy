@@ -39,6 +39,11 @@ button or trigger field activates the door.
 class CRotDoor : public CBaseDoor
 {
 public:
-	void Spawn( void );
+	void		Spawn( void );
+	int			ObjectCaps() override
+	{
+		return CBaseDoor::ObjectCaps() | FCAP_INDIRECT_USE;
+	}
+
 	virtual void SetToggleState( int state );
 };
