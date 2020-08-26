@@ -1467,18 +1467,18 @@ void CTestHull :: Spawn( entvars_t *pevMasterNode )
 	if ( WorldGraph.m_fGraphPresent )
 	{// graph loaded from disk, so we don't need the test hull
 		SetThink ( &CTestHull::SUB_Remove );
-		pev->nextthink = gpGlobals->time + 10;
+		pev->nextthink = gpGlobals->time;
 	}
 	else
 	{
 		SetThink ( &CTestHull::DropDelay );
-		pev->nextthink = gpGlobals->time + 5;
+		pev->nextthink = gpGlobals->time + 1;
 	}
 
 	// Make this invisible
 	// TODO: Shouldn't we just use EF_NODRAW?  This doesn't need to go to the client.
 	pev->rendermode = kRenderTransTexture;
-	pev->renderamt = 255;
+	pev->renderamt = 0;
 }
 
 //=========================================================
@@ -1487,13 +1487,16 @@ void CTestHull :: Spawn( entvars_t *pevMasterNode )
 //=========================================================
 void CTestHull::DropDelay ( void )
 {
-//	UTIL_CenterPrintAll( "Node Graph out of Date. Rebuilding..." );
+	if ( CVAR_GET_FLOAT( "developer" ) >= 2 )
+	{
+		UTIL_CenterPrintAll( "Node Graph out of Date. Rebuilding..." );
+	}
 
 	UTIL_SetOrigin ( VARS(pev), WorldGraph.m_pNodes[ 0 ].m_vecOrigin );
 
 	SetThink ( &CTestHull::CallBuildNodeGraph );
 
-	pev->nextthink = gpGlobals->time + 5;
+	pev->nextthink = gpGlobals->time + 1;
 }
 
 //=========================================================
@@ -1639,9 +1642,9 @@ void CTestHull :: BuildNodeGraph( void )
 	float	flDist;
 	int		step;
 
-	// Let's see it anyway
-	SetThink( nullptr );
-	//SetThink ( &CTestHull::SUB_Remove );// no matter what happens, the hull gets rid of itself.
+	//// Let's see it anyway
+	//SetThink( nullptr );
+	SetThink ( &CTestHull::SUB_Remove );// no matter what happens, the hull gets rid of itself.
 	pev->nextthink = gpGlobals->time;
 
 // 	malloc a swollen temporary connection pool that we trim down after we know exactly how many connections there are.
