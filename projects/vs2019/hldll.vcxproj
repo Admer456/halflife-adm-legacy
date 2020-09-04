@@ -80,8 +80,6 @@
     </Link>
     <PostBuildEvent>
       <Command>
-        call ..\..\filecopy.bat "$(TargetDir)$(TargetName).dll" "$(ModDir)\dlls\$(TargetName).dll"
-        call ..\..\filecopy.bat "$(TargetDir)$(TargetName).pdb" "$(ModDir)\dlls\$(TargetName).pdb"
       </Command>
     </PostBuildEvent>
     <PostBuildEvent />
