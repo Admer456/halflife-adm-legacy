@@ -26,6 +26,10 @@ extern IParticleMan *g_pParticleMan;
 #include "ADM/AdmRenderer.h"
 #include "ADM/Components/SimpleSky.h"
 
+#include "SDL2/SDL.h"
+#include "ADM/System/SDLWrapper.h"
+#include "ADM/Rendering/Renderer.hpp"
+
 /*
 =================
 HUD_DrawNormalTriangles
@@ -64,7 +68,12 @@ void DLLEXPORT HUD_DrawTransparentTriangles( void )
 	//gHUD.m_clImgui.TestDrawImgui();
 	//gHUD.m_clImgui.DisplayImgui();
 
-	g_Sky.Render( triAPI );
+	if ( !System::GetPausedMode() )
+	{
+		gRenderer.RenderFrame();
+
+		g_Sky.Render( triAPI );
+	}
 
 	if ( g_pParticleMan )
 		 g_pParticleMan->Update();

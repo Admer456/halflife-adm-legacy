@@ -57,6 +57,9 @@ void VectorAngles( const float *forward, float *angles );
 #include "com_model.h"
 #include "Input/KButton.h"
 
+#include "ADM/Rendering/Renderer.hpp"
+Renderer gRenderer;
+
 extern engine_studio_api_t IEngineStudio;
 
 extern kbutton_t	in_mlook;
@@ -2284,6 +2287,11 @@ void DLLEXPORT V_CalcRefdef( struct ref_params_s *pparams )
 {
 //	RecClCalcRefdef(pparams);
 
+	if ( pparams->paused )
+		pparams->onlyClientDraw = 0;
+	else
+		pparams->onlyClientDraw = 1;
+
 	// intermission / finale rendering
 	if ( pparams->intermission )
 	{	
@@ -2299,25 +2307,6 @@ void DLLEXPORT V_CalcRefdef( struct ref_params_s *pparams )
 	}
 
 	System::SetPausedMode( pparams->paused );
-
-/*
-// Example of how to overlay the whole screen with red at 50 % alpha
-#define SF_TEST
-#if defined SF_TEST
-	{
-		screenfade_t sf;
-		gEngfuncs.pfnGetScreenFade( &sf );
-
-		sf.fader = 255;
-		sf.fadeg = 0;
-		sf.fadeb = 0;
-		sf.fadealpha = 128;
-		sf.fadeFlags = FFADE_STAYOUT | FFADE_OUT;
-
-		gEngfuncs.pfnSetScreenFade( &sf );
-	}
-#endif
-*/
 }
 
 /*
@@ -2392,8 +2381,9 @@ void V_Init (void)
 	cl_bobup			= gEngfuncs.pfnRegisterVariable( "cl_bobup","0.5", 0 );
 	cl_waterdist		= gEngfuncs.pfnRegisterVariable( "cl_waterdist","4", 0 );
 	cl_chasedist		= gEngfuncs.pfnRegisterVariable( "cl_chasedist","112", 0 );
-}
 
+	gRenderer.Init();
+}
 
 //#define TRACE_TEST
 #if defined( TRACE_TEST )

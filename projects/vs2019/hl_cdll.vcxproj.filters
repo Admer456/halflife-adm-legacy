@@ -71,6 +71,9 @@
     <Filter Include="Sources\ADM\Components">
       <UniqueIdentifier>{0a5744f6-091e-4317-99f6-e7df39d488ae}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\ADM\Rendering">
+      <UniqueIdentifier>{1173e474-a818-4b7e-a636-e41cfc685bfb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\cl_dll\hl\hl_weapons.cpp">
@@ -417,6 +420,9 @@
     </ClCompile>
     <ClCompile Include="..\..\cl_dll\ADM\Components\SimpleSky.cpp">
       <Filter>Sources\ADM\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cl_dll\ADM\Rendering\Renderer.cpp">
+      <Filter>Sources\ADM\Rendering</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -767,6 +773,9 @@
     </ClInclude>
     <ClInclude Include="..\..\common\winsani_out.h">
       <Filter>Sources\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cl_dll\ADM\Rendering\Renderer.hpp">
+      <Filter>Sources\ADM\Rendering</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
