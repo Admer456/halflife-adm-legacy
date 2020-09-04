@@ -134,6 +134,9 @@ void Renderer::Init()
 	// Load the default shader program
 	ReloadShaders();
 
+	// Find and set up a uniform for time
+	uniformTime = glGetUniformLocation( defaultProgram, "time" );
+
 	// Create a triangle so we can render it later
 	InitDefaultModel();
 }
@@ -172,6 +175,7 @@ void Renderer::RenderFrame()
 	// Render the default triangle
 	RenderDefaultModel();
 	
+	// "Unbind" this vertex array so the engine's UI renderer operates normally
 	glBindVertexArray( 0 );
 
 	// Once we're done rendering, just pop them to return back to normal
@@ -313,6 +317,10 @@ void Renderer::RenderDefaultModel()
 
 	// Render the thing using the default program
 	glUseProgram( defaultProgram );
+
+	// Set a value for the "time" uniform, so we can pass some time data to the shader
+	glUniform1f( uniformTime, gEngfuncs.GetClientTime() );
+
 	glBindVertexArray( testVertArray );
 	glDrawElements( GL_TRIANGLES, sizeof( triangleIndices ) / sizeof( GLuint ), GL_UNSIGNED_INT, 0 );
 	//glDrawArrays( GL_TRIANGLES, 0, 3 );

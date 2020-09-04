@@ -64,6 +64,7 @@ private:
 	GLuint testVertBuf; // This is a VBO
 	GLuint testElemBuf; // This is an EBO
 	GLuint defaultProgram; // A simple shader that is used to render a default triangle
+	GLuint uniformTime;
 
 	float clearRed{ 0.2 };
 	float clearGreen{ 0.2 };
