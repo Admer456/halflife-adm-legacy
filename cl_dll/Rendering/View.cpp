@@ -2287,10 +2287,7 @@ void DLLEXPORT V_CalcRefdef( struct ref_params_s *pparams )
 {
 //	RecClCalcRefdef(pparams);
 
-	if ( pparams->paused )
-		pparams->onlyClientDraw = 0;
-	else
-		pparams->onlyClientDraw = 1;
+	pparams->onlyClientDraw = 1;
 
 	// intermission / finale rendering
 	if ( pparams->intermission )

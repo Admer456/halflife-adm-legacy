@@ -41,6 +41,8 @@ void DLLEXPORT HUD_DrawNormalTriangles( void )
 {
 //	RecClDrawNormalTriangles();
 
+	gRenderer.RenderFrame();
+
 	gHUD.m_Spectator.DrawOverview();
 }
 
@@ -68,13 +70,8 @@ void DLLEXPORT HUD_DrawTransparentTriangles( void )
 	//gHUD.m_clImgui.TestDrawImgui();
 	//gHUD.m_clImgui.DisplayImgui();
 
-	if ( !System::GetPausedMode() )
-	{
-		gRenderer.RenderFrame();
-
-		g_Sky.Render( triAPI );
-	}
-
+	g_Sky.Render( triAPI );
+	
 	if ( g_pParticleMan )
 		 g_pParticleMan->Update();
 }

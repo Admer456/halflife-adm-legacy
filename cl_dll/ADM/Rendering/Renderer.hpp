@@ -1,11 +1,20 @@
 #pragma once
 
+// This is required so that we can link against a static GLEW lib
+// instead of relying on the DLL, which seems to not be compatible with delay-loading
+// This way, we avoid having to load it from the Half-Life root directory and we avoid
+// having to use a DLL/SO at all
+#ifndef GLEW_STATIC
+#define GLEW_STATIC
+#endif
+
 #include "GL/glew.h"
 
 struct SDL_Window;
 
 // Later on we'll do some sorta interface so we can have different renderers just in case lol
-// Let's keep it super simple for now
+// Let's keep it super simple for now.
+// Currently, the main menu rendering is broken, precisely the fonts. 
 class Renderer final
 {
 public:
@@ -35,6 +44,7 @@ public:
 	void Init();
 
 	// Renders a frame (all visible models, applies shaders etc.)
+	// Called from HUD_DrawNormalTriangles
 	void RenderFrame();
 
 	// Sets the clear colours
@@ -52,14 +62,20 @@ private:
 
 	GLuint testVertArray; // This is a VAO
 	GLuint testVertBuf; // This is a VBO
+	GLuint testElemBuf; // This is an EBO
 	GLuint defaultProgram; // A simple shader that is used to render a default triangle
 
 	float clearRed{ 0.2 };
 	float clearGreen{ 0.2 };
 	float clearBlue{ 0.2 };
 
+	bool madeTestTriangle{ false };
+
 private:
+	// Creates a triangle
 	void InitDefaultModel();
+
+	// Renders the triangle
 	void RenderDefaultModel();
 };
 
