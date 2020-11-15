@@ -29,10 +29,12 @@
 #include "Trigger/CBaseTrigger.h"
 #include "Path/CPathCorner.h"
 
-#define	SF_TRIGGER_PUSH_START_OFF	2//spawnflag that makes trigger_push spawn turned OFF
-#define SF_TRIGGER_HURT_TARGETONCE	1// Only fire hurt target once
-#define	SF_TRIGGER_HURT_START_OFF	2//spawnflag that makes trigger_push spawn turned OFF
-#define	SF_TRIGGER_HURT_NO_CLIENTS	8//spawnflag that makes trigger_push spawn turned OFF
+#define SF_TRIGGER_HURT_TARGETONCE	1	// Only fire hurt target once
+#define	SF_TRIGGER_PUSH_START_OFF	2	// spawnflag that makes trigger_push spawn turned OFF
+#define SF_TRIGGER_PUSH_PLAYERSONLY	4	// Only push players
+
+#define	SF_TRIGGER_HURT_START_OFF	2	// spawnflag that makes trigger_hurt spawn turned OFF
+#define	SF_TRIGGER_HURT_NO_CLIENTS	8	// Don't hurt players
 #define SF_TRIGGER_HURT_CLIENTONLYFIRE	16// trigger hurt will only fire its target if it is hurting a client
 #define SF_TRIGGER_HURT_CLIENTONLYTOUCH 32// only clients may touch this trigger.
 
@@ -1689,6 +1691,9 @@ void CTriggerPush :: Touch( CBaseEntity *pOther )
 	case MOVETYPE_FOLLOW:
 		return;
 	}
+
+	if ( !pOther->IsPlayer() && pev->spawnflags & SF_TRIGGER_PUSH_PLAYERSONLY )
+		return;
 
 	if ( pevToucher->solid != SOLID_NOT && pevToucher->solid != SOLID_BSP )
 	{

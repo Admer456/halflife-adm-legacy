@@ -3085,6 +3085,7 @@
 	[ 
 		1: "Once only" : 0 
 		2: "Start off" : 0
+		4: "Players only" : 0
 	]
 	speed(integer) : "Speed of push" : 40
 ]
