@@ -14,20 +14,20 @@
 	MaxRange(string) : "Max viewable distance" : "4096" : "Maximum distance the player can see."
 	chaptertitle(string) : "Chapter title message" : "" : "Text displayed when entering the level."
 
-	startdark(choices) : "Level fade in" : 0 : "If Yes, then the level will start black and fade into normal light." =
+	startdark(choices) : "Level fade in" : 0 =
 	[	
 		0 : "No"
 		1 : "Yes"
 	]
-	gametitle(choices) : "Display game title" : 0 : "Game title that appears onscreen when this level starts." = 
+	gametitle(choices) : "Display game title" : 0 = 
 	[	
-		0 : "No" : "Don't display game title sprite."
-		1 : "Yes" : "Display game title sprite."
+		0 : "No"
+		1 : "Yes"
 	]
-	newunit(choices) : "New level unit" : 0 : "Used to clear out savegame data of previous levels to keep the savegame size as small as possible. Only set it to Yes if the player cannot return to any previous levels." = 
+	newunit(choices) : "New level unit" : 0 = 
 	[
-		0 : "No, keep current" : "Keeps all globals alive."
-		1 : "Yes, clear previous levels" : "Flushes all globals."
+		0 : "No, keep current"
+		1 : "Yes, clear previous levels"
 	]
 	mapteams(string) : "Map team list" : : "This will be copied into the mp_teamlist while your map is running if the server allows maps to override the team list."
 	defaultteam(choices) : "Default team" : 0 = 
@@ -3085,6 +3085,7 @@
 	[ 
 		1: "Once only" : 0 
 		2: "Start off" : 0
+		4: "Players only" : 0
 	]
 	speed(integer) : "Speed of push" : 40
 ]
