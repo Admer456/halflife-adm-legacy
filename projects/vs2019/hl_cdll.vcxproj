@@ -75,10 +75,8 @@
       <DelayLoadDLLs>fmod.dll</DelayLoadDLLs>
     </Link>
     <PostBuildEvent>
-      <Command>
-        call ..\..\filecopy.bat "$(TargetDir)$(TargetName).dll" "$(ModDir)\cl_dlls\$(TargetName).dll"
-        call ..\..\filecopy.bat "$(TargetDir)$(TargetName).pdb" "$(ModDir)\cl_dlls\$(TargetName).pdb"
-      </Command>
+      <Command>call ..\..\filecopy.bat "$(TargetDir)$(TargetName).dll" "$(ModDir)\cl_dlls\$(TargetName).dll"
+call ..\..\filecopy.bat "$(TargetDir)$(TargetName).pdb" "$(ModDir)\cl_dlls\$(TargetName).pdb"</Command>
     </PostBuildEvent>
     <PostBuildEvent />
   </ItemDefinitionGroup>
@@ -108,10 +106,8 @@
       <DelayLoadDLLs>fmod.dll</DelayLoadDLLs>
     </Link>
     <PostBuildEvent>
-      <Command>
-        call ..\..\filecopy.bat "$(TargetDir)$(TargetName).dll" "$(ModDir)\cl_dlls\$(TargetName).dll"
-        call ..\..\filecopy.bat "$(TargetDir)$(TargetName).pdb" "$(ModDir)\cl_dlls\$(TargetName).pdb"
-      </Command>
+      <Command>call ..\..\filecopy.bat "$(TargetDir)$(TargetName).dll" "$(ModDir)\cl_dlls\$(TargetName).dll"
+call ..\..\filecopy.bat "$(TargetDir)$(TargetName).pdb" "$(ModDir)\cl_dlls\$(TargetName).pdb"</Command>
     </PostBuildEvent>
     <PostBuildEvent />
   </ItemDefinitionGroup>

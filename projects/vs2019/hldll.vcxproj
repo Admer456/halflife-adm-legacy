@@ -79,10 +79,8 @@
       </DelayLoadDLLs>
     </Link>
     <PostBuildEvent>
-      <Command>
-        call ..\..\filecopy.bat "$(TargetDir)$(TargetName).dll" "$(ModDir)\dlls\$(TargetName).dll"
-        call ..\..\filecopy.bat "$(TargetDir)$(TargetName).pdb" "$(ModDir)\dlls\$(TargetName).pdb"
-      </Command>
+      <Command>call ..\..\filecopy.bat "$(TargetDir)$(TargetName).dll" "$(ModDir)\dlls\$(TargetName).dll"
+call ..\..\filecopy.bat "$(TargetDir)$(TargetName).pdb" "$(ModDir)\dlls\$(TargetName).pdb"      </Command>
     </PostBuildEvent>
     <PostBuildEvent />
   </ItemDefinitionGroup>
@@ -110,10 +108,8 @@
       <AdditionalDependencies>..\..\external\bullet\lib\Release\BulletDynamics.lib;..\..\external\bullet\lib\Release\BulletCollision.lib;..\..\external\bullet\lib\Release\LinearMath.lib;..\..\external\bullet\lib\Release\ConvexDecomposition.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>
-        call ..\..\filecopy.bat "$(TargetDir)$(TargetName).dll" "$(ModDir)\dlls\$(TargetName).dll"
-        call ..\..\filecopy.bat "$(TargetDir)$(TargetName).pdb" "$(ModDir)\dlls\$(TargetName).pdb"
-      </Command>
+      <Command>call ..\..\filecopy.bat "$(TargetDir)$(TargetName).dll" "$(ModDir)\dlls\$(TargetName).dll"
+call ..\..\filecopy.bat "$(TargetDir)$(TargetName).pdb" "$(ModDir)\dlls\$(TargetName).pdb"</Command>
     </PostBuildEvent>
     <PostBuildEvent />
   </ItemDefinitionGroup>
