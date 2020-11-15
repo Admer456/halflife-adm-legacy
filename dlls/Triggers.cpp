@@ -1692,6 +1692,7 @@ void CTriggerPush :: Touch( CBaseEntity *pOther )
 		return;
 	}
 
+	// "Players only" flag -Admer
 	if ( !pOther->IsPlayer() && pev->spawnflags & SF_TRIGGER_PUSH_PLAYERSONLY )
 		return;
 
