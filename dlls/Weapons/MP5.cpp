@@ -40,14 +40,6 @@ enum mp5_e
 LINK_ENTITY_TO_CLASS( weapon_mp5, CMP5 );
 LINK_WEAPON_TO_CLASS( weapon_9mmAR, CMP5 );
 
-
-//=========================================================
-//=========================================================
-int CMP5::SecondaryAmmoIndex( void )
-{
-	return m_iSecondaryAmmoType;
-}
-
 void CMP5::Spawn( )
 {
 	pev->classname = MAKE_STRING("weapon_9mmAR"); // hack to allow for old names

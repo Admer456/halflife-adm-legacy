@@ -160,7 +160,7 @@ int CHudMenu :: Draw( float flTime )
 	menu_r		= 255;
 	menu_g		= 255;
 	menu_b		= 255;
-	menu_x		= 200;
+	menu_x		= 20;
 	menu_ralign	 = FALSE;
 
 	const char* sptr = g_szMenuString;

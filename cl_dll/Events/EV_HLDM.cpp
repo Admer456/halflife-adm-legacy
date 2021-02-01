@@ -919,7 +919,7 @@ void EV_FireGauss( event_args_t *args )
 		if ( tr.allsolid )
 			break;
 
-		if (fFirstBeam)
+		if ( fFirstBeam )
 		{
 			if ( EV_IsLocal( idx ) )
 			{
@@ -928,37 +928,37 @@ void EV_FireGauss( event_args_t *args )
 			}
 			fFirstBeam = 0;
 
-			gEngfuncs.pEfxAPI->R_BeamEntPoint( 
+			gEngfuncs.pEfxAPI->R_BeamEntPoint(
 				idx | 0x1000,
 				tr.endpos,
 				m_iBeam,
 				0.1,
 				m_fPrimaryFire ? 1.0 : 2.5,
 				0.0,
-				m_fPrimaryFire ? 128.0 : flDamage,
+				(m_fPrimaryFire ? 128.0 : flDamage) / 255.0,
 				0,
 				0,
 				0,
-				m_fPrimaryFire ? 255 : 255,
-				m_fPrimaryFire ? 128 : 255,
-				m_fPrimaryFire ? 0 : 255
+				(m_fPrimaryFire ? 255 : 255) / 255.0,
+				(m_fPrimaryFire ? 128 : 255) / 255.0,
+				(m_fPrimaryFire ? 0 : 255) / 255.0
 			);
 		}
 		else
 		{
 			gEngfuncs.pEfxAPI->R_BeamPoints( vecSrc,
-				tr.endpos,
-				m_iBeam,
-				0.1,
-				m_fPrimaryFire ? 1.0 : 2.5,
-				0.0,
-				m_fPrimaryFire ? 128.0 : flDamage,
-				0,
-				0,
-				0,
-				m_fPrimaryFire ? 255 : 255,
-				m_fPrimaryFire ? 128 : 255,
-				m_fPrimaryFire ? 0 : 255
+				 tr.endpos,
+				 m_iBeam,
+				 0.1,
+				 m_fPrimaryFire ? 1.0 : 2.5,
+				 0.0,
+				 (m_fPrimaryFire ? 128.0 : flDamage) / 255.0,
+				 0,
+				 0,
+				 0,
+				 (m_fPrimaryFire ? 255 : 255) / 255.0,
+				 (m_fPrimaryFire ? 128 : 255) / 255.0,
+				 (m_fPrimaryFire ? 0 : 255) / 255.0
 			);
 		}
 
@@ -1408,6 +1408,12 @@ void EV_EgonFire( event_args_t *args )
 	}
 	else
 	{
+		//If there is any sound playing already, kill it.
+		//This is necessary because multiple sounds can play on the same channel at the same time.
+		//In some cases, more than 1 run sound plays when the egon stops firing, in which case only the earliest entry in the list is stopped.
+		//This ensures no more than 1 of those is ever active at the same time.
+		gEngfuncs.pEventAPI->EV_StopSound( idx, CHAN_STATIC, EGON_SOUND_RUN );
+
 		if ( iFireMode == FIRE_WIDE )
 			gEngfuncs.pEventAPI->EV_PlaySound( idx, origin, CHAN_STATIC, EGON_SOUND_RUN, 0.98, ATTN_NORM, 0, 125 );
 		else

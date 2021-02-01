@@ -20,6 +20,8 @@
 
 */
 
+#include <cmath>
+
 #include "Base/ExtDLL.h"
 #include "Util.h"
 #include "Base/CBase.h"
@@ -642,7 +644,7 @@ BOOL CanAttack( float attack_time, float curtime, BOOL isPredicted )
 	}
 	else
 	{
-		return ( attack_time <= 0.0 ) ? TRUE : FALSE;
+		return ((static_cast<int>(std::floor( attack_time * 1000.0 )) * 1000.0) <= 0.0) ? TRUE : FALSE;
 	}
 }
 
@@ -949,18 +951,40 @@ BOOL CBasePlayerWeapon :: AddSecondaryAmmo( int iCount, char *szName, int iMax )
 // (does it have ammo loaded? do I have any ammo for the 
 // weapon?, etc)
 //=========================================================
-BOOL CBasePlayerWeapon :: IsUseable( void )
+BOOL CBasePlayerWeapon::IsUseable( void )
 {
-	if ( m_iClip <= 0 )
+	if ( m_iClip > 0 )
 	{
-		if ( m_pPlayer->m_rgAmmo[ PrimaryAmmoIndex() ] <= 0 && iMaxAmmo1() != -1 )			
+		return TRUE;
+	}
+
+	//Player has unlimited ammo for this weapon or does not use magazines
+	if ( iMaxAmmo1() == WEAPON_NOCLIP )
+	{
+		return TRUE;
+	}
+
+	if ( m_pPlayer->m_rgAmmo[PrimaryAmmoIndex()] > 0 )
+	{
+		return TRUE;
+	}
+
+	if ( pszAmmo2() )
+	{
+		//Player has unlimited ammo for this weapon or does not use magazines
+		if ( iMaxAmmo2() == WEAPON_NOCLIP )
 		{
-			// clip is empty (or nonexistant) and the player has no more ammo of this type. 
-			return FALSE;
+			return TRUE;
+		}
+
+		if ( m_pPlayer->m_rgAmmo[SecondaryAmmoIndex()] > 0 )
+		{
+			return TRUE;
 		}
 	}
 
-	return TRUE;
+	// clip is empty (or nonexistant) and the player has no more ammo of this type. 
+	return FALSE;
 }
 
 BOOL CBasePlayerWeapon :: CanDeploy( void )
@@ -1060,7 +1084,7 @@ int CBasePlayerWeapon::PrimaryAmmoIndex( void )
 //=========================================================
 int CBasePlayerWeapon::SecondaryAmmoIndex( void )
 {
-	return -1;
+	return m_iSecondaryAmmoType;
 }
 
 void CBasePlayerWeapon::Holster( int skiplocal /* = 0 */ )
@@ -1157,7 +1181,7 @@ int CBasePlayerWeapon::ExtractAmmo( CBasePlayerWeapon *pWeapon )
 
 	if ( pszAmmo2() != NULL )
 	{
-		iReturn = pWeapon->AddSecondaryAmmo( 0, (char *)pszAmmo2(), iMaxAmmo2() );
+		iReturn |= pWeapon->AddSecondaryAmmo( 0, (char *)pszAmmo2(), iMaxAmmo2() );
 	}
 
 	return iReturn;

@@ -493,9 +493,14 @@ void CEgon::DestroyEffect( void )
 
 void CEgon::WeaponIdle( void )
 {
-	ResetEmptySound( );
+	if ( !(m_pPlayer->m_afButtonPressed & IN_ATTACK2) && (m_pPlayer->pev->button & IN_ATTACK) )
+	{
+		return;
+	}
 
-	if ( m_flTimeWeaponIdle > gpGlobals->time )
+	ResetEmptySound();
+
+	if ( m_flTimeWeaponIdle > UTIL_WeaponTimeBase() )
 		return;
 
 	if ( m_fireState != FIRE_OFF )
