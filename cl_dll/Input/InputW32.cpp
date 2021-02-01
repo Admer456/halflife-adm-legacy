@@ -60,8 +60,6 @@ static bool m_bRawInput = false;
 static bool m_bMouseThread = false;
 extern globalvars_t *gpGlobals;
 
-static bool m_bRelativeMouseMode = false;
-
 // mouse variables
 cvar_t		*m_filter;
 cvar_t		*sensitivity;
@@ -158,6 +156,7 @@ DWORD	s_hMouseThreadId = 0;
 HANDLE	s_hMouseThread = 0;
 HANDLE	s_hMouseQuitEvent = 0;
 HANDLE	s_hMouseDoneQuitEvent = 0;
+SDL_bool mouseRelative = SDL_TRUE;
 #endif
 
 /*
@@ -226,19 +225,32 @@ DWORD WINAPI MousePos_ThreadFunction( LPVOID p )
 IN_ActivateMouse
 ===========
 */
-void DLLEXPORT IN_ActivateMouse (void)
+void DLLEXPORT IN_ActivateMouse( void )
 {
-	if (mouseinitialized)
+	if ( mouseinitialized )
 	{
 #ifdef _WIN32
-		if (mouseparmsvalid)
-			restore_spi = SystemParametersInfo (SPI_SETMOUSE, 0, newmouseparms, 0);
+		if ( mouseparmsvalid )
+			restore_spi = SystemParametersInfo( SPI_SETMOUSE, 0, newmouseparms, 0 );
 
-		if ( m_bRawInput )
-			SDL_SetRelativeMouseMode( SDL_TRUE );
 #endif
 		mouseactive = 1;
 	}
+
+#ifdef _WIN32
+	if ( !m_bRawInput )
+	{
+		SDL_SetRelativeMouseMode( SDL_FALSE );
+		mouseRelative = SDL_FALSE;
+	}
+	else
+	{
+		mouseRelative = SDL_TRUE;
+		SDL_SetRelativeMouseMode( SDL_TRUE );
+	}
+#else
+	SDL_SetRelativeMouseMode( SDL_TRUE );
+#endif
 }
 
 
@@ -247,20 +259,27 @@ void DLLEXPORT IN_ActivateMouse (void)
 IN_DeactivateMouse
 ===========
 */
-void DLLEXPORT IN_DeactivateMouse (void)
+void DLLEXPORT IN_DeactivateMouse( void )
 {
-	if (mouseinitialized)
+	if ( mouseinitialized )
 	{
 #ifdef _WIN32
-		if (restore_spi)
-			SystemParametersInfo (SPI_SETMOUSE, 0, originalmouseparms, 0);
+		if ( restore_spi )
+			SystemParametersInfo( SPI_SETMOUSE, 0, originalmouseparms, 0 );
 
-		SDL_SetRelativeMouseMode( SDL_FALSE );
-		m_bRelativeMouseMode = false;
 #endif
 
 		mouseactive = 0;
 	}
+
+#ifdef _WIN32
+	if ( m_bRawInput )
+	{
+		mouseRelative = SDL_FALSE;
+	}
+
+#endif
+	SDL_SetRelativeMouseMode( SDL_FALSE );
 }
 
 /*
@@ -373,18 +392,6 @@ void IN_ResetMouse( void )
 		s_flRawInputUpdateTime = gpGlobals->time;
 		m_bRawInput = CVAR_GET_FLOAT( "m_rawinput" ) != 0;
 	}
-
-	if ( m_bRawInput && mouseactive && !m_bRelativeMouseMode )
-	{
-		SDL_SetRelativeMouseMode( SDL_TRUE );
-		m_bRelativeMouseMode = true;
-	}
-	else if ( !m_bRawInput && m_bRelativeMouseMode )
-	{
-		SDL_SetRelativeMouseMode( SDL_FALSE );
-		m_bRelativeMouseMode = false;
-	}
-
 #endif
 }
 
@@ -588,6 +595,19 @@ void IN_MouseMove ( float frametime, usercmd_t *cmd)
 	}
 
 	gEngfuncs.SetViewAngles( (float *)viewangles );
+
+#ifdef _WIN32
+	if ( !m_bRawInput && mouseRelative )
+	{
+		SDL_SetRelativeMouseMode( SDL_FALSE );
+		mouseRelative = SDL_FALSE;
+	}
+	else if ( m_bRawInput && !mouseRelative )
+	{
+		SDL_SetRelativeMouseMode( SDL_TRUE );
+		mouseRelative = SDL_TRUE;
+	}
+#endif
 
 /*
 //#define TRACE_TEST
