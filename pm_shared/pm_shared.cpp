@@ -2439,7 +2439,7 @@ void PM_NoClip()
 //  running PM_AirMove, which doesn't crop velocity to maxspeed like the ground / other
 //  movement logic does.
 //-----------------------------------------------------------------------------
-/* void PM_PreventMegaBunnyJumping( void )
+void PM_PreventMegaBunnyJumping( void )
 {
 	// Current player speed
 	float spd;
@@ -2463,7 +2463,6 @@ void PM_NoClip()
 	
 	VectorScale( pmove->velocity, fraction, pmove->velocity ); //Crop it down!.
 }
-*/
 
 /*
 =============
