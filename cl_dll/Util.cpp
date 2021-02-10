@@ -26,6 +26,9 @@
 #include "cl_util.h"
 #include <string.h>
 
+#include "con_nprint.h"
+#include <vadefs.h>
+
 #ifndef M_PI
 #define M_PI		3.14159265358979323846	// matches value in gcc v2 math.h
 #endif
@@ -145,3 +148,26 @@ HSPRITE LoadSprite(const char *pszName)
 	return SPR_Load(sz);
 }
 
+char* va( const char* format, ... )
+{
+	static char resultString[8192]; 
+
+	va_list	argptr;
+	va_start( argptr, format );
+	vsnprintf( resultString, sizeof( resultString ), format, argptr );
+	va_end( argptr );
+
+	return resultString;
+}
+
+void ConPrintEx( const char* str, int r, int g, int b, float lifeTime, int index )
+{
+	con_nprint_t info;
+	info.color[0] = r / 255.0f;
+	info.color[1] = g / 255.0f;
+	info.color[2] = b / 255.0f;
+	info.time_to_live = lifeTime;
+	info.index = index;
+
+	gEngfuncs.Con_NXPrintf( &info, "%s", str );
+}

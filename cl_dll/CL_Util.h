@@ -210,3 +210,12 @@ inline void UnpackRGB(int &r, int &g, int &b, unsigned long ulRGB)
 bool UTIL_GetGameDir( char* pszBuffer, const size_t uiBufferSize );
 
 HSPRITE LoadSprite(const char *pszName);
+
+// Very useful utility to format a string, so you don't have to create a varargs version of every function
+char* va( const char* format, ... );
+
+// Prints on the right side of the screen, can have customisable colours
+// index = row
+// lifeTime = how long it's displayed
+// Does not print to the console!
+void ConPrintEx( const char* str, int r = 200, int g = 200, int b = 200, float lifeTime = 5.0f, int index = 0 );
