@@ -70,46 +70,6 @@ void DLLEXPORT HUD_DrawTransparentTriangles( void )
 		 g_pParticleMan->Update();
 }
 
-//#define ORTHOEXAMPLE
-//#ifdef ORTHOEXAMPLE
-void OrthoExample() // AdmSrc - this ain't my code, lol
-{
-	gEngfuncs.pTriAPI->RenderMode(kRenderTransAdd); //additive
-
-	// use hotglow, or any other sprite for the texture
-	gEngfuncs.pTriAPI->SpriteTexture((struct model_s *)
-		gEngfuncs.GetSpritePointer(SPR_Load("sprites/hotglow.spr")),
-		0);
-
-	gEngfuncs.pTriAPI->CullFace(TRI_NONE); //no culling
-	gEngfuncs.pTriAPI->Begin(TRI_QUADS); //start our quad
-
-	//remember, always list vertices in counter-clockwise 
-	// order, unless you want the quad to be backwards =)
-	// the third value of vertex3f will always be 0 in ortho mode, 
-	// don't change it unless you wan't funny things to happen.
-
-	//top left
-	gEngfuncs.pTriAPI->TexCoord2f(0.0f, 1.0f);
-	gEngfuncs.pTriAPI->Vertex3f(0, 0, 0);
-
-	//bottom left
-	gEngfuncs.pTriAPI->TexCoord2f(0.0f, 0.0f);
-	gEngfuncs.pTriAPI->Vertex3f(0, ScreenHeight, 0);
-
-	//bottom right
-	gEngfuncs.pTriAPI->TexCoord2f(1.0f, 0.0f);
-	gEngfuncs.pTriAPI->Vertex3f(ScreenWidth, ScreenHeight, 0);
-
-	//top right
-	gEngfuncs.pTriAPI->TexCoord2f(1.0f, 1.0f);
-	gEngfuncs.pTriAPI->Vertex3f(ScreenWidth, 0, 0);
-
-	gEngfuncs.pTriAPI->End(); //end our list of vertexes
-	gEngfuncs.pTriAPI->RenderMode(kRenderNormal); //return to normal
-}
-//#endif
-
 /*
 =================
 HUD_DrawOrthoTriangles
@@ -120,13 +80,5 @@ smackdab on the screen) add them here
 
 void HUD_DrawOrthoTriangles(void)
 {
-//#ifdef ORTHOEXAMPLE
-//	OrthoExample();
-//#endif
-
-	ADM_RendDrawLine(0.2f, 0.9f, 0.9f, 0.9f);
-	ADM_RendDrawLine(0.1f, 0.85f, 0.8f, 0.85f);
-	ADM_RendDrawLine(0.2f, 0.9f, 0.1f, 0.85f);
-	ADM_RendDrawLine(0.9f, 0.9f, 0.8f, 0.85f);
 
 }

@@ -2334,6 +2334,7 @@ int TeamFortressViewport::MsgFunc_TeamNames(const char *pszName, int iSize, void
 	return 1;
 }
 
+// To-do: Get rid of TFC-specific stuff
 int TeamFortressViewport::MsgFunc_Feign(const char *pszName, int iSize, void *pbuf )
 {
 	BEGIN_READ( pbuf, iSize );

@@ -25,51 +25,6 @@
 #include "VGUI/vgui_TeamFortressViewport.h"
 #include "vgui_ControlConfigPanel.h"
 
-namespace
-{
-
-class TexturePanel : public Panel , public ActionSignal
-{
-private:
-	int _bindIndex;
-	TextEntry* _textEntry;
-public:
-	TexturePanel() : Panel(0,0,256,276)
-	{
-		_bindIndex=2700;
-		_textEntry=new TextEntry("2700",0,0,128,20);
-		_textEntry->setParent(this);
-		_textEntry->addActionSignal(this);
-	}
-public:
-	virtual bool isWithin(int x,int y)
-	{
-		return _textEntry->isWithin(x,y);
-	}
-public:
-	virtual void actionPerformed(Panel* panel)
-	{
-		char buf[256];
-		_textEntry->getText(0,buf,256);
-		sscanf(buf,"%d",&_bindIndex);
-	}
-protected:
-	virtual void paintBackground()
-	{
-			Panel::paintBackground();
-			
-			int wide,tall;
-			getPaintSize(wide,tall);
-		
-			drawSetColor(0,0,255,0);
-			drawSetTexture(_bindIndex);
-			drawTexturedRect(0,19,257,257);
-	}
-
-};
-
-}
-
 using namespace vgui;
 
 void VGui_ViewportPaintBackground(int extents[4])
@@ -90,7 +45,6 @@ void VGui_Startup()
 	//root->setBorder(new LineBorder());
 	root->setLayout(new BorderLayout(0));
 
-	
 	//root->getSurfaceBase()->setEmulatedCursorVisible(true);
 
 	if (gViewPort != NULL)
