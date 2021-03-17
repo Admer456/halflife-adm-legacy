@@ -8,7 +8,7 @@ Current target version: 0.1.0
 Current released version: 0.1.0A1  
 Check out what this means [on the wiki](https://github.com/Admer456/halflife-ADM/wiki)!  
 
-Discord: [Planet U2-A](https://discord.gg/YQFQXAf)  
+Discord: [Planet U2-A](https://discord.gg/tneyeuhgxH)  
 
 ## **Features:**
 
