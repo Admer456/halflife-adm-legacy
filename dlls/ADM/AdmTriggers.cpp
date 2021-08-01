@@ -1964,11 +1964,16 @@ void CUtilRotateNoOrigin::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE
 class CUtilMoveWith : public CBaseEntity
 {
 public:
-	void				Spawn( void );
-	void				Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value );
-	void				Think( void );
+	static constexpr int SF_StartOn		= 1 << 0;
+	static constexpr int SF_NoPosition	= 1 << 1;
+	static constexpr int SF_NoAngles	= 1 << 2;
 
-	void				KeyValue( KeyValueData* pkvd );
+	void				Spawn() override;
+	void				Activate() override;
+	void				Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value ) override;
+	void				Think( void ) override;
+
+	void				KeyValue( KeyValueData* pkvd ) override;
 
 	virtual int			Save( CSave &save );
 	virtual int			Restore( CRestore &restore );
@@ -1977,10 +1982,10 @@ public:
 
 private:
 	string_t			m_iszTarget, m_iszParent;
-	CBaseEntity*		m_pTarget;
-	CBaseEntity*		m_pParent;
+	CBaseEntity*		m_pTarget{ nullptr };
+	CBaseEntity*		m_pParent{ nullptr };
 
-	BOOL				m_fMoveActive;
+	BOOL				m_fMoveActive{ FALSE };
 };
 
 LINK_ENTITY_TO_CLASS( util_movewith, CUtilMoveWith );
@@ -1996,28 +2001,50 @@ IMPLEMENT_SAVERESTORE( CUtilMoveWith, CBaseEntity );
 
 void CUtilMoveWith::Spawn()
 {
-	m_fMoveActive = false;
-
-	m_pTarget = NULL;
-	m_pParent = NULL;
+	if ( pev->spawnflags & SF_StartOn )
+	{
+		m_fMoveActive = TRUE;
+	}
 
 	pev->nextthink = gpGlobals->time + 1.5;
 }
 
+void CUtilMoveWith::Activate()
+{
+	m_pTarget = UTIL_FindEntityByTargetname( nullptr, STRING( m_iszTarget ) );
+	m_pParent = UTIL_FindEntityByTargetname( nullptr, STRING( m_iszParent ) );
+}
+
 void CUtilMoveWith::Use( CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value )
 {
-	m_pTarget = UTIL_FindEntityByTargetname( NULL, STRING( m_iszTarget ) );
-	m_pParent = UTIL_FindEntityByTargetname( NULL, STRING( m_iszParent ) );
+	// This can happen with entities that are created during gameplay
+	if ( nullptr == m_pTarget )
+		m_pTarget = UTIL_FindEntityByTargetname( nullptr, STRING( m_iszTarget ) );
+	if ( nullptr == m_pParent )
+		m_pParent = UTIL_FindEntityByTargetname( nullptr, STRING( m_iszParent ) );
 
 	m_fMoveActive = true;
 }
 
 void CUtilMoveWith::Think()
 {
+	if ( nullptr == m_pTarget || nullptr == m_pParent )
+	{
+		UTIL_Remove( this );
+		return;
+	}
+
 	if ( m_fMoveActive )
 	{
-		UTIL_SetOrigin( m_pTarget->pev, m_pParent->pev->origin );
-		m_pTarget->pev->angles = m_pParent->pev->angles;
+		if ( ~pev->spawnflags & SF_NoPosition )
+		{
+			UTIL_SetOrigin( m_pTarget->pev, m_pParent->pev->origin );
+		}
+		if ( ~pev->spawnflags & SF_NoAngles )
+		{
+			m_pTarget->pev->angles = m_pParent->pev->angles;
+			ALERT( at_console, "Applying parent angles...\n" );
+		}
 	}
 
 	pev->nextthink = gpGlobals->time + 0.001;

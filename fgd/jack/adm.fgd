@@ -785,6 +785,13 @@
 [
 	m_iszTarget(string) : "Target entity"
 	m_iszParent(string) : "Parent entity"
+
+	spawnflags(flags) = 
+	[
+		1: "Start on" : 1
+		2: "No position" : 0
+		4: "No angles" : 1
+	]
 ]
 
 @PointClass base(Targetname) = util_servercommand : "Sends a command to the server"
