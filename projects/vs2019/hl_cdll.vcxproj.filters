@@ -127,9 +127,6 @@
     <ClCompile Include="..\..\pm_shared\pm_shared.cpp">
       <Filter>Sources\PM_Shared</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\dlls\adm\AdmRenderer.cpp">
-      <Filter>Sources\ADM</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\cl_dll\adm\AdmClientsideExtensions.cpp">
       <Filter>Sources\ADM</Filter>
     </ClCompile>
@@ -461,9 +458,6 @@
     </ClInclude>
     <ClInclude Include="..\..\common\Platform.h">
       <Filter>Sources\Common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\dlls\ADM\AdmRenderer.h">
-      <Filter>Sources\ADM</Filter>
     </ClInclude>
     <ClInclude Include="..\..\cl_dll\VGUI\vgui_int.h">
       <Filter>Sources\VGUI</Filter>

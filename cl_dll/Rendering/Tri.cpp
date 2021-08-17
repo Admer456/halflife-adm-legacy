@@ -23,7 +23,6 @@
 #include "tri.h"
 extern IParticleMan *g_pParticleMan;
 
-#include "ADM/AdmRenderer.h"
 #include "ADM/Components/SimpleSky.h"
 
 /*

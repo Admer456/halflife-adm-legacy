@@ -183,7 +183,6 @@ call ..\..\filecopy.bat "$(TargetDir)$(TargetName).pdb" "$(ModDir)\cl_dlls\$(Tar
     <ClCompile Include="..\..\cl_dll\VGUI\vgui_TeamFortressViewport.cpp" />
     <ClCompile Include="..\..\cl_dll\VGUI\vgui_teammenu.cpp" />
     <ClCompile Include="..\..\common\parsemsg.cpp" />
-    <ClCompile Include="..\..\dlls\adm\AdmRenderer.cpp" />
     <ClCompile Include="..\..\dlls\Weapons\Crossbow.cpp" />
     <ClCompile Include="..\..\dlls\Weapons\Crowbar.cpp" />
     <ClCompile Include="..\..\dlls\Weapons\Egon.cpp" />
@@ -320,7 +319,6 @@ call ..\..\filecopy.bat "$(TargetDir)$(TargetName).pdb" "$(ModDir)\cl_dlls\$(Tar
     <ClInclude Include="..\..\common\weaponinfo.h" />
     <ClInclude Include="..\..\common\winsani_in.h" />
     <ClInclude Include="..\..\common\winsani_out.h" />
-    <ClInclude Include="..\..\dlls\ADM\AdmRenderer.h" />
     <ClInclude Include="..\..\game_shared\vgui_scrollbar2.h" />
     <ClInclude Include="..\..\game_shared\vgui_slider2.h" />
     <ClInclude Include="..\..\game_shared\voice_banmgr.h" />
