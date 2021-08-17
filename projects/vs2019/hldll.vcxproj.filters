@@ -96,6 +96,9 @@
     <Filter Include="Sources\ADM\Audio">
       <UniqueIdentifier>{9d7ef8e8-05e9-4401-8340-c205e72f725e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shared\Maths">
+      <UniqueIdentifier>{4f78c50e-5e29-4721-b562-6cafbf06fc77}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\game_shared\voice_gamemgr.cpp">
@@ -641,6 +644,9 @@
     <ClCompile Include="..\..\dlls\Game\SaveTitles.cpp">
       <Filter>Sources\Game</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\shared\Maths\Vector.cpp">
+      <Filter>Shared\Maths</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\engine\eiface.h">
@@ -767,9 +773,6 @@
       <Filter>Sources</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\Util.h">
-      <Filter>Sources</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\dlls\Vector.h">
       <Filter>Sources</Filter>
     </ClInclude>
     <ClInclude Include="..\..\dlls\ADM\AdmEffects.h">
@@ -1158,6 +1161,9 @@
     </ClInclude>
     <ClInclude Include="..\..\common\winsani_out.h">
       <Filter>Sources\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\shared\Maths\Vector.h">
+      <Filter>Shared\Maths</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

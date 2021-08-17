@@ -64,7 +64,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WINDOWS_IGNORE_PACKING_MISMATCH;WIN32;_CRT_SECURE_NO_WARNINGS;_DEBUG;_WINDOWS;QUIVER;VOXEL;QUAKE2;VALVE_DLL;CLIENT_WEAPONS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
-      <AdditionalIncludeDirectories>..\..\dlls;..\..\engine;..\..\common;..\..\pm_shared;..\..\game_shared;..\..\public;..\..\external\fmod\core\inc;..\..\external\fmod\studio\inc;..\..\external\bullet;..\..\external;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\dlls;..\..\engine;..\..\common;..\..\pm_shared;..\..\game_shared;..\..\public;..\..\external\fmod\core\inc;..\..\external\fmod\studio\inc;..\..\external\bullet;..\..\external;..\..\shared\Maths;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <AdditionalOptions>/Zc:threadSafeInit- %(AdditionalOptions)</AdditionalOptions>
       <ForcedIncludeFiles>$(VC_ReferencesPath_VC_x86)\..\..\include\string;%(ForcedIncludeFiles)</ForcedIncludeFiles>
@@ -93,7 +93,7 @@ call ..\..\filecopy.bat "$(TargetDir)$(TargetName).pdb" "$(ModDir)\dlls\$(Target
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WINDOWS_IGNORE_PACKING_MISMATCH;WIN32;_CRT_SECURE_NO_WARNINGS;NDEBUG;_WINDOWS;QUIVER;VOXEL;QUAKE2;VALVE_DLL;CLIENT_WEAPONS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\..\dlls;..\..\engine;..\..\common;..\..\pm_shared;..\..\game_shared;..\..\public;..\..\external\fmod\core\inc;..\..\external\fmod\studio\inc;..\..\external\bullet;..\..\external;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\dlls;..\..\engine;..\..\common;..\..\pm_shared;..\..\game_shared;..\..\public;..\..\external\fmod\core\inc;..\..\external\fmod\studio\inc;..\..\external\bullet;..\..\external;..\..\shared\Maths;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <AdditionalOptions>/Zc:threadSafeInit- %(AdditionalOptions)</AdditionalOptions>
@@ -295,6 +295,7 @@ call ..\..\filecopy.bat "$(TargetDir)$(TargetName).pdb" "$(ModDir)\dlls\$(Target
     <ClCompile Include="..\..\shared\ADM\Physics\PhysBody_MeshConvex.cpp" />
     <ClCompile Include="..\..\shared\ADM\Physics\PhysBody_Plane.cpp" />
     <ClCompile Include="..\..\shared\ADM\Physics\PhysicsWorld.cpp" />
+    <ClCompile Include="..\..\shared\Maths\Vector.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\common\beamdef.h" />
@@ -446,7 +447,6 @@ call ..\..\filecopy.bat "$(TargetDir)$(TargetName).pdb" "$(ModDir)\dlls\$(Target
     <ClInclude Include="..\..\dlls\Game\GamerulesTeamplay.h" />
     <ClInclude Include="..\..\dlls\Trigger\CBaseTrigger.h" />
     <ClInclude Include="..\..\dlls\Util.h" />
-    <ClInclude Include="..\..\dlls\Vector.h" />
     <ClInclude Include="..\..\dlls\Weapons\Weapons.h" />
     <ClInclude Include="..\..\engine\EIFace.h" />
     <ClInclude Include="..\..\pm_shared\pm_debug.h" />
@@ -469,6 +469,7 @@ call ..\..\filecopy.bat "$(TargetDir)$(TargetName).pdb" "$(ModDir)\dlls\$(Target
     <ClInclude Include="..\..\shared\ADM\Physics\PhysicsWorld.h" />
     <ClInclude Include="..\..\shared\ADM\Physics\IPhysBody.h" />
     <ClInclude Include="..\..\shared\ADM\VersionInfo.h" />
+    <ClInclude Include="..\..\shared\Maths\Vector.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\fgd\adm.fgd" />

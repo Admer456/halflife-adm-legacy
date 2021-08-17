@@ -16,7 +16,7 @@
 #include "cl_dll.h"
 #include "cl_util.h"
 #include "cl_entity.h"
-#include "UtilVector.h"
+#include "Vector.h"
 
 #include "triangleapi.h"
 #include "Rendering/tri.h"

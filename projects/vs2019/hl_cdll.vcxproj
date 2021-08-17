@@ -61,7 +61,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WINDOWS_IGNORE_PACKING_MISMATCH;WIN32;_CRT_SECURE_NO_WARNINGS;_DEBUG;_WINDOWS;CLIENT_DLL;CLIENT_WEAPONS;HL_DLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <AdditionalIncludeDirectories>..\..\dlls;..\..\cl_dll;..\..\public;..\..\common;..\..\pm_shared;..\..\engine;..\..\utils\vgui\include;..\..\game_shared;..\..\external;..\..\external\fmod\studio\inc;..\..\external\fmod\core\inc;..\..\external\bullet;..\..\external\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\dlls;..\..\cl_dll;..\..\public;..\..\common;..\..\pm_shared;..\..\engine;..\..\utils\vgui\include;..\..\game_shared;..\..\external;..\..\external\fmod\studio\inc;..\..\external\fmod\core\inc;..\..\external\bullet;..\..\external\imgui;..\..\shared\Maths;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <AdditionalOptions>/Zc:threadSafeInit- %(AdditionalOptions)</AdditionalOptions>
       <ForcedIncludeFiles>$(VC_ReferencesPath_VC_x86)\..\..\include\string;%(ForcedIncludeFiles)</ForcedIncludeFiles>
@@ -90,7 +90,7 @@ call ..\..\filecopy.bat "$(TargetDir)$(TargetName).pdb" "$(ModDir)\cl_dlls\$(Tar
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WINDOWS_IGNORE_PACKING_MISMATCH;WIN32;_CRT_SECURE_NO_WARNINGS;NDEBUG;_WINDOWS;CLIENT_DLL;CLIENT_WEAPONS;HL_DLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <AdditionalIncludeDirectories>..\..\dlls;..\..\cl_dll;..\..\public;..\..\common;..\..\pm_shared;..\..\engine;..\..\utils\vgui\include;..\..\game_shared;..\..\external;..\..\external\fmod\studio\inc;..\..\external\fmod\core\inc;..\..\external\bullet;..\..\external\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\dlls;..\..\cl_dll;..\..\public;..\..\common;..\..\pm_shared;..\..\engine;..\..\utils\vgui\include;..\..\game_shared;..\..\external;..\..\external\fmod\studio\inc;..\..\external\fmod\core\inc;..\..\external\bullet;..\..\external\imgui;..\..\shared\Maths;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <AdditionalOptions>/Zc:threadSafeInit- %(AdditionalOptions)</AdditionalOptions>
       <ForcedIncludeFiles>$(VC_ReferencesPath_VC_x86)\..\..\include\string;%(ForcedIncludeFiles)</ForcedIncludeFiles>
@@ -227,6 +227,7 @@ call ..\..\filecopy.bat "$(TargetDir)$(TargetName).pdb" "$(ModDir)\cl_dlls\$(Tar
     <ClCompile Include="..\..\shared\ADM\Physics\PhysBody_MeshConvex.cpp" />
     <ClCompile Include="..\..\shared\ADM\Physics\PhysBody_Plane.cpp" />
     <ClCompile Include="..\..\shared\ADM\Physics\PhysicsWorld.cpp" />
+    <ClCompile Include="..\..\shared\Maths\Vector.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\cl_dll\ADM\Components\SimpleSky.h" />
@@ -268,7 +269,6 @@ call ..\..\filecopy.bat "$(TargetDir)$(TargetName).pdb" "$(ModDir)\cl_dlls\$(Tar
     <ClInclude Include="..\..\cl_dll\Rendering\Tri.h" />
     <ClInclude Include="..\..\cl_dll\Rendering\View.h" />
     <ClInclude Include="..\..\cl_dll\TFDefs.h" />
-    <ClInclude Include="..\..\cl_dll\UtilVector.h" />
     <ClInclude Include="..\..\cl_dll\VGUI\vgui_ConsolePanel.h" />
     <ClInclude Include="..\..\cl_dll\VGUI\vgui_ControlConfigPanel.h" />
     <ClInclude Include="..\..\cl_dll\VGUI\vgui_int.h" />
@@ -345,6 +345,7 @@ call ..\..\filecopy.bat "$(TargetDir)$(TargetName).pdb" "$(ModDir)\cl_dlls\$(Tar
     <ClInclude Include="..\..\shared\ADM\Physics\PhysBody_Plane.h" />
     <ClInclude Include="..\..\shared\ADM\Physics\PhysicsWorld.h" />
     <ClInclude Include="..\..\shared\ADM\VersionInfo.h" />
+    <ClInclude Include="..\..\shared\Maths\Vector.h" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="..\..\lib\public\game_controls.lib" />

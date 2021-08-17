@@ -71,6 +71,9 @@
     <Filter Include="Sources\ADM\Components">
       <UniqueIdentifier>{0a5744f6-091e-4317-99f6-e7df39d488ae}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shared\Maths">
+      <UniqueIdentifier>{78d1b922-dbf8-44c2-a472-c5b8f5e8b65b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\cl_dll\hl\hl_weapons.cpp">
@@ -418,6 +421,9 @@
     <ClCompile Include="..\..\cl_dll\ADM\Components\SimpleSky.cpp">
       <Filter>Sources\ADM\Components</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\shared\Maths\Vector.cpp">
+      <Filter>Shared\Maths</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\pm_shared\pm_debug.h">
@@ -574,9 +580,6 @@
       <Filter>Sources</Filter>
     </ClInclude>
     <ClInclude Include="..\..\cl_dll\TFDefs.h">
-      <Filter>Sources</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\cl_dll\UtilVector.h">
       <Filter>Sources</Filter>
     </ClInclude>
     <ClInclude Include="..\..\cl_dll\WRect.h">
@@ -767,6 +770,9 @@
     </ClInclude>
     <ClInclude Include="..\..\common\winsani_out.h">
       <Filter>Sources\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\shared\Maths\Vector.h">
+      <Filter>Shared\Maths</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
