@@ -99,6 +99,12 @@
     <Filter Include="Shared\PlayerMove">
       <UniqueIdentifier>{d0da3515-e270-4d8f-9791-8ef68cab0188}</UniqueIdentifier>
     </Filter>
+    <Filter Include="FGDs\JACK">
+      <UniqueIdentifier>{e5bbf3ec-ea1b-4979-9a5b-4cca607507ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FGDs\TrenchBroom">
+      <UniqueIdentifier>{e2f0ec03-a84b-4f58-b76d-ae9a2860c2c8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\game_shared\voice_gamemgr.cpp">
@@ -1170,8 +1176,11 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\fgd\adm.fgd">
-      <Filter>FGDs</Filter>
+    <None Include="..\..\fgd\jack\adm.fgd">
+      <Filter>FGDs\JACK</Filter>
+    </None>
+    <None Include="..\..\fgd\trenchbroom\ADM.fgd">
+      <Filter>FGDs\TrenchBroom</Filter>
     </None>
   </ItemGroup>
 </Project>

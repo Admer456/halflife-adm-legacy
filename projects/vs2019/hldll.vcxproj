@@ -473,7 +473,8 @@ call ..\..\filecopy.bat "$(TargetDir)$(TargetName).pdb" "$(ModDir)\dlls\$(Target
     <ClInclude Include="..\..\shared\PlayerMove\pm_shared.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\fgd\adm.fgd" />
+    <None Include="..\..\fgd\jack\adm.fgd" />
+    <None Include="..\..\fgd\trenchbroom\ADM.fgd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
