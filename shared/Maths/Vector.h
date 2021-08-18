@@ -272,7 +272,7 @@ public:
 	// @returns A vector that was rotated around an axis
 	inline Vector Rotated( const Vector& axis, const float& angle ) const
 	{
-		const float degrees = angle * 180.0f / 3.14159f;
+		const float degrees = angle * 180.0f / Math::Pi;
 
 		// How much of this will remain after the rotation
 		Vector cosV = *this * std::cos( degrees );

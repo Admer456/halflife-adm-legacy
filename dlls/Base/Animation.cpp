@@ -13,46 +13,15 @@
 *
 ****/
 
-#include "Platform.h"
-
-// hack into header files that we can ship
-typedef int qboolean;
-typedef unsigned char byte;
-#include "../utils/common/mathlib.h"
-#include "const.h"
-#include "progdefs.h"
-#include "edict.h"
-#include "eiface.h"
+#include "ExtDLL.h"
+#include "Util.h"
 
 #include "studio.h"
-
-#ifndef ACTIVITY_H
-#include "AI/activity.h"
-#endif
-
 #include "AI/ActivityMap.h"
-
-#ifndef ANIMATION_H
 #include "Base/Animation.h"
-#endif
-
-#ifndef SCRIPTEVENT_H
 #include "AI/ScriptEvent.h"
-#endif
-
-#ifndef ENGINECALLBACK_H
-#include "enginecallback.h"
-#endif
-
-// Don't do this at home
-#include <vector>
-#include "../shared/ADM/AdmSoundList.h"
-
-extern globalvars_t				*gpGlobals;
 
 #pragma warning( disable : 4244 )
-
-
 
 int ExtractBbox( void *pmodel, int sequence, float *mins, float *maxs )
 {
@@ -147,7 +116,7 @@ void GetEyePosition ( void *pmodel, float *vecEyePosition )
 		return;
 	}
 
-	VectorCopy ( pstudiohdr->eyeposition, vecEyePosition );
+	pstudiohdr->eyeposition.CopyToArray( vecEyePosition );
 }
 
 int LookupSequence( void *pmodel, const char *label )

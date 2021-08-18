@@ -1165,6 +1165,9 @@
     <ClInclude Include="..\..\shared\Maths\Vector.h">
       <Filter>Shared\Maths</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\shared\Maths\Constants.h">
+      <Filter>Shared\Maths</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\fgd\adm.fgd">

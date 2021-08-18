@@ -33,7 +33,8 @@ typedef unsigned short word;
 typedef float vec_t;
 typedef int (*pfnUserMsgHook)(const char *pszName, int iSize, void *pbuf);
 
-#include "Vector.h"
+#include "Maths/Constants.h"
+#include "Maths/Vector.h"
 
 #ifndef DID_VEC3_T_DEFINE
 #define DID_VEC3_T_DEFINE
