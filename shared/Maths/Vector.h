@@ -88,6 +88,10 @@ inline Vector2D operator*( float fl, const Vector2D& v )
 	return v * fl; 
 }
 
+// A bit of forward declaration because float * const Vector& is used inside Vector
+class Vector;
+inline Vector operator* ( float fl, const Vector& v );
+
 //=========================================================
 // 3D Vector
 //=========================================================
@@ -230,15 +234,60 @@ public:
 		return Vector( y * v.z - z * v.y, z * v.x - x * v.z, x * v.y - y * v.x );
 	}
 
-	// Reflects this vector off a surface normal
 	// @param mod: Bias. Lower the value, greater the angle between the incoming
 	// vector and the reflected vector. Higher the value, greater the influence of the surface normal
-	inline Vector Reflect( const Vector& normal, const float& mod = 2.0f ) const
+	// @returns The reflection of this vector off a surface normal
+	inline Vector Reflected( const Vector& normal, const float& mod = 2.0f ) const
 	{
 		const float dot = Dot( normal );
 		const Vector inverseNormal = normal * mod * dot;
 
 		return *this - inverseNormal;
+	}
+
+	// Reflects this vector off a plane
+	inline void Reflect( const Vector& normal, const float& mod = 2.0f )
+	{
+		*this = Reflected( normal, mod );
+	}
+
+	// "Flattens" this vector on a plane
+	// This can be useful when you wanna glide over a surface nicely
+	inline Vector ProjectedOnPlane( const Vector& normal ) const
+	{
+		// The original formula divided the dot product
+		// by the square of the length of the normal
+		// But normals are normalized, so that's unnecessary
+		return *this - (Dot( normal ) * normal);
+	}
+
+	// Projects *this* vector on a plane
+	inline void ProjectOnPlane( const Vector& normal )
+	{
+		*this = ProjectedOnPlane( normal );
+	}
+
+	// NOTE: This works with directional vectors, not Euler angle vectors
+	// It would be better to use quaternions for this 
+	// @returns A vector that was rotated around an axis
+	inline Vector Rotated( const Vector& axis, const float& angle ) const
+	{
+		const float degrees = angle * 180.0f / 3.14159f;
+
+		// How much of this will remain after the rotation
+		Vector cosV = *this * std::cos( degrees );
+		// Dunno what this really means
+		Vector K = (1.0f - std::cos( degrees )) * (Dot( axis )) * axis;
+		// How much remains of the rotated vector
+		Vector cross = std::sin( degrees ) * Cross( axis );
+
+		return cosV + K + cross;
+	}
+
+	// Rotates this vector around an axis
+	inline void Rotate( const Vector& axis, const float& angle )
+	{
+		*this = Rotated( axis, angle );
 	}
 
 	// Checks if two vectors are roughly equal

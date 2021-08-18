@@ -1,4 +1,6 @@
+#define _USE_MATH_DEFINES
 #include <cmath>
+
 #include "Base/ExtDLL.h"
 #include "Util.h"
 #include "Vector.h"
@@ -14,14 +16,14 @@ void Vector::AngleVectors( Vector* forward, Vector* right, Vector* up ) const
 	float		sr, sp, sy, cr, cp, cy;
 
 	angle = y * (M_PI * 2 / 360);
-	sy = sin( angle );
-	cy = cos( angle );
+	sy = std::sin( angle );
+	cy = std::cos( angle );
 	angle = x * (M_PI * 2 / 360);
-	sp = sin( angle );
-	cp = cos( angle );
+	sp = std::sin( angle );
+	cp = std::cos( angle );
 	angle = z * (M_PI * 2 / 360);
-	sr = sin( angle );
-	cr = cos( angle );
+	sr = std::sin( angle );
+	cr = std::cos( angle );
 
 	if ( forward )
 	{
@@ -64,12 +66,12 @@ Vector Vector::ToAngles() const
 	}
 	else
 	{
-		yaw = (atan2( y, x ) * 180.0f / M_PI);
+		yaw = (std::atan2( y, x ) * 180.0f / M_PI);
 		if ( yaw < 0.0f )
 			yaw += 360.0f;
 
-		tmp = sqrt( x * x + y * y );
-		pitch = (atan2( z, tmp ) * 180.0f / M_PI);
+		tmp = std::sqrt( x * x + y * y );
+		pitch = (std::atan2( z, tmp ) * 180.0f / M_PI);
 		if ( pitch < 0.0f )
 			pitch += 360.0f;
 	}
