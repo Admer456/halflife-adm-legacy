@@ -16,7 +16,7 @@
 #include "HUD/hud.h"
 #include "cl_util.h"
 #include "parsemsg.h"
-#include "pm_shared.h"
+#include "PlayerMove/pm_shared.h"
 #include "triangleapi.h"
 #include "com_model.h"
 #include "Components/SimpleSky.h"

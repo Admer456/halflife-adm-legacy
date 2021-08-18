@@ -38,7 +38,7 @@
 #include "weaponinfo.h"
 #include "usercmd.h"
 #include "netadr.h"
-#include "pm_shared.h"
+#include "PlayerMove/pm_shared.h"
 
 //#include "adm/adm_sound.h"
 

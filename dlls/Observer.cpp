@@ -20,7 +20,7 @@
 #include	"Base/CBase.h"
 #include	"player.h"
 #include	"Weapons/Weapons.h"
-#include	"pm_shared.h"
+#include	"PlayerMove/pm_shared.h"
 
 extern int gmsgCurWeapon;
 extern int gmsgSetFOV;

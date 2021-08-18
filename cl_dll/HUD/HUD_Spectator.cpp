@@ -13,8 +13,8 @@
 #include "VGUI/vgui_SpectatorPanel.h"
 #include "hltv.h"
 
-#include "pm_shared.h"
-#include "pm_defs.h"
+#include "PlayerMove/pm_shared.h"
+#include "PlayerMove/pm_defs.h"
 #include "pmtrace.h"
 #include "parsemsg.h"
 #include "entity_types.h"

@@ -25,7 +25,7 @@
 #include "../public/interface.h"
 //#include "vgui_schememanager.h"
 
-#include "pm_shared.h"
+#include "PlayerMove/pm_shared.h"
 
 #include <string.h>
 #include "HUD/HUD_servers.h"

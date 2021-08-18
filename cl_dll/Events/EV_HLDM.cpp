@@ -19,8 +19,8 @@
 #include "cl_entity.h"
 #include "entity_types.h"
 #include "usercmd.h"
-#include "pm_defs.h"
-#include "pm_materials.h"
+#include "PlayerMove/pm_defs.h"
+#include "PlayerMove/pm_materials.h"
 
 #include "eventscripts.h"
 #include "ev_hldm.h"
@@ -39,7 +39,7 @@ extern engine_studio_api_t IEngineStudio;
 
 static int tracerCount[ 32 ];
 
-#include "pm_shared.h"
+#include "PlayerMove/pm_shared.h"
 
 // God, I hate forward declarations in .cpp files
 void V_PunchAxis( int axis, float punch );

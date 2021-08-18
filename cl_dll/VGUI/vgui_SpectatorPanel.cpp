@@ -7,7 +7,7 @@
 #include "const.h"
 #include "entity_state.h"
 #include "cl_entity.h"
-#include "pm_shared.h"
+#include "PlayerMove/pm_shared.h"
 #include "VGUI/vgui_TeamFortressViewport.h"
 #include "vgui_SpectatorPanel.h"
 #include "VGUI/vgui_ScorePanel.h"

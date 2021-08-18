@@ -44,7 +44,7 @@
 #include "Input/Camera.h"
 #include "Input/IN_Defs.h"
 #include "parsemsg.h"
-#include "pm_shared.h"
+#include "PlayerMove/pm_shared.h"
 #include "keydefs.h"
 #include "demo.h"
 #include "demo_api.h"

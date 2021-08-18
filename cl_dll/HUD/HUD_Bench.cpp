@@ -10,7 +10,7 @@
 #include "entity_state.h"
 #include "cl_entity.h"
 #include "usercmd.h"
-#include "pm_defs.h"
+#include "PlayerMove/pm_defs.h"
 #include "event_api.h"
 
 #include "bench.h"

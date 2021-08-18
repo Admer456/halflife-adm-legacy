@@ -122,7 +122,7 @@ struct entity_state_s
 	vec3_t		vuser4;
 };
 
-#include "pm_info.h"
+#include "PlayerMove/pm_info.h"
 
 typedef struct clientdata_s
 {

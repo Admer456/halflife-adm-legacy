@@ -23,7 +23,7 @@
 #include "usercmd.h"
 #include "entity_state.h"
 #include "demo_api.h"
-#include "pm_defs.h"
+#include "PlayerMove/pm_defs.h"
 #include "event_api.h"
 #include "r_efx.h"
 

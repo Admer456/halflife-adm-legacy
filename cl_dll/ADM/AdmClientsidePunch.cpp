@@ -1,7 +1,7 @@
 #include "HUD/HUD.h"
 #include "CL_Util.h"
 #include "ParseMsg.h"
-#include "PM_Shared.h"
+#include "PlayerMove/PM_Shared.h"
 #include "Const.h"
 
 DECLARE_MESSAGE( m_clPunch, VPunch );

@@ -21,7 +21,7 @@
 #include "HUD/hud.h"
 #include "cl_util.h"
 #include "parsemsg.h"
-#include "pm_shared.h"
+#include "PlayerMove/pm_shared.h"
 
 #include <string.h>
 #include <stdio.h>

@@ -10,9 +10,9 @@
 #include "cl_entity.h"
 #include "ref_params.h"
 #include "Input/IN_Defs.h" // PITCH YAW ROLL
-#include "pm_movevars.h"
-#include "pm_shared.h"
-#include "pm_defs.h"
+#include "PlayerMove/pm_movevars.h"
+#include "PlayerMove/pm_shared.h"
+#include "PlayerMove/pm_defs.h"
 #include "event_api.h"
 #include "pmtrace.h"
 #include "bench.h"
