@@ -721,9 +721,6 @@
     <ClInclude Include="..\..\dlls\Base\CBase.h">
       <Filter>Sources\Base</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\dlls\Base\CDLL_DLL.h">
-      <Filter>Sources\Base</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\dlls\Base\EngineCallback.h">
       <Filter>Sources\Base</Filter>
     </ClInclude>
@@ -1167,6 +1164,9 @@
     </ClInclude>
     <ClInclude Include="..\..\shared\Maths\Constants.h">
       <Filter>Shared\Maths</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\shared\ClientServerShared.h">
+      <Filter>Shared</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

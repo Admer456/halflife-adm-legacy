@@ -17,8 +17,8 @@
 
 // this file is included by both the game-dll and the client-dll,
 
-#ifndef CDLL_DLL_H
-#define CDLL_DLL_H
+#ifndef CLIENT_SERVER_SHARED_H
+#define CLIENT_SERVER_SHARED_H
 
 #define MAX_WEAPONS		32		// ???
 

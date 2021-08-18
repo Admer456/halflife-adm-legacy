@@ -21,8 +21,6 @@
 #include "Base/Animation.h"
 #include "AI/ScriptEvent.h"
 
-#pragma warning( disable : 4244 )
-
 int ExtractBbox( void *pmodel, int sequence, float *mins, float *maxs )
 {
 	studiohdr_t *pstudiohdr;

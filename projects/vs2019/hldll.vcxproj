@@ -360,7 +360,6 @@ call ..\..\filecopy.bat "$(TargetDir)$(TargetName).pdb" "$(ModDir)\dlls\$(Target
     <ClInclude Include="..\..\dlls\Base\Animation.h" />
     <ClInclude Include="..\..\dlls\AI\BaseMonster.h" />
     <ClInclude Include="..\..\dlls\Base\CBase.h" />
-    <ClInclude Include="..\..\dlls\Base\CDLL_DLL.h" />
     <ClInclude Include="..\..\dlls\Env\CBeam.h" />
     <ClInclude Include="..\..\dlls\Env\CBlood.h" />
     <ClInclude Include="..\..\dlls\Env\CBubbling.h" />
@@ -469,6 +468,7 @@ call ..\..\filecopy.bat "$(TargetDir)$(TargetName).pdb" "$(ModDir)\dlls\$(Target
     <ClInclude Include="..\..\shared\ADM\Physics\PhysicsWorld.h" />
     <ClInclude Include="..\..\shared\ADM\Physics\IPhysBody.h" />
     <ClInclude Include="..\..\shared\ADM\VersionInfo.h" />
+    <ClInclude Include="..\..\shared\ClientServerShared.h" />
     <ClInclude Include="..\..\shared\Maths\Constants.h" />
     <ClInclude Include="..\..\shared\Maths\Vector.h" />
   </ItemGroup>

@@ -43,6 +43,6 @@ typedef float vec_t;				// needed before including progdefs.h
 #include "eiface.h"
 
 // Shared header between the client DLL and the game DLLs
-#include "cdll_dll.h"
+#include "ClientServerShared.h"
 
 #endif //EXTDLL_H
