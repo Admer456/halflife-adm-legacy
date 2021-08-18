@@ -311,7 +311,7 @@ int CLeech::TakeDamage( entvars_t *pevInflictor, entvars_t *pevAttacker, float f
 	// Nudge the leech away from the damage
 	if ( pevInflictor )
 	{
-		pev->velocity = (pev->origin - pevInflictor->origin).Normalize() * 25;
+		pev->velocity = (pev->origin - pevInflictor->origin).Normalized() * 25;
 	}
 
 	return CBaseMonster::TakeDamage( pevInflictor, pevAttacker, flDamage, bitsDamageType );
@@ -335,8 +335,8 @@ void CLeech::HandleAnimEvent( MonsterEvent_t *pEvent )
 			face.z = 0;
 			dir = (pEnemy->pev->origin - pev->origin);
 			dir.z = 0;
-			dir = dir.Normalize();
-			face = face.Normalize();
+			dir = dir.Normalized();
+			face = face.Normalized();
 
 			
 			if ( DotProduct(dir, face) > 0.9 )		// Only take damage if the leech is facing the prey

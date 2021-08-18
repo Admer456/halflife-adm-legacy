@@ -463,7 +463,7 @@ void COsprey::Flight( )
 		// TODO: this needs to send different sounds to every player for multiplayer.	
 		if (pPlayer)
 		{
-			float pitch = DotProduct( m_velocity - pPlayer->pev->velocity, (pPlayer->pev->origin - pev->origin).Normalize() );
+			float pitch = DotProduct( m_velocity - pPlayer->pev->velocity, (pPlayer->pev->origin - pev->origin).Normalized() );
 
 			pitch = (int)(100 + pitch / 75.0);
 

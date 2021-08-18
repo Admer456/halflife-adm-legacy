@@ -49,7 +49,7 @@ void CGib :: LimitVelocity( void )
 	// ceiling at 1500.  The gib velocity equation is not bounded properly.  Rather than tune it
 	// in 3 separate places again, I'll just limit it here.
 	if ( length > 1500.0 )
-		pev->velocity = pev->velocity.Normalize() * 1500;		// This should really be sv_maxvelocity * 0.75 or something
+		pev->velocity = pev->velocity.Normalized() * 1500;		// This should really be sv_maxvelocity * 0.75 or something
 }
 
 
@@ -149,7 +149,7 @@ void CGib :: SpawnHeadGib( entvars_t *pevVictim )
 			entvars_t	*pevPlayer;
 
 			pevPlayer = VARS( pentPlayer );
-			pGib->pev->velocity = ( ( pevPlayer->origin + pevPlayer->view_ofs ) - pGib->pev->origin ).Normalize() * 300;
+			pGib->pev->velocity = ( ( pevPlayer->origin + pevPlayer->view_ofs ) - pGib->pev->origin ).Normalized() * 300;
 			pGib->pev->velocity.z += 100;
 		}
 		else
@@ -867,8 +867,8 @@ int CBaseMonster :: TakeDamage( entvars_t *pevInflictor, entvars_t *pevAttacker,
 		CBaseEntity *pInflictor = CBaseEntity :: Instance( pevInflictor );
 		if (pInflictor)
 		{
-			vecDir = ( pInflictor->Center() - Vector ( 0, 0, 10 ) - Center() ).Normalize();
-			vecDir = g_vecAttackDir = vecDir.Normalize();
+			vecDir = ( pInflictor->Center() - Vector ( 0, 0, 10 ) - Center() ).Normalized();
+			vecDir = g_vecAttackDir = vecDir.Normalized();
 		}
 	}
 
@@ -982,8 +982,8 @@ int CBaseMonster :: DeadTakeDamage( entvars_t *pevInflictor, entvars_t *pevAttac
 		CBaseEntity *pInflictor = CBaseEntity :: Instance( pevInflictor );
 		if (pInflictor)
 		{
-			vecDir = ( pInflictor->Center() - Vector ( 0, 0, 10 ) - Center() ).Normalize();
-			vecDir = g_vecAttackDir = vecDir.Normalize();
+			vecDir = ( pInflictor->Center() - Vector ( 0, 0, 10 ) - Center() ).Normalized();
+			vecDir = g_vecAttackDir = vecDir.Normalized();
 		}
 	}
 
@@ -1097,7 +1097,7 @@ void RadiusDamage( Vector vecSrc, entvars_t *pevInflictor, entvars_t *pevAttacke
 				if (tr.flFraction != 1.0)
 				{
 					ClearMultiDamage( );
-					pEntity->TraceAttack( pevInflictor, flAdjustedDamage, (tr.vecEndPos - vecSrc).Normalize( ), &tr, bitsDamageType );
+					pEntity->TraceAttack( pevInflictor, flAdjustedDamage, (tr.vecEndPos - vecSrc).Normalized( ), &tr, bitsDamageType );
 					ApplyMultiDamage( pevInflictor, pevAttacker );
 				}
 				else
@@ -1173,10 +1173,10 @@ BOOL CBaseMonster :: FInViewCone ( CBaseEntity *pEntity )
 
 	UTIL_MakeVectors ( pev->angles );
 	
-	vec2LOS = ( pEntity->pev->origin - pev->origin ).Make2D();
-	vec2LOS = vec2LOS.Normalize();
+	vec2LOS = ( pEntity->pev->origin - pev->origin ).To2D();
+	vec2LOS = vec2LOS.Normalized();
 
-	flDot = DotProduct (vec2LOS , gpGlobals->v_forward.Make2D() );
+	flDot = DotProduct (vec2LOS , gpGlobals->v_forward.To2D() );
 
 	if ( flDot > m_flFieldOfView )
 	{
@@ -1200,10 +1200,10 @@ BOOL CBaseMonster :: FInViewCone ( Vector *pOrigin )
 
 	UTIL_MakeVectors ( pev->angles );
 	
-	vec2LOS = ( *pOrigin - pev->origin ).Make2D();
-	vec2LOS = vec2LOS.Normalize();
+	vec2LOS = ( *pOrigin - pev->origin ).To2D();
+	vec2LOS = vec2LOS.Normalized();
 
-	flDot = DotProduct (vec2LOS , gpGlobals->v_forward.Make2D() );
+	flDot = DotProduct (vec2LOS , gpGlobals->v_forward.To2D() );
 
 	if ( flDot > m_flFieldOfView )
 	{

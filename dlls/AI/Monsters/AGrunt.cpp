@@ -433,7 +433,7 @@ void CAGrunt :: HandleAnimEvent( MonsterEvent_t *pEvent )
 			{
 				vecDirToEnemy = ( ( m_vecEnemyLKP ) - pev->origin );
 				angDir = UTIL_VecToAngles( vecDirToEnemy );
-				vecDirToEnemy = vecDirToEnemy.Normalize();
+				vecDirToEnemy = vecDirToEnemy.Normalized();
 			}
 			else
 			{

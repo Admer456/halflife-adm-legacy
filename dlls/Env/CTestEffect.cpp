@@ -29,7 +29,7 @@ void CTestEffect::TestThink( void )
 
 		Vector vecSrc = pev->origin;
 		Vector vecDir = Vector( RANDOM_FLOAT( -1.0, 1.0 ), RANDOM_FLOAT( -1.0, 1.0 ), RANDOM_FLOAT( -1.0, 1.0 ) );
-		vecDir = vecDir.Normalize();
+		vecDir = vecDir.Normalized();
 		UTIL_TraceLine( vecSrc, vecSrc + vecDir * 128, ignore_monsters, ENT( pev ), &tr );
 
 		pbeam->PointsInit( vecSrc, tr.vecEndPos );

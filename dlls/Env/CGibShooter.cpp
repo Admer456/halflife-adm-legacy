@@ -121,7 +121,7 @@ void CGibShooter::ShootThink( void )
 	vecShootDir = vecShootDir + gpGlobals->v_forward * RANDOM_FLOAT( -1, 1 ) * m_flVariance;;
 	vecShootDir = vecShootDir + gpGlobals->v_up * RANDOM_FLOAT( -1, 1 ) * m_flVariance;;
 
-	vecShootDir = vecShootDir.Normalize();
+	vecShootDir = vecShootDir.Normalized();
 	CGib *pGib = CreateGib();
 
 	if ( pGib )

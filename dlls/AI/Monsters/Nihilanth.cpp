@@ -602,8 +602,8 @@ void CNihilanth :: ShootBalls( void )
 
 				GetAttachment( 2, vecHand, vecAngle );
 				vecSrc = vecHand + pev->velocity * (m_flShootTime - gpGlobals->time);
-				// vecDir = (m_posTarget - vecSrc).Normalize( );
-				vecDir = (m_posTarget - pev->origin).Normalize( );
+				// vecDir = (m_posTarget - vecSrc).Normalized( );
+				vecDir = (m_posTarget - pev->origin).Normalized( );
 				vecSrc = vecSrc + vecDir * (gpGlobals->time - m_flShootTime);
 				pEntity = (CNihilanthHVR *)Create( "nihilanth_energy_ball", vecSrc, pev->angles, edict() );
 				pEntity->pev->velocity = vecDir * 200.0; 
@@ -611,8 +611,8 @@ void CNihilanth :: ShootBalls( void )
 
 				GetAttachment( 3, vecHand, vecAngle );
 				vecSrc = vecHand + pev->velocity * (m_flShootTime - gpGlobals->time);
-				// vecDir = (m_posTarget - vecSrc).Normalize( );
-				vecDir = (m_posTarget - pev->origin).Normalize( );
+				// vecDir = (m_posTarget - vecSrc).Normalized( );
+				vecDir = (m_posTarget - pev->origin).Normalized( );
 				vecSrc = vecSrc + vecDir * (gpGlobals->time - m_flShootTime);
 				pEntity = (CNihilanthHVR *)Create( "nihilanth_energy_ball", vecSrc, pev->angles, edict() );
 				pEntity->pev->velocity = vecDir * 200.0; 
@@ -735,9 +735,9 @@ void CNihilanth :: NextActivity( )
 		{
 			m_hRecharger = pRecharger;
 			m_posDesired = Vector( pev->origin.x, pev->origin.y, pRecharger->pev->origin.z );
-			m_vecDesired = (pRecharger->pev->origin - m_posDesired).Normalize( );
+			m_vecDesired = (pRecharger->pev->origin - m_posDesired).Normalized( );
 			m_vecDesired.z = 0;
-			m_vecDesired = m_vecDesired.Normalize();
+			m_vecDesired = m_vecDesired.Normalized();
 		}
 		else
 		{
@@ -878,7 +878,7 @@ void CNihilanth :: HuntThink( void )
 				m_flPrevSeen = gpGlobals->time;
 			m_flLastSeen = gpGlobals->time;
 			m_posTarget = m_hEnemy->pev->origin;
-			m_vecTarget = (m_posTarget - pev->origin).Normalize();
+			m_vecTarget = (m_posTarget - pev->origin).Normalized();
 			m_vecDesired = m_vecTarget;
 			m_posDesired = Vector( pev->origin.x, pev->origin.y, m_posTarget.z + m_flAdj );
 		}
@@ -1261,7 +1261,7 @@ void CNihilanth::TraceAttack( entvars_t *pevAttacker, float flDamage, Vector vec
 
 	if (m_irritation != 3)
 	{
-		Vector vecBlood = (ptr->vecEndPos - pev->origin).Normalize( );
+		Vector vecBlood = (ptr->vecEndPos - pev->origin).Normalized( );
 
 		UTIL_BloodStream( ptr->vecEndPos, vecBlood, BloodColor(), flDamage + (100 - 100 * (pev->health / gSkillData.nihilanthHealth)));
 	}
@@ -1446,7 +1446,7 @@ void CNihilanthHVR :: ZapInit( CBaseEntity *pEnemy )
 	pev->rendercolor.z = 255;
 	pev->scale = 2.0;
 
-	pev->velocity = (pEnemy->pev->origin - pev->origin).Normalize() * 200;
+	pev->velocity = (pEnemy->pev->origin - pev->origin).Normalized() * 200;
 
 	m_hEnemy = pEnemy;
 	SetThink( &CNihilanthHVR::ZapThink );
@@ -1747,12 +1747,12 @@ BOOL CNihilanthHVR :: CircleTarget( Vector vecTarget )
 	if (d1 < 0 && d2 <= d1)
 	{
 		// ALERT( at_console, "too close\n");
-		m_vecIdeal = m_vecIdeal - (vecDest - vecSrc).Normalize() * 50;
+		m_vecIdeal = m_vecIdeal - (vecDest - vecSrc).Normalized() * 50;
 	}
 	else if (d1 > 0 && d2 >= d1)
 	{
 		// ALERT( at_console, "too far\n");
-		m_vecIdeal = m_vecIdeal + (vecDest - vecSrc).Normalize() * 50;
+		m_vecIdeal = m_vecIdeal + (vecDest - vecSrc).Normalized() * 50;
 	}
 	pev->avelocity.z = d1 * 20;
 
@@ -1762,10 +1762,10 @@ BOOL CNihilanthHVR :: CircleTarget( Vector vecTarget )
 	}
 
 	m_vecIdeal = m_vecIdeal + Vector( RANDOM_FLOAT( -2, 2 ), RANDOM_FLOAT( -2, 2 ), RANDOM_FLOAT( -2, 2 ));
-	m_vecIdeal = Vector( m_vecIdeal.x, m_vecIdeal.y, 0 ).Normalize( ) * 200
-		/* + Vector( -m_vecIdeal.y, m_vecIdeal.x, 0 ).Normalize( ) * 32 */
+	m_vecIdeal = Vector( m_vecIdeal.x, m_vecIdeal.y, 0 ).Normalized( ) * 200
+		/* + Vector( -m_vecIdeal.y, m_vecIdeal.x, 0 ).Normalized( ) * 32 */
 		+ Vector( 0, 0, m_vecIdeal.z );
-	// m_vecIdeal = m_vecIdeal + Vector( -m_vecIdeal.y, m_vecIdeal.x, 0 ).Normalize( ) * 2;
+	// m_vecIdeal = m_vecIdeal + Vector( -m_vecIdeal.y, m_vecIdeal.x, 0 ).Normalized( ) * 2;
 
 	// move up/down
 	d1 = vecTarget.z - pev->origin.z;
@@ -1792,9 +1792,9 @@ void CNihilanthHVR :: MovetoTarget( Vector vecTarget )
 	float flSpeed = m_vecIdeal.Length();
 	if (flSpeed > 300)
 	{
-		m_vecIdeal = m_vecIdeal.Normalize( ) * 300;
+		m_vecIdeal = m_vecIdeal.Normalized( ) * 300;
 	}
-	m_vecIdeal = m_vecIdeal + (vecTarget - pev->origin).Normalize() * 300;
+	m_vecIdeal = m_vecIdeal + (vecTarget - pev->origin).Normalized() * 300;
 	pev->velocity = m_vecIdeal;
 }
 
@@ -1804,7 +1804,7 @@ void CNihilanthHVR :: MovetoTarget( Vector vecTarget )
 void CNihilanthHVR :: Crawl( void  )
 {
 
-	Vector vecAim = Vector( RANDOM_FLOAT( -1, 1 ), RANDOM_FLOAT( -1, 1 ), RANDOM_FLOAT( -1, 1 ) ).Normalize( );
+	Vector vecAim = Vector( RANDOM_FLOAT( -1, 1 ), RANDOM_FLOAT( -1, 1 ), RANDOM_FLOAT( -1, 1 ) ).Normalized( );
 	Vector vecPnt = pev->origin + pev->velocity * 0.2 + vecAim * 128;
 
 	MESSAGE_BEGIN( MSG_BROADCAST, SVC_TEMPENTITY );
@@ -1836,7 +1836,7 @@ void CNihilanthHVR::RemoveTouch( CBaseEntity *pOther )
 
 void CNihilanthHVR::BounceTouch( CBaseEntity *pOther )
 {
-	Vector vecDir = m_vecIdeal.Normalize( );
+	Vector vecDir = m_vecIdeal.Normalized( );
 
 	TraceResult tr = UTIL_GetGlobalTrace( );
 

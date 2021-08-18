@@ -59,7 +59,7 @@ public:
 		return sqrt(x*x + y*y );
 	}
 
-	inline Vector2D Normalize() const
+	inline Vector2D Normalized() const
 	{
 		Vector2D vec2;
 
@@ -260,7 +260,14 @@ public:
 	// Treats this vector as a direction and converts it to Euler angles (pitch and yaw only)
 	Vector ToAngles() const;
 
-	inline Vector Normalize() const
+	// Normalizes this vector
+	inline void Normalize()
+	{
+		*this = this->Normalized();
+	}
+
+	// @returns A normalized version of this vector
+	inline Vector Normalized() const
 	{
 		float flLen = Length();
 		if ( flLen == 0 ) 
@@ -269,14 +276,10 @@ public:
 		return Vector( x * flLen, y * flLen, z * flLen );
 	}
 
-	inline Vector2D Make2D() const
+	// @returns A 2D version of this vector
+	inline Vector2D To2D() const
 	{
-		Vector2D	Vec2;
-
-		Vec2.x = x;
-		Vec2.y = y;
-
-		return Vec2;
+		return Vector2D( x, y );
 	}
 
 	inline float Length2D() const

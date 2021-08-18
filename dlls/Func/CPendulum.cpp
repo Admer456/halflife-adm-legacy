@@ -179,7 +179,7 @@ void CPendulum::Touch( CBaseEntity *pOther )
 
 	pOther->TakeDamage( pev, pev, damage, DMG_CRUSH );
 
-	pevOther->velocity = (pevOther->origin - VecBModelOrigin( pev )).Normalize() * damage;
+	pevOther->velocity = (pevOther->origin - VecBModelOrigin( pev )).Normalized() * damage;
 }
 
 void CPendulum::RopeTouch( CBaseEntity *pOther )

@@ -241,7 +241,7 @@ void CFuncRotating::HurtTouch( CBaseEntity *pOther )
 
 	pOther->TakeDamage( pev, pev, pev->dmg, DMG_CRUSH );
 
-	pevOther->velocity = (pevOther->origin - VecBModelOrigin( pev )).Normalize() * pev->dmg;
+	pevOther->velocity = (pevOther->origin - VecBModelOrigin( pev )).Normalized() * pev->dmg;
 }
 
 //

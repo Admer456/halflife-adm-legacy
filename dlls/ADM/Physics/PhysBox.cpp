@@ -97,7 +97,7 @@ void CPhysBox::Touch( CBaseEntity* other )
 	// as a force, but considering the player can get stuck...
 	// this may push it out of the player
 	Vector delta = pev->origin - other->pev->origin;
-	Vector force = delta.Normalize() * (1.0f / delta.Length());
+	Vector force = delta.Normalized() * (1.0f / delta.Length());
 
 	force = force * 1000.f;
 

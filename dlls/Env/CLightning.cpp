@@ -375,7 +375,7 @@ void CLightning::RandomArea( void )
 		Vector vecSrc = pev->origin;
 
 		Vector vecDir1 = Vector( RANDOM_FLOAT( -1.0, 1.0 ), RANDOM_FLOAT( -1.0, 1.0 ), RANDOM_FLOAT( -1.0, 1.0 ) );
-		vecDir1 = vecDir1.Normalize();
+		vecDir1 = vecDir1.Normalized();
 		TraceResult		tr1;
 		UTIL_TraceLine( vecSrc, vecSrc + vecDir1 * m_radius, ignore_monsters, ENT( pev ), &tr1 );
 
@@ -386,7 +386,7 @@ void CLightning::RandomArea( void )
 		do {
 			vecDir2 = Vector( RANDOM_FLOAT( -1.0, 1.0 ), RANDOM_FLOAT( -1.0, 1.0 ), RANDOM_FLOAT( -1.0, 1.0 ) );
 		} while ( DotProduct( vecDir1, vecDir2 ) > 0 );
-		vecDir2 = vecDir2.Normalize();
+		vecDir2 = vecDir2.Normalized();
 		TraceResult		tr2;
 		UTIL_TraceLine( vecSrc, vecSrc + vecDir2 * m_radius, ignore_monsters, ENT( pev ), &tr2 );
 
@@ -415,7 +415,7 @@ void CLightning::RandomPoint( Vector &vecSrc )
 	for ( iLoops = 0; iLoops < 10; iLoops++ )
 	{
 		Vector vecDir1 = Vector( RANDOM_FLOAT( -1.0, 1.0 ), RANDOM_FLOAT( -1.0, 1.0 ), RANDOM_FLOAT( -1.0, 1.0 ) );
-		vecDir1 = vecDir1.Normalize();
+		vecDir1 = vecDir1.Normalized();
 		TraceResult		tr1;
 		UTIL_TraceLine( vecSrc, vecSrc + vecDir1 * m_radius, ignore_monsters, ENT( pev ), &tr1 );
 

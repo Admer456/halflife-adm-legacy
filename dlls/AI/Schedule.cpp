@@ -1164,8 +1164,8 @@ case TASK_GET_PATH_TO_BESTSCENT:
 			// to start strafing, we have to first figure out if the target is on the left side or right side
 			UTIL_MakeVectors ( pev->angles );
 
-			vec2DirToPoint = ( m_Route[ 0 ].vecLocation - pev->origin ).Make2D().Normalize();
-			vec2RightSide = gpGlobals->v_right.Make2D().Normalize();
+			vec2DirToPoint = ( m_Route[ 0 ].vecLocation - pev->origin ).To2D().Normalized();
+			vec2RightSide = gpGlobals->v_right.To2D().Normalized();
 
 			if ( DotProduct ( vec2DirToPoint, vec2RightSide ) > 0 )
 			{

@@ -687,7 +687,7 @@ void CBaseCar::VehicleMovement()
 	oldangles = pev->angles;
 
 	//Vector velocityNoGravity = (oldPosition - pev->origin) * 64.f;
-	//Vector calcAngles = UTIL_VecToAngles( velocityNoGravity ).Normalize();
+	//Vector calcAngles = UTIL_VecToAngles( velocityNoGravity ).Normalized();
 
 	//if ( pev->velocity.Length2D() < 3.0 )
 	//{

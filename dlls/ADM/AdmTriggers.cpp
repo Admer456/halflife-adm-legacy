@@ -1810,7 +1810,7 @@ void CUtilRotator::RotateApply(CBaseEntity* pTarget)
 				vecNewOrigin.z = DistToOrigin() * sin(m_vecSecondaryAnglePhase.x * Deg2Rad) + m_vecPrimaryOrigin.z;
 
 			m_vecSecondaryAnglePhase = m_vecSecondaryAnglePhase + (m_vecSecondaryAngles / CVAR_GET_FLOAT("fps_max")); // Hell yeah, let's keep it all in sync :ok_hand:
-			//	m_vecSecondaryAnglePhase.Normalize();
+			//	m_vecSecondaryAnglePhase.Normalized();
 			if (m_vecSecondaryAnglePhase.x > 360)
 				m_vecSecondaryAnglePhase.x = 0;
 
