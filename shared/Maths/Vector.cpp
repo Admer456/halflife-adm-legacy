@@ -8,7 +8,7 @@
 // 
 // Copied from pm_math.cpp
 // ====================================================
-void Vector::AngleVectors( Vector* forward, Vector* right, Vector* up )
+void Vector::AngleVectors( Vector* forward, Vector* right, Vector* up ) const
 {
 	float		angle;
 	float		sr, sp, sy, cr, cp, cy;
@@ -43,4 +43,36 @@ void Vector::AngleVectors( Vector* forward, Vector* right, Vector* up )
 		up->y = (cr * sp * sy + -sr * cy);
 		up->z = cr * cp;
 	}
+}
+
+// ====================================================
+// Vector::ToAngles
+// 
+// Copied from pm_math.cpp
+// ====================================================
+Vector Vector::ToAngles() const
+{
+	float tmp, yaw, pitch;
+
+	if ( y == 0.0f && x == 0.0f )
+	{
+		yaw = 0.0f;
+		if ( z > 0.0f )
+			pitch = 90.0f;
+		else
+			pitch = 270.0f;
+	}
+	else
+	{
+		yaw = (atan2( y, x ) * 180.0f / M_PI);
+		if ( yaw < 0.0f )
+			yaw += 360.0f;
+
+		tmp = sqrt( x * x + y * y );
+		pitch = (atan2( z, tmp ) * 180.0f / M_PI);
+		if ( pitch < 0.0f )
+			pitch += 360.0f;
+	}
+
+	return Vector( pitch, yaw, 0.0f );
 }

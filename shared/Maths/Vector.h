@@ -255,7 +255,10 @@ public:
 
 	// Calculates forward, right and up vectors from an angle vector
 	// Assumes that this vector contains Euler angles in degrees
-	void AngleVectors( Vector* forward = nullptr, Vector* right = nullptr, Vector* up = nullptr );
+	void AngleVectors( Vector* forward = nullptr, Vector* right = nullptr, Vector* up = nullptr ) const;
+
+	// Treats this vector as a direction and converts it to Euler angles (pitch and yaw only)
+	Vector ToAngles() const;
 
 	inline Vector Normalize() const
 	{
