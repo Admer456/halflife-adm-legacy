@@ -28,6 +28,8 @@ CBaseEntity
 
 #define		MAX_PATH_SIZE	10 // max number of nodes available for a path.
 
+#define		SF_SPAWN_PRIMARY 16 // Indicates that this info_player_start is primary and if there are multiple ones in a map, use that
+
 // These are caps bits to indicate what an object's capabilities (currently used for save/restore and level transitions)
 #define		FCAP_CUSTOMSAVE				0x00000001
 #define		FCAP_ACROSS_TRANSITION		0x00000002		// should transfer between transitions

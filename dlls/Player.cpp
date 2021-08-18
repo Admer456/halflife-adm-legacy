@@ -2829,6 +2829,8 @@ EntSelectSpawnPoint
 Returns the entity to spawn at
 
 USES AND SETS GLOBAL g_pLastSpawn
+
+TODO: Rewrite the entire spawnpoint system -Admer
 ============
 */
 edict_t *EntSelectSpawnPoint( CBaseEntity *pPlayer )
@@ -2897,8 +2899,39 @@ edict_t *EntSelectSpawnPoint( CBaseEntity *pPlayer )
 	// If startspot is set, (re)spawn there.
 	if ( FStringNull( gpGlobals->startspot ) || !strlen(STRING(gpGlobals->startspot)))
 	{
-		pSpot = UTIL_FindEntityByClassname(NULL, "info_player_start");
-		if ( !FNullEnt(pSpot) )
+		int numSpawnPoints = 0;
+		pSpot = nullptr;
+
+		// Search for the one with the "Primary" flag
+		while ( nullptr != (pSpot = UTIL_FindEntityByClassname( pSpot, "info_player_start" )) )
+		{
+			numSpawnPoints++;
+
+			// We found it
+			if ( pSpot->pev->spawnflags & SF_SPAWN_PRIMARY )
+			{
+				goto ReturnSpot;
+			}
+		}
+
+		// In case there are no primary spawnpoints, search for one randomly
+		{
+			int i = 0;
+			int chosenSpawnPoint = RANDOM_LONG( 0, numSpawnPoints - 1 );
+
+			pSpot = nullptr;
+			while ( nullptr != (pSpot = UTIL_FindEntityByClassname( pSpot, "info_player_start" )) )
+			{
+				// We found it
+				if ( i++ == chosenSpawnPoint )
+				{
+					break;
+				}
+			}
+		}
+
+		// We found one
+		if ( !FNullEnt( pSpot ) )
 			goto ReturnSpot;
 	}
 	else

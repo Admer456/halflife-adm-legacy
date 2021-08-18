@@ -2107,7 +2107,13 @@
 	target(target_destination) : "Target"
 	master(string) : "Master"
 ]
-@PointClass base(PlayerClass) sequence(2) studio("models/player.mdl") = info_player_start : "Player 1 start" []
+@PointClass base(PlayerClass) sequence(2) studio("models/player.mdl") = info_player_start : "Player 1 start" 
+[
+	spawnflags(flags) =
+	[
+		16 : "Primary" : 0 : "If there are multiple info_player_starts in a map, this one is guaranteed to spawn the player"
+	]
+]
 
 @PointClass base(Targetname) size(-4 -4 -4, 4 4 4) color(200 100 50) = info_target : "Beam Target" []
 @PointClass size(-8 -8 0, 8 8 16) base(PlayerClass, Targetname) = info_teleport_destination : "Teleport destination" []
