@@ -281,9 +281,6 @@ call ..\..\filecopy.bat "$(TargetDir)$(TargetName).pdb" "$(ModDir)\dlls\$(Target
     <ClCompile Include="..\..\dlls\World.cpp" />
     <ClCompile Include="..\..\dlls\XenPlants.cpp" />
     <ClCompile Include="..\..\game_shared\voice_gamemgr.cpp" />
-    <ClCompile Include="..\..\pm_shared\pm_debug.cpp" />
-    <ClCompile Include="..\..\pm_shared\pm_math.cpp" />
-    <ClCompile Include="..\..\pm_shared\pm_shared.cpp" />
     <ClCompile Include="..\..\shared\ADM\AdmControl.cpp" />
     <ClCompile Include="..\..\shared\ADM\AdmSound.cpp" />
     <ClCompile Include="..\..\shared\ADM\AdmSoundList.cpp" />
@@ -296,6 +293,9 @@ call ..\..\filecopy.bat "$(TargetDir)$(TargetName).pdb" "$(ModDir)\dlls\$(Target
     <ClCompile Include="..\..\shared\ADM\Physics\PhysBody_Plane.cpp" />
     <ClCompile Include="..\..\shared\ADM\Physics\PhysicsWorld.cpp" />
     <ClCompile Include="..\..\shared\Maths\Vector.cpp" />
+    <ClCompile Include="..\..\shared\PlayerMove\pm_debug.cpp" />
+    <ClCompile Include="..\..\shared\PlayerMove\pm_math.cpp" />
+    <ClCompile Include="..\..\shared\PlayerMove\pm_shared.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\common\beamdef.h" />
@@ -448,12 +448,6 @@ call ..\..\filecopy.bat "$(TargetDir)$(TargetName).pdb" "$(ModDir)\dlls\$(Target
     <ClInclude Include="..\..\dlls\Util.h" />
     <ClInclude Include="..\..\dlls\Weapons\Weapons.h" />
     <ClInclude Include="..\..\engine\EIFace.h" />
-    <ClInclude Include="..\..\pm_shared\pm_debug.h" />
-    <ClInclude Include="..\..\pm_shared\pm_defs.h" />
-    <ClInclude Include="..\..\pm_shared\pm_info.h" />
-    <ClInclude Include="..\..\pm_shared\pm_materials.h" />
-    <ClInclude Include="..\..\pm_shared\pm_movevars.h" />
-    <ClInclude Include="..\..\pm_shared\pm_shared.h" />
     <ClInclude Include="..\..\shared\ADM\AdmControl.h" />
     <ClInclude Include="..\..\shared\ADM\AdmSound.h" />
     <ClInclude Include="..\..\shared\ADM\AdmSoundList.h" />
@@ -471,6 +465,12 @@ call ..\..\filecopy.bat "$(TargetDir)$(TargetName).pdb" "$(ModDir)\dlls\$(Target
     <ClInclude Include="..\..\shared\ClientServerShared.h" />
     <ClInclude Include="..\..\shared\Maths\Constants.h" />
     <ClInclude Include="..\..\shared\Maths\Vector.h" />
+    <ClInclude Include="..\..\shared\PlayerMove\pm_debug.h" />
+    <ClInclude Include="..\..\shared\PlayerMove\pm_defs.h" />
+    <ClInclude Include="..\..\shared\PlayerMove\pm_info.h" />
+    <ClInclude Include="..\..\shared\PlayerMove\pm_materials.h" />
+    <ClInclude Include="..\..\shared\PlayerMove\pm_movevars.h" />
+    <ClInclude Include="..\..\shared\PlayerMove\pm_shared.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\fgd\adm.fgd" />

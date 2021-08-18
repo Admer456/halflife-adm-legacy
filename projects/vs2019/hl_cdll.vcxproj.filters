@@ -26,9 +26,6 @@
     <Filter Include="Sources\Weapons">
       <UniqueIdentifier>{a46a0ff1-e7ad-43c4-afb8-6c93e71803a1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Sources\PM_Shared">
-      <UniqueIdentifier>{7d8ce8c9-fed8-42ee-9ba0-73d0fee6006a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Sources\Public">
       <UniqueIdentifier>{c053705f-05f3-4d16-ab13-80bfa84cbe75}</UniqueIdentifier>
     </Filter>
@@ -74,6 +71,9 @@
     <Filter Include="Shared\Maths">
       <UniqueIdentifier>{78d1b922-dbf8-44c2-a472-c5b8f5e8b65b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shared\PlayerMove">
+      <UniqueIdentifier>{095fc2cb-0d38-4377-a1ff-91c5a9687cf6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\cl_dll\hl\hl_weapons.cpp">
@@ -117,15 +117,6 @@
     </ClCompile>
     <ClCompile Include="..\..\public\interface.cpp">
       <Filter>Sources\Public</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\pm_shared\pm_debug.cpp">
-      <Filter>Sources\PM_Shared</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\pm_shared\pm_math.cpp">
-      <Filter>Sources\PM_Shared</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\pm_shared\pm_shared.cpp">
-      <Filter>Sources\PM_Shared</Filter>
     </ClCompile>
     <ClCompile Include="..\..\cl_dll\adm\AdmClientsideExtensions.cpp">
       <Filter>Sources\ADM</Filter>
@@ -421,26 +412,17 @@
     <ClCompile Include="..\..\shared\Maths\Vector.cpp">
       <Filter>Shared\Maths</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\shared\PlayerMove\pm_debug.cpp">
+      <Filter>Shared\PlayerMove</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\shared\PlayerMove\pm_math.cpp">
+      <Filter>Shared\PlayerMove</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\shared\PlayerMove\pm_shared.cpp">
+      <Filter>Shared\PlayerMove</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\pm_shared\pm_debug.h">
-      <Filter>Sources\PM_Shared</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\pm_shared\pm_defs.h">
-      <Filter>Sources\PM_Shared</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\pm_shared\pm_info.h">
-      <Filter>Sources\PM_Shared</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\pm_shared\pm_materials.h">
-      <Filter>Sources\PM_Shared</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\pm_shared\pm_movevars.h">
-      <Filter>Sources\PM_Shared</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\pm_shared\pm_shared.h">
-      <Filter>Sources\PM_Shared</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\game_shared\vgui_scrollbar2.h">
       <Filter>Sources\Game_Shared</Filter>
     </ClInclude>
@@ -770,6 +752,24 @@
     </ClInclude>
     <ClInclude Include="..\..\shared\ClientServerShared.h">
       <Filter>Shared</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\shared\PlayerMove\pm_debug.h">
+      <Filter>Shared\PlayerMove</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\shared\PlayerMove\pm_defs.h">
+      <Filter>Shared\PlayerMove</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\shared\PlayerMove\pm_info.h">
+      <Filter>Shared\PlayerMove</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\shared\PlayerMove\pm_materials.h">
+      <Filter>Shared\PlayerMove</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\shared\PlayerMove\pm_movevars.h">
+      <Filter>Shared\PlayerMove</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\shared\PlayerMove\pm_shared.h">
+      <Filter>Shared\PlayerMove</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
