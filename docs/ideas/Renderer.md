@@ -21,7 +21,7 @@ So, I propose a renderer rewrite on the clientside. It's an enormous task, but a
 ## Prerequisites
 Some pretty good graphics programming knowledge.
 
-[FoxGLBox]() could be used, or [Magnum](), or [bgfx]() or write yer own. Ideally, we'd want to be able to switch between OpenGL 2.1 and 3.3, so using an abstraction layer would be nice.
+[FoxGLBox](https://github.com/Admer456/FoxGLBox) could be used, or [Magnum](https://github.com/mosra/magnum), or [bgfx](https://github.com/bkaradzic/bgfx) or write yer own. Ideally, we'd want to be able to switch between OpenGL 2.1 and 3.3, so using an abstraction layer would be nice.
 
 Potentially a custom audio system if we decide to turn on `r_norefresh`.
 
