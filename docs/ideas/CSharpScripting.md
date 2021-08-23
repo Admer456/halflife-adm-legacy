@@ -28,6 +28,15 @@ namespace GameEntities
 }
 ```
 
+## Scope
+- Addon scripts (a.k.a. server plugins)
+- Clientside HUD scripts
+- Serverside gamemode scripts
+- Map entity scripts
+- Map scripts
+- Monster scripts
+- Weapon scripts
+
 ## Implementation
 
 ### Phase 1

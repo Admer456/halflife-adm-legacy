@@ -11,6 +11,9 @@ We'd need an entity system localised entirely in the client DLL. Let's call this
 
 This entity system would read entities from the BSP and instantiate needed ones on the clientside. Having them able to spawn, think and render themselves should be enough.
 
+## Scope
+- Simple vegetation rendering to replace serverside entities
+
 ## Implementation
 
 ### Phase 1

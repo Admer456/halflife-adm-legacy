@@ -25,6 +25,9 @@ Some pretty good graphics programming knowledge.
 
 Potentially a custom audio system if we decide to turn on `r_norefresh`.
 
+## Scope
+A rewrite of GoldSRC's renderer with some extra features: a material system and shaders. No fancy shading, PBR or anything like that!
+
 ## Implementation
 
 ### Phase 1A - Texture replacements

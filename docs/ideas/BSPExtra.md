@@ -19,6 +19,12 @@ A custom renderer is needed if we want to take advantage of BSP extensions in an
 
 Some more extreme iterations of this idea would require custom physics as well, i.e. to be handled entirely in the mod.
 
+## Scope
+- External lightmaps
+- External geometry
+- Riddance of clipnodes
+- Simplification of VIS
+
 ## Implementation
 
 ### Phase 1A
@@ -43,9 +49,9 @@ We almost wouldn't be limited by GoldSRC BSP any more.
 
 ### Phase 3
 *TODO: write about this in more detail*  
-We might end up needing our own VIS to avoid worldleaves. However, this is very unlikely.
+**Option 1:** We might end up needing our own VIS to avoid worldleaves. However, this is very unlikely.
 
-func_detail could be completely ignored by HLCSG and HLBSP. HLBSPX would process it in its own BSPX format, which would be treated like a typical mesh, without any impact on worldleaves.
+**Option 2:** Keep GoldSRC VIS for game purposes. func_detail could be completely ignored by HLCSG and HLBSP. HLBSPX would process it in its own BSPX format, which would be treated like a typical mesh, without any impact on worldleaves.
 
 ## Gains
 Probably the biggest ones out of all.  
