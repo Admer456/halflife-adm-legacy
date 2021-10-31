@@ -1350,7 +1350,7 @@
 	]
 ]
 
-@PointClass base(Targetname, Target, RenderFields) size(-16 -16 -16, 16 16 16) color(100 100 0) = env_render : "Render Controls"
+@PointClass base(Targetname, Target, RenderFields) size(-4 -4 -4, 4 4 4) color(100 100 0) = env_render : "Render Controls"
 [
 	spawnflags(flags) =
 	[
