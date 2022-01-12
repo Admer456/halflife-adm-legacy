@@ -1,3 +1,10 @@
+## Note!
+--------------
+This repository will soon be archived and [here's why](https://github.com/Admer456/halflife-adm-legacy/issues/27).  
+Development will restart in another repository, coming soon.
+
+--------------
+
 Advanced Development Mod
 ======================
 
