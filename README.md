@@ -1,7 +1,7 @@
 ## Note!
 --------------
-This repository will soon be archived and [here's why](https://github.com/Admer456/halflife-adm-legacy/issues/27).  
-Development will restart in another repository, coming soon.
+This repository is now archived and [here's why](https://github.com/Admer456/halflife-adm-legacy/issues/27).  
+Development restarted in the new [Half-Life: ADM](https://github.com/Admer456/halflife-adm) repository.
 
 --------------
 
